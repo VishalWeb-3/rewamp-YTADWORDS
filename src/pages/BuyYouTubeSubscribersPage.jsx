@@ -413,10 +413,9 @@ export default function BuyYouTubeSubscribersPage() {
             {/* Left Section - GIF */}
             <div className="flex justify-center lg:justify-start">
               <img
-                src="https://views4you.com/wp-content/uploads/2022/11/Youtube-views-growing-video-optimized.gif"
+                src="/demo1.jpg"
                 alt="YouTube Subscribers Growing"
-                className="w-full max-w-md h-auto "
-                style={{ display: 'block', margin: 'auto' }}
+                className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
               />
             </div>
 
