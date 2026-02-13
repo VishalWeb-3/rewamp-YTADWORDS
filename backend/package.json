@@ -1,0 +1,37 @@
+{
+  "name": "youtubeadwords-backend",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "YouTube AdWords API - Users, Carts, Orders, Payments",
+  "main": "server.ts",
+  "scripts": {
+    "build": "prisma generate",
+    "start": "prisma generate && npx tsx server.ts",
+    "dev": "npx tsx watch server.ts",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.2.3",
+    "@types/pg": "^8.16.0",
+    "prisma": "^7.3.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "pg": "^8.18.0"
+  }
+}
