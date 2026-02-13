@@ -61,8 +61,8 @@ async function sessionMiddleware(req: express.Request, res: express.Response, ne
         name: session.user.name,
       };
     }
-  } catch {
-    /* ignore */
+  } catch (err) {
+    console.error("Session middleware DB error:", err);
   }
   next();
 }
@@ -523,9 +523,21 @@ app.get("/api/youtube/search", async (req, res) => {
   }
 });
 
-// Health check
-app.get("/api/health", (_req, res) => {
-  res.json({ ok: true });
+// Health check (optional: verify DB so Render shows unhealthy if DB is down)
+app.get("/api/health", async (_req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("Health check DB error:", err);
+    res.status(503).json({ ok: false, error: "Database unavailable" });
+  }
+});
+
+// Catch unhandled errors in async routes
+app.use((err: Error, _req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "Internal server error" });
 });
 
 app.listen(PORT, "0.0.0.0", () => {
