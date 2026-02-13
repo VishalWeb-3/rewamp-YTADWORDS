@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: youtubeadwords-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: UPLEF_API_KEY
+        sync: false
+      - key: UPLEF_API_SECRET
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: YOUTUBE_API_KEY
+        sync: false
+      - key: API_URL
+        sync: false

@@ -323,6 +323,7 @@ app.post("/api/orders/create", async (req, res) => {
       0
     );
     const externalOrderId = `ORDER_${Date.now()}`;
+    const frontendUrl = process.env.FRONTEND_URL?.replace(/\/$/, "") || "http://localhost:5173";
     const successUrl = `${frontendUrl}/payment/success`;
     const failureUrl = `${frontendUrl}/payment/failure`;
 
@@ -527,6 +528,6 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
-app.listen(PORT, () => {
-  console.log(`YouTube AdWords API running at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`YouTube AdWords API running on port ${PORT}`);
 });
