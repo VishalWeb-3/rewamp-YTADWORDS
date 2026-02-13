@@ -27,10 +27,10 @@ const services = [
     ),
     textClass: 'text-red-600',
     items: [
-      'Buy YouTube Views',
-      'Buy YouTube Subscribers',
-      'Buy YouTube Likes',
-      'Buy YouTube Watch Hours',
+      { label: 'Buy YouTube Views', link: '/buy-youtube-views' },
+      { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' },
+      { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' },
+      { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' },
     ],
   },
   {
@@ -98,20 +98,20 @@ export default function ServiceBar() {
               {openIndex === index && (
                 <div className="absolute left-0 top-full pt-1 z-50 min-w-[240px]">
                   <div className="rounded-lg border border-gray-200 bg-white shadow-lg py-1">
-                    {s.items.map((item) => {
-                      const isBuyYouTubeViews = item === 'Buy YouTube Views';
-                      const Component = isBuyYouTubeViews ? Link : 'a';
-                      const props = isBuyYouTubeViews 
-                        ? { to: '/buy-youtube-views' }
+                    {s.items.map((item, itemIndex) => {
+                      const itemData = typeof item === 'string' ? { label: item, link: '#' } : item;
+                      const Component = itemData.link !== '#' ? Link : 'a';
+                      const props = itemData.link !== '#' 
+                        ? { to: itemData.link }
                         : { href: '#' };
                       
                       return (
                         <Component
-                          key={item}
+                          key={itemIndex}
                           {...props}
                           className="block px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
                         >
-                          {item}
+                          {itemData.label}
                         </Component>
                       );
                     })}
