@@ -140,7 +140,7 @@ export default function CheckoutPage() {
         return;
       }
 
-      alert(data.error || data.details || 'Failed to create order');
+      alert(data.details || data.error || 'Failed to create order');
     } catch (err) {
       console.error('Checkout error:', err);
       alert('Something went wrong. Please try again.');

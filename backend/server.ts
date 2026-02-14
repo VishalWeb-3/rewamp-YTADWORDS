@@ -369,17 +369,33 @@ app.post("/api/orders/create", async (req, res) => {
         }),
       });
 
-      const uplefData = await uplefResponse.json();
-      if (!uplefResponse.ok || !uplefData.success) {
-        console.error("Uplef API Error:", { status: uplefResponse.status, data: uplefData });
-        return res.status(uplefResponse.status || 400).json({
+      let uplefData: { success?: boolean; data?: { order?: { orderId?: string }; paymentPageUrl?: string }; message?: string; error?: string } = {};
+      try {
+        uplefData = await uplefResponse.json();
+      } catch {
+        console.error("Uplef API Error: response was not JSON");
+        return res.status(502).json({
           error: "Failed to create payment",
-          details: uplefData.message || "Check your Uplef API keys in .env",
+          details: "Payment provider returned invalid response.",
         });
       }
 
-      const uplefOrderId = uplefData.data?.order?.orderId;
-      const paymentUrl = uplefData.data?.paymentPageUrl;
+      const paymentUrl = uplefData.data?.paymentPageUrl ?? (uplefData as any).paymentPageUrl;
+      const uplefOrderId = uplefData.data?.order?.orderId ?? (uplefData.data as any)?.orderId;
+      const uplefSuccess = uplefData.success === true || (uplefResponse.ok && !!paymentUrl);
+
+      if (!uplefSuccess || !paymentUrl) {
+        const details =
+          uplefData.message ||
+          uplefData.error ||
+          (typeof (uplefData as any).details === "string" ? (uplefData as any).details : null) ||
+          "Check UPLEF_API_KEY and UPLEF_API_SECRET in Render Environment.";
+        console.error("Uplef API Error:", { status: uplefResponse.status, data: uplefData });
+        return res.status(uplefResponse.status || 400).json({
+          error: "Failed to create payment",
+          details,
+        });
+      }
 
       const result = await prisma.$transaction(async (tx) => {
         const orders = await Promise.all(
