@@ -46,4 +46,4 @@ jobs:
       # Run locally: firebase login:ci
       # Then in GitHub: repo → Settings → Secrets and variables → Actions → update FIREBASE_TOKEN
       - name: Deploy to Firebase Hosting
-        run: firebase deploy --only hosting --project socio-websites --non-interactive --token "${{ secrets.FIREBASE_TOKEN }}"
+        run: firebase deploy --only hosting:yotubeadwords --project socio-websites --non-interactive --token "${{ secrets.FIREBASE_TOKEN }}"
