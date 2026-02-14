@@ -13,7 +13,7 @@ Tina Cloud needs **both** the `tina` folder and **`tina-lock.json`** to index yo
 2. **In Tina Cloud** → your project → **Configuration**:
    - **Path to Tina Config**: must point to where the `tina` folder lives in your repo.
      - If your repo root has a `frontend` folder and the tina folder is `frontend/tina/`, use **`frontend`** (Tina will look for `frontend/tina/config.js`).
-     - If that doesn’t work, try **`frontend/tina`** (path to the tina folder itself).
+     - If that doesn’t work, use **`frontend`** only (do not use `frontend/tina`).
    - Click **Refresh Branches** and wait a few minutes. `main` should then appear.
 
 3. **Commit and push** the full `tina` folder (including `tina-lock.json` and `__generated__/`). If "No branches found" appeared because `tina-lock.json` was never pushed, add and push it:
@@ -51,6 +51,8 @@ This means the schema your **admin** was built with doesn’t match what **Tina 
 4. Hard-refresh the admin page: [http://localhost:5173/admin/index.html](http://localhost:5173/admin/index.html) (Cmd+Shift+R).
 
 If you added a new collection (e.g. Contact), the mismatch often happens until `tina-lock.json` is pushed and the branch is reindexed.
+
+**Path is `frontend` and you still see the error?** Use **Reindex** (not just Refresh Branches): Configuration → find **main** → click **Reindex**. Wait 3–5 minutes, then hard-refresh the admin or open it in an incognito window.
 
 ## Get the admin to open (first time)
 
