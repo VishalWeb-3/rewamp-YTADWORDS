@@ -1,1 +1,15 @@
-{"projects":{"default":"socio-websites"},"targets":{"socio-websites":{"hosting":{"yt-adwords":"yotubeadwords"}}}}
+{
+  "projects": {
+    "default": "socio-websites"
+  },
+  "targets": {
+    "socio-websites": {
+      "hosting": {
+        "yt-adwords": [
+          "yotubeadwords"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
