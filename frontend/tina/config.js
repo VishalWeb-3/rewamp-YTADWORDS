@@ -5,6 +5,13 @@ export default defineConfig({
     outputFolder: 'admin',
     publicFolder: 'public',
   },
+  media: {
+    tina: {
+      publicFolder: 'public',
+      mediaRoot: 'uploads',
+      static: false,
+    },
+  },
   branch: process.env.VITE_TINA_BRANCH || process.env.TINA_BRANCH || 'main',
   clientId: process.env.VITE_TINA_CLIENT_ID || process.env.TINA_CLIENT_ID || process.env.Tins_client || '',
   token: process.env.VITE_TINA_TOKEN || process.env.TINA_TOKEN || process.env.Tina_token || '',
