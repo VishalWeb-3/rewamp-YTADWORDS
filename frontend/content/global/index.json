@@ -144,7 +144,7 @@
     "title": "Your Cart",
     "emptyTitle": "Your cart is empty",
     "emptySubtext": "Add services to get started",
-    "browseServices": "sdkla"
+    "browseServices": "Browse Services"
   },
   "auth": {
     "loginTitle": "Login",
