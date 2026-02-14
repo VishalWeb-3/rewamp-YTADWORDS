@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
+import { useGlobalContent } from '../contexts/ContentContext';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export default function SignupPage() {
+  const globalContent = useGlobalContent();
+  const auth = globalContent?.auth || {};
   const { setUser } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -105,10 +108,10 @@ export default function SignupPage() {
           {/* Page Title */}
           <div className="text-center mb-8">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
-              Create Account
+              {auth.signupTitle || 'Create Account'}
             </h1>
             <p className="text-gray-600">
-              Sign up to start using Views4You services
+              {auth.signupSubtitle || 'Sign up to start using Views4You services'}
             </p>
           </div>
 
@@ -306,16 +309,16 @@ export default function SignupPage() {
                 disabled={isSubmitting}
                 className="w-full bg-brand-red text-white font-bold py-3 rounded-lg hover:bg-[#C62828] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Creating Account...' : 'Create Account'}
+                {isSubmitting ? (auth.creatingAccountButton || 'Creating Account...') : (auth.createAccountButton || 'Create Account')}
               </button>
             </form>
 
             {/* Login Link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600 text-sm">
-                Already have an account?{' '}
+                {auth.hasAccount || 'Already have an account?'}{' '}
                 <Link to="/login" className="text-brand-red font-semibold hover:underline">
-                  Login here
+                  {auth.logInLinkText || 'Log in'}
                 </Link>
               </p>
             </div>

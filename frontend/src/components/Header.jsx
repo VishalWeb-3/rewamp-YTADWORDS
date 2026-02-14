@@ -2,23 +2,42 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useGlobalContent } from '../contexts/ContentContext';
 
-function Logo() {
+function Logo({ siteName }) {
+  const raw = (siteName || 'YOUTUBEADWORDS').trim();
+  const parts = raw.split(/\s+/);
+  let youtube = 'YOUTUBE', ad = 'AD', words = 'WORDS';
+  if (parts.length >= 3) {
+    [youtube, ad, words] = parts;
+  } else if (parts.length === 1 && raw.toUpperCase() === 'YOUTUBEADWORDS') {
+    youtube = 'YOUTUBE'; ad = 'AD'; words = 'WORDS';
+  } else if (parts.length >= 1) {
+    youtube = parts[0] || youtube;
+  }
   return (
     <Link to="/" className="flex items-center gap-0.5 font-bold text-xl tracking-tight">
-      <span className="text-black">YOUTUBE</span>
-      <span className="bg-brand-red text-white px-1.5 py-0.5 text-lg">AD</span>
-      <span className="text-black">WORDS</span>
+      <span className="text-black">{youtube}</span>
+      <span className="bg-brand-red text-white px-1.5 py-0.5 text-lg">{ad}</span>
+      <span className="text-black">{words}</span>
     </Link>
   );
 }
 
 export default function Header() {
+  const globalContent = useGlobalContent();
+  const header = globalContent?.header || {};
   const { setIsCartOpen, getCartCount } = useCart();
   const { user, displayName, logout, isLoggedIn } = useAuth();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const cartCount = getCartCount();
+  const navItems = header.navLinks || [
+    { label: 'Google Ads Services', link: '/' },
+    { label: 'YouTube Services', link: '/buy-youtube-views' },
+    { label: 'TikTok Ads Services', link: '/' },
+    { label: 'Contact', link: '/contact' },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -30,27 +49,16 @@ export default function Header() {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const navItems = [
-    { label: 'Google Ads Services', active: true, link: '/' },
-    { label: 'YouTube Services', active: true, link: '/buy-youtube-views' },
-    { label: 'TikTok Ads Services', active: true, link: '/' },
-    { label: 'Contact', active: false, link: '/contact' },
-  ];
-
   return (
     <header className="bg-white">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Logo />
+        <Logo siteName={header.siteName} />
         <nav className="flex items-center gap-1">
           {navItems.map((item) => (
             <Link
               key={item.label}
               to={item.link || '#'}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                item.active
-                  ? 'bg-[#E53935] text-white hover:bg-[#C62828]'
-                  : 'text-gray-800 hover:text-gray-600'
-              }`}
+              className="px-4 py-2 rounded-full text-sm font-medium transition-colors bg-[#E53935] text-white hover:bg-[#C62828]"
             >
               {item.label}
             </Link>
@@ -71,14 +79,14 @@ export default function Header() {
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => setUserMenuOpen(false)}
                   >
-                    My Orders
+                    {header.myOrders || 'My Orders'}
                   </Link>
                   <button
                     type="button"
                     onClick={() => { logout(); setUserMenuOpen(false); }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                   >
-                    Logout
+                    {header.logout || 'Logout'}
                   </button>
                 </div>
               )}
@@ -88,7 +96,7 @@ export default function Header() {
               to="/login"
               className="px-4 py-2 rounded-full text-sm font-medium text-gray-800 hover:text-gray-600 transition-colors"
             >
-              Login
+              {header.loginLabel || 'Login'}
             </Link>
           )}
           {!isLoggedIn && (
@@ -96,13 +104,13 @@ export default function Header() {
               to="/orders"
               className="px-4 py-2 rounded-full text-sm font-medium text-gray-800 hover:text-gray-600 transition-colors"
             >
-              My Orders
+              {header.myOrders || 'My Orders'}
             </Link>
           )}
           <button
             onClick={() => setIsCartOpen(true)}
             className="relative p-2 rounded-full hover:bg-gray-100 transition-colors ml-2"
-            aria-label="Shopping cart"
+            aria-label={header.shoppingCartAria || 'Shopping cart'}
           >
             <svg
               className="w-6 h-6 text-gray-800"

@@ -1,0 +1,123 @@
+fragment GlobalParts on Global {
+  __typename
+  header {
+    __typename
+    siteName
+    logo
+    navLinks {
+      __typename
+      label
+      link
+    }
+    loginLabel
+    signupLabel
+    signedInAs
+    myOrders
+    logout
+    shoppingCartAria
+  }
+  footer {
+    __typename
+    tagline
+    ourServicesTitle
+    resourcesTitle
+    companyTitle
+    legalDisclaimer
+    copyright
+    privacyPolicy
+    termsOfService
+    refundPolicy
+    cookiesSettings
+  }
+  serviceBar {
+    __typename
+    services {
+      __typename
+      label
+      items {
+        __typename
+        label
+        link
+      }
+    }
+  }
+  cart {
+    __typename
+    title
+    emptyTitle
+    emptySubtext
+    browseServices
+  }
+  auth {
+    __typename
+    loginTitle
+    loginSubtitle
+    emailOrUsernameLabel
+    emailPlaceholder
+    passwordLabel
+    passwordPlaceholder
+    logInButton
+    loggingInButton
+    rememberMe
+    forgotPassword
+    noAccount
+    signUpLinkText
+    signupTitle
+    signupSubtitle
+    hasAccount
+    logInLinkText
+  }
+}
+
+fragment HomeParts on Home {
+  __typename
+  hero {
+    __typename
+    badge
+    title
+    subtitle
+    ctaPrimary
+    ctaSecondary
+    lastOrder
+    activeCampaigns
+  }
+  servicesSection {
+    __typename
+    googleServices
+    tiktokServices
+  }
+  whyChooseUs {
+    __typename
+    title
+    features {
+      __typename
+      title
+    }
+  }
+  faq {
+    __typename
+    heading
+    items {
+      __typename
+      question
+      answer
+    }
+  }
+  comparison {
+    __typename
+    heading
+    better
+    otherTitle
+    ourTitle
+    bestChoice
+    otherPoints
+    ourPoints
+  }
+  globalAudienceCta {
+    __typename
+    title
+    titleHighlight
+    paragraph1
+    paragraph2
+  }
+}

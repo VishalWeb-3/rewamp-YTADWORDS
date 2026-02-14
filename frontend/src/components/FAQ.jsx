@@ -1,29 +1,18 @@
 import React, { useState } from 'react';
+import { useHomeContent } from '../contexts/ContentContext';
 
-const faqs = [
-  {
-    question: 'Is using YouTube Ad Words safe for my channel?',
-    answer: 'Yes, absolutely! YouTube Ad Words uses legitimate Google Ads strategies and complies with all platform policies. We deliver real traffic through official ad networks, ensuring your channel remains safe and secure.',
-  },
-  {
-    question: 'Can your services help me get monetized on YouTube?',
-    answer: 'Yes! Our Watch Hours and Subscriber packages are specifically designed to help creators meet YouTube\'s monetization requirements. We provide authentic engagement that helps you reach the thresholds needed for the YouTube Partner Program.',
-  },
-  {
-    question: 'Will my subscribers or followers drop over time?',
-    answer: 'No, our services come with a Non-Drop Lifetime Guarantee. We use real traffic and engagement methods, so your subscribers and followers will remain stable. Unlike bot-based services, our authentic approach ensures long-term retention.',
-  },
-  {
-    question: 'How long does it take to see results?',
-    answer: 'Results typically start appearing within 24-48 hours of purchase. Delivery speed depends on the package size and service type. Smaller packages may complete faster, while larger campaigns are delivered gradually over days or weeks to ensure natural growth patterns.',
-  },
-  {
-    question: 'How is YouTube Ad Words different from other panels?',
-    answer: 'YouTube Ad Words stands out by using legitimate Google Ads strategies instead of bots or proxies. We offer real traffic, 100% policy compliance, non-drop guarantees, and 24/7 expert support. Our White-Hat approach ensures account safety and authentic engagement that lasts.',
-  },
+const DEFAULT_FAQS = [
+  { question: 'Is using YouTube Ad Words safe for my channel?', answer: 'Yes, absolutely! YouTube Ad Words uses legitimate Google Ads strategies and complies with all platform policies. We deliver real traffic through official ad networks, ensuring your channel remains safe and secure.' },
+  { question: "Can your services help me get monetized on YouTube?", answer: "Yes! Our Watch Hours and Subscriber packages are specifically designed to help creators meet YouTube's monetization requirements. We provide authentic engagement that helps you reach the thresholds needed for the YouTube Partner Program." },
+  { question: 'Will my subscribers or followers drop over time?', answer: 'No, our services come with a Non-Drop Lifetime Guarantee. We use real traffic and engagement methods, so your subscribers and followers will remain stable. Unlike bot-based services, our authentic approach ensures long-term retention.' },
+  { question: 'How long does it take to see results?', answer: 'Results typically start appearing within 24-48 hours of purchase. Delivery speed depends on the package size and service type. Smaller packages may complete faster, while larger campaigns are delivered gradually over days or weeks to ensure natural growth patterns.' },
+  { question: 'How is YouTube Ad Words different from other panels?', answer: 'YouTube Ad Words stands out by using legitimate Google Ads strategies instead of bots or proxies. We offer real traffic, 100% policy compliance, non-drop guarantees, and 24/7 expert support. Our White-Hat approach ensures account safety and authentic engagement that lasts.' },
 ];
 
 export default function FAQ() {
+  const home = useHomeContent();
+  const section = home?.faq || {};
+  const faqs = section.items?.length ? section.items : DEFAULT_FAQS;
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -35,9 +24,9 @@ export default function FAQ() {
       <div className="max-w-4xl mx-auto px-6">
         {/* Heading */}
         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
-          Frequently Asked{' '}
+          {section.heading || 'Frequently Asked'}{' '}
           <span className="text-brand-red relative">
-            Questions
+            {section.headingHighlight || 'Questions'}
             <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-red" />
           </span>
         </h2>

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useGlobalContent } from '../contexts/ContentContext';
 
 export default function CartSidebar() {
+  const globalContent = useGlobalContent();
+  const cart = globalContent?.cart || {};
   const {
     cartItems,
     removeFromCart,
@@ -26,7 +29,7 @@ export default function CartSidebar() {
       <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900">Your Cart</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{cart.title || 'Your Cart'}</h2>
           <button
             onClick={() => setIsCartOpen(false)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -64,14 +67,14 @@ export default function CartSidebar() {
                   d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                 />
               </svg>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Your cart is empty</h3>
-              <p className="text-gray-600 mb-6">Add services to get started</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">{cart.emptyTitle || 'Your cart is empty'}</h3>
+              <p className="text-gray-600 mb-6">{cart.emptySubtext || 'Add services to get started'}</p>
               <Link
                 to="/"
                 onClick={() => setIsCartOpen(false)}
                 className="px-6 py-3 bg-brand-red text-white font-semibold rounded-lg hover:bg-[#C62828] transition-colors"
               >
-                Browse Services
+                {cart.browseServices || 'Browse Services'}
               </Link>
             </div>
           ) : (

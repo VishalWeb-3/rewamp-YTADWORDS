@@ -1,29 +1,21 @@
 import React from 'react';
+import { useHomeContent } from '../contexts/ContentContext';
 
-const otherProvidersPoints = [
-  'Uses cheap bot scripts & proxies',
-  'High drop rate (Views disappear)',
-  'Risks account flagging or bans',
-  'No customer support available',
-  'Generic, fake-looking profiles',
-];
-
-const youtubeAdWordsPoints = [
-  'Real Traffic via Google Ads Strategies',
-  'Non-Drop Lifetime Guarantee',
-  '100% Safe & Policy Compliant',
-  '24/7 Expert WhatsApp/Chat Support',
-  'High-Retention (Sticky) Engagement',
-];
+const DEFAULT_OTHER = ['Uses cheap bot scripts & proxies', 'High drop rate (Views disappear)', 'Risks account flagging or bans', 'No customer support available', 'Generic, fake-looking profiles'];
+const DEFAULT_OUR = ['Real Traffic via Google Ads Strategies', 'Non-Drop Lifetime Guarantee', '100% Safe & Policy Compliant', '24/7 Expert WhatsApp/Chat Support', 'High-Retention (Sticky) Engagement'];
 
 export default function ComparisonSection() {
+  const home = useHomeContent();
+  const section = home?.comparison || {};
+  const otherProvidersPoints = section.otherPoints?.length ? section.otherPoints : DEFAULT_OTHER;
+  const youtubeAdWordsPoints = section.ourPoints?.length ? section.ourPoints : DEFAULT_OUR;
   return (
     <section className="bg-white py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Main Heading */}
         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
-          Why We Are{' '}
-          <span className="text-brand-red">Better?</span>
+          {section.heading || 'Why We Are'}{' '}
+          <span className="text-brand-red">{section.better || 'Better?'}</span>
         </h2>
 
         {/* Comparison Cards */}
@@ -31,7 +23,7 @@ export default function ComparisonSection() {
           {/* Left Card - Other Providers */}
           <div className="bg-gray-100 rounded-2xl shadow-lg p-8 lg:p-10 flex-1 w-full lg:w-auto">
             <h3 className="text-xl lg:text-2xl font-bold text-gray-800 text-center mb-6">
-              Other Providers
+              {section.otherTitle || 'Other Providers'}
             </h3>
             <ul className="space-y-4">
               {otherProvidersPoints.map((point, index) => (
@@ -56,7 +48,7 @@ export default function ComparisonSection() {
           <div className="bg-white rounded-2xl border-2 border-brand-red p-8 lg:p-10 flex-1 w-full lg:w-auto relative">
             {/* BEST CHOICE Label */}
             <div className="absolute -top-3 -right-3 bg-brand-red rounded-full px-4 py-1.5 shadow-lg z-20">
-              <span className="text-white text-xs font-bold uppercase tracking-wide">BEST CHOICE</span>
+              <span className="text-white text-xs font-bold uppercase tracking-wide">{section.bestChoice || 'BEST CHOICE'}</span>
             </div>
 
             {/* Red Radial Gradient Shadow */}
@@ -69,8 +61,17 @@ export default function ComparisonSection() {
             />
 
             <h3 className="text-xl lg:text-2xl font-bold text-center mb-6">
-              <span className="text-gray-800">YouTube</span>{' '}
-              <span className="text-brand-red">Ad Words</span>
+              {section.ourTitle ? (
+                <>
+                  <span className="text-gray-800">YouTube</span>{' '}
+                  <span className="text-brand-red">Ad Words</span>
+                </>
+              ) : (
+                <>
+                  <span className="text-gray-800">YouTube</span>{' '}
+                  <span className="text-brand-red">Ad Words</span>
+                </>
+              )}
             </h3>
             <ul className="space-y-4">
               {youtubeAdWordsPoints.map((point, index) => (

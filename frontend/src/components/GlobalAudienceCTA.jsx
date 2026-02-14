@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHomeContent } from '../contexts/ContentContext';
 
 const serviceCategories = [
   {
@@ -129,6 +130,8 @@ function CategoryIcon({ type }) {
 }
 
 export default function GlobalAudienceCTA() {
+  const home = useHomeContent();
+  const globalCta = home?.globalAudienceCta || {};
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
@@ -139,16 +142,15 @@ export default function GlobalAudienceCTA() {
             {/* Left Content */}
             <div className="flex flex-col justify-center text-white">
               <h2 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">
-                Expanding your reach
+                {(globalCta?.title ?? 'Expanding your reach')}
                 <br />
-                to a{' '}
-                <span className="text-3xl lg:text-4xl">Global Audience</span>
+                {(globalCta?.titleHighlight ?? 'to a Global Audience')}
               </h2>
               <p className="text-white/90 text-sm lg:text-base leading-relaxed mb-4">
-                Stop waiting, start growing. At YouTube Ad Words, we don't just sell stats; we fuel careers. Whether you need to cross the monetization threshold or dominate the TikTok algorithm, our premium packages are designed for instant impact.
+                {globalCta?.paragraph1 ?? "Stop waiting, start growing. At YouTube Ad Words, we don't just sell stats; we fuel careers. Whether you need to cross the monetization threshold or dominate the TikTok algorithm, our premium packages are designed for instant impact."}
               </p>
               <p className="text-white/90 text-sm lg:text-base leading-relaxed">
-                Join thousands of creators who trust us for safe, affordable, and high-retention growth. Select your platform and launch your campaign in seconds.
+                {globalCta?.paragraph2 ?? 'Join thousands of creators who trust us for safe, affordable, and high-retention growth. Select your platform and launch your campaign in seconds.'}
               </p>
             </div>
 

@@ -1,23 +1,20 @@
 import React from 'react';
+import { useHomeContent } from '../contexts/ContentContext';
 
 export default function WhyChooseYouTubeAdWords() {
+  const home = useHomeContent();
+  const section = home?.whyChooseYouTubeAdWords || {};
   return (
     <section className="bg-gray-50 py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Main Heading */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2
-            className="font-bold mb-2"
-            style={{ fontSize: "22px", lineHeight: "1.2" }} // 2px less than 24px
-          >
-            Why Should You Choose
+          <h2 className="font-bold mb-2" style={{ fontSize: "22px", lineHeight: "1.2" }}>
+            {section.heading1 || 'Why Should You Choose'}
           </h2>
-          <h2
-            className="font-bold"
-            style={{ fontSize: "22px", lineHeight: "1.2" }}
-          >
-            <span className="text-brand-red">YouTube</span>{' '}
-            <span className="text-blue-700">Ad Words?</span>
+          <h2 className="font-bold" style={{ fontSize: "22px", lineHeight: "1.2" }}>
+            <span className="text-brand-red">{section.heading2YouTube || 'YouTube'}</span>{' '}
+            <span className="text-blue-700">{section.heading2AdWords || 'Ad Words?'}</span>
           </h2>
         </div>
 
@@ -26,11 +23,8 @@ export default function WhyChooseYouTubeAdWords() {
           {/* Left Card */}
           <div className="bg-white rounded-2xl shadow-md p-8 lg:p-10 relative">
             <div className="flex items-start justify-between mb-4">
-              <h3
-                className="font-bold text-gray-900 flex-1"
-                style={{ fontSize: "16px", lineHeight: "1.2" }} // 2px less than 18px
-              >
-                Advanced Google Ads & Algorithm Mastery
+              <h3 className="font-bold text-gray-900 flex-1" style={{ fontSize: "16px", lineHeight: "1.2" }}>
+                {section.card1Title || 'Advanced Google Ads & Algorithm Mastery'}
               </h3>
               <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center ml-4">
                 <span
@@ -39,22 +33,16 @@ export default function WhyChooseYouTubeAdWords() {
                 >!</span>
               </div>
             </div>
-            <p
-              className="text-gray-700 leading-relaxed"
-              style={{ fontSize: "14px" }} // 2px less than 16px
-            >
-              <strong>YouTube Ad Words</strong> leverages precision targeting, deep YouTube algorithm knowledge, and proven Google Ads strategies to deliver authentic traffic that drives real growth, retention, and better ranking for your content.
+            <p className="text-gray-700 leading-relaxed" style={{ fontSize: "14px" }}>
+              {section.card1Text || 'YouTube Ad Words leverages precision targeting, deep YouTube algorithm knowledge, and proven Google Ads strategies to deliver authentic traffic that drives real growth, retention, and better ranking for your content.'}
             </p>
           </div>
 
           {/* Right Card */}
           <div className="bg-white rounded-2xl shadow-md p-8 lg:p-10 relative">
             <div className="flex items-start justify-between mb-4">
-              <h3
-                className="font-bold text-gray-900 flex-1"
-                style={{ fontSize: "16px", lineHeight: "1.2" }}
-              >
-                100% Safe, Secure & Compliant Growth
+              <h3 className="font-bold text-gray-900 flex-1" style={{ fontSize: "16px", lineHeight: "1.2" }}>
+                {section.card2Title || '100% Safe, Secure & Compliant Growth'}
               </h3>
               <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center ml-4">
                 <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,11 +51,8 @@ export default function WhyChooseYouTubeAdWords() {
                 </svg>
               </div>
             </div>
-            <p
-              className="text-gray-700 leading-relaxed"
-              style={{ fontSize: "14px" }}
-            >
-              Our "White-Hat" approach ensures <strong>YouTube Ad Words</strong> complies with all platform policies, protects against bot activity, and maintains your account security while delivering genuine, high-quality engagement.
+            <p className="text-gray-700 leading-relaxed" style={{ fontSize: "14px" }}>
+              {section.card2Text || 'Our "White-Hat" approach ensures YouTube Ad Words complies with all platform policies, protects against bot activity, and maintains your account security while delivering genuine, high-quality engagement.'}
             </p>
           </div>
         </div>

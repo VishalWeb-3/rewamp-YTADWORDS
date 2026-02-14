@@ -1,31 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const ourServices = [
-  'YouTube Views',
-  'YouTube Subscribers',
-  'YouTube Watch Hours',
-  'TikTok Followers',
-  'Google Ads Views',
-];
-
-const resources = [
-  'Blog',
-  'Affiliate Program',
-  'Why Choose Us?',
-  'Actionable Feedback',
-  'Corrections Policy',
-];
-
-const company = [
-  { label: 'About Us', link: '/about-us' },
-  { label: 'Contact', link: '/contact' },
-  { label: 'Careers', link: '#' },
-  { label: 'Partners', link: '#' },
-  { label: 'Publishing Principles', link: '#' },
-];
+import { useGlobalContent } from '../contexts/ContentContext';
 
 export default function Footer() {
+  const globalContent = useGlobalContent();
+  const footer = globalContent?.footer || {};
+  const ourServices = footer.ourServices || ['YouTube Views', 'YouTube Subscribers', 'YouTube Watch Hours', 'TikTok Followers', 'Google Ads Views'];
+  const resources = footer.resources || ['Blog', 'Affiliate Program', 'Why Choose Us?', 'Actionable Feedback', 'Corrections Policy'];
+  const company = footer.company || [
+    { label: 'About Us', link: '/about-us' },
+    { label: 'Contact', link: '/contact' },
+    { label: 'Careers', link: '#' },
+    { label: 'Partners', link: '#' },
+    { label: 'Publishing Principles', link: '#' },
+  ];
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 py-12 lg:py-16">
@@ -39,7 +27,7 @@ export default function Footer() {
               <span className="text-black">WORDS</span>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed mb-6">
-              YouTube Ad Words empowers creators and brands to transform raw content into viral success. We make growth easier to achieve, understand, and act on.
+              {footer.tagline || 'YouTube Ad Words empowers creators and brands to transform raw content into viral success. We make growth easier to achieve, understand, and act on.'}
             </p>
             {/* Social Media Icons */}
             <div className="flex gap-3">
@@ -65,7 +53,7 @@ export default function Footer() {
 
           {/* Our Services Column */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-4">Our Services</h3>
+            <h3 className="font-bold text-gray-900 mb-4">{footer.ourServicesTitle || 'Our Services'}</h3>
             <ul className="space-y-2">
               {ourServices.map((service, index) => (
                 <li key={index}>
@@ -79,7 +67,7 @@ export default function Footer() {
 
           {/* Resources Column */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-4">Resources</h3>
+            <h3 className="font-bold text-gray-900 mb-4">{footer.resourcesTitle || 'Resources'}</h3>
             <ul className="space-y-2">
               {resources.map((resource, index) => (
                 <li key={index}>
@@ -93,7 +81,7 @@ export default function Footer() {
 
           {/* Company Column */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-4">Company</h3>
+            <h3 className="font-bold text-gray-900 mb-4">{footer.companyTitle || 'Company'}</h3>
             <ul className="space-y-2">
               {company.map((item, index) => (
                 <li key={index}>
@@ -115,27 +103,27 @@ export default function Footer() {
         {/* Middle Section - Legal Disclaimer */}
         <div className="border-t border-gray-200 pt-8 mb-8">
           <p className="text-gray-500 text-xs leading-relaxed max-w-4xl">
-            All the materials offered by YouTube Ad Words are safeguarded by copyright laws. Unlawful reproduction or distribution of our materials is strictly forbidden. It's important to understand that YouTube Ad Words operates independently and is not associated with any social media platforms. This website is not affiliated with or endorsed by Instagram LLC, YouTube LLC, TikTok Inc., Facebook, or any other social media platform.
+            {footer.legalDisclaimer || "All the materials offered by YouTube Ad Words are safeguarded by copyright laws. Unlawful reproduction or distribution of our materials is strictly forbidden. It's important to understand that YouTube Ad Words operates independently and is not associated with any social media platforms. This website is not affiliated with or endorsed by Instagram LLC, YouTube LLC, TikTok Inc., Facebook, or any other social media platform."}
           </p>
         </div>
 
         {/* Bottom Section */}
         <div className="border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-xs">
-            © 2026 YouTube Ad Words. All rights reserved. | Novence SASU - Cs 48756 Paris
+            {footer.copyright || '© 2026 YouTube Ad Words. All rights reserved. | Novence SASU - Cs 48756 Paris'}
           </p>
           <div className="flex gap-4">
             <Link to="/privacy-policy" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
-              Privacy Policy
+              {footer.privacyPolicy || 'Privacy Policy'}
             </Link>
             <Link to="/terms" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
-              Terms of Service
+              {footer.termsOfService || 'Terms of Service'}
             </Link>
             <Link to="/refund-policy" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
-              Refund Policy
+              {footer.refundPolicy || 'Refund Policy'}
             </Link>
             <a href="#" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
-              Cookies Settings
+              {footer.cookiesSettings || 'Cookies Settings'}
             </a>
           </div>
         </div>

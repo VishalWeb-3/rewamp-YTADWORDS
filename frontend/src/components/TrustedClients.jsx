@@ -1,106 +1,41 @@
 import React from 'react';
+import { useHomeContent } from '../contexts/ContentContext';
 
-const testimonials = [
-  {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="#FF0000">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-      </svg>
-    ),
-    category: 'YT Creator',
-    rating: '4.9',
-    quote: 'The Google Ads strategy is fantastic. It\'s motivating to see my subscriber count grow with real people. YouTube Ad Words has a great mix of safety and speed.',
-    name: 'Caleb Sterling',
-    handle: '@caleb_tech_reviews',
-    highlighted: true,
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-      </svg>
-    ),
-    category: 'TikToker',
-    rating: '4.8',
-    quote: 'Finally a service that doesn\'t use bots. My engagement on TikTok videos skyrocketed within 24 hours. The support team helped me choose the right package.',
-    name: 'Chloe Vance',
-    handle: '@chloe_vibe_official',
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M3 21h18" />
-        <path d="M5 21V7l8-4v18" />
-        <path d="M19 21V11l-6-4" />
-        <path d="M9 9v0" />
-        <path d="M9 12v0" />
-        <path d="M9 15v0" />
-        <path d="M9 18v0" />
-      </svg>
-    ),
-    category: 'Agency',
-    rating: '5.0',
-    quote: 'We manage 10+ channels and use YouTube Ad Words for the initial push. The retention rate is amazing compared to other panels. Highly recommended!',
-    name: 'Marcus Thorne',
-    handle: 'Thorne Digital Media',
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M9 18V5l12-2v13" />
-        <circle cx="6" cy="18" r="3" />
-        <circle cx="18" cy="16" r="3" />
-      </svg>
-    ),
-    category: 'Musician',
-    rating: '4.7',
-    quote: 'Used the \'Watch Hours\' service to get my music channel monetized. It took about 2 weeks but the delivery was steady and safe. Thanks team!',
-    name: 'Jaxson Reed',
-    handle: '@jaxson_beats',
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    ),
-    category: 'Influencer',
-    rating: '4.9',
-    quote: 'I was skeptical about buying likes, but these look real. No sudden drops, and it helped my reel go viral on the Explore page. Will buy again.',
-    name: 'Elena Brooks',
-    handle: '@elena_style_nyc',
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M6 12h4m-2-2v4" />
-        <rect x="2" y="6" width="20" height="12" rx="2" />
-        <path d="M14 10h.01M18 10h.01" />
-      </svg>
-    ),
-    category: 'Gamer',
-    rating: '4.8',
-    quote: 'Great service for live streamers. The concurrent viewers package helped me rank higher in the gaming category. Stable and reliable.',
-    name: 'Tyler Frost',
-    handle: '@frost_gaming_live',
-  },
+const ICONS = [
+  <svg key="yt" className="w-8 h-8" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>,
+  <svg key="tt" className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>,
+  <svg key="ag" className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 21h18" /><path d="M5 21V7l8-4v18" /><path d="M19 21V11l-6-4" /></svg>,
+  <svg key="mu" className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>,
+  <svg key="in" className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" /></svg>,
+  <svg key="ga" className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 12h4m-2-2v4" /><rect x="2" y="6" width="20" height="12" rx="2" /></svg>,
 ];
 
 export default function TrustedClients() {
+  const home = useHomeContent();
+  const section = home?.trustedClients || {};
+  const testimonialsFromContent = section.testimonials || [];
+  const testimonials = testimonialsFromContent.length ? testimonialsFromContent.map((t, i) => ({ ...t, icon: ICONS[i] || ICONS[0] })) : [
+    { category: 'YT Creator', rating: '4.9', quote: "The Google Ads strategy is fantastic. It's motivating to see my subscriber count grow with real people. YouTube Ad Words has a great mix of safety and speed.", name: 'Caleb Sterling', handle: '@caleb_tech_reviews', highlighted: true, icon: ICONS[0] },
+    { category: 'TikToker', rating: '4.8', quote: "Finally a service that doesn't use bots. My engagement on TikTok videos skyrocketed within 24 hours. The support team helped me choose the right package.", name: 'Chloe Vance', handle: '@chloe_vibe_official', icon: ICONS[1] },
+    { category: 'Agency', rating: '5.0', quote: 'We manage 10+ channels and use YouTube Ad Words for the initial push. The retention rate is amazing compared to other panels. Highly recommended!', name: 'Marcus Thorne', handle: 'Thorne Digital Media', icon: ICONS[2] },
+    { category: 'Musician', rating: '4.7', quote: "Used the 'Watch Hours' service to get my music channel monetized. It took about 2 weeks but the delivery was steady and safe. Thanks team!", name: 'Jaxson Reed', handle: '@jaxson_beats', icon: ICONS[3] },
+    { category: 'Influencer', rating: '4.9', quote: "I was skeptical about buying likes, but these look real. No sudden drops, and it helped my reel go viral on the Explore page. Will buy again.", name: 'Elena Brooks', handle: '@elena_style_nyc', icon: ICONS[4] },
+    { category: 'Gamer', rating: '4.8', quote: 'Great service for live streamers. The concurrent viewers package helped me rank higher in the gaming category. Stable and reliable.', name: 'Tyler Frost', handle: '@frost_gaming_live', icon: ICONS[5] },
+  ];
+
   return (
     <section className="bg-white py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-            Our Trusted{' '}
+            {section.title || 'Our Trusted'}{' '}
             <span className="bg-brand-red text-white px-4 py-1 rounded-full inline-block">
-              Clients
+              {section.titleHighlight || 'Clients'}
             </span>
           </h2>
           <p className="text-gray-500 text-base lg:text-lg max-w-2xl mx-auto">
-            Our mission is to drive progress and enhance the careers of creators by delivering superior Google Ads strategies that exceed expectations.
+            {section.subtitle || 'Our mission is to drive progress and enhance the careers of creators by delivering superior Google Ads strategies that exceed expectations.'}
           </p>
         </div>
 

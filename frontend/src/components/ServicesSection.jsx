@@ -1,21 +1,12 @@
 import React from 'react';
 import TrustedPlatformsCarousel from './TrustedPlatformsCarousel';
-
-const googleServices = [
-  'Google Ads Video Views',
-  'Google Display Ads Views',
-  'Google Discovery Views',
-  'Google Search Traffic',
-];
-
-const tiktokServices = [
-  'TikTok Video Views',
-  'TikTok Ads Views',
-  'TikTok Followers',
-  'TikTok Engagement',
-];
+import { useHomeContent } from '../contexts/ContentContext';
 
 export default function ServicesSection() {
+  const home = useHomeContent();
+  const section = home?.servicesSection || {};
+  const googleServices = section.googleServices || ['Google Ads Video Views', 'Google Display Ads Views', 'Google Discovery Views', 'Google Search Traffic'];
+  const tiktokServices = section.tiktokServices || ['TikTok Video Views', 'TikTok Ads Views', 'TikTok Followers', 'TikTok Engagement'];
   return (
     <section className="bg-white py-10 lg:py-14">
       <div className="max-w-7xl mx-auto px-6 space-y-12">

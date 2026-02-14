@@ -1,6 +1,7 @@
 import React from 'react';
+import { useHomeContent } from '../contexts/ContentContext';
 
-const benefits = [
+const DEFAULT_BENEFITS = [
   'Genuine views delivered via Google Ads networks',
   'Target Worldwide, USA, India, or Tier-1 Countries',
   'Includes Video, Display, Discovery, and Search traffic',
@@ -9,23 +10,23 @@ const benefits = [
 ];
 
 export default function PremiumSolutions() {
+  const home = useHomeContent();
+  const section = home?.premiumSolutions || {};
+  const benefits = section.benefits?.length ? section.benefits : DEFAULT_BENEFITS;
   return (
     <section className="bg-gray-50 py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Title and Subtitle */}
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-            Our Premium Advertising Solutions
+            {section.title || 'Our Premium Advertising Solutions'}
           </h2>
           <div className="w-16 h-0.5 bg-brand-red mx-auto mb-4" />
           <h3 className="text-2xl lg:text-3xl font-bold text-brand-red">
-            Buy Google Ads Services
+            {section.subtitle || 'Buy Google Ads Services'}
           </h3>
         </div>
 
-        {/* Two Cards Side-by-Side */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Left Card - Benefits List */}
           <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-10">
             <ul className="space-y-4">
               {benefits.map((benefit, index) => (
@@ -49,30 +50,26 @@ export default function PremiumSolutions() {
             }}
           >
             <button className="bg-white rounded-xl px-8 py-4 text-brand-red font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md">
-              Start Google Ads Campaign
+              {section.ctaButton || 'Start Google Ads Campaign'}
             </button>
           </div>
         </div>
 
-        {/* Two Text Blocks Below */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Text Block */}
           <div className="bg-white rounded-2xl shadow-md p-8 lg:p-10">
             <h3 className="text-xl lg:text-xl font-bold text-gray-900 mb-4">
-              Why Are Google Ads Views Important?
+              {section.block1Title || 'Why Are Google Ads Views Important?'}
             </h3>
             <p className="text-gray-700 leading-relaxed text-base lg:text-md">
-              Google Ads views are derived from actively searching users, ensuring real interactions and engagement. These views help improve your search rankings and increase organic recommendations, making your content more discoverable to your target audience.
+              {section.block1Text || 'Google Ads views are derived from actively searching users, ensuring real interactions and engagement. These views help improve your search rankings and increase organic recommendations, making your content more discoverable to your target audience.'}
             </p>
           </div>
-
-          {/* Right Text Block */}
           <div className="bg-white rounded-2xl shadow-md p-8 lg:p-10">
             <h3 className="text-xl lg:text-xl font-bold text-gray-900 mb-4">
-              Top Reasons to Choose Our Google Services
+              {section.block2Title || 'Top Reasons to Choose Our Google Services'}
             </h3>
             <p className="text-gray-700 leading-relaxed text-base lg:text-md">
-              Our services use legitimate ad tech to deliver safe traffic. You can target specific high-value regions like USA and Tier-1 countries, ensuring premium traffic that drives conversion and engagement for your campaigns.
+              {section.block2Text || 'Our services use legitimate ad tech to deliver safe traffic. You can target specific high-value regions like USA and Tier-1 countries, ensuring premium traffic that drives conversion and engagement for your campaigns.'}
             </p>
           </div>
         </div>

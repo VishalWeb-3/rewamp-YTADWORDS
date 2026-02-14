@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
+import { useGlobalContent } from '../contexts/ContentContext';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export default function LoginPage() {
+  const globalContent = useGlobalContent();
+  const auth = globalContent?.auth || {};
   const { setUser } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -60,10 +63,10 @@ export default function LoginPage() {
           {/* Page Title */}
           <div className="text-center mb-8">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
-              Login
+              {auth.loginTitle || 'Login'}
             </h1>
             <p className="text-gray-600">
-              Sign in to your Views4You account
+              {auth.loginSubtitle || 'Sign in to your Views4You account'}
             </p>
           </div>
 
@@ -79,7 +82,7 @@ export default function LoginPage() {
               {/* Email or Username Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email or Username <span className="text-brand-red">*</span>
+                  {auth.emailOrUsernameLabel || 'Email or Username'} <span className="text-brand-red">*</span>
                 </label>
                 <input
                   type="text"
@@ -88,7 +91,7 @@ export default function LoginPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="email@example.com or username"
+                  placeholder={auth.emailPlaceholder || 'email@example.com or username'}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900"
                 />
               </div>
@@ -96,7 +99,7 @@ export default function LoginPage() {
               {/* Password Field */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password <span className="text-brand-red">*</span>
+                  {auth.passwordLabel || 'Password'} <span className="text-brand-red">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -106,7 +109,7 @@ export default function LoginPage() {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    placeholder="Enter your password"
+                    placeholder={auth.passwordPlaceholder || 'Enter your password'}
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 pr-12"
                   />
                   <button
@@ -135,10 +138,10 @@ export default function LoginPage() {
                     type="checkbox"
                     className="w-4 h-4 text-brand-red border-gray-300 rounded focus:ring-brand-red"
                   />
-                  <span className="ml-2 text-sm text-gray-700">Remember me</span>
+                  <span className="ml-2 text-sm text-gray-700">{auth.rememberMe || 'Remember me'}</span>
                 </label>
                 <a href="#" className="text-sm text-brand-red hover:underline">
-                  Forgot password?
+                  {auth.forgotPassword || 'Forgot password?'}
                 </a>
               </div>
 
@@ -148,16 +151,16 @@ export default function LoginPage() {
                 disabled={isSubmitting}
                 className="w-full bg-brand-red text-white font-bold py-3 rounded-lg hover:bg-[#C62828] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Logging in...' : 'Login'}
+                {isSubmitting ? (auth.loggingInButton || 'Logging in...') : (auth.logInButton || 'Login')}
               </button>
             </form>
 
             {/* Sign Up Link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600 text-sm">
-                Don't have an account?{' '}
+                {auth.noAccount || "Don't have an account?"}{' '}
                 <Link to="/signup" className="text-brand-red font-semibold hover:underline">
-                  Sign up here
+                  {auth.signUpLinkText || 'Sign up here'}
                 </Link>
               </p>
             </div>
