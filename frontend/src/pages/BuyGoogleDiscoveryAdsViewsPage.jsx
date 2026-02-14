@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const discoveryAdsViewsPackages = {
+const discoveryAdsViewsPackagesFallback = {
   regular: [
     { views: '100', price: '1.99', originalPrice: null, discount: null },
     { views: '1.0k', price: '14.90', originalPrice: '22.00', discount: '32%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyGoogleDiscoveryAdsViewsPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const discoveryAdsViewsPackages = usePricingPackages('buy-google-discovery-ads-views', discoveryAdsViewsPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyGoogleDiscoveryAdsViewsPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = discoveryAdsViewsPackages[activeTab];
+  const packages = discoveryAdsViewsPackages ? discoveryAdsViewsPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

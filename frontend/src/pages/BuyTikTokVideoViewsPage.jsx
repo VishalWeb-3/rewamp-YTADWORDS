@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const videoViewsPackages = {
+const videoViewsPackagesFallback = {
   regular: [
     { views: '100', price: '1.49', originalPrice: null, discount: null },
     { views: '1.0k', price: '10.90', originalPrice: '16.00', discount: '32%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyTikTokVideoViewsPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const videoViewsPackages = usePricingPackages('buy-tiktok-video-views', videoViewsPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyTikTokVideoViewsPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = videoViewsPackages[activeTab];
+  const packages = videoViewsPackages ? videoViewsPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

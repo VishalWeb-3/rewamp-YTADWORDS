@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const reachPackages = {
+const reachPackagesFallback = {
   regular: [
     { reach: '100', price: '1.49', originalPrice: null, discount: null },
     { reach: '1.0k', price: '10.90', originalPrice: '16.00', discount: '32%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyTikTokReachPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const reachPackages = usePricingPackages('buy-tiktok-reach', reachPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyTikTokReachPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = reachPackages[activeTab];
+  const packages = reachPackages ? reachPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

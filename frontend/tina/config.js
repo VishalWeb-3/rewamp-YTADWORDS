@@ -213,6 +213,64 @@ export default defineConfig({
           { type: 'string', name: 'submittingButton', label: 'Submitting Button Text' },
         ],
       },
+      {
+        name: 'pricing',
+        label: 'All Details Pricing',
+        path: 'content/pricing',
+        format: 'json',
+        ui: {
+          allowedActions: { create: false, delete: false },
+          description: 'Manage prices for all service/pricing pages. Each page has regular, fast, and ads tiers with package options.',
+        },
+        fields: [
+          {
+            type: 'object',
+            name: 'pages',
+            label: 'Pricing Pages',
+            list: true,
+            fields: [
+              { type: 'string', name: 'slug', label: 'Page Slug', description: 'Route path without leading slash, e.g. buy-youtube-views', required: true },
+              { type: 'string', name: 'quantityKey', label: 'Quantity Field', description: 'views, subscribers, likes, hours, traffic, followers, reach, rereviews, engagement', required: true, ui: { component: 'select', options: ['views', 'subscribers', 'likes', 'hours', 'traffic', 'followers', 'reach', 'rereviews', 'engagement'] } },
+              {
+                type: 'object',
+                name: 'regularPackages',
+                label: 'Regular Tier Packages',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'quantity', label: 'Quantity (e.g. 100, 1.0k)' },
+                  { type: 'string', name: 'price', label: 'Price' },
+                  { type: 'string', name: 'originalPrice', label: 'Original Price', required: false },
+                  { type: 'string', name: 'discount', label: 'Discount', required: false },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'fastPackages',
+                label: 'Fast Tier Packages',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'quantity', label: 'Quantity' },
+                  { type: 'string', name: 'price', label: 'Price' },
+                  { type: 'string', name: 'originalPrice', label: 'Original Price', required: false },
+                  { type: 'string', name: 'discount', label: 'Discount', required: false },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'adsPackages',
+                label: 'Ads Tier Packages',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'quantity', label: 'Quantity' },
+                  { type: 'string', name: 'price', label: 'Price' },
+                  { type: 'string', name: 'originalPrice', label: 'Original Price', required: false },
+                  { type: 'string', name: 'discount', label: 'Discount', required: false },
+                ],
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 });

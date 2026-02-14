@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const watchHoursPackages = {
+const watchHoursPackagesFallback = {
   regular: [
     { hours: '100', price: '4.99', originalPrice: null, discount: null },
     { hours: '1.0k', price: '39.90', originalPrice: '60.00', discount: '33%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyYouTubeWatchHoursPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const watchHoursPackages = usePricingPackages('buy-youtube-watch-hours', watchHoursPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyYouTubeWatchHoursPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = watchHoursPackages[activeTab];
+  const packages = watchHoursPackages ? watchHoursPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

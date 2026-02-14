@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const viewPackages = {
+const viewPackagesFallback = {
   regular: [
     { views: '100', price: '1.49', originalPrice: null, discount: null },
     { views: '1.0k', price: '10.90', originalPrice: '16.00', discount: '32%' },
@@ -38,6 +39,7 @@ export default function BuyYouTubeViewsPage() {
   const { addToCart } = useCart();
   const { goToCheckout, isLoggedIn } = useCheckout();
   const navigate = useNavigate();
+  const viewPackages = usePricingPackages('buy-youtube-views', viewPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -48,7 +50,7 @@ export default function BuyYouTubeViewsPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = viewPackages[activeTab];
+  const packages = viewPackages ? viewPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({
@@ -289,11 +291,11 @@ export default function BuyYouTubeViewsPage() {
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
-                    $47.49
+                    ${(viewPackages?.ads?.find((p) => p.views === '5.0k') || viewPackages?.regular?.find((p) => p.views === '5.0k'))?.price ?? '47.49'}
                   </div>
                   <button
                     onClick={() => {
-                      const pkg = { views: '5000', price: '47.49' };
+                      const pkg = viewPackages?.ads?.find((p) => p.views === '5.0k') || viewPackages?.regular?.find((p) => p.views === '5.0k') || { views: '5000', price: '47.49' };
                       goToCheckout(pkg, 'YouTube', 'All In One YouTube Views Campaign', 'views');
                     }}
                     className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors"

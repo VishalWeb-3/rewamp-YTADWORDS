@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const searchTrafficPackages = {
+const searchTrafficPackagesFallback = {
   regular: [
     { traffic: '100', price: '2.49', originalPrice: null, discount: null },
     { traffic: '1.0k', price: '19.90', originalPrice: '30.00', discount: '34%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyGoogleAdsSearchTrafficPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const searchTrafficPackages = usePricingPackages('buy-google-ads-search-traffic', searchTrafficPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyGoogleAdsSearchTrafficPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = searchTrafficPackages[activeTab];
+  const packages = searchTrafficPackages ? searchTrafficPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

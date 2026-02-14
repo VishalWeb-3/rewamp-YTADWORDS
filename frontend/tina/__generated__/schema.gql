@@ -60,12 +60,15 @@ type Query {
   homeConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HomeFilter): HomeConnection!
   contact(relativePath: String): Contact!
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
+  pricing(relativePath: String): Pricing!
+  pricingConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingFilter): PricingConnection!
 }
 
 input DocumentFilter {
   global: GlobalFilter
   home: HomeFilter
   contact: ContactFilter
+  pricing: PricingFilter
 }
 
 type DocumentConnectionEdges {
@@ -91,7 +94,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Folder
+union DocumentNode = Global | Home | Contact | Pricing | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -470,6 +473,86 @@ type ContactConnection implements Connection {
   edges: [ContactConnectionEdges]
 }
 
+type PricingPagesRegularPackages {
+  quantity: String
+  price: String
+  originalPrice: String
+  discount: String
+}
+
+type PricingPagesFastPackages {
+  quantity: String
+  price: String
+  originalPrice: String
+  discount: String
+}
+
+type PricingPagesAdsPackages {
+  quantity: String
+  price: String
+  originalPrice: String
+  discount: String
+}
+
+type PricingPages {
+  slug: String!
+  quantityKey: String!
+  regularPackages: [PricingPagesRegularPackages]
+  fastPackages: [PricingPagesFastPackages]
+  adsPackages: [PricingPagesAdsPackages]
+}
+
+type Pricing implements Node & Document {
+  pages: [PricingPages]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input PricingPagesRegularPackagesFilter {
+  quantity: StringFilter
+  price: StringFilter
+  originalPrice: StringFilter
+  discount: StringFilter
+}
+
+input PricingPagesFastPackagesFilter {
+  quantity: StringFilter
+  price: StringFilter
+  originalPrice: StringFilter
+  discount: StringFilter
+}
+
+input PricingPagesAdsPackagesFilter {
+  quantity: StringFilter
+  price: StringFilter
+  originalPrice: StringFilter
+  discount: StringFilter
+}
+
+input PricingPagesFilter {
+  slug: StringFilter
+  quantityKey: StringFilter
+  regularPackages: PricingPagesRegularPackagesFilter
+  fastPackages: PricingPagesFastPackagesFilter
+  adsPackages: PricingPagesAdsPackagesFilter
+}
+
+input PricingFilter {
+  pages: PricingPagesFilter
+}
+
+type PricingConnectionEdges {
+  cursor: String!
+  node: Pricing
+}
+
+type PricingConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PricingConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -482,12 +565,15 @@ type Mutation {
   createHome(relativePath: String!, params: HomeMutation!): Home!
   updateContact(relativePath: String!, params: ContactMutation!): Contact!
   createContact(relativePath: String!, params: ContactMutation!): Contact!
+  updatePricing(relativePath: String!, params: PricingMutation!): Pricing!
+  createPricing(relativePath: String!, params: PricingMutation!): Pricing!
 }
 
 input DocumentUpdateMutation {
   global: GlobalMutation
   home: HomeMutation
   contact: ContactMutation
+  pricing: PricingMutation
   relativePath: String
 }
 
@@ -495,6 +581,7 @@ input DocumentMutation {
   global: GlobalMutation
   home: HomeMutation
   contact: ContactMutation
+  pricing: PricingMutation
 }
 
 input GlobalHeaderNavLinksMutation {
@@ -659,6 +746,39 @@ input ContactMutation {
   reasonOptions: [ContactReasonOptionsMutation]
   submitButton: String
   submittingButton: String
+}
+
+input PricingPagesRegularPackagesMutation {
+  quantity: String
+  price: String
+  originalPrice: String
+  discount: String
+}
+
+input PricingPagesFastPackagesMutation {
+  quantity: String
+  price: String
+  originalPrice: String
+  discount: String
+}
+
+input PricingPagesAdsPackagesMutation {
+  quantity: String
+  price: String
+  originalPrice: String
+  discount: String
+}
+
+input PricingPagesMutation {
+  slug: String
+  quantityKey: String
+  regularPackages: [PricingPagesRegularPackagesMutation]
+  fastPackages: [PricingPagesFastPackagesMutation]
+  adsPackages: [PricingPagesAdsPackagesMutation]
+}
+
+input PricingMutation {
+  pages: [PricingPagesMutation]
 }
 
 schema {

@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const subscriberPackages = {
+const subscriberPackagesFallback = {
   regular: [
     { subscribers: '100', price: '2.99', originalPrice: null, discount: null },
     { subscribers: '1.0k', price: '24.90', originalPrice: '35.00', discount: '29%' },
@@ -38,6 +39,7 @@ export default function BuyYouTubeSubscribersPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { goToCheckout } = useCheckout();
+  const subscriberPackages = usePricingPackages('buy-youtube-subscribers', subscriberPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -48,7 +50,7 @@ export default function BuyYouTubeSubscribersPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = subscriberPackages[activeTab];
+  const packages = subscriberPackages ? subscriberPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

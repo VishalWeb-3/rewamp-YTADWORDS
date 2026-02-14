@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const followerPackages = {
+const followerPackagesFallback = {
   regular: [
     { followers: '100', price: '2.99', originalPrice: null, discount: null },
     { followers: '1.0k', price: '24.90', originalPrice: '35.00', discount: '29%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyTikTokFollowersPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const followerPackages = usePricingPackages('buy-tiktok-followers', followerPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyTikTokFollowersPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = followerPackages[activeTab];
+  const packages = followerPackages ? followerPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

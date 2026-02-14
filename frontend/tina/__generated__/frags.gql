@@ -147,3 +147,33 @@ fragment ContactParts on Contact {
   submitButton
   submittingButton
 }
+
+fragment PricingParts on Pricing {
+  __typename
+  pages {
+    __typename
+    slug
+    quantityKey
+    regularPackages {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    fastPackages {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    adsPackages {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+  }
+}

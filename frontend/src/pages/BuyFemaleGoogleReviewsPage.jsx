@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const femaleReviewsPackages = {
+const femaleReviewsPackagesFallback = {
   regular: [
     { rereviews: '10', price: '29.90', originalPrice: null, discount: null },
     { rereviews: '25', price: '69.90', originalPrice: '105.00', discount: '33%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyFemaleGoogleReviewsPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const femaleReviewsPackages = usePricingPackages('buy-female-google-reviews', femaleReviewsPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyFemaleGoogleReviewsPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = femaleReviewsPackages[activeTab];
+  const packages = femaleReviewsPackages ? femaleReviewsPackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({

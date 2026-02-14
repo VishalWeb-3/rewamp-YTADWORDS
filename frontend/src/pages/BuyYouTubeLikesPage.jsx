@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
+import { usePricingPackages } from '../contexts/ContentContext';
 
-const likePackages = {
+const likePackagesFallback = {
   regular: [
     { likes: '100', price: '0.99', originalPrice: null, discount: null },
     { likes: '1.0k', price: '8.90', originalPrice: '13.00', discount: '32%' },
@@ -36,6 +37,7 @@ const features = [
 export default function BuyYouTubeLikesPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const likePackages = usePricingPackages('buy-youtube-likes', likePackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -46,7 +48,7 @@ export default function BuyYouTubeLikesPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = likePackages[activeTab];
+  const packages = likePackages ? likePackages[activeTab] : [];
 
   const handleAddToCart = (pkg) => {
     addToCart({
