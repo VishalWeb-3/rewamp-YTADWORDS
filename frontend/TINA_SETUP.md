@@ -24,7 +24,33 @@ Tina Cloud needs **both** the `tina` folder and **`tina-lock.json`** to index yo
    git push origin main
    ```
 
-4. **Refresh Branches** again in Tina Cloud (Configuration → Refresh Branches). Wait a few minutes., then reload [http://localhost:5173/admin](http://localhost:5173/admin).
+4. **Refresh Branches** again in Tina Cloud (Configuration → Refresh Branches). Wait a few minutes, then reload [http://localhost:5173/admin/index.html](http://localhost:5173/admin/index.html).
+
+## Fix "GraphQL Schema Mismatch" (editing may not work)
+
+This means the schema your **admin** was built with doesn’t match what **Tina Cloud** has indexed for the branch. Sync them:
+
+1. **Regenerate and push the schema** so Tina Cloud can re-index:
+   ```bash
+   # From repo root (youtubeadwords):
+   cd frontend && npm run build:admin && cd ..
+   git add frontend/tina/
+   git add frontend/public/admin/index.html
+   git status
+   git commit -m "Sync Tina schema (fix GraphQL mismatch)"
+   git push origin main
+   ```
+   If you're already in the `frontend/` folder, use `git add tina/ public/admin/index.html` (no `frontend/` prefix).
+
+2. **Reindex the branch in Tina Cloud** so it uses the new schema:
+   - Go to [Tina Cloud](https://app.tina.io/) → your project → **Configuration**.
+   - Find the **main** branch in the list and click **Reindex** (or **Refresh Branches** and wait a few minutes).
+
+3. **Rebuild the admin** so the admin bundle matches the same schema (you already ran `build:admin` in step 1).
+
+4. Hard-refresh the admin page: [http://localhost:5173/admin/index.html](http://localhost:5173/admin/index.html) (Cmd+Shift+R).
+
+If you added a new collection (e.g. Contact), the mismatch often happens until `tina-lock.json` is pushed and the branch is reindexed.
 
 ## Get the admin to open (first time)
 

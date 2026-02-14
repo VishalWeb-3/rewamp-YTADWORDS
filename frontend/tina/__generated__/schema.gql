@@ -60,15 +60,12 @@ type Query {
   homeConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HomeFilter): HomeConnection!
   contact(relativePath: String): Contact!
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
-  prices(relativePath: String): Prices!
-  pricesConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricesFilter): PricesConnection!
 }
 
 input DocumentFilter {
   global: GlobalFilter
   home: HomeFilter
   contact: ContactFilter
-  prices: PricesFilter
 }
 
 type DocumentConnectionEdges {
@@ -94,7 +91,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Prices | Folder
+union DocumentNode = Global | Home | Contact | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -473,148 +470,6 @@ type ContactConnection implements Connection {
   edges: [ContactConnectionEdges]
 }
 
-type PricesPageEntriesTabs {
-  id: String
-  label: String
-}
-
-type PricesPageEntriesPackagesRegular {
-  quantity: String
-  price: String
-  originalPrice: String
-  discount: String
-}
-
-type PricesPageEntriesPackagesFast {
-  quantity: String
-  price: String
-  originalPrice: String
-  discount: String
-}
-
-type PricesPageEntriesPackagesAds {
-  quantity: String
-  price: String
-  originalPrice: String
-  discount: String
-}
-
-type PricesPageEntriesFeatures {
-  label: String
-}
-
-type PricesPageEntriesAllInOneFeatures {
-  value: String
-  label: String
-}
-
-type PricesPageEntries {
-  slug: String
-  title: String
-  titleHighlight: String
-  subtitle: String
-  imageAlt: String
-  imageSrc: String
-  tabs: [PricesPageEntriesTabs]
-  infoBanner: String
-  infoBannerHighlight: String
-  packagesRegular: [PricesPageEntriesPackagesRegular]
-  packagesFast: [PricesPageEntriesPackagesFast]
-  packagesAds: [PricesPageEntriesPackagesAds]
-  quantityKey: String
-  quantityUnit: String
-  features: [PricesPageEntriesFeatures]
-  buyNowLabel: String
-  addToCartLabel: String
-  allInOnePrice: String
-  allInOneTitle: String
-  allInOneButtonLabel: String
-  allInOneDescription: String
-  allInOneFeatures: [PricesPageEntriesAllInOneFeatures]
-}
-
-type Prices implements Node & Document {
-  pageEntries: [PricesPageEntries]
-  id: ID!
-  _sys: SystemInfo!
-  _values: JSON!
-}
-
-input PricesPageEntriesTabsFilter {
-  id: StringFilter
-  label: StringFilter
-}
-
-input PricesPageEntriesPackagesRegularFilter {
-  quantity: StringFilter
-  price: StringFilter
-  originalPrice: StringFilter
-  discount: StringFilter
-}
-
-input PricesPageEntriesPackagesFastFilter {
-  quantity: StringFilter
-  price: StringFilter
-  originalPrice: StringFilter
-  discount: StringFilter
-}
-
-input PricesPageEntriesPackagesAdsFilter {
-  quantity: StringFilter
-  price: StringFilter
-  originalPrice: StringFilter
-  discount: StringFilter
-}
-
-input PricesPageEntriesFeaturesFilter {
-  label: StringFilter
-}
-
-input PricesPageEntriesAllInOneFeaturesFilter {
-  value: StringFilter
-  label: StringFilter
-}
-
-input PricesPageEntriesFilter {
-  slug: StringFilter
-  title: StringFilter
-  titleHighlight: StringFilter
-  subtitle: StringFilter
-  imageAlt: StringFilter
-  imageSrc: StringFilter
-  tabs: PricesPageEntriesTabsFilter
-  infoBanner: StringFilter
-  infoBannerHighlight: StringFilter
-  packagesRegular: PricesPageEntriesPackagesRegularFilter
-  packagesFast: PricesPageEntriesPackagesFastFilter
-  packagesAds: PricesPageEntriesPackagesAdsFilter
-  quantityKey: StringFilter
-  quantityUnit: StringFilter
-  features: PricesPageEntriesFeaturesFilter
-  buyNowLabel: StringFilter
-  addToCartLabel: StringFilter
-  allInOnePrice: StringFilter
-  allInOneTitle: StringFilter
-  allInOneButtonLabel: StringFilter
-  allInOneDescription: StringFilter
-  allInOneFeatures: PricesPageEntriesAllInOneFeaturesFilter
-}
-
-input PricesFilter {
-  pageEntries: PricesPageEntriesFilter
-}
-
-type PricesConnectionEdges {
-  cursor: String!
-  node: Prices
-}
-
-type PricesConnection implements Connection {
-  pageInfo: PageInfo!
-  totalCount: Float!
-  edges: [PricesConnectionEdges]
-}
-
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -627,15 +482,12 @@ type Mutation {
   createHome(relativePath: String!, params: HomeMutation!): Home!
   updateContact(relativePath: String!, params: ContactMutation!): Contact!
   createContact(relativePath: String!, params: ContactMutation!): Contact!
-  updatePrices(relativePath: String!, params: PricesMutation!): Prices!
-  createPrices(relativePath: String!, params: PricesMutation!): Prices!
 }
 
 input DocumentUpdateMutation {
   global: GlobalMutation
   home: HomeMutation
   contact: ContactMutation
-  prices: PricesMutation
   relativePath: String
 }
 
@@ -643,7 +495,6 @@ input DocumentMutation {
   global: GlobalMutation
   home: HomeMutation
   contact: ContactMutation
-  prices: PricesMutation
 }
 
 input GlobalHeaderNavLinksMutation {
@@ -808,70 +659,6 @@ input ContactMutation {
   reasonOptions: [ContactReasonOptionsMutation]
   submitButton: String
   submittingButton: String
-}
-
-input PricesPageEntriesTabsMutation {
-  id: String
-  label: String
-}
-
-input PricesPageEntriesPackagesRegularMutation {
-  quantity: String
-  price: String
-  originalPrice: String
-  discount: String
-}
-
-input PricesPageEntriesPackagesFastMutation {
-  quantity: String
-  price: String
-  originalPrice: String
-  discount: String
-}
-
-input PricesPageEntriesPackagesAdsMutation {
-  quantity: String
-  price: String
-  originalPrice: String
-  discount: String
-}
-
-input PricesPageEntriesFeaturesMutation {
-  label: String
-}
-
-input PricesPageEntriesAllInOneFeaturesMutation {
-  value: String
-  label: String
-}
-
-input PricesPageEntriesMutation {
-  slug: String
-  title: String
-  titleHighlight: String
-  subtitle: String
-  imageAlt: String
-  imageSrc: String
-  tabs: [PricesPageEntriesTabsMutation]
-  infoBanner: String
-  infoBannerHighlight: String
-  packagesRegular: [PricesPageEntriesPackagesRegularMutation]
-  packagesFast: [PricesPageEntriesPackagesFastMutation]
-  packagesAds: [PricesPageEntriesPackagesAdsMutation]
-  quantityKey: String
-  quantityUnit: String
-  features: [PricesPageEntriesFeaturesMutation]
-  buyNowLabel: String
-  addToCartLabel: String
-  allInOnePrice: String
-  allInOneTitle: String
-  allInOneButtonLabel: String
-  allInOneDescription: String
-  allInOneFeatures: [PricesPageEntriesAllInOneFeaturesMutation]
-}
-
-input PricesMutation {
-  pageEntries: [PricesPageEntriesMutation]
 }
 
 schema {

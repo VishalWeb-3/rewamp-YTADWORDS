@@ -158,65 +158,6 @@ export const ContactPartsFragmentDoc = gql`
   submittingButton
 }
     `;
-export const PricesPartsFragmentDoc = gql`
-    fragment PricesParts on Prices {
-  __typename
-  pageEntries {
-    __typename
-    slug
-    title
-    titleHighlight
-    subtitle
-    imageAlt
-    imageSrc
-    tabs {
-      __typename
-      id
-      label
-    }
-    infoBanner
-    infoBannerHighlight
-    packagesRegular {
-      __typename
-      quantity
-      price
-      originalPrice
-      discount
-    }
-    packagesFast {
-      __typename
-      quantity
-      price
-      originalPrice
-      discount
-    }
-    packagesAds {
-      __typename
-      quantity
-      price
-      originalPrice
-      discount
-    }
-    quantityKey
-    quantityUnit
-    features {
-      __typename
-      label
-    }
-    buyNowLabel
-    addToCartLabel
-    allInOnePrice
-    allInOneTitle
-    allInOneButtonLabel
-    allInOneDescription
-    allInOneFeatures {
-      __typename
-      value
-      label
-    }
-  }
-}
-    `;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -388,63 +329,6 @@ export const ContactConnectionDocument = gql`
   }
 }
     ${ContactPartsFragmentDoc}`;
-export const PricesDocument = gql`
-    query prices($relativePath: String!) {
-  prices(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...PricesParts
-  }
-}
-    ${PricesPartsFragmentDoc}`;
-export const PricesConnectionDocument = gql`
-    query pricesConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PricesFilter) {
-  pricesConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...PricesParts
-      }
-    }
-  }
-}
-    ${PricesPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
     global(variables, options) {
@@ -464,12 +348,6 @@ export function getSdk(requester) {
     },
     contactConnection(variables, options) {
       return requester(ContactConnectionDocument, variables, options);
-    },
-    prices(variables, options) {
-      return requester(PricesDocument, variables, options);
-    },
-    pricesConnection(variables, options) {
-      return requester(PricesConnectionDocument, variables, options);
     }
   };
 }
