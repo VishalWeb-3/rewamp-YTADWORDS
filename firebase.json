@@ -1,8 +1,1 @@
-{
-  "hosting": {
-    "target": "yotubeadwords",
-    "public": "frontend/dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [{"source": "**", "destination": "/index.html"}]
-  }
-}
+{"hosting":{"target":"yt-adwords","public":"frontend/dist","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]}}
