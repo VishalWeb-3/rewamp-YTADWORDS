@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build:admin": "node -r dotenv/config ./node_modules/.bin/tinacms build"
+    "build:admin": "node -r dotenv/config ./node_modules/.bin/tinacms build --skip-cloud-checks",
+    "build:admin:local": "node -r dotenv/config ./node_modules/.bin/tinacms build --skip-cloud-checks"
   },
   "dependencies": {
     "react": "^18.2.0",

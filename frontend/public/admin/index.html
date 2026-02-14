@@ -1,29 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YouTube AdWords – Tina CMS Admin</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 80px auto; padding: 0 24px; color: #333; line-height: 1.6; }
-    h1 { font-size: 1.5rem; margin-bottom: 8px; }
-    p { margin: 0 0 1em; }
-    code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
-    .btn { display: inline-block; margin-top: 16px; padding: 10px 20px; background: #E53935; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
-    .btn:hover { background: #C62828; }
-    .muted { color: #666; font-size: 0.9rem; }
-    a.ext { color: #E53935; }
-  </style>
-</head>
-<body>
-  <h1>Tina CMS Admin</h1>
-  <p>To open the visual editor:</p>
-  <ol>
-    <li>In Tina Cloud, add your Git branch (e.g. <code>main</code>) and ensure the repo is connected: <a class="ext" href="https://app.tina.io" target="_blank" rel="noopener">app.tina.io</a> → your project → Configuration → add branch / Site URLs.</li>
-    <li>From <code>frontend</code> run: <code>npm run build:admin</code> (uses <code>.env</code> – <code>Tins_client</code> and <code>Tina_token</code> are read as clientId and token).</li>
-    <li>Refresh this page; the real Tina admin will load here.</li>
-  </ol>
-  <p class="muted">You can also edit <code>content/global/index.json</code> and <code>content/home/home.json</code> directly in the repo.</p>
-  <a href="/" class="btn">Back to site</a>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TinaCMS</title>
+    <script type="module" crossorigin src="/admin/assets/index-dfdc8ff5.js"></script>
+    <link rel="stylesheet" href="/admin/assets/index-5bad52fc.css">
+  </head>
+  <body class="tina-tailwind">
+    <div id="root"></div>
+    <script>
+      function handleLoadError() {
+        console.error('Failed to load assets')
+        // Assets have failed to load
+        document.getElementById('root').innerHTML =
+          '<style type="text/css">\
+        #no-assets-placeholder body {\
+          font-family: sans-serif;\
+          font-size: 16px;\
+          line-height: 1.4;\
+          color: #333;\
+          background-color: #f5f5f5;\
+        }\
+        #no-assets-placeholder {\
+          max-width: 600px;\
+          margin: 0 auto;\
+          padding: 40px;\
+          text-align: center;\
+          background-color: #fff;\
+          box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);\
+        }\
+        #no-assets-placeholder h1 {\
+          font-size: 24px;\
+          margin-bottom: 20px;\
+        }\
+        #no-assets-placeholder p {\
+          margin-bottom: 10px;\
+        }\
+        #no-assets-placeholder a {\
+          color: #0077cc;\
+          text-decoration: none;\
+        }\
+        #no-assets-placeholder a:hover {\
+          text-decoration: underline;\
+        }\
+        </style>\
+        <div id=\'no-assets-placeholder\'>\
+          <h1>Failed loading TinaCMS assets</h1>\
+          <p>\
+            Your TinaCMS configuration may be misconfigured, and we could not load\
+            the assets for this page.\
+          </p>\
+          <p>\
+            Please visit <a href="https://tina.io/docs/r/FAQ/#13-how-do-i-resolve-failed-loading-tinacms-assets-error">this doc</a> for help.\
+          </p>\
+        </div>'
+      }
+
+      // Check if #root has childen after 2 seconds
+      // If not, we assume that the assets have failed to load
+      setTimeout(() => {
+        if (!document.getElementById('root').children.length) {
+          handleLoadError()
+        }
+      }, 2000)
+    </script>
+    
+  </body>
 </html>
