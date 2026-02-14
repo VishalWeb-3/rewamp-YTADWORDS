@@ -121,3 +121,87 @@ fragment HomeParts on Home {
     paragraph2
   }
 }
+
+fragment ContactParts on Contact {
+  __typename
+  title
+  introParagraph1
+  introParagraph2
+  trackOrderLinkText
+  trackOrderLinkHref
+  formHeading
+  successMessage
+  labelEmail
+  labelReason
+  labelOrderNumber
+  labelMessage
+  placeholderEmail
+  placeholderReason
+  placeholderOrderNumber
+  placeholderMessage
+  reasonOptions {
+    __typename
+    value
+    label
+  }
+  submitButton
+  submittingButton
+}
+
+fragment PricesParts on Prices {
+  __typename
+  pageEntries {
+    __typename
+    slug
+    title
+    titleHighlight
+    subtitle
+    imageAlt
+    imageSrc
+    tabs {
+      __typename
+      id
+      label
+    }
+    infoBanner
+    infoBannerHighlight
+    packagesRegular {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    packagesFast {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    packagesAds {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    quantityKey
+    quantityUnit
+    features {
+      __typename
+      label
+    }
+    buyNowLabel
+    addToCartLabel
+    allInOnePrice
+    allInOneTitle
+    allInOneButtonLabel
+    allInOneDescription
+    allInOneFeatures {
+      __typename
+      value
+      label
+    }
+  }
+}

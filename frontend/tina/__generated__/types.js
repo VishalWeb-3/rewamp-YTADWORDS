@@ -131,6 +131,92 @@ export const HomePartsFragmentDoc = gql`
   }
 }
     `;
+export const ContactPartsFragmentDoc = gql`
+    fragment ContactParts on Contact {
+  __typename
+  title
+  introParagraph1
+  introParagraph2
+  trackOrderLinkText
+  trackOrderLinkHref
+  formHeading
+  successMessage
+  labelEmail
+  labelReason
+  labelOrderNumber
+  labelMessage
+  placeholderEmail
+  placeholderReason
+  placeholderOrderNumber
+  placeholderMessage
+  reasonOptions {
+    __typename
+    value
+    label
+  }
+  submitButton
+  submittingButton
+}
+    `;
+export const PricesPartsFragmentDoc = gql`
+    fragment PricesParts on Prices {
+  __typename
+  pageEntries {
+    __typename
+    slug
+    title
+    titleHighlight
+    subtitle
+    imageAlt
+    imageSrc
+    tabs {
+      __typename
+      id
+      label
+    }
+    infoBanner
+    infoBannerHighlight
+    packagesRegular {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    packagesFast {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    packagesAds {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    quantityKey
+    quantityUnit
+    features {
+      __typename
+      label
+    }
+    buyNowLabel
+    addToCartLabel
+    allInOnePrice
+    allInOneTitle
+    allInOneButtonLabel
+    allInOneDescription
+    allInOneFeatures {
+      __typename
+      value
+      label
+    }
+  }
+}
+    `;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -245,6 +331,120 @@ export const HomeConnectionDocument = gql`
   }
 }
     ${HomePartsFragmentDoc}`;
+export const ContactDocument = gql`
+    query contact($relativePath: String!) {
+  contact(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ContactParts
+  }
+}
+    ${ContactPartsFragmentDoc}`;
+export const ContactConnectionDocument = gql`
+    query contactConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ContactFilter) {
+  contactConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ContactParts
+      }
+    }
+  }
+}
+    ${ContactPartsFragmentDoc}`;
+export const PricesDocument = gql`
+    query prices($relativePath: String!) {
+  prices(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PricesParts
+  }
+}
+    ${PricesPartsFragmentDoc}`;
+export const PricesConnectionDocument = gql`
+    query pricesConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PricesFilter) {
+  pricesConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PricesParts
+      }
+    }
+  }
+}
+    ${PricesPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
     global(variables, options) {
@@ -258,6 +458,18 @@ export function getSdk(requester) {
     },
     homeConnection(variables, options) {
       return requester(HomeConnectionDocument, variables, options);
+    },
+    contact(variables, options) {
+      return requester(ContactDocument, variables, options);
+    },
+    contactConnection(variables, options) {
+      return requester(ContactConnectionDocument, variables, options);
+    },
+    prices(variables, options) {
+      return requester(PricesDocument, variables, options);
+    },
+    pricesConnection(variables, options) {
+      return requester(PricesConnectionDocument, variables, options);
     }
   };
 }

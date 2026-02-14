@@ -1,0 +1,274 @@
+{
+  "pageEntries": [
+    {
+      "slug": "buy-youtube-views",
+      "title": "Buy YouTube Views",
+      "titleHighlight": "Instantly",
+      "subtitle": "Views4You is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!",
+      "imageAlt": "Buy YouTube Views",
+      "imageSrc": "/pricepage.png",
+      "tabs": [
+        { "id": "regular", "label": "Regular Views" },
+        { "id": "fast", "label": "Fast Views" },
+        { "id": "ads", "label": "Ads Views" }
+      ],
+      "infoBanner": "We recommend our Fast YouTube Views packages for orders with a high number of views.",
+      "infoBannerHighlight": "Fast YouTube Views",
+      "packagesRegular": [
+        { "quantity": "100", "price": "1.49", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "10.90", "originalPrice": "16.00", "discount": "32%" },
+        { "quantity": "2.5k", "price": "24.90", "originalPrice": "37.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "44.90", "originalPrice": "67.00", "discount": "33%" }
+      ],
+      "packagesFast": [
+        { "quantity": "100", "price": "2.49", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "19.90", "originalPrice": "29.00", "discount": "31%" },
+        { "quantity": "2.5k", "price": "44.90", "originalPrice": "67.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "79.90", "originalPrice": "120.00", "discount": "33%" }
+      ],
+      "packagesAds": [
+        { "quantity": "100", "price": "3.49", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "29.90", "originalPrice": "45.00", "discount": "33%" },
+        { "quantity": "2.5k", "price": "69.90", "originalPrice": "105.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "129.90", "originalPrice": "195.00", "discount": "33%" }
+      ],
+      "quantityKey": "views",
+      "quantityUnit": "views",
+      "features": [
+        { "label": "Real & Organic Views" },
+        { "label": "High Quality" },
+        { "label": "Instant start" },
+        { "label": "Refill Guaranteed" },
+        { "label": "No drops" },
+        { "label": "Privacy and safety" }
+      ],
+      "buyNowLabel": "Buy now",
+      "addToCartLabel": "Add to cart",
+      "allInOnePrice": "47.49",
+      "allInOneTitle": "All In One YouTube Views Campaign",
+      "allInOneButtonLabel": "Buy now",
+      "allInOneDescription": "With Views4You's all-inclusive package, you can buy YouTube subscribers, and views simultaneously. Moreover, you may order YouTube likes service and add it to the package for the best price.",
+      "allInOneFeatures": [
+        { "value": "5000", "label": "Views for chosen video" },
+        { "value": "1000", "label": "Likes for chosen video" },
+        { "value": "100", "label": "New active subscribers at once" },
+        { "value": "24/7", "label": "Customer Support" }
+      ]
+    },
+    {
+      "slug": "buy-youtube-subscribers",
+      "title": "Buy YouTube Subscribers",
+      "titleHighlight": "Instantly",
+      "subtitle": "Views4You is the safest way to buy YouTube Subscribers with delivery in just a few minutes.",
+      "imageAlt": "Buy YouTube Subscribers",
+      "imageSrc": "/pricepage.png",
+      "tabs": [
+        { "id": "regular", "label": "Regular Subscribers" },
+        { "id": "fast", "label": "Fast Subscribers" },
+        { "id": "ads", "label": "Ads Subscribers" }
+      ],
+      "infoBanner": "We recommend our Fast YouTube Subscribers packages for orders with a high number of subscribers.",
+      "infoBannerHighlight": "Fast YouTube Subscribers",
+      "packagesRegular": [
+        { "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" },
+        { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }
+      ],
+      "packagesFast": [
+        { "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" },
+        { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }
+      ],
+      "packagesAds": [
+        { "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" },
+        { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }
+      ],
+      "quantityKey": "subscribers",
+      "quantityUnit": "subscribers",
+      "features": [
+        { "label": "Real & Organic Subscribers" },
+        { "label": "High Quality" },
+        { "label": "Instant start" },
+        { "label": "Refill Guaranteed" },
+        { "label": "No drops" },
+        { "label": "Privacy and safety" }
+      ],
+      "buyNowLabel": "Buy now",
+      "addToCartLabel": "Add to cart",
+      "allInOnePrice": null,
+      "allInOneTitle": null,
+      "allInOneButtonLabel": null,
+      "allInOneDescription": null,
+      "allInOneFeatures": null
+    },
+    {
+      "slug": "buy-youtube-likes",
+      "title": "Buy YouTube Likes",
+      "titleHighlight": "Instantly",
+      "subtitle": "Views4You is the safest way to buy YouTube Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!",
+      "imageAlt": "Buy YouTube Likes",
+      "imageSrc": "/pricepage.png",
+      "tabs": [
+        { "id": "regular", "label": "Regular Likes" },
+        { "id": "fast", "label": "Fast Likes" },
+        { "id": "ads", "label": "Ads Likes" }
+      ],
+      "infoBanner": "We recommend our Fast YouTube Likes packages for orders with a high number of likes.",
+      "infoBannerHighlight": "Fast YouTube Likes",
+      "packagesRegular": [
+        { "quantity": "100", "price": "0.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "8.90", "originalPrice": "13.00", "discount": "32%" },
+        { "quantity": "2.5k", "price": "19.90", "originalPrice": "30.00", "discount": "34%" },
+        { "quantity": "5.0k", "price": "34.90", "originalPrice": "52.00", "discount": "33%" }
+      ],
+      "packagesFast": [
+        { "quantity": "100", "price": "1.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "16.90", "originalPrice": "25.00", "discount": "32%" },
+        { "quantity": "2.5k", "price": "39.90", "originalPrice": "60.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "69.90", "originalPrice": "105.00", "discount": "33%" }
+      ],
+      "packagesAds": [
+        { "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "24.90", "originalPrice": "38.00", "discount": "34%" },
+        { "quantity": "2.5k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "109.90", "originalPrice": "165.00", "discount": "33%" }
+      ],
+      "quantityKey": "likes",
+      "quantityUnit": "likes",
+      "features": [
+        { "label": "Real & Organic Likes" },
+        { "label": "High Quality" },
+        { "label": "Instant start" },
+        { "label": "Refill Guaranteed" },
+        { "label": "No drops" },
+        { "label": "Privacy and safety" }
+      ],
+      "buyNowLabel": "Buy now",
+      "addToCartLabel": "Add to cart",
+      "allInOnePrice": null,
+      "allInOneTitle": null,
+      "allInOneButtonLabel": null,
+      "allInOneDescription": null,
+      "allInOneFeatures": null
+    },
+    {
+      "slug": "buy-youtube-watch-hours",
+      "title": "Buy YouTube Watch Hours",
+      "titleHighlight": "Instantly",
+      "subtitle": "Views4You is the safest way to buy YouTube Watch Hours with delivery in just a few minutes.",
+      "imageAlt": "Buy YouTube Watch Hours",
+      "imageSrc": "/pricepage.png",
+      "tabs": [
+        { "id": "regular", "label": "Regular" },
+        { "id": "fast", "label": "Fast" },
+        { "id": "ads", "label": "Ads" }
+      ],
+      "infoBanner": "We recommend our Fast YouTube Watch Hours packages for larger orders.",
+      "infoBannerHighlight": "Fast YouTube Watch Hours",
+      "packagesRegular": [
+        { "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" },
+        { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }
+      ],
+      "packagesFast": [
+        { "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" },
+        { "quantity": "2.5k", "price": "124.90", "originalPrice": "188.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "239.90", "originalPrice": "360.00", "discount": "33%" }
+      ],
+      "packagesAds": [
+        { "quantity": "100", "price": "9.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "79.90", "originalPrice": "120.00", "discount": "33%" },
+        { "quantity": "2.5k", "price": "179.90", "originalPrice": "270.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "349.90", "originalPrice": "525.00", "discount": "33%" }
+      ],
+      "quantityKey": "watchHours",
+      "quantityUnit": "watch hours",
+      "features": [
+        { "label": "Real Watch Time" },
+        { "label": "High Quality" },
+        { "label": "Instant start" },
+        { "label": "Refill Guaranteed" },
+        { "label": "No drops" },
+        { "label": "Privacy and safety" }
+      ],
+      "buyNowLabel": "Buy now",
+      "addToCartLabel": "Add to cart",
+      "allInOnePrice": null,
+      "allInOneTitle": null,
+      "allInOneButtonLabel": null,
+      "allInOneDescription": null,
+      "allInOneFeatures": null
+    },
+    {
+      "slug": "buy-tiktok-followers",
+      "title": "Buy TikTok Followers",
+      "titleHighlight": "Instantly",
+      "subtitle": "Views4You is the safest way to buy TikTok Followers with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!",
+      "imageAlt": "Buy TikTok Followers",
+      "imageSrc": "/pricepage.png",
+      "tabs": [
+        { "id": "regular", "label": "Regular Followers" },
+        { "id": "fast", "label": "Fast Followers" },
+        { "id": "ads", "label": "Ads Followers" }
+      ],
+      "infoBanner": "We recommend our Fast TikTok Followers packages for orders with a high number of followers.",
+      "infoBannerHighlight": "Fast TikTok Followers",
+      "packagesRegular": [
+        { "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" },
+        { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }
+      ],
+      "packagesFast": [
+        { "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" },
+        { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }
+      ],
+      "packagesAds": [
+        { "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null },
+        { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" },
+        { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" },
+        { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }
+      ],
+      "quantityKey": "followers",
+      "quantityUnit": "followers",
+      "features": [
+        { "label": "Real & Organic Followers" },
+        { "label": "High Quality" },
+        { "label": "Instant start" },
+        { "label": "Refill Guaranteed" },
+        { "label": "No drops" },
+        { "label": "Privacy and safety" }
+      ],
+      "buyNowLabel": "Buy now",
+      "addToCartLabel": "Add to cart",
+      "allInOnePrice": null,
+      "allInOneTitle": null,
+      "allInOneButtonLabel": null,
+      "allInOneDescription": null,
+      "allInOneFeatures": null
+    },
+    { "slug": "buy-tiktok-ads-views", "title": "Buy TikTok Ads Views", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy TikTok Ads Views.", "imageAlt": "Buy TikTok Ads Views", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast TikTok Ads Views for larger orders.", "infoBannerHighlight": "Fast TikTok Ads Views", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "views", "quantityUnit": "views", "features": [{ "label": "Real & Organic Views" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-tiktok-reach", "title": "Buy TikTok Reach", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy TikTok Reach.", "imageAlt": "Buy TikTok Reach", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast TikTok Reach for larger orders.", "infoBannerHighlight": "Fast TikTok Reach", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "reach", "quantityUnit": "reach", "features": [{ "label": "Real Reach" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-tiktok-engagement", "title": "Buy TikTok Engagement", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy TikTok Engagement.", "imageAlt": "Buy TikTok Engagement", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast TikTok Engagement for larger orders.", "infoBannerHighlight": "Fast TikTok Engagement", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "engagement", "quantityUnit": "engagement", "features": [{ "label": "Real Engagement" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-tiktok-video-views", "title": "Buy TikTok Video Views", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy TikTok Video Views.", "imageAlt": "Buy TikTok Video Views", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast TikTok Video Views for larger orders.", "infoBannerHighlight": "Fast TikTok Video Views", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "views", "quantityUnit": "views", "features": [{ "label": "Real & Organic Views" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-tiktok-traffic", "title": "Buy TikTok Traffic", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy TikTok Traffic.", "imageAlt": "Buy TikTok Traffic", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast TikTok Traffic for larger orders.", "infoBannerHighlight": "Fast TikTok Traffic", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "traffic", "quantityUnit": "traffic", "features": [{ "label": "Real Traffic" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-skip-ads-views", "title": "Buy Google Skip Ads Views", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Skip Ads Views.", "imageAlt": "Buy Google Skip Ads Views", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Skip Ads Views for larger orders.", "infoBannerHighlight": "Fast Google Skip Ads Views", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "views", "quantityUnit": "views", "features": [{ "label": "Real & Organic Views" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-display-ads-views", "title": "Buy Google Display Ads Views", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Display Ads Views.", "imageAlt": "Buy Google Display Ads Views", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Display Ads Views for larger orders.", "infoBannerHighlight": "Fast Google Display Ads Views", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "views", "quantityUnit": "views", "features": [{ "label": "Real & Organic Views" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-discovery-ads-views", "title": "Buy Google Discovery Ads Views", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Discovery Ads Views.", "imageAlt": "Buy Google Discovery Ads Views", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Discovery Ads Views for larger orders.", "infoBannerHighlight": "Fast Google Discovery Ads Views", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "views", "quantityUnit": "views", "features": [{ "label": "Real & Organic Views" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-ads-search-traffic", "title": "Buy Google Ads Search Traffic", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Ads Search Traffic.", "imageAlt": "Buy Google Ads Search Traffic", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Ads Search Traffic for larger orders.", "infoBannerHighlight": "Fast Google Ads Search Traffic", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "traffic", "quantityUnit": "traffic", "features": [{ "label": "Real Traffic" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-ads-website-traffic", "title": "Buy Google Ads Website Traffic", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Ads Website Traffic.", "imageAlt": "Buy Google Ads Website Traffic", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Ads Website Traffic for larger orders.", "infoBannerHighlight": "Fast Google Ads Website Traffic", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "traffic", "quantityUnit": "traffic", "features": [{ "label": "Real Traffic" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-female-google-reviews", "title": "Buy Female Google Reviews", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Female Google Reviews.", "imageAlt": "Buy Female Google Reviews", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Female Google Reviews for larger orders.", "infoBannerHighlight": "Fast Female Google Reviews", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "reviews", "quantityUnit": "reviews", "features": [{ "label": "Real Reviews" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-male-google-reviews", "title": "Buy Male Google Reviews", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Male Google Reviews.", "imageAlt": "Buy Male Google Reviews", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Male Google Reviews for larger orders.", "infoBannerHighlight": "Fast Male Google Reviews", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "reviews", "quantityUnit": "reviews", "features": [{ "label": "Real Reviews" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-usa-google-reviews", "title": "Buy USA Google Reviews", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy USA Google Reviews.", "imageAlt": "Buy USA Google Reviews", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast USA Google Reviews for larger orders.", "infoBannerHighlight": "Fast USA Google Reviews", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "reviews", "quantityUnit": "reviews", "features": [{ "label": "Real Reviews" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-local-guide-reviews", "title": "Buy Google Local Guide Reviews", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Local Guide Reviews.", "imageAlt": "Buy Google Local Guide Reviews", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Local Guide Reviews for larger orders.", "infoBannerHighlight": "Fast Google Local Guide Reviews", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "reviews", "quantityUnit": "reviews", "features": [{ "label": "Real Reviews" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null },
+    { "slug": "buy-google-reviews-by-age-group", "title": "Buy Google Reviews By Age Group", "titleHighlight": "Instantly", "subtitle": "Views4You is the safest way to buy Google Reviews By Age Group.", "imageAlt": "Buy Google Reviews By Age Group", "imageSrc": "/pricepage.png", "tabs": [{ "id": "regular", "label": "Regular" }, { "id": "fast", "label": "Fast" }, { "id": "ads", "label": "Ads" }], "infoBanner": "We recommend our Fast Google Reviews By Age Group for larger orders.", "infoBannerHighlight": "Fast Google Reviews By Age Group", "packagesRegular": [{ "quantity": "100", "price": "2.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "24.90", "originalPrice": "35.00", "discount": "29%" }, { "quantity": "2.5k", "price": "54.90", "originalPrice": "82.00", "discount": "33%" }, { "quantity": "5.0k", "price": "99.90", "originalPrice": "150.00", "discount": "33%" }], "packagesFast": [{ "quantity": "100", "price": "4.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "39.90", "originalPrice": "59.00", "discount": "32%" }, { "quantity": "2.5k", "price": "89.90", "originalPrice": "135.00", "discount": "33%" }, { "quantity": "5.0k", "price": "169.90", "originalPrice": "255.00", "discount": "33%" }], "packagesAds": [{ "quantity": "100", "price": "6.99", "originalPrice": null, "discount": null }, { "quantity": "1.0k", "price": "59.90", "originalPrice": "90.00", "discount": "33%" }, { "quantity": "2.5k", "price": "139.90", "originalPrice": "210.00", "discount": "33%" }, { "quantity": "5.0k", "price": "259.90", "originalPrice": "390.00", "discount": "33%" }], "quantityKey": "reviews", "quantityUnit": "reviews", "features": [{ "label": "Real Reviews" }, { "label": "High Quality" }, { "label": "Instant start" }, { "label": "Refill Guaranteed" }, { "label": "No drops" }, { "label": "Privacy and safety" }], "buyNowLabel": "Buy now", "addToCartLabel": "Add to cart", "allInOnePrice": null, "allInOneTitle": null, "allInOneButtonLabel": null, "allInOneDescription": null, "allInOneFeatures": null }
+  ]
+}

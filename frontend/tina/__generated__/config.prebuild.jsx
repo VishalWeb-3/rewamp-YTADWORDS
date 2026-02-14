@@ -174,6 +174,143 @@ var config_default = defineConfig({
             { type: "string", name: "paragraph2", label: "Paragraph 2" }
           ] }
         ]
+      },
+      {
+        name: "contact",
+        label: "Contact",
+        path: "content/contact",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          { type: "string", name: "title", label: "Page Title" },
+          { type: "string", name: "introParagraph1", label: "Intro Paragraph 1", ui: { component: "textarea" } },
+          { type: "string", name: "introParagraph2", label: "Intro Paragraph 2", ui: { component: "textarea" } },
+          { type: "string", name: "trackOrderLinkText", label: "Track Order Link Text" },
+          { type: "string", name: "trackOrderLinkHref", label: "Track Order Link URL" },
+          { type: "string", name: "formHeading", label: "Form Heading" },
+          { type: "string", name: "successMessage", label: "Success Message" },
+          { type: "string", name: "labelEmail", label: "Email Label" },
+          { type: "string", name: "labelReason", label: "Reason Label" },
+          { type: "string", name: "labelOrderNumber", label: "Order Number Label" },
+          { type: "string", name: "labelMessage", label: "Message Label" },
+          { type: "string", name: "placeholderEmail", label: "Email Placeholder" },
+          { type: "string", name: "placeholderReason", label: "Reason Placeholder" },
+          { type: "string", name: "placeholderOrderNumber", label: "Order Number Placeholder" },
+          { type: "string", name: "placeholderMessage", label: "Message Placeholder" },
+          {
+            type: "object",
+            name: "reasonOptions",
+            label: "Reason Options",
+            list: true,
+            fields: [
+              { type: "string", name: "value", label: "Value" },
+              { type: "string", name: "label", label: "Label" }
+            ]
+          },
+          { type: "string", name: "submitButton", label: "Submit Button Text" },
+          { type: "string", name: "submittingButton", label: "Submitting Button Text" }
+        ]
+      },
+      {
+        name: "prices",
+        label: "Prices",
+        path: "content/prices",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            type: "object",
+            name: "pageEntries",
+            label: "Price Pages",
+            list: true,
+            fields: [
+              { type: "string", name: "slug", label: "Page Slug (e.g. buy-youtube-views)" },
+              { type: "string", name: "title", label: "Title" },
+              { type: "string", name: "titleHighlight", label: "Title Highlight" },
+              { type: "string", name: "subtitle", label: "Subtitle", ui: { component: "textarea" } },
+              { type: "string", name: "imageAlt", label: "Image Alt" },
+              { type: "string", name: "imageSrc", label: "Image URL" },
+              {
+                type: "object",
+                name: "tabs",
+                label: "Tabs",
+                list: true,
+                fields: [
+                  { type: "string", name: "id", label: "Tab ID" },
+                  { type: "string", name: "label", label: "Tab Label" }
+                ]
+              },
+              { type: "string", name: "infoBanner", label: "Info Banner", ui: { component: "textarea" } },
+              { type: "string", name: "infoBannerHighlight", label: "Info Banner Highlight" },
+              {
+                type: "object",
+                name: "packagesRegular",
+                label: "Packages (Regular)",
+                list: true,
+                fields: [
+                  { type: "string", name: "quantity", label: "Quantity" },
+                  { type: "string", name: "price", label: "Price" },
+                  { type: "string", name: "originalPrice", label: "Original Price", required: false },
+                  { type: "string", name: "discount", label: "Discount", required: false }
+                ]
+              },
+              {
+                type: "object",
+                name: "packagesFast",
+                label: "Packages (Fast)",
+                list: true,
+                fields: [
+                  { type: "string", name: "quantity", label: "Quantity" },
+                  { type: "string", name: "price", label: "Price" },
+                  { type: "string", name: "originalPrice", label: "Original Price", required: false },
+                  { type: "string", name: "discount", label: "Discount", required: false }
+                ]
+              },
+              {
+                type: "object",
+                name: "packagesAds",
+                label: "Packages (Ads)",
+                list: true,
+                fields: [
+                  { type: "string", name: "quantity", label: "Quantity" },
+                  { type: "string", name: "price", label: "Price" },
+                  { type: "string", name: "originalPrice", label: "Original Price", required: false },
+                  { type: "string", name: "discount", label: "Discount", required: false }
+                ]
+              },
+              { type: "string", name: "quantityKey", label: "Quantity Key (views, likes, followers)" },
+              { type: "string", name: "quantityUnit", label: "Quantity Unit Label" },
+              {
+                type: "object",
+                name: "features",
+                label: "Features",
+                list: true,
+                fields: [{ type: "string", name: "label", label: "Label" }]
+              },
+              { type: "string", name: "buyNowLabel", label: "Buy Now Button" },
+              { type: "string", name: "addToCartLabel", label: "Add to Cart Button" },
+              { type: "string", name: "allInOnePrice", label: "All-in-One Price", required: false },
+              { type: "string", name: "allInOneTitle", label: "All-in-One Title", required: false },
+              { type: "string", name: "allInOneButtonLabel", label: "All-in-One Button", required: false },
+              { type: "string", name: "allInOneDescription", label: "All-in-One Description", ui: { component: "textarea" }, required: false },
+              {
+                type: "object",
+                name: "allInOneFeatures",
+                label: "All-in-One Features",
+                list: true,
+                required: false,
+                fields: [
+                  { type: "string", name: "value", label: "Value" },
+                  { type: "string", name: "label", label: "Label" }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

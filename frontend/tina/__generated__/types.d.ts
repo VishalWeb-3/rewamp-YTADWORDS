@@ -86,6 +86,10 @@ export type Query = {
   globalConnection: GlobalConnection;
   home: Home;
   homeConnection: HomeConnection;
+  contact: Contact;
+  contactConnection: ContactConnection;
+  prices: Prices;
+  pricesConnection: PricesConnection;
 };
 
 
@@ -139,9 +143,41 @@ export type QueryHomeConnectionArgs = {
   filter?: InputMaybe<HomeFilter>;
 };
 
+
+export type QueryContactArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryContactConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ContactFilter>;
+};
+
+
+export type QueryPricesArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPricesConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PricesFilter>;
+};
+
 export type DocumentFilter = {
   global?: InputMaybe<GlobalFilter>;
   home?: InputMaybe<HomeFilter>;
+  contact?: InputMaybe<ContactFilter>;
+  prices?: InputMaybe<PricesFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -181,7 +217,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Global | Home | Folder;
+export type DocumentNode = Global | Home | Contact | Prices | Folder;
 
 export type GlobalHeaderNavLinks = {
   __typename?: 'GlobalHeaderNavLinks';
@@ -516,6 +552,228 @@ export type HomeConnection = Connection & {
   edges?: Maybe<Array<Maybe<HomeConnectionEdges>>>;
 };
 
+export type ContactReasonOptions = {
+  __typename?: 'ContactReasonOptions';
+  value?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type Contact = Node & Document & {
+  __typename?: 'Contact';
+  title?: Maybe<Scalars['String']['output']>;
+  introParagraph1?: Maybe<Scalars['String']['output']>;
+  introParagraph2?: Maybe<Scalars['String']['output']>;
+  trackOrderLinkText?: Maybe<Scalars['String']['output']>;
+  trackOrderLinkHref?: Maybe<Scalars['String']['output']>;
+  formHeading?: Maybe<Scalars['String']['output']>;
+  successMessage?: Maybe<Scalars['String']['output']>;
+  labelEmail?: Maybe<Scalars['String']['output']>;
+  labelReason?: Maybe<Scalars['String']['output']>;
+  labelOrderNumber?: Maybe<Scalars['String']['output']>;
+  labelMessage?: Maybe<Scalars['String']['output']>;
+  placeholderEmail?: Maybe<Scalars['String']['output']>;
+  placeholderReason?: Maybe<Scalars['String']['output']>;
+  placeholderOrderNumber?: Maybe<Scalars['String']['output']>;
+  placeholderMessage?: Maybe<Scalars['String']['output']>;
+  reasonOptions?: Maybe<Array<Maybe<ContactReasonOptions>>>;
+  submitButton?: Maybe<Scalars['String']['output']>;
+  submittingButton?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type ContactReasonOptionsFilter = {
+  value?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+};
+
+export type ContactFilter = {
+  title?: InputMaybe<StringFilter>;
+  introParagraph1?: InputMaybe<StringFilter>;
+  introParagraph2?: InputMaybe<StringFilter>;
+  trackOrderLinkText?: InputMaybe<StringFilter>;
+  trackOrderLinkHref?: InputMaybe<StringFilter>;
+  formHeading?: InputMaybe<StringFilter>;
+  successMessage?: InputMaybe<StringFilter>;
+  labelEmail?: InputMaybe<StringFilter>;
+  labelReason?: InputMaybe<StringFilter>;
+  labelOrderNumber?: InputMaybe<StringFilter>;
+  labelMessage?: InputMaybe<StringFilter>;
+  placeholderEmail?: InputMaybe<StringFilter>;
+  placeholderReason?: InputMaybe<StringFilter>;
+  placeholderOrderNumber?: InputMaybe<StringFilter>;
+  placeholderMessage?: InputMaybe<StringFilter>;
+  reasonOptions?: InputMaybe<ContactReasonOptionsFilter>;
+  submitButton?: InputMaybe<StringFilter>;
+  submittingButton?: InputMaybe<StringFilter>;
+};
+
+export type ContactConnectionEdges = {
+  __typename?: 'ContactConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Contact>;
+};
+
+export type ContactConnection = Connection & {
+  __typename?: 'ContactConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<ContactConnectionEdges>>>;
+};
+
+export type PricesPageEntriesTabs = {
+  __typename?: 'PricesPageEntriesTabs';
+  id?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricesPageEntriesPackagesRegular = {
+  __typename?: 'PricesPageEntriesPackagesRegular';
+  quantity?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+  originalPrice?: Maybe<Scalars['String']['output']>;
+  discount?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricesPageEntriesPackagesFast = {
+  __typename?: 'PricesPageEntriesPackagesFast';
+  quantity?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+  originalPrice?: Maybe<Scalars['String']['output']>;
+  discount?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricesPageEntriesPackagesAds = {
+  __typename?: 'PricesPageEntriesPackagesAds';
+  quantity?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+  originalPrice?: Maybe<Scalars['String']['output']>;
+  discount?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricesPageEntriesFeatures = {
+  __typename?: 'PricesPageEntriesFeatures';
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricesPageEntriesAllInOneFeatures = {
+  __typename?: 'PricesPageEntriesAllInOneFeatures';
+  value?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricesPageEntries = {
+  __typename?: 'PricesPageEntries';
+  slug?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  titleHighlight?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  imageAlt?: Maybe<Scalars['String']['output']>;
+  imageSrc?: Maybe<Scalars['String']['output']>;
+  tabs?: Maybe<Array<Maybe<PricesPageEntriesTabs>>>;
+  infoBanner?: Maybe<Scalars['String']['output']>;
+  infoBannerHighlight?: Maybe<Scalars['String']['output']>;
+  packagesRegular?: Maybe<Array<Maybe<PricesPageEntriesPackagesRegular>>>;
+  packagesFast?: Maybe<Array<Maybe<PricesPageEntriesPackagesFast>>>;
+  packagesAds?: Maybe<Array<Maybe<PricesPageEntriesPackagesAds>>>;
+  quantityKey?: Maybe<Scalars['String']['output']>;
+  quantityUnit?: Maybe<Scalars['String']['output']>;
+  features?: Maybe<Array<Maybe<PricesPageEntriesFeatures>>>;
+  buyNowLabel?: Maybe<Scalars['String']['output']>;
+  addToCartLabel?: Maybe<Scalars['String']['output']>;
+  allInOnePrice?: Maybe<Scalars['String']['output']>;
+  allInOneTitle?: Maybe<Scalars['String']['output']>;
+  allInOneButtonLabel?: Maybe<Scalars['String']['output']>;
+  allInOneDescription?: Maybe<Scalars['String']['output']>;
+  allInOneFeatures?: Maybe<Array<Maybe<PricesPageEntriesAllInOneFeatures>>>;
+};
+
+export type Prices = Node & Document & {
+  __typename?: 'Prices';
+  pageEntries?: Maybe<Array<Maybe<PricesPageEntries>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type PricesPageEntriesTabsFilter = {
+  id?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+};
+
+export type PricesPageEntriesPackagesRegularFilter = {
+  quantity?: InputMaybe<StringFilter>;
+  price?: InputMaybe<StringFilter>;
+  originalPrice?: InputMaybe<StringFilter>;
+  discount?: InputMaybe<StringFilter>;
+};
+
+export type PricesPageEntriesPackagesFastFilter = {
+  quantity?: InputMaybe<StringFilter>;
+  price?: InputMaybe<StringFilter>;
+  originalPrice?: InputMaybe<StringFilter>;
+  discount?: InputMaybe<StringFilter>;
+};
+
+export type PricesPageEntriesPackagesAdsFilter = {
+  quantity?: InputMaybe<StringFilter>;
+  price?: InputMaybe<StringFilter>;
+  originalPrice?: InputMaybe<StringFilter>;
+  discount?: InputMaybe<StringFilter>;
+};
+
+export type PricesPageEntriesFeaturesFilter = {
+  label?: InputMaybe<StringFilter>;
+};
+
+export type PricesPageEntriesAllInOneFeaturesFilter = {
+  value?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+};
+
+export type PricesPageEntriesFilter = {
+  slug?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  titleHighlight?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  imageAlt?: InputMaybe<StringFilter>;
+  imageSrc?: InputMaybe<StringFilter>;
+  tabs?: InputMaybe<PricesPageEntriesTabsFilter>;
+  infoBanner?: InputMaybe<StringFilter>;
+  infoBannerHighlight?: InputMaybe<StringFilter>;
+  packagesRegular?: InputMaybe<PricesPageEntriesPackagesRegularFilter>;
+  packagesFast?: InputMaybe<PricesPageEntriesPackagesFastFilter>;
+  packagesAds?: InputMaybe<PricesPageEntriesPackagesAdsFilter>;
+  quantityKey?: InputMaybe<StringFilter>;
+  quantityUnit?: InputMaybe<StringFilter>;
+  features?: InputMaybe<PricesPageEntriesFeaturesFilter>;
+  buyNowLabel?: InputMaybe<StringFilter>;
+  addToCartLabel?: InputMaybe<StringFilter>;
+  allInOnePrice?: InputMaybe<StringFilter>;
+  allInOneTitle?: InputMaybe<StringFilter>;
+  allInOneButtonLabel?: InputMaybe<StringFilter>;
+  allInOneDescription?: InputMaybe<StringFilter>;
+  allInOneFeatures?: InputMaybe<PricesPageEntriesAllInOneFeaturesFilter>;
+};
+
+export type PricesFilter = {
+  pageEntries?: InputMaybe<PricesPageEntriesFilter>;
+};
+
+export type PricesConnectionEdges = {
+  __typename?: 'PricesConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Prices>;
+};
+
+export type PricesConnection = Connection & {
+  __typename?: 'PricesConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PricesConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -527,6 +785,10 @@ export type Mutation = {
   createGlobal: Global;
   updateHome: Home;
   createHome: Home;
+  updateContact: Contact;
+  createContact: Contact;
+  updatePrices: Prices;
+  createPrices: Prices;
 };
 
 
@@ -586,15 +848,43 @@ export type MutationCreateHomeArgs = {
   params: HomeMutation;
 };
 
+
+export type MutationUpdateContactArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ContactMutation;
+};
+
+
+export type MutationCreateContactArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ContactMutation;
+};
+
+
+export type MutationUpdatePricesArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PricesMutation;
+};
+
+
+export type MutationCreatePricesArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PricesMutation;
+};
+
 export type DocumentUpdateMutation = {
   global?: InputMaybe<GlobalMutation>;
   home?: InputMaybe<HomeMutation>;
+  contact?: InputMaybe<ContactMutation>;
+  prices?: InputMaybe<PricesMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
   global?: InputMaybe<GlobalMutation>;
   home?: InputMaybe<HomeMutation>;
+  contact?: InputMaybe<ContactMutation>;
+  prices?: InputMaybe<PricesMutation>;
 };
 
 export type GlobalHeaderNavLinksMutation = {
@@ -735,9 +1025,103 @@ export type HomeMutation = {
   globalAudienceCta?: InputMaybe<HomeGlobalAudienceCtaMutation>;
 };
 
+export type ContactReasonOptionsMutation = {
+  value?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ContactMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  introParagraph1?: InputMaybe<Scalars['String']['input']>;
+  introParagraph2?: InputMaybe<Scalars['String']['input']>;
+  trackOrderLinkText?: InputMaybe<Scalars['String']['input']>;
+  trackOrderLinkHref?: InputMaybe<Scalars['String']['input']>;
+  formHeading?: InputMaybe<Scalars['String']['input']>;
+  successMessage?: InputMaybe<Scalars['String']['input']>;
+  labelEmail?: InputMaybe<Scalars['String']['input']>;
+  labelReason?: InputMaybe<Scalars['String']['input']>;
+  labelOrderNumber?: InputMaybe<Scalars['String']['input']>;
+  labelMessage?: InputMaybe<Scalars['String']['input']>;
+  placeholderEmail?: InputMaybe<Scalars['String']['input']>;
+  placeholderReason?: InputMaybe<Scalars['String']['input']>;
+  placeholderOrderNumber?: InputMaybe<Scalars['String']['input']>;
+  placeholderMessage?: InputMaybe<Scalars['String']['input']>;
+  reasonOptions?: InputMaybe<Array<InputMaybe<ContactReasonOptionsMutation>>>;
+  submitButton?: InputMaybe<Scalars['String']['input']>;
+  submittingButton?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesTabsMutation = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesPackagesRegularMutation = {
+  quantity?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+  originalPrice?: InputMaybe<Scalars['String']['input']>;
+  discount?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesPackagesFastMutation = {
+  quantity?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+  originalPrice?: InputMaybe<Scalars['String']['input']>;
+  discount?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesPackagesAdsMutation = {
+  quantity?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+  originalPrice?: InputMaybe<Scalars['String']['input']>;
+  discount?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesFeaturesMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesAllInOneFeaturesMutation = {
+  value?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricesPageEntriesMutation = {
+  slug?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  titleHighlight?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  imageAlt?: InputMaybe<Scalars['String']['input']>;
+  imageSrc?: InputMaybe<Scalars['String']['input']>;
+  tabs?: InputMaybe<Array<InputMaybe<PricesPageEntriesTabsMutation>>>;
+  infoBanner?: InputMaybe<Scalars['String']['input']>;
+  infoBannerHighlight?: InputMaybe<Scalars['String']['input']>;
+  packagesRegular?: InputMaybe<Array<InputMaybe<PricesPageEntriesPackagesRegularMutation>>>;
+  packagesFast?: InputMaybe<Array<InputMaybe<PricesPageEntriesPackagesFastMutation>>>;
+  packagesAds?: InputMaybe<Array<InputMaybe<PricesPageEntriesPackagesAdsMutation>>>;
+  quantityKey?: InputMaybe<Scalars['String']['input']>;
+  quantityUnit?: InputMaybe<Scalars['String']['input']>;
+  features?: InputMaybe<Array<InputMaybe<PricesPageEntriesFeaturesMutation>>>;
+  buyNowLabel?: InputMaybe<Scalars['String']['input']>;
+  addToCartLabel?: InputMaybe<Scalars['String']['input']>;
+  allInOnePrice?: InputMaybe<Scalars['String']['input']>;
+  allInOneTitle?: InputMaybe<Scalars['String']['input']>;
+  allInOneButtonLabel?: InputMaybe<Scalars['String']['input']>;
+  allInOneDescription?: InputMaybe<Scalars['String']['input']>;
+  allInOneFeatures?: InputMaybe<Array<InputMaybe<PricesPageEntriesAllInOneFeaturesMutation>>>;
+};
+
+export type PricesMutation = {
+  pageEntries?: InputMaybe<Array<InputMaybe<PricesPageEntriesMutation>>>;
+};
+
 export type GlobalPartsFragment = { __typename: 'Global', header?: { __typename: 'GlobalHeader', siteName?: string | null, logo?: string | null, loginLabel?: string | null, signupLabel?: string | null, signedInAs?: string | null, myOrders?: string | null, logout?: string | null, shoppingCartAria?: string | null, navLinks?: Array<{ __typename: 'GlobalHeaderNavLinks', label?: string | null, link?: string | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, ourServicesTitle?: string | null, resourcesTitle?: string | null, companyTitle?: string | null, legalDisclaimer?: string | null, copyright?: string | null, privacyPolicy?: string | null, termsOfService?: string | null, refundPolicy?: string | null, cookiesSettings?: string | null } | null, serviceBar?: { __typename: 'GlobalServiceBar', services?: Array<{ __typename: 'GlobalServiceBarServices', label?: string | null, items?: Array<{ __typename: 'GlobalServiceBarServicesItems', label?: string | null, link?: string | null } | null> | null } | null> | null } | null, cart?: { __typename: 'GlobalCart', title?: string | null, emptyTitle?: string | null, emptySubtext?: string | null, browseServices?: string | null } | null, auth?: { __typename: 'GlobalAuth', loginTitle?: string | null, loginSubtitle?: string | null, emailOrUsernameLabel?: string | null, emailPlaceholder?: string | null, passwordLabel?: string | null, passwordPlaceholder?: string | null, logInButton?: string | null, loggingInButton?: string | null, rememberMe?: string | null, forgotPassword?: string | null, noAccount?: string | null, signUpLinkText?: string | null, signupTitle?: string | null, signupSubtitle?: string | null, hasAccount?: string | null, logInLinkText?: string | null } | null };
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', badge?: string | null, title?: string | null, subtitle?: string | null, ctaPrimary?: string | null, ctaSecondary?: string | null, lastOrder?: string | null, activeCampaigns?: string | null } | null, servicesSection?: { __typename: 'HomeServicesSection', googleServices?: Array<string | null> | null, tiktokServices?: Array<string | null> | null } | null, whyChooseUs?: { __typename: 'HomeWhyChooseUs', title?: string | null, features?: Array<{ __typename: 'HomeWhyChooseUsFeatures', title?: string | null } | null> | null } | null, faq?: { __typename: 'HomeFaq', heading?: string | null, items?: Array<{ __typename: 'HomeFaqItems', question?: string | null, answer?: string | null } | null> | null } | null, comparison?: { __typename: 'HomeComparison', heading?: string | null, better?: string | null, otherTitle?: string | null, ourTitle?: string | null, bestChoice?: string | null, otherPoints?: Array<string | null> | null, ourPoints?: Array<string | null> | null } | null, globalAudienceCta?: { __typename: 'HomeGlobalAudienceCta', title?: string | null, titleHighlight?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null };
+
+export type ContactPartsFragment = { __typename: 'Contact', title?: string | null, introParagraph1?: string | null, introParagraph2?: string | null, trackOrderLinkText?: string | null, trackOrderLinkHref?: string | null, formHeading?: string | null, successMessage?: string | null, labelEmail?: string | null, labelReason?: string | null, labelOrderNumber?: string | null, labelMessage?: string | null, placeholderEmail?: string | null, placeholderReason?: string | null, placeholderOrderNumber?: string | null, placeholderMessage?: string | null, submitButton?: string | null, submittingButton?: string | null, reasonOptions?: Array<{ __typename: 'ContactReasonOptions', value?: string | null, label?: string | null } | null> | null };
+
+export type PricesPartsFragment = { __typename: 'Prices', pageEntries?: Array<{ __typename: 'PricesPageEntries', slug?: string | null, title?: string | null, titleHighlight?: string | null, subtitle?: string | null, imageAlt?: string | null, imageSrc?: string | null, infoBanner?: string | null, infoBannerHighlight?: string | null, quantityKey?: string | null, quantityUnit?: string | null, buyNowLabel?: string | null, addToCartLabel?: string | null, allInOnePrice?: string | null, allInOneTitle?: string | null, allInOneButtonLabel?: string | null, allInOneDescription?: string | null, tabs?: Array<{ __typename: 'PricesPageEntriesTabs', id?: string | null, label?: string | null } | null> | null, packagesRegular?: Array<{ __typename: 'PricesPageEntriesPackagesRegular', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, packagesFast?: Array<{ __typename: 'PricesPageEntriesPackagesFast', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, packagesAds?: Array<{ __typename: 'PricesPageEntriesPackagesAds', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, features?: Array<{ __typename: 'PricesPageEntriesFeatures', label?: string | null } | null> | null, allInOneFeatures?: Array<{ __typename: 'PricesPageEntriesAllInOneFeatures', value?: string | null, label?: string | null } | null> | null } | null> | null };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -776,6 +1160,44 @@ export type HomeConnectionQueryVariables = Exact<{
 
 
 export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', badge?: string | null, title?: string | null, subtitle?: string | null, ctaPrimary?: string | null, ctaSecondary?: string | null, lastOrder?: string | null, activeCampaigns?: string | null } | null, servicesSection?: { __typename: 'HomeServicesSection', googleServices?: Array<string | null> | null, tiktokServices?: Array<string | null> | null } | null, whyChooseUs?: { __typename: 'HomeWhyChooseUs', title?: string | null, features?: Array<{ __typename: 'HomeWhyChooseUsFeatures', title?: string | null } | null> | null } | null, faq?: { __typename: 'HomeFaq', heading?: string | null, items?: Array<{ __typename: 'HomeFaqItems', question?: string | null, answer?: string | null } | null> | null } | null, comparison?: { __typename: 'HomeComparison', heading?: string | null, better?: string | null, otherTitle?: string | null, ourTitle?: string | null, bestChoice?: string | null, otherPoints?: Array<string | null> | null, ourPoints?: Array<string | null> | null } | null, globalAudienceCta?: { __typename: 'HomeGlobalAudienceCta', title?: string | null, titleHighlight?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null } | null } | null> | null } };
+
+export type ContactQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, title?: string | null, introParagraph1?: string | null, introParagraph2?: string | null, trackOrderLinkText?: string | null, trackOrderLinkHref?: string | null, formHeading?: string | null, successMessage?: string | null, labelEmail?: string | null, labelReason?: string | null, labelOrderNumber?: string | null, labelMessage?: string | null, placeholderEmail?: string | null, placeholderReason?: string | null, placeholderOrderNumber?: string | null, placeholderMessage?: string | null, submitButton?: string | null, submittingButton?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, reasonOptions?: Array<{ __typename: 'ContactReasonOptions', value?: string | null, label?: string | null } | null> | null } };
+
+export type ContactConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ContactFilter>;
+}>;
+
+
+export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, title?: string | null, introParagraph1?: string | null, introParagraph2?: string | null, trackOrderLinkText?: string | null, trackOrderLinkHref?: string | null, formHeading?: string | null, successMessage?: string | null, labelEmail?: string | null, labelReason?: string | null, labelOrderNumber?: string | null, labelMessage?: string | null, placeholderEmail?: string | null, placeholderReason?: string | null, placeholderOrderNumber?: string | null, placeholderMessage?: string | null, submitButton?: string | null, submittingButton?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, reasonOptions?: Array<{ __typename: 'ContactReasonOptions', value?: string | null, label?: string | null } | null> | null } | null } | null> | null } };
+
+export type PricesQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PricesQuery = { __typename?: 'Query', prices: { __typename: 'Prices', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pageEntries?: Array<{ __typename: 'PricesPageEntries', slug?: string | null, title?: string | null, titleHighlight?: string | null, subtitle?: string | null, imageAlt?: string | null, imageSrc?: string | null, infoBanner?: string | null, infoBannerHighlight?: string | null, quantityKey?: string | null, quantityUnit?: string | null, buyNowLabel?: string | null, addToCartLabel?: string | null, allInOnePrice?: string | null, allInOneTitle?: string | null, allInOneButtonLabel?: string | null, allInOneDescription?: string | null, tabs?: Array<{ __typename: 'PricesPageEntriesTabs', id?: string | null, label?: string | null } | null> | null, packagesRegular?: Array<{ __typename: 'PricesPageEntriesPackagesRegular', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, packagesFast?: Array<{ __typename: 'PricesPageEntriesPackagesFast', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, packagesAds?: Array<{ __typename: 'PricesPageEntriesPackagesAds', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, features?: Array<{ __typename: 'PricesPageEntriesFeatures', label?: string | null } | null> | null, allInOneFeatures?: Array<{ __typename: 'PricesPageEntriesAllInOneFeatures', value?: string | null, label?: string | null } | null> | null } | null> | null } };
+
+export type PricesConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PricesFilter>;
+}>;
+
+
+export type PricesConnectionQuery = { __typename?: 'Query', pricesConnection: { __typename?: 'PricesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PricesConnectionEdges', cursor: string, node?: { __typename: 'Prices', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pageEntries?: Array<{ __typename: 'PricesPageEntries', slug?: string | null, title?: string | null, titleHighlight?: string | null, subtitle?: string | null, imageAlt?: string | null, imageSrc?: string | null, infoBanner?: string | null, infoBannerHighlight?: string | null, quantityKey?: string | null, quantityUnit?: string | null, buyNowLabel?: string | null, addToCartLabel?: string | null, allInOnePrice?: string | null, allInOneTitle?: string | null, allInOneButtonLabel?: string | null, allInOneDescription?: string | null, tabs?: Array<{ __typename: 'PricesPageEntriesTabs', id?: string | null, label?: string | null } | null> | null, packagesRegular?: Array<{ __typename: 'PricesPageEntriesPackagesRegular', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, packagesFast?: Array<{ __typename: 'PricesPageEntriesPackagesFast', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, packagesAds?: Array<{ __typename: 'PricesPageEntriesPackagesAds', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, features?: Array<{ __typename: 'PricesPageEntriesFeatures', label?: string | null } | null> | null, allInOneFeatures?: Array<{ __typename: 'PricesPageEntriesAllInOneFeatures', value?: string | null, label?: string | null } | null> | null } | null> | null } | null } | null> | null } };
 
 export const GlobalPartsFragmentDoc = gql`
     fragment GlobalParts on Global {
@@ -903,6 +1325,92 @@ export const HomePartsFragmentDoc = gql`
   }
 }
     `;
+export const ContactPartsFragmentDoc = gql`
+    fragment ContactParts on Contact {
+  __typename
+  title
+  introParagraph1
+  introParagraph2
+  trackOrderLinkText
+  trackOrderLinkHref
+  formHeading
+  successMessage
+  labelEmail
+  labelReason
+  labelOrderNumber
+  labelMessage
+  placeholderEmail
+  placeholderReason
+  placeholderOrderNumber
+  placeholderMessage
+  reasonOptions {
+    __typename
+    value
+    label
+  }
+  submitButton
+  submittingButton
+}
+    `;
+export const PricesPartsFragmentDoc = gql`
+    fragment PricesParts on Prices {
+  __typename
+  pageEntries {
+    __typename
+    slug
+    title
+    titleHighlight
+    subtitle
+    imageAlt
+    imageSrc
+    tabs {
+      __typename
+      id
+      label
+    }
+    infoBanner
+    infoBannerHighlight
+    packagesRegular {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    packagesFast {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    packagesAds {
+      __typename
+      quantity
+      price
+      originalPrice
+      discount
+    }
+    quantityKey
+    quantityUnit
+    features {
+      __typename
+      label
+    }
+    buyNowLabel
+    addToCartLabel
+    allInOnePrice
+    allInOneTitle
+    allInOneButtonLabel
+    allInOneDescription
+    allInOneFeatures {
+      __typename
+      value
+      label
+    }
+  }
+}
+    `;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -1017,6 +1525,120 @@ export const HomeConnectionDocument = gql`
   }
 }
     ${HomePartsFragmentDoc}`;
+export const ContactDocument = gql`
+    query contact($relativePath: String!) {
+  contact(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ContactParts
+  }
+}
+    ${ContactPartsFragmentDoc}`;
+export const ContactConnectionDocument = gql`
+    query contactConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ContactFilter) {
+  contactConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ContactParts
+      }
+    }
+  }
+}
+    ${ContactPartsFragmentDoc}`;
+export const PricesDocument = gql`
+    query prices($relativePath: String!) {
+  prices(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PricesParts
+  }
+}
+    ${PricesPartsFragmentDoc}`;
+export const PricesConnectionDocument = gql`
+    query pricesConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PricesFilter) {
+  pricesConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PricesParts
+      }
+    }
+  }
+}
+    ${PricesPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -1031,6 +1653,18 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     homeConnection(variables?: HomeConnectionQueryVariables, options?: C): Promise<{data: HomeConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomeConnectionQueryVariables, query: string}> {
         return requester<{data: HomeConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomeConnectionQueryVariables, query: string}, HomeConnectionQueryVariables>(HomeConnectionDocument, variables, options);
+      },
+    contact(variables: ContactQueryVariables, options?: C): Promise<{data: ContactQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ContactQueryVariables, query: string}> {
+        return requester<{data: ContactQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ContactQueryVariables, query: string}, ContactQueryVariables>(ContactDocument, variables, options);
+      },
+    contactConnection(variables?: ContactConnectionQueryVariables, options?: C): Promise<{data: ContactConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ContactConnectionQueryVariables, query: string}> {
+        return requester<{data: ContactConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ContactConnectionQueryVariables, query: string}, ContactConnectionQueryVariables>(ContactConnectionDocument, variables, options);
+      },
+    prices(variables: PricesQueryVariables, options?: C): Promise<{data: PricesQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricesQueryVariables, query: string}> {
+        return requester<{data: PricesQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricesQueryVariables, query: string}, PricesQueryVariables>(PricesDocument, variables, options);
+      },
+    pricesConnection(variables?: PricesConnectionQueryVariables, options?: C): Promise<{data: PricesConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricesConnectionQueryVariables, query: string}> {
+        return requester<{data: PricesConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricesConnectionQueryVariables, query: string}, PricesConnectionQueryVariables>(PricesConnectionDocument, variables, options);
       }
     };
   }
