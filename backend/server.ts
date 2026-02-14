@@ -69,18 +69,25 @@ async function sessionMiddleware(req: express.Request, res: express.Response, ne
 app.use(sessionMiddleware);
 
 // Helpers for setting/clearing auth cookie
+// SameSite=None + Secure required so cookie is sent when frontend is on different origin (e.g. localhost → Render)
 function setAuthCookie(res: express.Response, token: string) {
+  const isProduction = process.env.NODE_ENV === "production";
   res.cookie("auth_token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     maxAge: SESSION_MAX_AGE_MS,
     path: "/",
   });
 }
 
 function clearAuthCookie(res: express.Response) {
-  res.clearCookie("auth_token", { path: "/" });
+  const isProduction = process.env.NODE_ENV === "production";
+  res.clearCookie("auth_token", {
+    path: "/",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  });
 }
 
 // ========== Auth ==========
