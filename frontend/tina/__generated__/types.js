@@ -189,6 +189,86 @@ export const PricingPartsFragmentDoc = gql`
   }
 }
     `;
+export const PricingPageContentPartsFragmentDoc = gql`
+    fragment PricingPageContentParts on PricingPageContent {
+  __typename
+  pages {
+    __typename
+    slug
+    hero {
+      __typename
+      image
+      title
+      badge
+      intro
+    }
+    tabs {
+      __typename
+      regular
+      fast
+      ads
+    }
+    infoBanner
+    features {
+      __typename
+      label
+    }
+    allInOne {
+      __typename
+      heading
+      description
+      stats {
+        __typename
+        value
+        label
+      }
+    }
+    guarantee {
+      __typename
+      heading
+      intro1
+      intro2
+      cards {
+        __typename
+        title
+        body
+      }
+    }
+    whySection {
+      __typename
+      heading
+      image
+      paragraph1
+      paragraph2
+      paragraph3
+    }
+    numbersSection {
+      __typename
+      heading
+      image
+      paragraph1
+      paragraph2
+      paragraph3
+    }
+    strategySection {
+      __typename
+      heading
+      image
+      paragraph1
+      paragraph2
+    }
+    faq {
+      __typename
+      heading
+      items {
+        __typename
+        question
+        answer
+      }
+    }
+  }
+}
+    `;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -417,6 +497,63 @@ export const PricingConnectionDocument = gql`
   }
 }
     ${PricingPartsFragmentDoc}`;
+export const PricingPageContentDocument = gql`
+    query pricingPageContent($relativePath: String!) {
+  pricingPageContent(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PricingPageContentParts
+  }
+}
+    ${PricingPageContentPartsFragmentDoc}`;
+export const PricingPageContentConnectionDocument = gql`
+    query pricingPageContentConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PricingPageContentFilter) {
+  pricingPageContentConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PricingPageContentParts
+      }
+    }
+  }
+}
+    ${PricingPageContentPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
     global(variables, options) {
@@ -442,6 +579,12 @@ export function getSdk(requester) {
     },
     pricingConnection(variables, options) {
       return requester(PricingConnectionDocument, variables, options);
+    },
+    pricingPageContent(variables, options) {
+      return requester(PricingPageContentDocument, variables, options);
+    },
+    pricingPageContentConnection(variables, options) {
+      return requester(PricingPageContentConnectionDocument, variables, options);
     }
   };
 }

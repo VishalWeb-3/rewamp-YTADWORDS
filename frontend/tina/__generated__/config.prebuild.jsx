@@ -270,6 +270,148 @@ var config_default = defineConfig({
             ]
           }
         ]
+      },
+      {
+        name: "pricingPageContent",
+        label: "Pricing Page Content",
+        path: "content/pricing-pages",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false },
+          description: "Images and text for each pricing page (hero, features, FAQs, sections)."
+        },
+        fields: [
+          {
+            type: "object",
+            name: "pages",
+            label: "Page Content",
+            list: true,
+            fields: [
+              { type: "string", name: "slug", label: "Page Slug", description: "Must match route, e.g. buy-youtube-views", required: true },
+              {
+                type: "object",
+                name: "hero",
+                label: "Hero",
+                fields: [
+                  { type: "string", name: "image", label: "Hero Image URL", description: "e.g. /pricepage.png" },
+                  { type: "string", name: "title", label: "Title" },
+                  { type: "string", name: "badge", label: "Badge (e.g. Instantly)" },
+                  { type: "string", name: "intro", label: "Intro Paragraph", ui: { component: "textarea" } }
+                ]
+              },
+              {
+                type: "object",
+                name: "tabs",
+                label: "Tab Labels",
+                fields: [
+                  { type: "string", name: "regular", label: "Regular Tab" },
+                  { type: "string", name: "fast", label: "Fast Tab" },
+                  { type: "string", name: "ads", label: "Ads Tab" }
+                ]
+              },
+              { type: "string", name: "infoBanner", label: "Info Banner Text", ui: { component: "textarea" } },
+              {
+                type: "object",
+                name: "features",
+                label: "Features List",
+                list: true,
+                fields: [{ type: "string", name: "label", label: "Label" }]
+              },
+              {
+                type: "object",
+                name: "allInOne",
+                label: "All In One Section",
+                fields: [
+                  { type: "string", name: "heading", label: "Heading" },
+                  { type: "string", name: "description", label: "Description", ui: { component: "textarea" } },
+                  {
+                    type: "object",
+                    name: "stats",
+                    label: "Stats",
+                    list: true,
+                    fields: [
+                      { type: "string", name: "value", label: "Value (e.g. 5000)" },
+                      { type: "string", name: "label", label: "Label" }
+                    ]
+                  }
+                ]
+              },
+              {
+                type: "object",
+                name: "guarantee",
+                label: "Guarantee Section",
+                fields: [
+                  { type: "string", name: "heading", label: "Heading" },
+                  { type: "string", name: "intro1", label: "Intro Paragraph 1", ui: { component: "textarea" } },
+                  { type: "string", name: "intro2", label: "Intro Paragraph 2", ui: { component: "textarea" } },
+                  {
+                    type: "object",
+                    name: "cards",
+                    label: "Cards",
+                    list: true,
+                    fields: [
+                      { type: "string", name: "title", label: "Card Title" },
+                      { type: "string", name: "body", label: "Card Body", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                type: "object",
+                name: "whySection",
+                label: "Why Section",
+                fields: [
+                  { type: "string", name: "heading", label: "Heading" },
+                  { type: "string", name: "image", label: "Image URL" },
+                  { type: "string", name: "paragraph1", label: "Paragraph 1", ui: { component: "textarea" } },
+                  { type: "string", name: "paragraph2", label: "Paragraph 2", ui: { component: "textarea" } },
+                  { type: "string", name: "paragraph3", label: "Paragraph 3", ui: { component: "textarea" } }
+                ]
+              },
+              {
+                type: "object",
+                name: "numbersSection",
+                label: "Numbers / Engagement Section",
+                fields: [
+                  { type: "string", name: "heading", label: "Heading" },
+                  { type: "string", name: "image", label: "Image URL" },
+                  { type: "string", name: "paragraph1", label: "Paragraph 1", ui: { component: "textarea" } },
+                  { type: "string", name: "paragraph2", label: "Paragraph 2", ui: { component: "textarea" } },
+                  { type: "string", name: "paragraph3", label: "Paragraph 3", ui: { component: "textarea" } }
+                ]
+              },
+              {
+                type: "object",
+                name: "strategySection",
+                label: "Strategy Section",
+                fields: [
+                  { type: "string", name: "heading", label: "Heading" },
+                  { type: "string", name: "image", label: "Image URL" },
+                  { type: "string", name: "paragraph1", label: "Paragraph 1", ui: { component: "textarea" } },
+                  { type: "string", name: "paragraph2", label: "Paragraph 2", ui: { component: "textarea" } }
+                ]
+              },
+              {
+                type: "object",
+                name: "faq",
+                label: "FAQ Section",
+                fields: [
+                  { type: "string", name: "heading", label: "Heading" },
+                  {
+                    type: "object",
+                    name: "items",
+                    label: "FAQ Items",
+                    list: true,
+                    fields: [
+                      { type: "string", name: "question", label: "Question" },
+                      { type: "string", name: "answer", label: "Answer", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

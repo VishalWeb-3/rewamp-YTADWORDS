@@ -62,6 +62,8 @@ type Query {
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
   pricing(relativePath: String): Pricing!
   pricingConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingFilter): PricingConnection!
+  pricingPageContent(relativePath: String): PricingPageContent!
+  pricingPageContentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingPageContentFilter): PricingPageContentConnection!
 }
 
 input DocumentFilter {
@@ -69,6 +71,7 @@ input DocumentFilter {
   home: HomeFilter
   contact: ContactFilter
   pricing: PricingFilter
+  pricingPageContent: PricingPageContentFilter
 }
 
 type DocumentConnectionEdges {
@@ -94,7 +97,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Pricing | Folder
+union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -553,6 +556,202 @@ type PricingConnection implements Connection {
   edges: [PricingConnectionEdges]
 }
 
+type PricingPageContentPagesHero {
+  image: String
+  title: String
+  badge: String
+  intro: String
+}
+
+type PricingPageContentPagesTabs {
+  regular: String
+  fast: String
+  ads: String
+}
+
+type PricingPageContentPagesFeatures {
+  label: String
+}
+
+type PricingPageContentPagesAllInOneStats {
+  value: String
+  label: String
+}
+
+type PricingPageContentPagesAllInOne {
+  heading: String
+  description: String
+  stats: [PricingPageContentPagesAllInOneStats]
+}
+
+type PricingPageContentPagesGuaranteeCards {
+  title: String
+  body: String
+}
+
+type PricingPageContentPagesGuarantee {
+  heading: String
+  intro1: String
+  intro2: String
+  cards: [PricingPageContentPagesGuaranteeCards]
+}
+
+type PricingPageContentPagesWhySection {
+  heading: String
+  image: String
+  paragraph1: String
+  paragraph2: String
+  paragraph3: String
+}
+
+type PricingPageContentPagesNumbersSection {
+  heading: String
+  image: String
+  paragraph1: String
+  paragraph2: String
+  paragraph3: String
+}
+
+type PricingPageContentPagesStrategySection {
+  heading: String
+  image: String
+  paragraph1: String
+  paragraph2: String
+}
+
+type PricingPageContentPagesFaqItems {
+  question: String
+  answer: String
+}
+
+type PricingPageContentPagesFaq {
+  heading: String
+  items: [PricingPageContentPagesFaqItems]
+}
+
+type PricingPageContentPages {
+  slug: String!
+  hero: PricingPageContentPagesHero
+  tabs: PricingPageContentPagesTabs
+  infoBanner: String
+  features: [PricingPageContentPagesFeatures]
+  allInOne: PricingPageContentPagesAllInOne
+  guarantee: PricingPageContentPagesGuarantee
+  whySection: PricingPageContentPagesWhySection
+  numbersSection: PricingPageContentPagesNumbersSection
+  strategySection: PricingPageContentPagesStrategySection
+  faq: PricingPageContentPagesFaq
+}
+
+type PricingPageContent implements Node & Document {
+  pages: [PricingPageContentPages]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input PricingPageContentPagesHeroFilter {
+  image: StringFilter
+  title: StringFilter
+  badge: StringFilter
+  intro: StringFilter
+}
+
+input PricingPageContentPagesTabsFilter {
+  regular: StringFilter
+  fast: StringFilter
+  ads: StringFilter
+}
+
+input PricingPageContentPagesFeaturesFilter {
+  label: StringFilter
+}
+
+input PricingPageContentPagesAllInOneStatsFilter {
+  value: StringFilter
+  label: StringFilter
+}
+
+input PricingPageContentPagesAllInOneFilter {
+  heading: StringFilter
+  description: StringFilter
+  stats: PricingPageContentPagesAllInOneStatsFilter
+}
+
+input PricingPageContentPagesGuaranteeCardsFilter {
+  title: StringFilter
+  body: StringFilter
+}
+
+input PricingPageContentPagesGuaranteeFilter {
+  heading: StringFilter
+  intro1: StringFilter
+  intro2: StringFilter
+  cards: PricingPageContentPagesGuaranteeCardsFilter
+}
+
+input PricingPageContentPagesWhySectionFilter {
+  heading: StringFilter
+  image: StringFilter
+  paragraph1: StringFilter
+  paragraph2: StringFilter
+  paragraph3: StringFilter
+}
+
+input PricingPageContentPagesNumbersSectionFilter {
+  heading: StringFilter
+  image: StringFilter
+  paragraph1: StringFilter
+  paragraph2: StringFilter
+  paragraph3: StringFilter
+}
+
+input PricingPageContentPagesStrategySectionFilter {
+  heading: StringFilter
+  image: StringFilter
+  paragraph1: StringFilter
+  paragraph2: StringFilter
+}
+
+input PricingPageContentPagesFaqItemsFilter {
+  question: StringFilter
+  answer: StringFilter
+}
+
+input PricingPageContentPagesFaqFilter {
+  heading: StringFilter
+  items: PricingPageContentPagesFaqItemsFilter
+}
+
+input PricingPageContentPagesFilter {
+  slug: StringFilter
+  hero: PricingPageContentPagesHeroFilter
+  tabs: PricingPageContentPagesTabsFilter
+  infoBanner: StringFilter
+  features: PricingPageContentPagesFeaturesFilter
+  allInOne: PricingPageContentPagesAllInOneFilter
+  guarantee: PricingPageContentPagesGuaranteeFilter
+  whySection: PricingPageContentPagesWhySectionFilter
+  numbersSection: PricingPageContentPagesNumbersSectionFilter
+  strategySection: PricingPageContentPagesStrategySectionFilter
+  faq: PricingPageContentPagesFaqFilter
+}
+
+input PricingPageContentFilter {
+  pages: PricingPageContentPagesFilter
+}
+
+type PricingPageContentConnectionEdges {
+  cursor: String!
+  node: PricingPageContent
+}
+
+type PricingPageContentConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PricingPageContentConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -567,6 +766,8 @@ type Mutation {
   createContact(relativePath: String!, params: ContactMutation!): Contact!
   updatePricing(relativePath: String!, params: PricingMutation!): Pricing!
   createPricing(relativePath: String!, params: PricingMutation!): Pricing!
+  updatePricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
+  createPricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
 }
 
 input DocumentUpdateMutation {
@@ -574,6 +775,7 @@ input DocumentUpdateMutation {
   home: HomeMutation
   contact: ContactMutation
   pricing: PricingMutation
+  pricingPageContent: PricingPageContentMutation
   relativePath: String
 }
 
@@ -582,6 +784,7 @@ input DocumentMutation {
   home: HomeMutation
   contact: ContactMutation
   pricing: PricingMutation
+  pricingPageContent: PricingPageContentMutation
 }
 
 input GlobalHeaderNavLinksMutation {
@@ -779,6 +982,97 @@ input PricingPagesMutation {
 
 input PricingMutation {
   pages: [PricingPagesMutation]
+}
+
+input PricingPageContentPagesHeroMutation {
+  image: String
+  title: String
+  badge: String
+  intro: String
+}
+
+input PricingPageContentPagesTabsMutation {
+  regular: String
+  fast: String
+  ads: String
+}
+
+input PricingPageContentPagesFeaturesMutation {
+  label: String
+}
+
+input PricingPageContentPagesAllInOneStatsMutation {
+  value: String
+  label: String
+}
+
+input PricingPageContentPagesAllInOneMutation {
+  heading: String
+  description: String
+  stats: [PricingPageContentPagesAllInOneStatsMutation]
+}
+
+input PricingPageContentPagesGuaranteeCardsMutation {
+  title: String
+  body: String
+}
+
+input PricingPageContentPagesGuaranteeMutation {
+  heading: String
+  intro1: String
+  intro2: String
+  cards: [PricingPageContentPagesGuaranteeCardsMutation]
+}
+
+input PricingPageContentPagesWhySectionMutation {
+  heading: String
+  image: String
+  paragraph1: String
+  paragraph2: String
+  paragraph3: String
+}
+
+input PricingPageContentPagesNumbersSectionMutation {
+  heading: String
+  image: String
+  paragraph1: String
+  paragraph2: String
+  paragraph3: String
+}
+
+input PricingPageContentPagesStrategySectionMutation {
+  heading: String
+  image: String
+  paragraph1: String
+  paragraph2: String
+}
+
+input PricingPageContentPagesFaqItemsMutation {
+  question: String
+  answer: String
+}
+
+input PricingPageContentPagesFaqMutation {
+  heading: String
+  items: [PricingPageContentPagesFaqItemsMutation]
+}
+
+input PricingPageContentPagesMutation {
+  slug: String
+  hero: PricingPageContentPagesHeroMutation
+  tabs: PricingPageContentPagesTabsMutation
+  infoBanner: String
+  features: [PricingPageContentPagesFeaturesMutation]
+  allInOne: PricingPageContentPagesAllInOneMutation
+  guarantee: PricingPageContentPagesGuaranteeMutation
+  whySection: PricingPageContentPagesWhySectionMutation
+  numbersSection: PricingPageContentPagesNumbersSectionMutation
+  strategySection: PricingPageContentPagesStrategySectionMutation
+  faq: PricingPageContentPagesFaqMutation
+}
+
+input PricingPageContentMutation {
+  pages: [PricingPageContentPagesMutation]
 }
 
 schema {

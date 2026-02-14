@@ -90,6 +90,8 @@ export type Query = {
   contactConnection: ContactConnection;
   pricing: Pricing;
   pricingConnection: PricingConnection;
+  pricingPageContent: PricingPageContent;
+  pricingPageContentConnection: PricingPageContentConnection;
 };
 
 
@@ -173,11 +175,27 @@ export type QueryPricingConnectionArgs = {
   filter?: InputMaybe<PricingFilter>;
 };
 
+
+export type QueryPricingPageContentArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPricingPageContentConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PricingPageContentFilter>;
+};
+
 export type DocumentFilter = {
   global?: InputMaybe<GlobalFilter>;
   home?: InputMaybe<HomeFilter>;
   contact?: InputMaybe<ContactFilter>;
   pricing?: InputMaybe<PricingFilter>;
+  pricingPageContent?: InputMaybe<PricingPageContentFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -217,7 +235,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Global | Home | Contact | Pricing | Folder;
+export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Folder;
 
 export type GlobalHeaderNavLinks = {
   __typename?: 'GlobalHeaderNavLinks';
@@ -709,6 +727,218 @@ export type PricingConnection = Connection & {
   edges?: Maybe<Array<Maybe<PricingConnectionEdges>>>;
 };
 
+export type PricingPageContentPagesHero = {
+  __typename?: 'PricingPageContentPagesHero';
+  image?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  badge?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesTabs = {
+  __typename?: 'PricingPageContentPagesTabs';
+  regular?: Maybe<Scalars['String']['output']>;
+  fast?: Maybe<Scalars['String']['output']>;
+  ads?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesFeatures = {
+  __typename?: 'PricingPageContentPagesFeatures';
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesAllInOneStats = {
+  __typename?: 'PricingPageContentPagesAllInOneStats';
+  value?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesAllInOne = {
+  __typename?: 'PricingPageContentPagesAllInOne';
+  heading?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  stats?: Maybe<Array<Maybe<PricingPageContentPagesAllInOneStats>>>;
+};
+
+export type PricingPageContentPagesGuaranteeCards = {
+  __typename?: 'PricingPageContentPagesGuaranteeCards';
+  title?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesGuarantee = {
+  __typename?: 'PricingPageContentPagesGuarantee';
+  heading?: Maybe<Scalars['String']['output']>;
+  intro1?: Maybe<Scalars['String']['output']>;
+  intro2?: Maybe<Scalars['String']['output']>;
+  cards?: Maybe<Array<Maybe<PricingPageContentPagesGuaranteeCards>>>;
+};
+
+export type PricingPageContentPagesWhySection = {
+  __typename?: 'PricingPageContentPagesWhySection';
+  heading?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  paragraph1?: Maybe<Scalars['String']['output']>;
+  paragraph2?: Maybe<Scalars['String']['output']>;
+  paragraph3?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesNumbersSection = {
+  __typename?: 'PricingPageContentPagesNumbersSection';
+  heading?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  paragraph1?: Maybe<Scalars['String']['output']>;
+  paragraph2?: Maybe<Scalars['String']['output']>;
+  paragraph3?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesStrategySection = {
+  __typename?: 'PricingPageContentPagesStrategySection';
+  heading?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  paragraph1?: Maybe<Scalars['String']['output']>;
+  paragraph2?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesFaqItems = {
+  __typename?: 'PricingPageContentPagesFaqItems';
+  question?: Maybe<Scalars['String']['output']>;
+  answer?: Maybe<Scalars['String']['output']>;
+};
+
+export type PricingPageContentPagesFaq = {
+  __typename?: 'PricingPageContentPagesFaq';
+  heading?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<PricingPageContentPagesFaqItems>>>;
+};
+
+export type PricingPageContentPages = {
+  __typename?: 'PricingPageContentPages';
+  slug: Scalars['String']['output'];
+  hero?: Maybe<PricingPageContentPagesHero>;
+  tabs?: Maybe<PricingPageContentPagesTabs>;
+  infoBanner?: Maybe<Scalars['String']['output']>;
+  features?: Maybe<Array<Maybe<PricingPageContentPagesFeatures>>>;
+  allInOne?: Maybe<PricingPageContentPagesAllInOne>;
+  guarantee?: Maybe<PricingPageContentPagesGuarantee>;
+  whySection?: Maybe<PricingPageContentPagesWhySection>;
+  numbersSection?: Maybe<PricingPageContentPagesNumbersSection>;
+  strategySection?: Maybe<PricingPageContentPagesStrategySection>;
+  faq?: Maybe<PricingPageContentPagesFaq>;
+};
+
+export type PricingPageContent = Node & Document & {
+  __typename?: 'PricingPageContent';
+  pages?: Maybe<Array<Maybe<PricingPageContentPages>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type PricingPageContentPagesHeroFilter = {
+  image?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  badge?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesTabsFilter = {
+  regular?: InputMaybe<StringFilter>;
+  fast?: InputMaybe<StringFilter>;
+  ads?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesFeaturesFilter = {
+  label?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesAllInOneStatsFilter = {
+  value?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesAllInOneFilter = {
+  heading?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  stats?: InputMaybe<PricingPageContentPagesAllInOneStatsFilter>;
+};
+
+export type PricingPageContentPagesGuaranteeCardsFilter = {
+  title?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesGuaranteeFilter = {
+  heading?: InputMaybe<StringFilter>;
+  intro1?: InputMaybe<StringFilter>;
+  intro2?: InputMaybe<StringFilter>;
+  cards?: InputMaybe<PricingPageContentPagesGuaranteeCardsFilter>;
+};
+
+export type PricingPageContentPagesWhySectionFilter = {
+  heading?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringFilter>;
+  paragraph1?: InputMaybe<StringFilter>;
+  paragraph2?: InputMaybe<StringFilter>;
+  paragraph3?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesNumbersSectionFilter = {
+  heading?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringFilter>;
+  paragraph1?: InputMaybe<StringFilter>;
+  paragraph2?: InputMaybe<StringFilter>;
+  paragraph3?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesStrategySectionFilter = {
+  heading?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringFilter>;
+  paragraph1?: InputMaybe<StringFilter>;
+  paragraph2?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesFaqItemsFilter = {
+  question?: InputMaybe<StringFilter>;
+  answer?: InputMaybe<StringFilter>;
+};
+
+export type PricingPageContentPagesFaqFilter = {
+  heading?: InputMaybe<StringFilter>;
+  items?: InputMaybe<PricingPageContentPagesFaqItemsFilter>;
+};
+
+export type PricingPageContentPagesFilter = {
+  slug?: InputMaybe<StringFilter>;
+  hero?: InputMaybe<PricingPageContentPagesHeroFilter>;
+  tabs?: InputMaybe<PricingPageContentPagesTabsFilter>;
+  infoBanner?: InputMaybe<StringFilter>;
+  features?: InputMaybe<PricingPageContentPagesFeaturesFilter>;
+  allInOne?: InputMaybe<PricingPageContentPagesAllInOneFilter>;
+  guarantee?: InputMaybe<PricingPageContentPagesGuaranteeFilter>;
+  whySection?: InputMaybe<PricingPageContentPagesWhySectionFilter>;
+  numbersSection?: InputMaybe<PricingPageContentPagesNumbersSectionFilter>;
+  strategySection?: InputMaybe<PricingPageContentPagesStrategySectionFilter>;
+  faq?: InputMaybe<PricingPageContentPagesFaqFilter>;
+};
+
+export type PricingPageContentFilter = {
+  pages?: InputMaybe<PricingPageContentPagesFilter>;
+};
+
+export type PricingPageContentConnectionEdges = {
+  __typename?: 'PricingPageContentConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<PricingPageContent>;
+};
+
+export type PricingPageContentConnection = Connection & {
+  __typename?: 'PricingPageContentConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PricingPageContentConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -724,6 +954,8 @@ export type Mutation = {
   createContact: Contact;
   updatePricing: Pricing;
   createPricing: Pricing;
+  updatePricingPageContent: PricingPageContent;
+  createPricingPageContent: PricingPageContent;
 };
 
 
@@ -807,11 +1039,24 @@ export type MutationCreatePricingArgs = {
   params: PricingMutation;
 };
 
+
+export type MutationUpdatePricingPageContentArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PricingPageContentMutation;
+};
+
+
+export type MutationCreatePricingPageContentArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PricingPageContentMutation;
+};
+
 export type DocumentUpdateMutation = {
   global?: InputMaybe<GlobalMutation>;
   home?: InputMaybe<HomeMutation>;
   contact?: InputMaybe<ContactMutation>;
   pricing?: InputMaybe<PricingMutation>;
+  pricingPageContent?: InputMaybe<PricingPageContentMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -820,6 +1065,7 @@ export type DocumentMutation = {
   home?: InputMaybe<HomeMutation>;
   contact?: InputMaybe<ContactMutation>;
   pricing?: InputMaybe<PricingMutation>;
+  pricingPageContent?: InputMaybe<PricingPageContentMutation>;
 };
 
 export type GlobalHeaderNavLinksMutation = {
@@ -1019,6 +1265,97 @@ export type PricingMutation = {
   pages?: InputMaybe<Array<InputMaybe<PricingPagesMutation>>>;
 };
 
+export type PricingPageContentPagesHeroMutation = {
+  image?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  badge?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesTabsMutation = {
+  regular?: InputMaybe<Scalars['String']['input']>;
+  fast?: InputMaybe<Scalars['String']['input']>;
+  ads?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesFeaturesMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesAllInOneStatsMutation = {
+  value?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesAllInOneMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  stats?: InputMaybe<Array<InputMaybe<PricingPageContentPagesAllInOneStatsMutation>>>;
+};
+
+export type PricingPageContentPagesGuaranteeCardsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesGuaranteeMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro1?: InputMaybe<Scalars['String']['input']>;
+  intro2?: InputMaybe<Scalars['String']['input']>;
+  cards?: InputMaybe<Array<InputMaybe<PricingPageContentPagesGuaranteeCardsMutation>>>;
+};
+
+export type PricingPageContentPagesWhySectionMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  paragraph1?: InputMaybe<Scalars['String']['input']>;
+  paragraph2?: InputMaybe<Scalars['String']['input']>;
+  paragraph3?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesNumbersSectionMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  paragraph1?: InputMaybe<Scalars['String']['input']>;
+  paragraph2?: InputMaybe<Scalars['String']['input']>;
+  paragraph3?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesStrategySectionMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  paragraph1?: InputMaybe<Scalars['String']['input']>;
+  paragraph2?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesFaqItemsMutation = {
+  question?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PricingPageContentPagesFaqMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<PricingPageContentPagesFaqItemsMutation>>>;
+};
+
+export type PricingPageContentPagesMutation = {
+  slug?: InputMaybe<Scalars['String']['input']>;
+  hero?: InputMaybe<PricingPageContentPagesHeroMutation>;
+  tabs?: InputMaybe<PricingPageContentPagesTabsMutation>;
+  infoBanner?: InputMaybe<Scalars['String']['input']>;
+  features?: InputMaybe<Array<InputMaybe<PricingPageContentPagesFeaturesMutation>>>;
+  allInOne?: InputMaybe<PricingPageContentPagesAllInOneMutation>;
+  guarantee?: InputMaybe<PricingPageContentPagesGuaranteeMutation>;
+  whySection?: InputMaybe<PricingPageContentPagesWhySectionMutation>;
+  numbersSection?: InputMaybe<PricingPageContentPagesNumbersSectionMutation>;
+  strategySection?: InputMaybe<PricingPageContentPagesStrategySectionMutation>;
+  faq?: InputMaybe<PricingPageContentPagesFaqMutation>;
+};
+
+export type PricingPageContentMutation = {
+  pages?: InputMaybe<Array<InputMaybe<PricingPageContentPagesMutation>>>;
+};
+
 export type GlobalPartsFragment = { __typename: 'Global', header?: { __typename: 'GlobalHeader', siteName?: string | null, logo?: string | null, loginLabel?: string | null, signupLabel?: string | null, signedInAs?: string | null, myOrders?: string | null, logout?: string | null, shoppingCartAria?: string | null, navLinks?: Array<{ __typename: 'GlobalHeaderNavLinks', label?: string | null, link?: string | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, ourServicesTitle?: string | null, resourcesTitle?: string | null, companyTitle?: string | null, legalDisclaimer?: string | null, copyright?: string | null, privacyPolicy?: string | null, termsOfService?: string | null, refundPolicy?: string | null, cookiesSettings?: string | null } | null, serviceBar?: { __typename: 'GlobalServiceBar', services?: Array<{ __typename: 'GlobalServiceBarServices', label?: string | null, items?: Array<{ __typename: 'GlobalServiceBarServicesItems', label?: string | null, link?: string | null } | null> | null } | null> | null } | null, cart?: { __typename: 'GlobalCart', title?: string | null, emptyTitle?: string | null, emptySubtext?: string | null, browseServices?: string | null } | null, auth?: { __typename: 'GlobalAuth', loginTitle?: string | null, loginSubtitle?: string | null, emailOrUsernameLabel?: string | null, emailPlaceholder?: string | null, passwordLabel?: string | null, passwordPlaceholder?: string | null, logInButton?: string | null, loggingInButton?: string | null, rememberMe?: string | null, forgotPassword?: string | null, noAccount?: string | null, signUpLinkText?: string | null, signupTitle?: string | null, signupSubtitle?: string | null, hasAccount?: string | null, logInLinkText?: string | null } | null };
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', badge?: string | null, title?: string | null, subtitle?: string | null, ctaPrimary?: string | null, ctaSecondary?: string | null, lastOrder?: string | null, activeCampaigns?: string | null } | null, servicesSection?: { __typename: 'HomeServicesSection', googleServices?: Array<string | null> | null, tiktokServices?: Array<string | null> | null } | null, whyChooseUs?: { __typename: 'HomeWhyChooseUs', title?: string | null, features?: Array<{ __typename: 'HomeWhyChooseUsFeatures', title?: string | null } | null> | null } | null, faq?: { __typename: 'HomeFaq', heading?: string | null, items?: Array<{ __typename: 'HomeFaqItems', question?: string | null, answer?: string | null } | null> | null } | null, comparison?: { __typename: 'HomeComparison', heading?: string | null, better?: string | null, otherTitle?: string | null, ourTitle?: string | null, bestChoice?: string | null, otherPoints?: Array<string | null> | null, ourPoints?: Array<string | null> | null } | null, globalAudienceCta?: { __typename: 'HomeGlobalAudienceCta', title?: string | null, titleHighlight?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null };
@@ -1026,6 +1363,8 @@ export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'Home
 export type ContactPartsFragment = { __typename: 'Contact', title?: string | null, introParagraph1?: string | null, introParagraph2?: string | null, trackOrderLinkText?: string | null, trackOrderLinkHref?: string | null, formHeading?: string | null, successMessage?: string | null, labelEmail?: string | null, labelReason?: string | null, labelOrderNumber?: string | null, labelMessage?: string | null, placeholderEmail?: string | null, placeholderReason?: string | null, placeholderOrderNumber?: string | null, placeholderMessage?: string | null, submitButton?: string | null, submittingButton?: string | null, reasonOptions?: Array<{ __typename: 'ContactReasonOptions', value?: string | null, label?: string | null } | null> | null };
 
 export type PricingPartsFragment = { __typename: 'Pricing', pages?: Array<{ __typename: 'PricingPages', slug: string, quantityKey: string, regularPackages?: Array<{ __typename: 'PricingPagesRegularPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, fastPackages?: Array<{ __typename: 'PricingPagesFastPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, adsPackages?: Array<{ __typename: 'PricingPagesAdsPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null } | null> | null };
+
+export type PricingPageContentPartsFragment = { __typename: 'PricingPageContent', pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1102,6 +1441,25 @@ export type PricingConnectionQueryVariables = Exact<{
 
 
 export type PricingConnectionQuery = { __typename?: 'Query', pricingConnection: { __typename?: 'PricingConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PricingConnectionEdges', cursor: string, node?: { __typename: 'Pricing', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'PricingPages', slug: string, quantityKey: string, regularPackages?: Array<{ __typename: 'PricingPagesRegularPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, fastPackages?: Array<{ __typename: 'PricingPagesFastPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, adsPackages?: Array<{ __typename: 'PricingPagesAdsPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null } | null> | null } | null } | null> | null } };
+
+export type PricingPageContentQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PricingPageContentQuery = { __typename?: 'Query', pricingPageContent: { __typename: 'PricingPageContent', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null } };
+
+export type PricingPageContentConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PricingPageContentFilter>;
+}>;
+
+
+export type PricingPageContentConnectionQuery = { __typename?: 'Query', pricingPageContentConnection: { __typename?: 'PricingPageContentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PricingPageContentConnectionEdges', cursor: string, node?: { __typename: 'PricingPageContent', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null } | null } | null> | null } };
 
 export const GlobalPartsFragmentDoc = gql`
     fragment GlobalParts on Global {
@@ -1283,6 +1641,86 @@ export const PricingPartsFragmentDoc = gql`
       price
       originalPrice
       discount
+    }
+  }
+}
+    `;
+export const PricingPageContentPartsFragmentDoc = gql`
+    fragment PricingPageContentParts on PricingPageContent {
+  __typename
+  pages {
+    __typename
+    slug
+    hero {
+      __typename
+      image
+      title
+      badge
+      intro
+    }
+    tabs {
+      __typename
+      regular
+      fast
+      ads
+    }
+    infoBanner
+    features {
+      __typename
+      label
+    }
+    allInOne {
+      __typename
+      heading
+      description
+      stats {
+        __typename
+        value
+        label
+      }
+    }
+    guarantee {
+      __typename
+      heading
+      intro1
+      intro2
+      cards {
+        __typename
+        title
+        body
+      }
+    }
+    whySection {
+      __typename
+      heading
+      image
+      paragraph1
+      paragraph2
+      paragraph3
+    }
+    numbersSection {
+      __typename
+      heading
+      image
+      paragraph1
+      paragraph2
+      paragraph3
+    }
+    strategySection {
+      __typename
+      heading
+      image
+      paragraph1
+      paragraph2
+    }
+    faq {
+      __typename
+      heading
+      items {
+        __typename
+        question
+        answer
+      }
     }
   }
 }
@@ -1515,6 +1953,63 @@ export const PricingConnectionDocument = gql`
   }
 }
     ${PricingPartsFragmentDoc}`;
+export const PricingPageContentDocument = gql`
+    query pricingPageContent($relativePath: String!) {
+  pricingPageContent(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PricingPageContentParts
+  }
+}
+    ${PricingPageContentPartsFragmentDoc}`;
+export const PricingPageContentConnectionDocument = gql`
+    query pricingPageContentConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PricingPageContentFilter) {
+  pricingPageContentConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PricingPageContentParts
+      }
+    }
+  }
+}
+    ${PricingPageContentPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -1541,6 +2036,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     pricingConnection(variables?: PricingConnectionQueryVariables, options?: C): Promise<{data: PricingConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingConnectionQueryVariables, query: string}> {
         return requester<{data: PricingConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingConnectionQueryVariables, query: string}, PricingConnectionQueryVariables>(PricingConnectionDocument, variables, options);
+      },
+    pricingPageContent(variables: PricingPageContentQueryVariables, options?: C): Promise<{data: PricingPageContentQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentQueryVariables, query: string}> {
+        return requester<{data: PricingPageContentQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentQueryVariables, query: string}, PricingPageContentQueryVariables>(PricingPageContentDocument, variables, options);
+      },
+    pricingPageContentConnection(variables?: PricingPageContentConnectionQueryVariables, options?: C): Promise<{data: PricingPageContentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentConnectionQueryVariables, query: string}> {
+        return requester<{data: PricingPageContentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentConnectionQueryVariables, query: string}, PricingPageContentConnectionQueryVariables>(PricingPageContentConnectionDocument, variables, options);
       }
     };
   }
