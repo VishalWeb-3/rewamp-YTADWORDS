@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import globalContent from '../../content/global/index.json';
 import homeContent from '../../content/home/home.json';
 import contactContent from '../../content/contact/contact.json';
-import pricesContent from '../../content/prices/prices.json';
 
 // Fetch latest from Tina Cloud at runtime so edits in Tina appear without rebuild
 import { client } from '../../tina/__generated__/client';
@@ -22,20 +21,10 @@ function omitSys(obj) {
 
 const ContentContext = createContext(null);
 
-function buildPricesWithPages(prices) {
-  const entries = prices?.pageEntries ?? [];
-  const pages = entries.reduce((acc, e) => {
-    if (e?.slug) acc[e.slug] = e;
-    return acc;
-  }, {});
-  return { ...prices, pages };
-}
-
 const staticValue = {
   global: globalContent,
   home: homeContent,
   contact: contactContent,
-  prices: buildPricesWithPages(pricesContent),
 };
 
 export function ContentProvider({ children }) {
@@ -49,23 +38,20 @@ export function ContentProvider({ children }) {
           client.queries.global({ relativePath: 'index.json' }),
           client.queries.home({ relativePath: 'home.json' }),
         ];
-        const hasContact = typeof client.queries.contact === 'function';
-        const hasPrices = typeof client.queries.prices === 'function';
-        if (hasContact) promises.push(client.queries.contact({ relativePath: 'contact.json' }));
-        if (hasPrices) promises.push(client.queries.prices({ relativePath: 'prices.json' }));
+        if (typeof client.queries.contact === 'function') {
+          promises.push(client.queries.contact({ relativePath: 'contact.json' }));
+        }
         const results = await Promise.all(promises);
         if (cancelled) return;
         const globalData = results[0]?.data?.global;
         const homeData = results[1]?.data?.home;
-        const contactData = hasContact ? results[2]?.data?.contact : undefined;
-        const pricesData = hasPrices ? results[hasContact ? 3 : 2]?.data?.prices : undefined;
-        if (globalData || homeData || contactData || pricesData) {
+        const contactData = results[2]?.data?.contact;
+        if (globalData || homeData || contactData) {
           setValue((prev) => ({
             ...prev,
             ...(globalData && { global: omitSys(globalData) }),
             ...(homeData && { home: omitSys(homeData) }),
             ...(contactData && { contact: omitSys(contactData) }),
-            ...(pricesData && { prices: buildPricesWithPages(omitSys(pricesData)) }),
           }));
         }
       } catch (_) {
@@ -102,23 +88,4 @@ export function useHomeContent() {
 export function useContactContent() {
   const { contact } = useContent();
   return contact;
-}
-
-export function usePricesContent() {
-  const { prices } = useContent();
-  return prices;
-}
-
-/** Get price page config by route slug (e.g. 'buy-youtube-views'). Returns null if not found. */
-export function usePricePage(slug) {
-  const { prices } = useContent();
-  const page = prices?.pages?.[slug] ?? null;
-  const packages = page
-    ? {
-        regular: page.packagesRegular ?? [],
-        fast: page.packagesFast ?? [],
-        ads: page.packagesAds ?? [],
-      }
-    : null;
-  return { page, packages };
 }

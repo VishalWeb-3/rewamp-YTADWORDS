@@ -1,22 +1,5 @@
 # Tina CMS admin setup
 
-## Fix "GraphQL Schema Mismatch"
-
-If the admin shows **"GraphQL Schema Mismatch – editing may not work"**, the schema Tina Cloud has (from `tina-lock.json`) doesn’t match the one the admin was built with (e.g. after adding Contact or Prices).
-
-1. **Regenerate `tina-lock.json`** from the current schema (run from `frontend/`):
-   ```bash
-   node -e "
-   const fs = require('fs');
-   const full = JSON.parse(fs.readFileSync('tina/__generated__/_schema.json', 'utf8'));
-   const { version, meta, collections } = full;
-   fs.writeFileSync('tina/tina-lock.json', JSON.stringify({ schema: { version, meta, collections } }, null, 2));
-   "
-   ```
-2. **Commit and push** the updated `frontend/tina/tina-lock.json`.
-3. **Tina Cloud** → Configuration → **Refresh Branches** (or **Reindex** on the branch). Wait a few minutes.
-4. **Hard-refresh** the admin (Cmd+Shift+R / Ctrl+Shift+R) or close and reopen `/admin`.
-
 ## Fix "Branch 'main' not found" (after you’ve already committed)
 
 Tina Cloud needs **both** the `tina` folder and **`tina-lock.json`** to index your branch. If you committed but the admin still says "Branch 'main' not found", do this:

@@ -2,22 +2,10 @@
   "header": {
     "siteName": "YOUTUBEADWORDS",
     "navLinks": [
-      {
-        "label": "Google Ads Services",
-        "link": "/"
-      },
-      {
-        "label": "YouTube Services",
-        "link": "/buy-youtube-views"
-      },
-      {
-        "label": "TikTok Ads Services",
-        "link": "/"
-      },
-      {
-        "label": "Contact",
-        "link": "/contact"
-      }
+      { "label": "Google Ads Services", "link": "/" },
+      { "label": "YouTube Services", "link": "/buy-youtube-views" },
+      { "label": "TikTok Ads Services", "link": "/" },
+      { "label": "Contact", "link": "/contact" }
     ],
     "loginLabel": "Login",
     "myOrders": "My Orders",
@@ -27,8 +15,17 @@
   "footer": {
     "tagline": "YouTube Ad Words empowers creators and brands to transform raw content into viral success. We make growth easier to achieve, understand, and act on.",
     "ourServicesTitle": "Our Services",
+    "ourServices": ["YouTube Views", "YouTube Subscribers", "YouTube Watch Hours", "TikTok Followers", "Google Ads Views"],
     "resourcesTitle": "Resources",
+    "resources": ["Blog", "Affiliate Program", "Why Choose Us?", "Actionable Feedback", "Corrections Policy"],
     "companyTitle": "Company",
+    "company": [
+      { "label": "About Us", "link": "/about-us" },
+      { "label": "Contact", "link": "/contact" },
+      { "label": "Careers", "link": "#" },
+      { "label": "Partners", "link": "#" },
+      { "label": "Publishing Principles", "link": "#" }
+    ],
     "legalDisclaimer": "All the materials offered by YouTube Ad Words are safeguarded by copyright laws. Unlawful reproduction or distribution of our materials is strictly forbidden. It's important to understand that YouTube Ad Words operates independently and is not associated with any social media platforms. This website is not affiliated with or endorsed by Instagram LLC, YouTube LLC, TikTok Inc., Facebook, or any other social media platform.",
     "copyright": "© 2026 YouTube Ad Words. All rights reserved. | Novence SASU - Cs 48756 Paris",
     "privacyPolicy": "Privacy Policy",
@@ -41,101 +38,41 @@
       {
         "label": "Google Ads Services",
         "items": [
-          {
-            "label": "Google Skip Ads Views",
-            "link": "/buy-google-skip-ads-views"
-          },
-          {
-            "label": "Google Display Ads Views",
-            "link": "/buy-google-display-ads-views"
-          },
-          {
-            "label": "Google Discovery Ads Views",
-            "link": "/buy-google-discovery-ads-views"
-          },
-          {
-            "label": "Google Ads Search Campaign Traffic",
-            "link": "/buy-google-ads-search-traffic"
-          },
-          {
-            "label": "Google Ads Website / App Traffic",
-            "link": "/buy-google-ads-website-traffic"
-          }
+          { "label": "Google Skip Ads Views", "link": "/buy-google-skip-ads-views" },
+          { "label": "Google Display Ads Views", "link": "/buy-google-display-ads-views" },
+          { "label": "Google Discovery Ads Views", "link": "/buy-google-discovery-ads-views" },
+          { "label": "Google Ads Search Campaign Traffic", "link": "/buy-google-ads-search-traffic" },
+          { "label": "Google Ads Website / App Traffic", "link": "/buy-google-ads-website-traffic" }
         ]
       },
       {
         "label": "YouTube Services",
         "items": [
-          {
-            "label": "Buy YouTube Views",
-            "link": "/buy-youtube-views"
-          },
-          {
-            "label": "Buy YouTube Subscribers",
-            "link": "/buy-youtube-subscribers"
-          },
-          {
-            "label": "Buy YouTube Likes",
-            "link": "/buy-youtube-likes"
-          },
-          {
-            "label": "Buy YouTube Watch Hours",
-            "link": "/buy-youtube-watch-hours"
-          }
+          { "label": "Buy YouTube Views", "link": "/buy-youtube-views" },
+          { "label": "Buy YouTube Subscribers", "link": "/buy-youtube-subscribers" },
+          { "label": "Buy YouTube Likes", "link": "/buy-youtube-likes" },
+          { "label": "Buy YouTube Watch Hours", "link": "/buy-youtube-watch-hours" }
         ]
       },
       {
         "label": "TikTok Ads Services",
         "items": [
-          {
-            "label": "TikTok Followers Growth",
-            "link": "/buy-tiktok-followers"
-          },
-          {
-            "label": "TikTok Ads Views",
-            "link": "/buy-tiktok-ads-views"
-          },
-          {
-            "label": "TikTok Reach / Impressions",
-            "link": "/buy-tiktok-reach"
-          },
-          {
-            "label": "TikTok Engagement Services",
-            "link": "/buy-tiktok-engagement"
-          },
-          {
-            "label": "TikTok Video Views",
-            "link": "/buy-tiktok-video-views"
-          },
-          {
-            "label": "TikTok Website / App Traffic",
-            "link": "/buy-tiktok-traffic"
-          }
+          { "label": "TikTok Followers Growth", "link": "/buy-tiktok-followers" },
+          { "label": "TikTok Ads Views", "link": "/buy-tiktok-ads-views" },
+          { "label": "TikTok Reach / Impressions", "link": "/buy-tiktok-reach" },
+          { "label": "TikTok Engagement Services", "link": "/buy-tiktok-engagement" },
+          { "label": "TikTok Video Views", "link": "/buy-tiktok-video-views" },
+          { "label": "TikTok Website / App Traffic", "link": "/buy-tiktok-traffic" }
         ]
       },
       {
         "label": "Buy Google Reviews",
         "items": [
-          {
-            "label": "Buy Female Google Reviews",
-            "link": "/buy-female-google-reviews"
-          },
-          {
-            "label": "Buy Male Google Reviews",
-            "link": "/buy-male-google-reviews"
-          },
-          {
-            "label": "Buy USA Google Reviews",
-            "link": "/buy-usa-google-reviews"
-          },
-          {
-            "label": "Buy Google Local Guide Reviews",
-            "link": "/buy-google-local-guide-reviews"
-          },
-          {
-            "label": "Buy Google Reviews by Age Group",
-            "link": "/buy-google-reviews-by-age-group"
-          }
+          { "label": "Buy Female Google Reviews", "link": "/buy-female-google-reviews" },
+          { "label": "Buy Male Google Reviews", "link": "/buy-male-google-reviews" },
+          { "label": "Buy USA Google Reviews", "link": "/buy-usa-google-reviews" },
+          { "label": "Buy Google Local Guide Reviews", "link": "/buy-google-local-guide-reviews" },
+          { "label": "Buy Google Reviews by Age Group", "link": "/buy-google-reviews-by-age-group" }
         ]
       }
     ]
@@ -161,6 +98,8 @@
     "signUpLinkText": "Sign up here",
     "signupTitle": "Sign Up",
     "signupSubtitle": "Create your account",
+    "createAccountButton": "Create Account",
+    "creatingAccountButton": "Creating Account...",
     "hasAccount": "Already have an account?",
     "logInLinkText": "Log in"
   }
