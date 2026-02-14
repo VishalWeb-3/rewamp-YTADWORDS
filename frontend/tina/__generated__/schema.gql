@@ -650,8 +650,15 @@ type PricingPageContent implements Node & Document {
   _values: JSON!
 }
 
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
 input PricingPageContentPagesHeroFilter {
-  image: StringFilter
+  image: ImageFilter
   title: StringFilter
   badge: StringFilter
   intro: StringFilter
@@ -692,7 +699,7 @@ input PricingPageContentPagesGuaranteeFilter {
 
 input PricingPageContentPagesWhySectionFilter {
   heading: StringFilter
-  image: StringFilter
+  image: ImageFilter
   paragraph1: StringFilter
   paragraph2: StringFilter
   paragraph3: StringFilter
@@ -700,7 +707,7 @@ input PricingPageContentPagesWhySectionFilter {
 
 input PricingPageContentPagesNumbersSectionFilter {
   heading: StringFilter
-  image: StringFilter
+  image: ImageFilter
   paragraph1: StringFilter
   paragraph2: StringFilter
   paragraph3: StringFilter
@@ -708,7 +715,7 @@ input PricingPageContentPagesNumbersSectionFilter {
 
 input PricingPageContentPagesStrategySectionFilter {
   heading: StringFilter
-  image: StringFilter
+  image: ImageFilter
   paragraph1: StringFilter
   paragraph2: StringFilter
 }

@@ -835,8 +835,15 @@ export type PricingPageContent = Node & Document & {
   _values: Scalars['JSON']['output'];
 };
 
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type PricingPageContentPagesHeroFilter = {
-  image?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
   title?: InputMaybe<StringFilter>;
   badge?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
@@ -877,7 +884,7 @@ export type PricingPageContentPagesGuaranteeFilter = {
 
 export type PricingPageContentPagesWhySectionFilter = {
   heading?: InputMaybe<StringFilter>;
-  image?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
   paragraph1?: InputMaybe<StringFilter>;
   paragraph2?: InputMaybe<StringFilter>;
   paragraph3?: InputMaybe<StringFilter>;
@@ -885,7 +892,7 @@ export type PricingPageContentPagesWhySectionFilter = {
 
 export type PricingPageContentPagesNumbersSectionFilter = {
   heading?: InputMaybe<StringFilter>;
-  image?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
   paragraph1?: InputMaybe<StringFilter>;
   paragraph2?: InputMaybe<StringFilter>;
   paragraph3?: InputMaybe<StringFilter>;
@@ -893,7 +900,7 @@ export type PricingPageContentPagesNumbersSectionFilter = {
 
 export type PricingPageContentPagesStrategySectionFilter = {
   heading?: InputMaybe<StringFilter>;
-  image?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
   paragraph1?: InputMaybe<StringFilter>;
   paragraph2?: InputMaybe<StringFilter>;
 };

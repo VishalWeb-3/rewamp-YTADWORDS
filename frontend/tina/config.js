@@ -293,7 +293,7 @@ export default defineConfig({
                 name: 'hero',
                 label: 'Hero',
                 fields: [
-                  { type: 'string', name: 'image', label: 'Hero Image URL', description: 'e.g. /pricepage.png' },
+                  { type: 'image', name: 'image', label: 'Hero Image', description: 'Upload or pick from Media Manager' },
                   { type: 'string', name: 'title', label: 'Title' },
                   { type: 'string', name: 'badge', label: 'Badge (e.g. Instantly)' },
                   { type: 'string', name: 'intro', label: 'Intro Paragraph', ui: { component: 'textarea' } },
@@ -362,7 +362,7 @@ export default defineConfig({
                 label: 'Why Section',
                 fields: [
                   { type: 'string', name: 'heading', label: 'Heading' },
-                  { type: 'string', name: 'image', label: 'Image URL' },
+                  { type: 'image', name: 'image', label: 'Image', description: 'Upload or pick from Media Manager' },
                   { type: 'string', name: 'paragraph1', label: 'Paragraph 1', ui: { component: 'textarea' } },
                   { type: 'string', name: 'paragraph2', label: 'Paragraph 2', ui: { component: 'textarea' } },
                   { type: 'string', name: 'paragraph3', label: 'Paragraph 3', ui: { component: 'textarea' } },
@@ -374,7 +374,7 @@ export default defineConfig({
                 label: 'Numbers / Engagement Section',
                 fields: [
                   { type: 'string', name: 'heading', label: 'Heading' },
-                  { type: 'string', name: 'image', label: 'Image URL' },
+                  { type: 'image', name: 'image', label: 'Image', description: 'Upload or pick from Media Manager' },
                   { type: 'string', name: 'paragraph1', label: 'Paragraph 1', ui: { component: 'textarea' } },
                   { type: 'string', name: 'paragraph2', label: 'Paragraph 2', ui: { component: 'textarea' } },
                   { type: 'string', name: 'paragraph3', label: 'Paragraph 3', ui: { component: 'textarea' } },
@@ -386,7 +386,7 @@ export default defineConfig({
                 label: 'Strategy Section',
                 fields: [
                   { type: 'string', name: 'heading', label: 'Heading' },
-                  { type: 'string', name: 'image', label: 'Image URL' },
+                  { type: 'image', name: 'image', label: 'Image', description: 'Upload or pick from Media Manager' },
                   { type: 'string', name: 'paragraph1', label: 'Paragraph 1', ui: { component: 'textarea' } },
                   { type: 'string', name: 'paragraph2', label: 'Paragraph 2', ui: { component: 'textarea' } },
                 ],
