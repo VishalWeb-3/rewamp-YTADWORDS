@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 
 const viewPackagesFallback = {
   regular: [
@@ -26,7 +26,7 @@ const viewPackagesFallback = {
   ],
 };
 
-const features = [
+const featuresFallback = [
   { label: 'Real & Organic Views', icon: 'check' },
   { label: 'High Quality', icon: 'check' },
   { label: 'Instant start', icon: 'check' },
@@ -35,11 +35,21 @@ const features = [
   { label: 'Privacy and safety', icon: 'check' },
 ];
 
+const faqsFallback = [
+  { question: 'How quickly will I receive my YouTube views?', answer: 'Delivery times vary depending on the package you choose. Regular views typically start within a few hours, while Fast Views begin immediately. Ads Views are delivered through Google Ads campaigns and may take 24-48 hours to start. All packages are designed to deliver views gradually to ensure natural growth patterns.' },
+  { question: 'Are the views real and from real users?', answer: 'Yes! Views4You provides authentic views from real users. Our views come from recommended videos in YouTube Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our views have high retention rates and help activate YouTube\'s algorithm.' },
+  { question: 'Will buying views get my channel banned?', answer: 'No, our service is completely safe. We use legitimate methods that comply with YouTube\'s terms of service. Our views come from real users through organic discovery methods, so there\'s no risk to your channel. We\'ve been providing this service safely for years.' },
+  { question: 'Can I choose which country the views come from?', answer: 'Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience. You can also manually select a specific country when placing your order to ensure the views align with your content\'s target demographic.' },
+  { question: 'What happens if views drop after delivery?', answer: 'We offer a refill guarantee on all our packages. If you experience any drops in views, we will refill them at no additional cost. Our high-quality views have excellent retention rates, but we stand behind our service with this guarantee.' },
+  { question: 'Can I buy views for multiple videos at once?', answer: 'Absolutely! You can purchase views for as many videos as you like. Many of our customers buy views for every video they produce to maintain consistent growth and engagement across their channel.' },
+];
+
 export default function BuyYouTubeViewsPage() {
   const { addToCart } = useCart();
   const { goToCheckout, isLoggedIn } = useCheckout();
   const navigate = useNavigate();
   const viewPackages = usePricingPackages('buy-youtube-views', viewPackagesFallback);
+  const content = usePricingPageContent('buy-youtube-views', null);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -51,6 +61,12 @@ export default function BuyYouTubeViewsPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = viewPackages ? viewPackages[activeTab] : [];
+
+  const hero = content?.hero;
+  const tabs = content?.tabs;
+  const infoBanner = content?.infoBanner;
+  const features = (content?.features?.length ? content.features : featuresFallback).map((f) => ({ ...f, icon: 'check' }));
+  const faqs = content?.faq?.items?.length ? content.faq.items : faqsFallback;
 
   const handleAddToCart = (pkg) => {
     addToCart({
@@ -64,36 +80,15 @@ export default function BuyYouTubeViewsPage() {
     });
   };
 
-  const faqs = [
-    {
-      question: 'How quickly will I receive my YouTube views?',
-      answer: 'Delivery times vary depending on the package you choose. Regular views typically start within a few hours, while Fast Views begin immediately. Ads Views are delivered through Google Ads campaigns and may take 24-48 hours to start. All packages are designed to deliver views gradually to ensure natural growth patterns.',
-    },
-    {
-      question: 'Are the views real and from real users?',
-      answer: 'Yes! Views4You provides authentic views from real users. Our views come from recommended videos in YouTube Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our views have high retention rates and help activate YouTube\'s algorithm.',
-    },
-    {
-      question: 'Will buying views get my channel banned?',
-      answer: 'No, our service is completely safe. We use legitimate methods that comply with YouTube\'s terms of service. Our views come from real users through organic discovery methods, so there\'s no risk to your channel. We\'ve been providing this service safely for years.',
-    },
-    {
-      question: 'Can I choose which country the views come from?',
-      answer: 'Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience. You can also manually select a specific country when placing your order to ensure the views align with your content\'s target demographic.',
-    },
-    {
-      question: 'What happens if views drop after delivery?',
-      answer: 'We offer a refill guarantee on all our packages. If you experience any drops in views, we will refill them at no additional cost. Our high-quality views have excellent retention rates, but we stand behind our service with this guarantee.',
-    },
-    {
-      question: 'Can I buy views for multiple videos at once?',
-      answer: 'Absolutely! You can purchase views for as many videos as you like. Many of our customers buy views for every video they produce to maintain consistent growth and engagement across their channel.',
-    },
-  ];
-
   const toggleFAQ = (index) => {
     setOpenFAQIndex(openFAQIndex === index ? null : index);
   };
+
+  const tabList = [
+    { id: 'regular', label: tabs?.regular ?? 'Regular Views' },
+    { id: 'fast', label: tabs?.fast ?? 'Fast Views' },
+    { id: 'ads', label: tabs?.ads ?? 'Ads Views' },
+  ];
 
   return (
     <Layout>
@@ -110,20 +105,20 @@ export default function BuyYouTubeViewsPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src="/pricepage.png"
-                alt="Buy YouTube Views"
+                src={hero?.image ?? '/pricepage.png'}
+                alt={hero?.title ?? 'Buy YouTube Views'}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
             </div>
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                Buy YouTube Views{' '}
+                {hero?.title ?? 'Buy YouTube Views'}{' '}
                 <span className="bg-brand-red text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
-                  Instantly
+                  {hero?.badge ?? 'Instantly'}
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                Views4You is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                {hero?.intro ?? 'Views4You is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -132,11 +127,7 @@ export default function BuyYouTubeViewsPage() {
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
             {/* Tabs */}
             <div className="flex gap-4 mb-6 border-b border-gray-200">
-              {[
-                { id: 'regular', label: 'Regular Views' },
-                { id: 'fast', label: 'Fast Views' },
-                { id: 'ads', label: 'Ads Views' },
-              ].map((tab) => (
+              {tabList.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => {
@@ -155,12 +146,17 @@ export default function BuyYouTubeViewsPage() {
             </div>
 
             {/* Information Banner */}
-            <div className="bg-gray-100 rounded-lg p-4 mb-6">
-              <p className="text-gray-700 text-sm">
-                <span className="font-medium">Information:</span> We recommend our{' '}
-                <span className="text-brand-red font-semibold">Fast YouTube Views</span> packages for orders with a high number of views.
-              </p>
-            </div>
+            {(infoBanner ?? true) && (
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <p className="text-gray-700 text-sm">
+                  {infoBanner ? (
+                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                  ) : (
+                    <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Fast YouTube Views</span> packages for orders with a high number of views.</>
+                  )}
+                </p>
+              </div>
+            )}
 
             {/* View Packages Grid */}
             <div className="grid grid-cols-2 gap-4 mb-6">
@@ -278,17 +274,12 @@ export default function BuyYouTubeViewsPage() {
         {/* All In One YouTube Views Campaign Section */}
         <div className="mt-12 lg:mt-16">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
-            {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
-            
             <div className="grid lg:grid-cols-2 gap-8 relative z-10">
-              {/* Left Section */}
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                  All In One YouTube Views Campaign
+                  {content?.allInOne?.heading ?? 'All In One YouTube Views Campaign'}
                 </h2>
-                
-                {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
                     ${(viewPackages?.ads?.find((p) => p.views === '5.0k') || viewPackages?.regular?.find((p) => p.views === '5.0k'))?.price ?? '47.49'}
@@ -296,56 +287,29 @@ export default function BuyYouTubeViewsPage() {
                   <button
                     onClick={() => {
                       const pkg = viewPackages?.ads?.find((p) => p.views === '5.0k') || viewPackages?.regular?.find((p) => p.views === '5.0k') || { views: '5000', price: '47.49' };
-                      goToCheckout(pkg, 'YouTube', 'All In One YouTube Views Campaign', 'views');
+                      goToCheckout(pkg, 'YouTube', content?.allInOne?.heading ?? 'All In One YouTube Views Campaign', 'views');
                     }}
                     className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors"
                   >
                     Buy now
                   </button>
                 </div>
-                
-                {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                  With Views4You's all-inclusive package, you can{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube subscribers</span>, and views simultaneously. Moreover, you may order{' '}
-                  <span className="text-brand-red font-semibold">YouTube likes service</span> and add it to the package for the best price.
+                  {content?.allInOne?.description ?? "With Views4You's all-inclusive package, you can buy YouTube subscribers, and views simultaneously. Moreover, you may order YouTube likes service and add it to the package for the best price."}
                 </p>
               </div>
-              
-              {/* Right Section - Features Grid */}
               <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-4xl lg:text-5xl font-bold text-brand-red mb-2">
-                    5000
+                {((content?.allInOne?.stats?.length && content.allInOne.stats) || [
+                  { value: '5000', label: 'Views for chosen video' },
+                  { value: '1000', label: 'Likes for chosen video' },
+                  { value: '100', label: 'New active subscribers at once' },
+                  { value: '24/7', label: 'Customer Support' },
+                ]).map((stat, i) => (
+                  <div key={i} className="text-center">
+                    <div className="text-4xl lg:text-5xl font-bold text-brand-red mb-2">{stat.value}</div>
+                    <div className="text-gray-700 text-sm lg:text-base">{stat.label}</div>
                   </div>
-                  <div className="text-gray-700 text-sm lg:text-base">
-                    Views for chosen video
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl lg:text-5xl font-bold text-brand-red mb-2">
-                    1000
-                  </div>
-                  <div className="text-gray-700 text-sm lg:text-base">
-                    Likes for chosen video
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl lg:text-5xl font-bold text-brand-red mb-2">
-                    100
-                  </div>
-                  <div className="text-gray-700 text-sm lg:text-base">
-                    New active subscribers at once
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl lg:text-5xl font-bold text-brand-red mb-2">
-                    24/7
-                  </div>
-                  <div className="text-gray-700 text-sm lg:text-base">
-                    Customer Support
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -354,159 +318,84 @@ export default function BuyYouTubeViewsPage() {
         {/* Views4You's Guarantee Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Views4You's Guarantee When You Buy YouTube Views
+                {content?.guarantee?.heading ?? "Views4You's Guarantee When You Buy YouTube Views"}
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  We know that you put in a lot of hours to produce amazing content on YouTube. Views4You works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of views, just select how many you want!
-                </p>
-                <p>
-                  To grow their YouTube subscribers and likes daily with Views4You, our customers buy YouTube views for every video they produce.
-                </p>
+                <p>{content?.guarantee?.intro1 ?? "We know that you put in a lot of hours to produce amazing content on YouTube. Views4You works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of views, just select how many you want!"}</p>
+                <p>{content?.guarantee?.intro2 ?? "To grow their YouTube subscribers and likes daily with Views4You, our customers buy YouTube views for every video they produce."}</p>
               </div>
             </div>
-
-            {/* Right Section - First Feature Card */}
-            <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
-              <div className="mb-4">
-                {/* Red 3D Icon */}
-                <div className="relative w-12 h-12">
-                  <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
-                  <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
+            {(content?.guarantee?.cards?.length ? content.guarantee.cards : [
+              { title: 'Know the Specific Source of YouTube Views', body: 'Our customers who buy views from us see in YouTube Analytics that the views come from recommended videos. In this way, it also increases the number of views on your videos organically. You can do a trial of our free YouTube views service before purchasing.' },
+              { title: 'Get Views from the Suitable Country for Your Channel', body: 'After selecting the number of views you want to buy, you will be asked to enter the link of your video. Our system will automatically check your channel and will suggest a suitable country for your channel on the next screen. In this way, you will get a boost in views from viewers that are in alignment with your target audience.' },
+              { title: 'Lowest Price Guaranteed', body: "Views4You services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price." },
+              { title: 'Support Team Working Every Day of the Week', body: "One side of the world is day meanwhile the other side is night, but this does not affect our service. Our team is available 24/7 to answer your questions about our YouTube growth services, no matter what country you live in." },
+              { title: 'Slow or Fast Viewing Preference', body: "Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. Views4You adapts to whatever your preference is to give you the best satisfaction." },
+            ]).slice(0, 1).map((card, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
+                <div className="mb-4">
+                  <div className="relative w-12 h-12">
+                    <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
+                    <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
+                <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">{card.title}</h3>
+                <p className="text-gray-700 text-sm lg:text-base leading-relaxed">{card.body}</p>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                Know the Specific Source of YouTube Views
-              </h3>
-              <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Our customers who buy views from us see in YouTube Analytics that the views come from recommended videos. In this way, it also increases the number of views on your videos organically. You can do a trial of our free YouTube views service before purchasing.
-              </p>
-            </div>
+            ))}
           </div>
-
-          {/* Feature Cards Grid */}
           <div className="grid md:grid-cols-2 gap-6 mt-8">
-            {/* Card 1 */}
-            <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
-              <div className="mb-4">
-                <div className="relative w-12 h-12">
-                  <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
-                  <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
+            {(content?.guarantee?.cards?.length ? content.guarantee.cards : [
+              { title: 'Know the Specific Source of YouTube Views', body: 'Our customers who buy views from us see in YouTube Analytics that the views come from recommended videos. In this way, it also increases the number of views on your videos organically. You can do a trial of our free YouTube views service before purchasing.' },
+              { title: 'Get Views from the Suitable Country for Your Channel', body: 'After selecting the number of views you want to buy, you will be asked to enter the link of your video. Our system will automatically check your channel and will suggest a suitable country for your channel on the next screen. In this way, you will get a boost in views from viewers that are in alignment with your target audience.' },
+              { title: 'Lowest Price Guaranteed', body: "Views4You services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price." },
+              { title: 'Support Team Working Every Day of the Week', body: "One side of the world is day meanwhile the other side is night, but this does not affect our service. Our team is available 24/7 to answer your questions about our YouTube growth services, no matter what country you live in." },
+              { title: 'Slow or Fast Viewing Preference', body: "Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. Views4You adapts to whatever your preference is to give you the best satisfaction." },
+            ]).slice(1).map((card, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
+                <div className="mb-4">
+                  <div className="relative w-12 h-12">
+                    <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
+                    <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
+                <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">{card.title}</h3>
+                <p className="text-gray-700 text-sm lg:text-base leading-relaxed">{card.body}</p>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                Get Views from the Suitable Country for Your Channel
-              </h3>
-              <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                After selecting the number of views you want to buy, you will be asked to enter the link of your video. Our system will automatically check your channel and will suggest a suitable country for your channel on the next screen. In this way, you will get a boost in views from viewers that are in alignment with your target audience.
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
-              <div className="mb-4">
-                <div className="relative w-12 h-12">
-                  <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
-                  <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                Lowest Price Guaranteed
-              </h3>
-              <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Views4You services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
-              <div className="mb-4">
-                <div className="relative w-12 h-12">
-                  <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
-                  <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                Support Team Working Every Day of the Week
-              </h3>
-              <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                One side of the world is day meanwhile the other side is night, but this does not affect our service. Our team is available 24/7 to answer your questions about our YouTube growth services, no matter what country you live in.
-              </p>
-            </div>
-
-            {/* Card 4 */}
-            <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
-              <div className="mb-4">
-                <div className="relative w-12 h-12">
-                  <div className="absolute inset-0 bg-brand-red rounded transform rotate-12 shadow-lg"></div>
-                  <div className="absolute inset-0 bg-red-400/50 rounded transform rotate-6 translate-x-1 translate-y-1"></div>
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
-                Slow or Fast Viewing Preference
-              </h3>
-              <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. Views4You adapts to whatever your preference is to give you the best satisfaction.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Why Do You Need To Buy YouTube Views Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - GIF */}
             <div className="flex justify-center lg:justify-start">
               <img
-                src="/demo1.jpg"
-                alt="YouTube Views Growing"
+                src={content?.whySection?.image ?? '/demo1.jpg'}
+                alt={content?.whySection?.heading ?? 'YouTube Views Growing'}
                 className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
               />
             </div>
-
-            {/* Right Section - Text Content */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Why Do You Need To Buy YouTube Views?
+                {content?.whySection?.heading ?? 'Why Do You Need To Buy YouTube Views?'}
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  The number of views your YouTube video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of views, they will think that your video is valuable and worth watching.
-                </p>
-                <p>
-                  This increases the chances that they will click on your video and watch it. In addition, YouTube's algorithm favors videos with more views, which means that videos with more views are more likely to appear in search results and be recommended to other users.
-                </p>
-                <p>
-                  Therefore, buying YouTube views can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic views and subscribers in the long run.
-                </p>
+                <p>{content?.whySection?.paragraph1 ?? "The number of views your YouTube video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of views, they will think that your video is valuable and worth watching."}</p>
+                <p>{content?.whySection?.paragraph2 ?? "This increases the chances that they will click on your video and watch it. In addition, YouTube's algorithm favors videos with more views, which means that videos with more views are more likely to appear in search results and be recommended to other users."}</p>
+                <p>{content?.whySection?.paragraph3 ?? "Therefore, buying YouTube views can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic views and subscribers in the long run."}</p>
               </div>
             </div>
           </div>
@@ -515,35 +404,23 @@ export default function BuyYouTubeViewsPage() {
         {/* Numbers, Engagement, and Reputation Section */}
         <div className="mt-12 lg:mt-32">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Text Content */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; Views4You
+                {content?.numbersSection?.heading ?? 'Numbers, Engagement, and Reputation; Views4You'}
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?
-                </p>
-                <p>
-                  Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.
-                </p>
-                <p>
-                  What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? Views4You can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you.
-                </p>
+                <p>{content?.numbersSection?.paragraph1 ?? "What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?"}</p>
+                <p>{content?.numbersSection?.paragraph2 ?? "Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to."}</p>
+                <p>{content?.numbersSection?.paragraph3 ?? "What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? Views4You can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you."}</p>
               </div>
             </div>
-
-            {/* Right Section - Image */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                {/* Decorative shapes */}
                 <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
-                {/* Main image */}
                 <img
-                  src="/demo1.jpg"
-                  alt="Content Creation"
+                  src={content?.numbersSection?.image ?? '/demo1.jpg'}
+                  alt={content?.numbersSection?.heading ?? 'Content Creation'}
                   className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
                 />
               </div>
@@ -554,36 +431,24 @@ export default function BuyYouTubeViewsPage() {
         {/* An Excellent Strategy Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Image */}
             <div className="flex justify-center lg:justify-start order-2 lg:order-1">
               <div className="relative">
-                {/* Decorative shapes */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
-                {/* Main image */}
                 <img
-                  src="/demo2.jpg"
-                  alt="YouTube Channel Strategy"
+                  src={content?.strategySection?.image ?? '/demo2.jpg'}
+                  alt={content?.strategySection?.heading ?? 'YouTube Channel Strategy'}
                   className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
                 />
               </div>
             </div>
-
-            {/* Right Section - Text Content */}
             <div className="space-y-4 order-1 lg:order-2">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                An Excellent Strategy To Uplift Your YouTube Channel
+                {content?.strategySection?.heading ?? 'An Excellent Strategy To Uplift Your YouTube Channel'}
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  Organic views are great, but if you're in need, it is possible to{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube views</span> and{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube watch hours</span> that will provide you with just as much influence in way shorter time.
-                </p>
-                <p>
-                  The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying views on YouTube may be an excellent strategy to uplift your YouTube channel. The bought views serve as an effective support base and a credibility for visitors to become subscribers.
-                </p>
+                <p>{content?.strategySection?.paragraph1 ?? "Organic views are great, but if you're in need, it is possible to buy YouTube views and buy YouTube watch hours that will provide you with just as much influence in way shorter time."}</p>
+                <p>{content?.strategySection?.paragraph2 ?? "The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying views on YouTube may be an excellent strategy to uplift your YouTube channel. The bought views serve as an effective support base and a credibility for visitors to become subscribers."}</p>
               </div>
             </div>
           </div>
@@ -592,13 +457,18 @@ export default function BuyYouTubeViewsPage() {
         {/* FAQ Section */}
         <div className="mt-12 lg:mt-16">
           <div className="max-w-4xl mx-auto">
-            {/* Heading */}
             <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
-              Frequently Asked{' '}
-              <span className="text-brand-red relative">
-                Questions
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-red" />
-              </span>
+              {content?.faq?.heading ? (
+                content.faq.heading
+              ) : (
+                <>
+                  Frequently Asked{' '}
+                  <span className="text-brand-red relative">
+                    Questions
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-red" />
+                  </span>
+                </>
+              )}
             </h2>
 
             {/* FAQ Accordion */}

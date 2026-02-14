@@ -5,6 +5,7 @@ import globalContent from '../../content/global/index.json';
 import homeContent from '../../content/home/home.json';
 import contactContent from '../../content/contact/contact.json';
 import pricingContent from '../../content/pricing/index.json';
+import pricingPageContent from '../../content/pricing-pages/index.json';
 
 // Fetch latest from Tina Cloud at runtime so edits in Tina appear without rebuild
 import { client } from '../../tina/__generated__/client';
@@ -27,6 +28,7 @@ const staticValue = {
   home: homeContent,
   contact: contactContent,
   pricing: pricingContent,
+  pricingPageContent,
 };
 
 export function ContentProvider({ children }) {
@@ -36,29 +38,28 @@ export function ContentProvider({ children }) {
     let cancelled = false;
     const fetchFromTina = async () => {
       try {
-        const promises = [
+        const empty = Promise.resolve({ data: {} });
+        const results = await Promise.all([
           client.queries.global({ relativePath: 'index.json' }),
           client.queries.home({ relativePath: 'home.json' }),
-        ];
-        if (typeof client.queries.contact === 'function') {
-          promises.push(client.queries.contact({ relativePath: 'contact.json' }));
-        }
-        if (typeof client.queries.pricing === 'function') {
-          promises.push(client.queries.pricing({ relativePath: 'index.json' }));
-        }
-        const results = await Promise.all(promises);
+          typeof client.queries.contact === 'function' ? client.queries.contact({ relativePath: 'contact.json' }) : empty,
+          typeof client.queries.pricing === 'function' ? client.queries.pricing({ relativePath: 'index.json' }) : empty,
+          typeof client.queries.pricingPageContent === 'function' ? client.queries.pricingPageContent({ relativePath: 'index.json' }) : empty,
+        ]);
         if (cancelled) return;
         const globalData = results[0]?.data?.global;
         const homeData = results[1]?.data?.home;
         const contactData = results[2]?.data?.contact;
         const pricingData = results[3]?.data?.pricing;
-        if (globalData || homeData || contactData || pricingData) {
+        const pricingPageContentData = results[4]?.data?.pricingPageContent;
+        if (globalData || homeData || contactData || pricingData || pricingPageContentData) {
           setValue((prev) => ({
             ...prev,
             ...(globalData && { global: omitSys(globalData) }),
             ...(homeData && { home: omitSys(homeData) }),
             ...(contactData && { contact: omitSys(contactData) }),
             ...(pricingData && { pricing: omitSys(pricingData) }),
+            ...(pricingPageContentData && { pricingPageContent: omitSys(pricingPageContentData) }),
           }));
         }
       } catch (_) {
@@ -141,4 +142,24 @@ export function usePricingPackages(slug, fallbackPackages) {
     }
     return fallbackPackages ?? null;
   }, [pricing, slug, fallbackPackages]);
+}
+
+/**
+ * Get pricing page content (hero, tabs, features, FAQ, etc.) by slug.
+ * Returns null if no entry for that slug.
+ */
+export function getPricingPageContentBySlug(pricingPageContent, slug) {
+  if (!pricingPageContent?.pages || !slug) return null;
+  return pricingPageContent.pages.find((p) => p && p.slug === slug) ?? null;
+}
+
+/**
+ * Hook: get editable pricing page content by slug. Falls back to fallback when no Tina data for that slug.
+ */
+export function usePricingPageContent(slug, fallback) {
+  const { pricingPageContent } = useContent();
+  return useMemo(() => {
+    const fromTina = getPricingPageContentBySlug(pricingPageContent, slug);
+    return fromTina ?? fallback ?? null;
+  }, [pricingPageContent, slug, fallback]);
 }
