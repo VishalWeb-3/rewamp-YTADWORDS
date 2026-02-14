@@ -17,7 +17,7 @@ function getPlatform(serviceType) {
 }
 
 export default function CheckoutPage() {
-  const { user, isLoggedIn, isLoading } = useAuth();
+  const { user } = useAuth();
   const { cartItems, removeFromCart, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();

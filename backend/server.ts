@@ -317,26 +317,22 @@ app.post("/api/orders/create", async (req, res) => {
   }
 
   try {
-    let user =
-      userId != null && userId !== ""
-        ? await prisma.user.findFirst({ where: { id: parseInt(String(userId), 10) } })
-        : null;
+    let user = await prisma.user.findFirst({
+      where: userId ? { id: parseInt(userId) } : { email },
+    });
+
+    // Guest checkout: if no user exists for this email, create a guest user so order can proceed
     if (!user) {
-      user = await prisma.user.findFirst({ where: { email } });
-    }
-    if (!user) {
-      const guestUsername = `guest_${email.replace(/[^a-zA-Z0-9]/g, "_").slice(0, 30)}_${Date.now()}`;
+      const guestUsername = `guest_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+      const passwordHash = await bcrypt.hash(Math.random().toString(36) + Date.now(), SALT_ROUNDS);
       user = await prisma.user.create({
         data: {
           email,
           username: guestUsername,
-          password: await bcrypt.hash(crypto.randomBytes(32).toString("hex"), SALT_ROUNDS),
+          password: passwordHash,
+          name: null,
         },
       });
-    }
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
     }
 
     const totalAmount = items.reduce(
@@ -364,7 +360,10 @@ app.post("/api/orders/create", async (req, res) => {
           amount: totalAmount,
           currency: "USD",
           externalOrderId,
-          customer: { email: user.email, name: user.name || user.username },
+          customer: {
+            email: user.email,
+            name: user.name || (user.username.startsWith("guest_") ? "Guest" : user.username),
+          },
           successUrl,
           failureUrl,
         }),

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 
@@ -6,6 +6,7 @@ export function useCheckout() {
   const { isLoggedIn } = useAuth();
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const goToCheckout = (pkg, platform, serviceLabel, quantityKey = 'views') => {
     const amount = pkg[quantityKey] ?? pkg.quantity ?? pkg.views ?? pkg.likes ?? pkg.subscribers ?? pkg.hours ?? '0';
