@@ -317,9 +317,23 @@ app.post("/api/orders/create", async (req, res) => {
   }
 
   try {
-    const user = await prisma.user.findFirst({
-      where: userId ? { id: parseInt(userId) } : { email },
-    });
+    let user =
+      userId != null && userId !== ""
+        ? await prisma.user.findFirst({ where: { id: parseInt(String(userId), 10) } })
+        : null;
+    if (!user) {
+      user = await prisma.user.findFirst({ where: { email } });
+    }
+    if (!user) {
+      const guestUsername = `guest_${email.replace(/[^a-zA-Z0-9]/g, "_").slice(0, 30)}_${Date.now()}`;
+      user = await prisma.user.create({
+        data: {
+          email,
+          username: guestUsername,
+          password: await bcrypt.hash(crypto.randomBytes(32).toString("hex"), SALT_ROUNDS),
+        },
+      });
+    }
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });

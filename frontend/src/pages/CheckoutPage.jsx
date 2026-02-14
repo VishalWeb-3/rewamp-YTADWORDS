@@ -46,13 +46,6 @@ export default function CheckoutPage() {
     }
   }, [directItem]);
 
-  // Require login
-  useEffect(() => {
-    if (!isLoading && !isLoggedIn) {
-      navigate(`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`);
-    }
-  }, [isLoggedIn, isLoading, navigate, location]);
-
   const displayItems = useMemo(() => {
     if (directItem) {
       return [{
@@ -108,11 +101,6 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (!isLoggedIn || !user) {
-      navigate(`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`);
-      return;
-    }
-
     setIsProcessing(true);
 
     try {
@@ -129,7 +117,7 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          userId: user.id,
+          userId: user?.id ?? null,
           email,
           usernames,
           items,
