@@ -15,7 +15,7 @@ export default function PremiumSolutions() {
   const benefits = section.benefits?.length ? section.benefits : DEFAULT_BENEFITS;
   return (
     <section className="bg-gray-50 py-16 lg:py-20">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             {section.title || 'Our Premium Advertising Solutions'}

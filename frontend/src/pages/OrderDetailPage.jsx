@@ -13,7 +13,7 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <Layout>
-        <div className="max-w-4xl mx-auto px-6 py-16 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Not Found</h1>
           <p className="text-gray-600 mb-8">The order you're looking for doesn't exist.</p>
           <Link
@@ -55,7 +55,7 @@ export default function OrderDetailPage() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <button
           onClick={() => navigate('/orders')}
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"

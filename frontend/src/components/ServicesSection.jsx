@@ -8,8 +8,8 @@ export default function ServicesSection() {
   const googleServices = section.googleServices || ['Google Ads Video Views', 'Google Display Ads Views', 'Google Discovery Views', 'Google Search Traffic'];
   const tiktokServices = section.tiktokServices || ['TikTok Video Views', 'TikTok Ads Views', 'TikTok Followers', 'TikTok Engagement'];
   return (
-    <section className="bg-white py-10 lg:py-14">
-      <div className="max-w-7xl mx-auto px-6 space-y-12">
+    <section className="bg-white py-8 sm:py-10 lg:py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
         {/* White card: two rows of four buttons */}
         <div className="rounded-2xl bg-white shadow-sm p-6 lg:p-8">
           <div className="flex flex-col gap-5">

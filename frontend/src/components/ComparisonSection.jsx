@@ -11,7 +11,7 @@ export default function ComparisonSection() {
   const youtubeAdWordsPoints = section.ourPoints?.length ? section.ourPoints : DEFAULT_OUR;
   return (
     <section className="bg-white py-16 lg:py-20">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Main Heading */}
         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
           {section.heading || 'Why We Are'}{' '}

@@ -20,8 +20,8 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-white py-16 lg:py-20">
-      <div className="max-w-4xl mx-auto px-6">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
           {section.heading || 'Frequently Asked'}{' '}
@@ -39,8 +39,8 @@ export default function FAQ() {
               className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
               onClick={() => toggleFAQ(index)}
             >
-              <div className="p-6 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900 pr-4 flex-1">
+              <div className="p-4 sm:p-6 flex items-center justify-between gap-3">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 pr-2 sm:pr-4 flex-1 min-w-0">
                   {faq.question}
                 </h3>
                 <div className="flex-shrink-0">

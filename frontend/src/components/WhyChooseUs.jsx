@@ -27,7 +27,7 @@ export default function WhyChooseUs() {
 
   return (
     <section className="bg-white py-16 lg:py-20">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <h2 className="font-bold text-gray-900 text-center mb-12 lg:mb-16" style={{ fontSize: '21px', lineHeight: '1.2' }}>
           {title}
         </h2>

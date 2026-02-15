@@ -100,7 +100,7 @@ export default function BuyTikTokAdsViewsPage() {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-100/20 transform rotate-12 -translate-x-32 translate-y-32"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
           <div className="space-y-6">
@@ -160,7 +160,7 @@ export default function BuyTikTokAdsViewsPage() {
             </div>
 
             {/* View Packages Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
                 return (
@@ -171,23 +171,23 @@ export default function BuyTikTokAdsViewsPage() {
                       isSelected ? 'bg-blue-600 p-[2px]' : 'bg-gray-50 hover:border-blue-600/50 p-0'
                     }`}
                   >
-                    <div className={`px-4 py-3 flex flex-col items-center justify-center min-w-[100px] bg-white ${
+                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
                       isSelected ? 'border-2 border-blue-600 border-r-0 rounded-l-full' : 'rounded-l-full'
                     }`}>
-                      <div className="text-2xl font-bold text-gray-900">{pkg.views}</div>
+                      <div className="text-lg sm:text-2xl font-bold text-gray-900">{pkg.views}</div>
                       <div className="text-xs text-gray-500 mt-0.5">ads views</div>
                     </div>
-                    <div className={`flex-1 px-4 py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-blue-600' : ''}`}>
+                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-blue-600' : ''}`}>
                       {pkg.originalPrice ? (
                         <>
-                          <div className="flex items-center justify-center gap-2 mb-1">
-                            <span className={`line-through text-sm ${isSelected ? 'text-white' : 'text-gray-400'}`}>${pkg.originalPrice}</span>
-                            <span className={`font-bold text-lg ${isSelected ? 'text-white' : 'text-blue-600'}`}>${pkg.price}</span>
+                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
+                            <span className={`line-through text-xs sm:text-sm ${isSelected ? 'text-white' : 'text-gray-400'}`}>${pkg.originalPrice}</span>
+                            <span className={`font-bold text-base sm:text-lg ${isSelected ? 'text-white' : 'text-blue-600'}`}>${pkg.price}</span>
                           </div>
-                          <div className={`text-xs font-bold px-3 py-1 rounded-full ${isSelected ? 'bg-black text-white' : 'bg-blue-600 text-white'}`}>save {pkg.discount}</div>
+                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${isSelected ? 'bg-black text-white' : 'bg-blue-600 text-white'}`}>save {pkg.discount}</div>
                         </>
                       ) : (
-                        <div className={`font-bold text-xl ${isSelected ? 'text-white' : 'text-gray-900'}`}>${pkg.price}</div>
+                        <div className={`font-bold text-base sm:text-xl ${isSelected ? 'text-white' : 'text-gray-900'}`}>${pkg.price}</div>
                       )}
                     </div>
                   </div>

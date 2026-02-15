@@ -100,7 +100,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-100/20 transform rotate-12 -translate-x-32 translate-y-32"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
           <div className="space-y-6">
@@ -160,7 +160,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
             </div>
 
             {/* View Packages Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
                 return (
@@ -172,10 +172,10 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                     }`}
                   >
                     {/* Left Section - Reviews Quantity (White) */}
-                    <div className={`px-4 py-3 flex flex-col items-center justify-center min-w-[100px] bg-white ${
+                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
                       isSelected ? 'border-2 border-green-500 border-r-0 rounded-l-full' : 'rounded-l-full'
                     }`}>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-lg sm:text-2xl font-bold text-gray-900">
                         {pkg.reviews}
                       </div>
                       <div className="text-xs text-gray-500 mt-0.5">
@@ -184,31 +184,31 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                     </div>
                     
                     {/* Right Section - Price */}
-                    <div className={`flex-1 px-4 py-3 flex flex-col items-center justify-center rounded-r-full ${
+                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${
                       isSelected ? 'bg-green-500' : ''
                     }`}>
                       {pkg.originalPrice ? (
                         <>
-                          <div className="flex items-center justify-center gap-2 mb-1">
-                            <span className={`line-through text-sm ${
+                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
+                            <span className={`line-through text-xs sm:text-sm ${
                               isSelected ? 'text-white' : 'text-gray-400'
                             }`}>
                               ${pkg.originalPrice}
                             </span>
-                            <span className={`font-bold text-lg ${
+                            <span className={`font-bold text-base sm:text-lg ${
                               isSelected ? 'text-white' : 'text-green-500'
                             }`}>
                               ${pkg.price}
                             </span>
                           </div>
-                          <div className={`text-xs font-bold px-3 py-1 rounded-full ${
+                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${
                             isSelected ? 'bg-black text-white' : 'bg-green-500 text-white'
                           }`}>
                             save {pkg.discount}
                           </div>
                         </>
                       ) : (
-                        <div className={`font-bold text-xl ${
+                        <div className={`font-bold text-base sm:text-xl ${
                           isSelected ? 'text-white' : 'text-gray-900'
                         }`}>
                           ${pkg.price}
@@ -377,7 +377,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl lg:text-lg sm:text-2xl font-bold text-gray-900 mb-3">
                 Know the Specific Source of Google Reviews by Age Group
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
@@ -401,7 +401,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl lg:text-lg sm:text-2xl font-bold text-gray-900 mb-3">
                 Get Views from the Suitable Country for Your Channel
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
@@ -422,7 +422,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl lg:text-lg sm:text-2xl font-bold text-gray-900 mb-3">
                 Lowest Price Guaranteed
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
@@ -443,7 +443,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl lg:text-lg sm:text-2xl font-bold text-gray-900 mb-3">
                 Support Team Working Every Day of the Week
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
@@ -464,7 +464,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl lg:text-lg sm:text-2xl font-bold text-gray-900 mb-3">
                 Slow or Fast Viewing Preference
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
@@ -682,9 +682,9 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-black font-bold text-xl lg:text-2xl">VIEWS</span>
-                    <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg shadow-lg">4</span>
-                    <span className="text-black font-bold text-xl lg:text-2xl">YOU</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">VIEWS</span>
+                    <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">4</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOU</span>
                   </div>
                 </div>
                 <div className="space-y-3">

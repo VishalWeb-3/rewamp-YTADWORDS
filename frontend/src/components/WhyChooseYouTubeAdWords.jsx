@@ -6,7 +6,7 @@ export default function WhyChooseYouTubeAdWords() {
   const section = home?.whyChooseYouTubeAdWords || {};
   return (
     <section className="bg-gray-50 py-16 lg:py-20">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Main Heading */}
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="font-bold mb-2" style={{ fontSize: "22px", lineHeight: "1.2" }}>

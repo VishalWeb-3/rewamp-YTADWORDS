@@ -15,8 +15,8 @@ export default function Footer() {
     { label: 'Publishing Principles', link: '#' },
   ];
   return (
-    <footer className="bg-white border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-12 lg:py-16">
+    <footer className="bg-white border-t border-gray-200 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 lg:py-16">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Left Column - Branding */}
@@ -108,11 +108,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-xs">
+        <div className="border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+          <p className="text-gray-500 text-xs max-w-full">
             {footer.copyright || '© 2026 YouTube Ad Words. All rights reserved. | Novence SASU - Cs 48756 Paris'}
           </p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center md:justify-end gap-3 sm:gap-4">
             <Link to="/privacy-policy" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
               {footer.privacyPolicy || 'Privacy Policy'}
             </Link>

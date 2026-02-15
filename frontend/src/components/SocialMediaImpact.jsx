@@ -7,7 +7,7 @@ export default function SocialMediaImpact() {
   return (
     <section className="bg-white py-16 lg:py-20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(229, 57, 53, 0.15) 0%, rgba(229, 57, 53, 0.08) 40%, transparent 70%)' }} />
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           <div className="bg-white rounded-xl shadow-lg p-8 lg:p-10 flex flex-col h-full">
             <div className="space-y-4 flex-1">

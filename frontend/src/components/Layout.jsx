@@ -6,7 +6,7 @@ import CartSidebar from './CartSidebar';
 
 export default function Layout({ children }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <Header />
       <ServiceBar />
       {children}

@@ -15,7 +15,7 @@ export default function MeetOurExperts() {
   const experts = section.experts?.length ? section.experts : DEFAULT_EXPERTS;
   return (
     <section className="bg-white py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Title */}
         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-4">
           {section.title || 'Meet Our'}{' '}

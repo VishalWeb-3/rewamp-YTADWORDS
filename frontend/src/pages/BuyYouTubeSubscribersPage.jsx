@@ -103,7 +103,7 @@ export default function BuyYouTubeSubscribersPage() {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-100/20 transform rotate-12 -translate-x-32 translate-y-32"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 lg:py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
           <div className="space-y-6">
@@ -116,9 +116,9 @@ export default function BuyYouTubeSubscribersPage() {
               />
             </div>
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
                 Buy YouTube Subscribers{' '}
-                <span className="bg-brand-red text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
+                <span className="bg-brand-red text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-lg sm:text-2xl lg:text-3xl font-bold">
                   Instantly
                 </span>
               </h1>
@@ -131,7 +131,7 @@ export default function BuyYouTubeSubscribersPage() {
           {/* Right Section - Pricing Card */}
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
             {/* Tabs */}
-            <div className="flex gap-4 mb-6 border-b border-gray-200">
+            <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
               {[
                 { id: 'regular', label: 'Regular Subscribers' },
                 { id: 'fast', label: 'Fast Subscribers' },
@@ -163,7 +163,7 @@ export default function BuyYouTubeSubscribersPage() {
             </div>
 
             {/* View Packages Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
                 return (
@@ -175,10 +175,10 @@ export default function BuyYouTubeSubscribersPage() {
                     }`}
                   >
                     {/* Left Section - Subscribers Quantity (White) */}
-                    <div className={`px-4 py-3 flex flex-col items-center justify-center min-w-[100px] bg-white ${
+                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
                       isSelected ? 'border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'
                     }`}>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-lg sm:text-2xl font-bold text-gray-900">
                         {pkg.subscribers}
                       </div>
                       <div className="text-xs text-gray-500 mt-0.5">
@@ -187,31 +187,31 @@ export default function BuyYouTubeSubscribersPage() {
                     </div>
                     
                     {/* Right Section - Price */}
-                    <div className={`flex-1 px-4 py-3 flex flex-col items-center justify-center rounded-r-full ${
+                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${
                       isSelected ? 'bg-brand-red' : ''
                     }`}>
                       {pkg.originalPrice ? (
                         <>
-                          <div className="flex items-center justify-center gap-2 mb-1">
-                            <span className={`line-through text-sm ${
+                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
+                            <span className={`line-through text-xs sm:text-sm ${
                               isSelected ? 'text-white' : 'text-gray-400'
                             }`}>
                               ${pkg.originalPrice}
                             </span>
-                            <span className={`font-bold text-lg ${
+                            <span className={`font-bold text-base sm:text-lg ${
                               isSelected ? 'text-white' : 'text-brand-red'
                             }`}>
                               ${pkg.price}
                             </span>
                           </div>
-                          <div className={`text-xs font-bold px-3 py-1 rounded-full ${
+                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${
                             isSelected ? 'bg-black text-white' : 'bg-brand-red text-white'
                           }`}>
                             save {pkg.discount}
                           </div>
                         </>
                       ) : (
-                        <div className={`font-bold text-xl ${
+                        <div className={`font-bold text-base sm:text-xl ${
                           isSelected ? 'text-white' : 'text-gray-900'
                         }`}>
                           ${pkg.price}

@@ -53,7 +53,7 @@ export default function WhatWeEnsure() {
 
   return (
     <section className="bg-white py-16 lg:py-10">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Title */}
         <h2 className="text-3xl lg:text-4xl font-serif font-bold text-center mb-12 lg:mb-16">
           {section.title || 'What We'}{' '}
@@ -63,43 +63,34 @@ export default function WhatWeEnsure() {
           </span>
         </h2>
 
-        {/* Cards Container - overlapping layout */}
-        <div className="relative flex items-center justify-center min-h-[480px] lg:min-h-[540px]">
+        {/* Cards Container - stacked on mobile, overlapping on desktop */}
+        <div className="relative flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-0 min-h-0 lg:min-h-[540px] py-4 lg:py-0 px-2 sm:px-0">
           {cards.map((card, index) => {
             const isHovered = hoveredCard === card.id;
             const zIndex = isHovered ? 50 : card.defaultZ;
             
-            // Calculate overlap: each card overlaps previous by ~10%
-            // Card widths: 336px mobile (280 * 1.2), 384px desktop (320 * 1.2)
-            const cardWidthMobile = 336;
             const cardWidthDesktop = 384;
-            const overlapMobile = cardWidthMobile * 0.1; // 33.6px
-            const overlapDesktop = cardWidthDesktop * 0.1; // 38.4px
-            
-            // Calculate positions for centering
-            const offsetMobile = (index * (cardWidthMobile - overlapMobile)) - ((cards.length - 1) * (cardWidthMobile - overlapMobile)) / 2;
+            const overlapDesktop = cardWidthDesktop * 0.1;
             const offsetDesktop = (index * (cardWidthDesktop - overlapDesktop)) - ((cards.length - 1) * (cardWidthDesktop - overlapDesktop)) / 2;
             
-            // Get rotation value
             const rotationValue = card.rotation === '-rotate-2' ? '-2deg' : card.rotation === 'rotate-2' ? '2deg' : '1deg';
             const scaleValue = isHovered ? 1.05 : 1;
             
             return (
               <div
                 key={card.id}
-                className="absolute transition-all duration-300 ease-out ensure-card"
+                className="w-full max-w-[336px] lg:max-w-none lg:absolute transition-all duration-300 ease-out ensure-card-mobile lg:ensure-card"
                 style={{ 
                   zIndex,
-                  '--offset-mobile': `${offsetMobile}px`,
                   '--offset-desktop': `${offsetDesktop}px`,
-                  left: `calc(50% + var(--offset-mobile))`,
-                  transform: `translateX(-50%) rotate(${rotationValue}) scale(${scaleValue})`,
+                  '--rotation': rotationValue,
+                  '--scale': scaleValue,
                 }}
                 onMouseEnter={() => setHoveredCard(card.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <div
-                  className={`${card.bgColor} rounded-2xl p-7 lg:p-10 shadow-xl w-[336px] lg:w-[384px] cursor-pointer`}
+                  className={`${card.bgColor} rounded-2xl p-6 sm:p-7 lg:p-10 shadow-xl w-full lg:w-[384px] cursor-pointer`}
                 >
                   {/* Icon */}
                   <div className="flex justify-end mb-5">

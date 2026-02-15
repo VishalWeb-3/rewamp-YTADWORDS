@@ -104,7 +104,7 @@ export default function SignupPage() {
   return (
     <Layout>
       <div className="bg-white min-h-screen py-12 lg:py-16">
-        <div className="max-w-md mx-auto px-6">
+        <div className="max-w-md mx-auto px-4 sm:px-6">
           {/* Page Title */}
           <div className="text-center mb-8">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">

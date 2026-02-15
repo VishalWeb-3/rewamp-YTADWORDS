@@ -5,11 +5,11 @@ export default function Hero() {
   const home = useHomeContent();
   const hero = home?.hero || {};
   return (
-    <section className="min-h-[calc(100vh-180px)] bg-gray-100 bg-dot-pattern bg-[length:20px_20px]">
-      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+    <section className="min-h-[calc(100vh-140px)] sm:min-h-[calc(100vh-180px)] bg-gray-100 bg-dot-pattern bg-[length:20px_20px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col lg:flex-row items-center gap-8 sm:gap-12 lg:gap-16">
         {/* Left column */}
-        <div className="flex-1 max-w-xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm mb-6">
+        <div className="flex-1 max-w-xl w-full">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm mb-4 sm:mb-6">
             <span className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-green-light">
               <svg className="w-4 h-4 text-brand-green" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -17,7 +17,7 @@ export default function Hero() {
             </span>
             <span className="text-sm font-medium text-gray-800">{hero.badge || '2.4M+ Quality Ad Views Delivered'}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
             {hero.title ? (
               (() => {
                 const t = hero.title;
@@ -42,14 +42,14 @@ export default function Hero() {
               </>
             )}
           </h1>
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-6 sm:mb-8">
             {hero.subtitle || "Experience rapid growth with YouTubeAdWords' premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide."}
           </p>
-          <div className="flex flex-wrap gap-4 mb-6">
-            <a href="#" className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-brand-red text-white font-semibold text-base hover:bg-brand-red-dark transition-colors">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
+            <a href="#" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-brand-red text-white font-semibold text-sm sm:text-base hover:bg-brand-red-dark transition-colors">
               {hero.ctaPrimary || 'Start Your Campaign'}
             </a>
-            <a href="#" className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-white border-2 border-gray-300 text-gray-800 font-semibold text-base hover:border-gray-400 hover:bg-gray-50 transition-colors">
+            <a href="#" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-white border-2 border-gray-300 text-gray-800 font-semibold text-sm sm:text-base hover:border-gray-400 hover:bg-gray-50 transition-colors">
               {hero.ctaSecondary || 'View Pricing'}
             </a>
           </div>
@@ -69,11 +69,11 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="flex-1 relative w-full max-w-2xl min-h-[480px] flex items-center justify-center">
+        <div className="flex-1 relative w-full max-w-2xl min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] flex items-center justify-center">
           <img
             src="/youtubeadwords_1.webp"
             alt={hero.heroImageAlt || 'YouTube AdWords - Boost your Google Ads & TikTok campaigns'}
-            className="w-full h-auto max-h-[520px] object-contain object-center rounded-lg"
+            className="w-full h-auto max-h-[280px] sm:max-h-[400px] lg:max-h-[520px] object-contain object-center rounded-lg"
           />
         </div>
       </div>

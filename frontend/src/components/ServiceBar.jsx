@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalContent } from '../contexts/ContentContext';
 
@@ -28,7 +28,15 @@ export default function ServiceBar() {
   const serviceBar = globalContent?.serviceBar || {};
   const servicesFromContent = serviceBar.services || [];
   const [openIndex, setOpenIndex] = useState(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const iconKeys = ['google', 'youtube', 'tiktok', 'reviews'];
+
+  useEffect(() => {
+    const checkTouch = () => setIsTouchDevice(!window.matchMedia('(hover: hover)').matches);
+    checkTouch();
+    window.matchMedia('(hover: hover)').addEventListener('change', checkTouch);
+    return () => window.matchMedia('(hover: hover)').removeEventListener('change', checkTouch);
+  }, []);
   const services = servicesFromContent.length
     ? servicesFromContent.map((s, i) => ({
         label: s.label,
@@ -43,32 +51,37 @@ export default function ServiceBar() {
         { label: 'Buy Google Reviews', items: [{ label: 'Buy Female Google Reviews', link: '/buy-female-google-reviews' }, { label: 'Buy Male Google Reviews', link: '/buy-male-google-reviews' }, { label: 'Buy USA Google Reviews', link: '/buy-usa-google-reviews' }, { label: 'Buy Google Local Guide Reviews', link: '/buy-google-local-guide-reviews' }, { label: 'Buy Google Reviews by Age Group', link: '/buy-google-reviews-by-age-group' }], icon: ICONS.reviews, textClass: 'text-green-600' },
       ];
 
+  const handleToggle = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <div className="bg-white">
-      <div className="max-w-4xl mx-auto px-6 py-3">
+    <div className="bg-white border-b border-gray-100">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-center gap-2 flex-wrap">
           {services.map((s, index) => (
             <div
               key={s.label}
               className="relative"
-              onMouseEnter={() => setOpenIndex(index)}
-              onMouseLeave={() => setOpenIndex(null)}
+              onMouseEnter={() => !isTouchDevice && setOpenIndex(index)}
+              onMouseLeave={() => !isTouchDevice && setOpenIndex(null)}
             >
               <button
-                className={`flex items-center gap-3 px-3 py-2 rounded-full bg-white border shadow-sm transition-all ${
+                onClick={() => handleToggle(index)}
+                className={`flex items-center gap-2 sm:gap-3 px-2.5 sm:px-3 py-2 rounded-full bg-white border shadow-sm transition-all ${
                   openIndex === index
                     ? 'border-red-400 shadow-md bg-red-50'
                     : 'border-gray-200 hover:shadow-md hover:border-gray-300'
                 }`}
               >
                 {typeof s.icon === 'function' ? s.icon() : s.icon}
-                <span className={`text-sm font-medium ${openIndex === index ? 'text-red-600' : s.textClass}`}>
+                <span className={`text-xs sm:text-sm font-medium whitespace-nowrap ${openIndex === index ? 'text-red-600' : s.textClass}`}>
                   {s.label}
                 </span>
               </button>
 
               {openIndex === index && (
-                <div className="absolute left-0 top-full pt-1 z-50 min-w-[240px]">
+                <div className="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 top-full pt-1 z-50 min-w-[220px] sm:min-w-[240px]">
                   <div className="rounded-lg border border-gray-200 bg-white shadow-lg py-1">
                     {s.items.map((item, itemIndex) => {
                       const itemData = typeof item === 'string' ? { label: item, link: '#' } : item;
