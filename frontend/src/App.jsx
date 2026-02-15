@@ -39,9 +39,9 @@ import PaymentFailurePage from './pages/PaymentFailurePage';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
+    <Router>
+      <AuthProvider>
+        <CartProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/buy-youtube-views" element={<BuyYouTubeViewsPage />} />
@@ -85,8 +85,8 @@ export default function App() {
           <Route path="/payment/success" element={<PaymentSuccessPage />} />
           <Route path="/payment/failure" element={<PaymentFailurePage />} />
         </Routes>
-      </Router>
-    </CartProvider>
-    </AuthProvider>
+        </CartProvider>
+      </AuthProvider>
+    </Router>
   );
 }
