@@ -77,3 +77,7 @@ If you added a new collection (e.g. Pricing), the mismatch and “schema not con
 - `npm run build:admin:local` – same as above (explicit name).
 
 Once your branch is indexed in Tina Cloud, you can remove `--skip-cloud-checks` from the script in `package.json` if you want the build to verify the branch in CI.
+
+## Pricing page images (Tina Media)
+
+The price section uses **three images** (hero, “Why” section, “Numbers” section, “Strategy” section) stored in Tina Media, like buzzoid.com. In Tina Admin → **Pricing Page Content** → a page → **Hero** / **Why Section** / **Numbers Section** / **Strategy Section**, each **Image** field uses the Media Manager: you can upload files or pick from existing media. Uploads are stored under `public/uploads/`. If you have existing assets (`pricepage.png`, `demo1.jpg`, `demo2.jpg`), place them in `frontend/public/uploads/` so they’re available in Media and the content paths (`uploads/...`) resolve correctly.

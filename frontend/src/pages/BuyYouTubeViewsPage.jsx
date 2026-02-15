@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
+import { resolveImageUrl } from '../utils/image';
 
 const viewPackagesFallback = {
   regular: [
@@ -105,7 +106,7 @@ export default function BuyYouTubeViewsPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src={hero?.image ?? '/pricepage.png'}
+                src={resolveImageUrl(hero?.image, '/pricepage.png')}
                 alt={hero?.title ?? 'Buy YouTube Views'}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
@@ -383,7 +384,7 @@ export default function BuyYouTubeViewsPage() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center lg:justify-start">
               <img
-                src={content?.whySection?.image ?? '/demo1.jpg'}
+                src={resolveImageUrl(content?.whySection?.image, '/demo1.jpg')}
                 alt={content?.whySection?.heading ?? 'YouTube Views Growing'}
                 className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
               />
@@ -419,7 +420,7 @@ export default function BuyYouTubeViewsPage() {
                 <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
                 <img
-                  src={content?.numbersSection?.image ?? '/demo1.jpg'}
+                  src={resolveImageUrl(content?.numbersSection?.image, '/demo1.jpg')}
                   alt={content?.numbersSection?.heading ?? 'Content Creation'}
                   className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
                 />
@@ -436,7 +437,7 @@ export default function BuyYouTubeViewsPage() {
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
                 <img
-                  src={content?.strategySection?.image ?? '/demo2.jpg'}
+                  src={resolveImageUrl(content?.strategySection?.image, '/demo2.jpg')}
                   alt={content?.strategySection?.heading ?? 'YouTube Channel Strategy'}
                   className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
                 />
