@@ -78,6 +78,28 @@ If you added a new collection (e.g. Pricing), the mismatch and “schema not con
 
 Once your branch is indexed in Tina Cloud, you can remove `--skip-cloud-checks` from the script in `package.json` if you want the build to verify the branch in CI.
 
+## Media not showing / “Images are not there”
+
+If the Tina Media Manager only shows `.gitkeep` and no images:
+
+1. **Enable media in Tina Cloud**  
+   Go to [app.tina.io](https://app.tina.io) → your project → **Media**.  
+   You’ll see: *“Media will not be enabled until you click **Sync Media** after configuring your media settings.”*  
+   Click the blue **Enable Media** button first and wait for it to finish. Then use **Sync Media** if it appears. Media Branch: `main`, Public Folder: `public`, Media Root: `uploads`.  
+   **If it still says "enable media" when you revisit:** (1) Stay on the page until the action completes. (2) Ensure the Tina Cloud GitHub connection has **write** access to your repo (GitHub → Settings → Applications → authorize this repo). (3) If `main` has branch protection, it may block Tina's push to `public/uploads/` — allow the Tina app to push or temporarily relax the rule. (4) Try again in an incognito window.
+
+2. **Upload the pricing images**  
+   Open your site’s Tina admin (e.g. `youtubeadwords.com/admin` or `localhost:5173/admin`) → **Media** (left sidebar).  
+   Click the orange **Upload** button and upload:
+   - `pricepage.png` (hero)
+   - `demo1.jpg` (Why section + Numbers section)
+   - `demo2.jpg` (Strategy section)  
+
+   After upload, Tina will sync them to your repo’s `public/uploads/` on the `main` branch. They’ll then appear in the Media Manager and you can pick them in **Pricing Page Content** for each image field.
+
+3. **Optional: add files via repo instead**  
+   Put `pricepage.png`, `demo1.jpg`, and `demo2.jpg` into `frontend/public/uploads/`, commit and push. Then in Tina Cloud → Media, click **Sync Media** again so the media manager shows them.
+
 ## Pricing page images (Tina Media)
 
-The price section uses **three images** (hero, “Why” section, “Numbers” section, “Strategy” section) stored in Tina Media, like buzzoid.com. In Tina Admin → **Pricing Page Content** → a page → **Hero** / **Why Section** / **Numbers Section** / **Strategy Section**, each **Image** field uses the Media Manager: you can upload files or pick from existing media. Uploads are stored under `public/uploads/`. If you have existing assets (`pricepage.png`, `demo1.jpg`, `demo2.jpg`), place them in `frontend/public/uploads/` so they’re available in Media and the content paths (`uploads/...`) resolve correctly.
+The price section uses **four image fields** (hero, “Why” section, “Numbers” section, “Strategy” section) stored in Tina Media, like buzzoid.com. In Tina Admin → **Pricing Page Content** → a page → **Hero** / **Why Section** / **Numbers Section** / **Strategy Section**, each **Image** field uses the Media Manager: you can upload files or pick from existing media. Uploads are stored under `public/uploads/`. Content expects `uploads/pricepage.png`, `uploads/demo1.jpg`, `uploads/demo2.jpg`; upload those (or files with those names) so they appear in Media and the pricing page displays correctly.
