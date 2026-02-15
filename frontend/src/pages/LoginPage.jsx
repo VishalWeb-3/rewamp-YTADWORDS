@@ -9,7 +9,7 @@ const API_BASE = import.meta.env.VITE_API_URL || '';
 export default function LoginPage() {
   const globalContent = useGlobalContent();
   const auth = globalContent?.auth || {};
-  const { setUser } = useAuth();
+  const { setUser, setBanned } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -43,7 +43,12 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || 'Login failed');
+        if (res.status === 403 && data.error === 'Account banned') {
+          setBanned?.({ isBanned: true, banReason: data.reason || 'Your account has been suspended.' });
+          setError(data.reason || data.error || 'Your account has been suspended.');
+        } else {
+          setError(data.error || 'Login failed');
+        }
         setIsSubmitting(false);
         return;
       }

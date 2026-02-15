@@ -68,6 +68,23 @@ async function sessionMiddleware(req: express.Request, res: express.Response, ne
 }
 app.use(sessionMiddleware);
 
+/** Reject request if user is banned. Same as buzzoid.com. */
+async function rejectIfBanned(userId: number, res: express.Response): Promise<boolean> {
+  if (!userId) return false;
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { isBanned: true, banReason: true },
+  });
+  if (user?.isBanned) {
+    res.status(403).json({
+      error: "Account banned",
+      reason: user.banReason || "Your account has been suspended.",
+    });
+    return true;
+  }
+  return false;
+}
+
 // Helpers for setting/clearing auth cookie
 // SameSite=None + Secure required so cookie is sent when frontend is on different origin (e.g. localhost → Render)
 function setAuthCookie(res: express.Response, token: string) {
@@ -168,6 +185,14 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    const u = user as { isBanned?: boolean; banReason?: string | null };
+    if (u.isBanned) {
+      return res.status(403).json({
+        error: "Account banned",
+        reason: u.banReason || "Your account has been suspended.",
+      });
+    }
+
     const token = crypto.randomBytes(32).toString("hex");
     await prisma.session.create({
       data: {
@@ -193,12 +218,36 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-// Get current user from session cookie
-app.get("/api/auth/me", (req, res) => {
+// Get current user from session cookie. If banned, return 403 so frontend shows overlay.
+app.get("/api/auth/me", async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ user: null });
   }
+  if (await rejectIfBanned(req.user.id, res)) {
+    clearAuthCookie(res);
+    return;
+  }
   res.json({ user: req.user });
+});
+
+// Check if user is banned (for frontend overlay) – same as buzzoid
+app.get("/api/auth/check/:userId", async (req, res) => {
+  const userId = parseInt(req.params.userId);
+  if (isNaN(userId)) return res.status(400).json({ error: "Invalid user ID" });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { isBanned: true, banReason: true },
+    });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json({
+      isBanned: user.isBanned ?? false,
+      banReason: user.banReason || null,
+    });
+  } catch (err) {
+    console.error("Check ban error:", err);
+    res.status(500).json({ error: "Failed to check status" });
+  }
 });
 
 // Logout: destroy session, clear cookie
@@ -217,7 +266,8 @@ app.post("/api/auth/logout", async (req, res) => {
 
 // ========== Cart ==========
 app.get("/api/cart/:userId", async (req, res) => {
-  const { userId } = req.params;
+  const userId = parseInt(req.params.userId);
+  if (await rejectIfBanned(userId, res)) return;
   try {
     const cartItems = await prisma.cartItem.findMany({
       where: { userId: parseInt(userId) },
@@ -232,6 +282,7 @@ app.get("/api/cart/:userId", async (req, res) => {
 
 app.post("/api/cart/add", async (req, res) => {
   const { userId, amount, price, service, platform, username } = req.body;
+  if (userId && (await rejectIfBanned(parseInt(userId), res))) return;
   try {
     const cartItem = await prisma.cartItem.create({
       data: {
@@ -264,7 +315,8 @@ app.delete("/api/cart/remove/:itemId", async (req, res) => {
 });
 
 app.delete("/api/cart/clear/:userId", async (req, res) => {
-  const { userId } = req.params;
+  const userId = parseInt(req.params.userId);
+  if (await rejectIfBanned(userId, res)) return;
   try {
     await prisma.cartItem.deleteMany({
       where: { userId: parseInt(userId) },
@@ -278,7 +330,8 @@ app.delete("/api/cart/clear/:userId", async (req, res) => {
 
 // ========== Orders ==========
 app.get("/api/orders/:userId", async (req, res) => {
-  const { userId } = req.params;
+  const userId = parseInt(req.params.userId);
+  if (await rejectIfBanned(userId, res)) return;
   try {
     const orders = await prisma.order.findMany({
       where: { userId: parseInt(userId) },
@@ -309,6 +362,7 @@ app.get("/api/orders/detail/:orderId", async (req, res) => {
 
 app.post("/api/orders/create", async (req, res) => {
   const { userId, items, email, usernames, paymentMethod: rawMethod } = req.body;
+  if (userId && (await rejectIfBanned(parseInt(userId), res))) return;
   const paymentMethod = rawMethod === "crypto" ? "CRYPTO" : "CARD";
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -332,6 +386,14 @@ app.post("/api/orders/create", async (req, res) => {
           password: passwordHash,
           name: null,
         },
+      });
+    }
+
+    const u = user as { isBanned?: boolean; banReason?: string | null };
+    if (u.isBanned) {
+      return res.status(403).json({
+        error: "Account banned",
+        reason: u.banReason || "Your account has been suspended.",
       });
     }
 
