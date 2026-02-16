@@ -23,6 +23,10 @@ body {
   width: 100%;
 }
 
+#root {
+  width: 100%;
+}
+
 img,
 video {
   max-width: 100%;

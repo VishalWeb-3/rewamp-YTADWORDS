@@ -122,9 +122,9 @@ export default function Footer() {
             <Link to="/refund-policy" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
               {footer.refundPolicy || 'Refund Policy'}
             </Link>
-            <a href="#" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
+            <Link to="/cookies" className="text-gray-500 text-xs hover:text-brand-red transition-colors">
               {footer.cookiesSettings || 'Cookies Settings'}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import homeContent from '../../content/home/home.json';
 import contactContent from '../../content/contact/contact.json';
 import pricingContent from '../../content/pricing/index.json';
 import pricingPageContent from '../../content/pricing-pages/index.json';
+import legalContent from '../../content/legal/index.json';
 
 // Fetch latest from Tina Cloud at runtime so edits in Tina appear without rebuild
 import { client } from '../../tina/__generated__/client';
@@ -29,6 +30,7 @@ const staticValue = {
   contact: contactContent,
   pricing: pricingContent,
   pricingPageContent,
+  legal: legalContent,
 };
 
 export function ContentProvider({ children }) {
@@ -45,6 +47,7 @@ export function ContentProvider({ children }) {
           typeof client.queries.contact === 'function' ? client.queries.contact({ relativePath: 'contact.json' }) : empty,
           typeof client.queries.pricing === 'function' ? client.queries.pricing({ relativePath: 'index.json' }) : empty,
           typeof client.queries.pricingPageContent === 'function' ? client.queries.pricingPageContent({ relativePath: 'index.json' }) : empty,
+          typeof client.queries.legal === 'function' ? client.queries.legal({ relativePath: 'index.json' }) : empty,
         ]);
         if (cancelled) return;
         const globalData = results[0]?.data?.global;
@@ -52,7 +55,8 @@ export function ContentProvider({ children }) {
         const contactData = results[2]?.data?.contact;
         const pricingData = results[3]?.data?.pricing;
         const pricingPageContentData = results[4]?.data?.pricingPageContent;
-        if (globalData || homeData || contactData || pricingData || pricingPageContentData) {
+        const legalData = results[5]?.data?.legal;
+        if (globalData || homeData || contactData || pricingData || pricingPageContentData || legalData) {
           setValue((prev) => ({
             ...prev,
             ...(globalData && { global: omitSys(globalData) }),
@@ -60,6 +64,7 @@ export function ContentProvider({ children }) {
             ...(contactData && { contact: omitSys(contactData) }),
             ...(pricingData && { pricing: omitSys(pricingData) }),
             ...(pricingPageContentData && { pricingPageContent: omitSys(pricingPageContentData) }),
+            ...(legalData && { legal: omitSys(legalData) }),
           }));
         }
       } catch (_) {
@@ -96,6 +101,11 @@ export function useHomeContent() {
 export function useContactContent() {
   const { contact } = useContent();
   return contact;
+}
+
+export function useLegalContent() {
+  const { legal } = useContent();
+  return legal;
 }
 
 /** Convert Tina pricing package list to package objects with quantityKey. */

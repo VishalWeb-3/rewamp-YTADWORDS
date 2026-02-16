@@ -28,6 +28,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
+import CookiesSettingsPage from './pages/CookiesSettingsPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CheckoutPage from './pages/CheckoutPage';
@@ -74,6 +75,8 @@ export default function App() {
           <Route path="/terms-of-service" element={<TermsPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           <Route path="/refunds" element={<RefundPolicyPage />} />
+          <Route path="/cookies" element={<CookiesSettingsPage />} />
+          <Route path="/cookies-settings" element={<CookiesSettingsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />

@@ -52,8 +52,8 @@ export default function WhatWeEnsure() {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <section className="bg-white py-16 lg:py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="bg-white py-16 lg:py-10 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
         {/* Title */}
         <h2 className="text-3xl lg:text-4xl font-serif font-bold text-center mb-12 lg:mb-16">
           {section.title || 'What We'}{' '}
@@ -63,28 +63,24 @@ export default function WhatWeEnsure() {
           </span>
         </h2>
 
-        {/* Cards Container - stacked on mobile, overlapping on desktop */}
-        <div className="relative flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-0 min-h-0 lg:min-h-[540px] py-4 lg:py-0 px-2 sm:px-0">
+        {/* Cards Container - stacked on mobile, flexbox centered on desktop */}
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-0 min-h-0 lg:min-h-[540px] py-4 lg:py-0 px-2 sm:px-0 w-full">
           {cards.map((card, index) => {
             const isHovered = hoveredCard === card.id;
             const zIndex = isHovered ? 50 : card.defaultZ;
             
-            const cardWidthDesktop = 384;
-            const overlapDesktop = cardWidthDesktop * 0.1;
-            const offsetDesktop = (index * (cardWidthDesktop - overlapDesktop)) - ((cards.length - 1) * (cardWidthDesktop - overlapDesktop)) / 2;
-            
             const rotationValue = card.rotation === '-rotate-2' ? '-2deg' : card.rotation === 'rotate-2' ? '2deg' : '1deg';
             const scaleValue = isHovered ? 1.05 : 1;
+            const overlapPx = 38; // ~10% of 384px for overlap
             
             return (
               <div
                 key={card.id}
-                className="w-full max-w-[336px] lg:max-w-none lg:absolute transition-all duration-300 ease-out ensure-card-mobile lg:ensure-card"
+                className="w-full max-w-[336px] lg:max-w-[384px] lg:flex-shrink-0 transition-all duration-300 ease-out"
                 style={{ 
                   zIndex,
-                  '--offset-desktop': `${offsetDesktop}px`,
-                  '--rotation': rotationValue,
-                  '--scale': scaleValue,
+                  marginLeft: index > 0 ? `-${overlapPx}px` : undefined,
+                  transform: `rotate(${rotationValue}) scale(${scaleValue})`,
                 }}
                 onMouseEnter={() => setHoveredCard(card.id)}
                 onMouseLeave={() => setHoveredCard(null)}

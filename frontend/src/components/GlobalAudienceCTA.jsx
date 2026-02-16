@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useHomeContent } from '../contexts/ContentContext';
 
 const serviceCategories = [
@@ -6,44 +7,44 @@ const serviceCategories = [
     label: 'Google Ads Services',
     icon: 'G',
     services: [
-      { label: 'Google Skip Ads Views', icon: 'play' },
-      { label: 'Google Display Ads Views', icon: 'play' },
-      { label: 'Google Discovery Ads Views', icon: 'play' },
-      { label: 'Google Ads Search Campaign Traffic', icon: 'play' },
-      { label: 'Google Ads Website / App Traffic', icon: 'play' },
+      { label: 'Google Skip Ads Views', icon: 'play', link: '/buy-google-skip-ads-views' },
+      { label: 'Google Display Ads Views', icon: 'play', link: '/buy-google-display-ads-views' },
+      { label: 'Google Discovery Ads Views', icon: 'play', link: '/buy-google-discovery-ads-views' },
+      { label: 'Google Ads Search Campaign Traffic', icon: 'play', link: '/buy-google-ads-search-traffic' },
+      { label: 'Google Ads Website / App Traffic', icon: 'play', link: '/buy-google-ads-website-traffic' },
     ],
   },
   {
     label: 'YouTube Services',
     icon: 'youtube',
     services: [
-      { label: 'Buy YouTube Views', icon: 'play' },
-      { label: 'Buy YouTube Subscribers', icon: 'users' },
-      { label: 'Buy YouTube Likes', icon: 'thumbs' },
-      { label: 'Buy YouTube Watch Hours', icon: 'clock' },
+      { label: 'Buy YouTube Views', icon: 'play', link: '/buy-youtube-views' },
+      { label: 'Buy YouTube Subscribers', icon: 'users', link: '/buy-youtube-subscribers' },
+      { label: 'Buy YouTube Likes', icon: 'thumbs', link: '/buy-youtube-likes' },
+      { label: 'Buy YouTube Watch Hours', icon: 'clock', link: '/buy-youtube-watch-hours' },
     ],
   },
   {
     label: 'TikTok Ads Services',
     icon: 'tiktok',
     services: [
-      { label: 'TikTok Followers Growth', icon: 'users' },
-      { label: 'TikTok Ads Views', icon: 'eye' },
-      { label: 'TikTok Reach / Impressions', icon: 'eye' },
-      { label: 'TikTok Engagement Services', icon: 'heart' },
-      { label: 'TikTok Video Views', icon: 'eye' },
-      { label: 'TikTok Website / App Traffic', icon: 'eye' },
+      { label: 'TikTok Followers Growth', icon: 'users', link: '/buy-tiktok-followers' },
+      { label: 'TikTok Ads Views', icon: 'eye', link: '/buy-tiktok-ads-views' },
+      { label: 'TikTok Reach / Impressions', icon: 'eye', link: '/buy-tiktok-reach' },
+      { label: 'TikTok Engagement Services', icon: 'heart', link: '/buy-tiktok-engagement' },
+      { label: 'TikTok Video Views', icon: 'eye', link: '/buy-tiktok-video-views' },
+      { label: 'TikTok Website / App Traffic', icon: 'eye', link: '/buy-tiktok-traffic' },
     ],
   },
   {
     label: 'Buy Google Reviews',
     icon: 'star',
     services: [
-      { label: 'Buy Female Google Reviews', icon: 'star' },
-      { label: 'Buy Male Google Reviews', icon: 'star' },
-      { label: 'Buy USA Google Reviews', icon: 'star' },
-      { label: 'Buy Google Local Guide Reviews', icon: 'star' },
-      { label: 'Buy Google Reviews by Age Group', icon: 'star' },
+      { label: 'Buy Female Google Reviews', icon: 'star', link: '/buy-female-google-reviews' },
+      { label: 'Buy Male Google Reviews', icon: 'star', link: '/buy-male-google-reviews' },
+      { label: 'Buy USA Google Reviews', icon: 'star', link: '/buy-usa-google-reviews' },
+      { label: 'Buy Google Local Guide Reviews', icon: 'star', link: '/buy-google-local-guide-reviews' },
+      { label: 'Buy Google Reviews by Age Group', icon: 'star', link: '/buy-google-reviews-by-age-group' },
     ],
   },
 ];
@@ -189,8 +190,9 @@ export default function GlobalAudienceCTA() {
                         </h3>
                         <div className="space-y-2">
                           {category.services.map((service, sIndex) => (
-                            <button
+                            <Link
                               key={sIndex}
+                              to={service.link || '#'}
                               className={`w-full rounded-lg px-4 py-2.5 flex items-center justify-between transition-colors duration-200 text-xs ${
                                 category.label === 'TikTok Ads Services'
                                   ? 'bg-blue-600 hover:bg-blue-700 text-white'
@@ -199,7 +201,7 @@ export default function GlobalAudienceCTA() {
                             >
                               <span className="font-medium">{service.label}</span>
                               <ServiceIcon type={service.icon} />
-                            </button>
+                            </Link>
                           ))}
                         </div>
                       </div>

@@ -420,6 +420,133 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: 'legal',
+        label: 'Legal Pages',
+        path: 'content/legal',
+        format: 'json',
+        ui: {
+          allowedActions: { create: false, delete: false },
+          description: 'Content for Privacy Policy, Terms of Service, Refund Policy, and Cookies Settings pages.',
+        },
+        fields: [
+          {
+            type: 'object',
+            name: 'privacy',
+            label: 'Privacy Policy',
+            fields: [
+              { type: 'string', name: 'title', label: 'Page Title' },
+              { type: 'string', name: 'lastUpdated', label: 'Last Updated' },
+              {
+                type: 'object',
+                name: 'sections',
+                label: 'Sections',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'heading', label: 'Heading' },
+                  { type: 'string', name: 'body', label: 'Body', ui: { component: 'textarea' } },
+                  { type: 'string', name: 'listItems', label: 'List Items', list: true, required: false },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'terms',
+            label: 'Terms of Service',
+            fields: [
+              { type: 'string', name: 'title', label: 'Page Title' },
+              { type: 'string', name: 'lastUpdated', label: 'Last Updated' },
+              {
+                type: 'object',
+                name: 'sections',
+                label: 'Sections',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'heading', label: 'Heading' },
+                  { type: 'string', name: 'body', label: 'Body', ui: { component: 'textarea' } },
+                  { type: 'string', name: 'listItems', label: 'List Items', list: true, required: false },
+                  {
+                    type: 'object',
+                    name: 'subsections',
+                    label: 'Subsections',
+                    list: true,
+                    required: false,
+                    fields: [
+                      { type: 'string', name: 'subheading', label: 'Subheading' },
+                      { type: 'string', name: 'body', label: 'Body', ui: { component: 'textarea' } },
+                      { type: 'string', name: 'listItems', label: 'List Items', list: true, required: false },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'refund',
+            label: 'Refund Policy',
+            fields: [
+              { type: 'string', name: 'title', label: 'Page Title' },
+              { type: 'string', name: 'lastUpdated', label: 'Last Updated' },
+              {
+                type: 'object',
+                name: 'sections',
+                label: 'Sections',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'heading', label: 'Heading' },
+                  { type: 'string', name: 'body', label: 'Body', ui: { component: 'textarea' } },
+                  { type: 'string', name: 'listItems', label: 'List Items', list: true, required: false },
+                  {
+                    type: 'object',
+                    name: 'subsections',
+                    label: 'Subsections',
+                    list: true,
+                    required: false,
+                    fields: [
+                      { type: 'string', name: 'subheading', label: 'Subheading' },
+                      { type: 'string', name: 'body', label: 'Body', ui: { component: 'textarea' } },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'cookies',
+            label: 'Cookies Settings',
+            fields: [
+              { type: 'string', name: 'title', label: 'Page Title' },
+              { type: 'string', name: 'lastUpdated', label: 'Last Updated' },
+              {
+                type: 'object',
+                name: 'sections',
+                label: 'Sections',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'heading', label: 'Heading' },
+                  { type: 'string', name: 'body', label: 'Body', ui: { component: 'textarea' } },
+                ],
+              },
+              {
+                type: 'object',
+                name: 'cookieTypes',
+                label: 'Cookie Types',
+                list: true,
+                fields: [
+                  { type: 'string', name: 'name', label: 'Name' },
+                  { type: 'string', name: 'description', label: 'Description', ui: { component: 'textarea' } },
+                  { type: 'boolean', name: 'alwaysOn', label: 'Always On (not toggleable)', required: false },
+                ],
+              },
+              { type: 'string', name: 'saveButtonText', label: 'Save Button Text' },
+              { type: 'string', name: 'savedButtonText', label: 'Saved Button Text' },
+            ],
+          },
+        ],
+      },
     ],
   },
 });
