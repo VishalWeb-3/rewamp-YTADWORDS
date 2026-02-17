@@ -28,7 +28,7 @@ jobs:
         env:
           VITE_TINA_CLIENT_ID: ${{ secrets.VITE_TINA_CLIENT_ID }}
           VITE_TINA_TOKEN: ${{ secrets.VITE_TINA_TOKEN }}
-        run: npx tinacms build
+        run: npx tinacms build --skip-cloud-checks
         continue-on-error: true
 
       - name: Build
