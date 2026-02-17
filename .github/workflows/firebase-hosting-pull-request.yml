@@ -13,7 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cd frontend && npm ci && npm run build
+      - name: Build with TinaCMS
+        working-directory: frontend
+        env:
+          VITE_TINA_CLIENT_ID: ${{ secrets.VITE_TINA_CLIENT_ID }}
+          VITE_TINA_TOKEN: ${{ secrets.VITE_TINA_TOKEN }}
+          TINA_CLIENT_ID: ${{ secrets.VITE_TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.VITE_TINA_TOKEN }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: |
+          npm ci
+          npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
