@@ -284,9 +284,13 @@ type HomeHero {
   title: String
   subtitle: String
   ctaPrimary: String
+  ctaPrimaryLink: String
   ctaSecondary: String
+  ctaSecondaryLink: String
   lastOrder: String
   activeCampaigns: String
+  heroImage: String
+  heroImageAlt: String
 }
 
 type HomeServicesSection {
@@ -342,14 +346,25 @@ type Home implements Node & Document {
   _values: JSON!
 }
 
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
 input HomeHeroFilter {
   badge: StringFilter
   title: StringFilter
   subtitle: StringFilter
   ctaPrimary: StringFilter
+  ctaPrimaryLink: StringFilter
   ctaSecondary: StringFilter
+  ctaSecondaryLink: StringFilter
   lastOrder: StringFilter
   activeCampaigns: StringFilter
+  heroImage: ImageFilter
+  heroImageAlt: StringFilter
 }
 
 input HomeServicesSectionFilter {
@@ -651,13 +666,6 @@ type PricingPageContent implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
-}
-
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
 }
 
 input PricingPageContentPagesHeroFilter {
@@ -1055,9 +1063,13 @@ input HomeHeroMutation {
   title: String
   subtitle: String
   ctaPrimary: String
+  ctaPrimaryLink: String
   ctaSecondary: String
+  ctaSecondaryLink: String
   lastOrder: String
   activeCampaigns: String
+  heroImage: String
+  heroImageAlt: String
 }
 
 input HomeServicesSectionMutation {

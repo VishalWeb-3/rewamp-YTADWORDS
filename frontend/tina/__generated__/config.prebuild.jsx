@@ -139,47 +139,93 @@ var config_default = defineConfig({
           allowedActions: { create: false, delete: false }
         },
         fields: [
-          { type: "object", name: "hero", label: "Hero", fields: [
-            { type: "string", name: "badge", label: "Badge Text" },
-            { type: "string", name: "title", label: "Title" },
-            { type: "string", name: "subtitle", label: "Subtitle" },
-            { type: "string", name: "ctaPrimary", label: "CTA Primary" },
-            { type: "string", name: "ctaSecondary", label: "CTA Secondary" },
-            { type: "string", name: "lastOrder", label: "Last Order Text" },
-            { type: "string", name: "activeCampaigns", label: "Active Campaigns Text" }
-          ] },
-          { type: "object", name: "servicesSection", label: "Services Section", fields: [
-            { type: "string", name: "googleServices", label: "Google Services", list: true },
-            { type: "string", name: "tiktokServices", label: "TikTok Services", list: true }
-          ] },
-          { type: "object", name: "whyChooseUs", label: "Why Choose Us", fields: [
-            { type: "string", name: "title", label: "Title" },
-            { type: "object", name: "features", label: "Features", list: true, fields: [
-              { type: "string", name: "title", label: "Title" }
-            ] }
-          ] },
-          { type: "object", name: "faq", label: "FAQ", fields: [
-            { type: "string", name: "heading", label: "Heading" },
-            { type: "object", name: "items", label: "Items", list: true, fields: [
-              { type: "string", name: "question", label: "Question" },
-              { type: "string", name: "answer", label: "Answer", ui: { component: "textarea" } }
-            ] }
-          ] },
-          { type: "object", name: "comparison", label: "Comparison", fields: [
-            { type: "string", name: "heading", label: "Heading" },
-            { type: "string", name: "better", label: "Better" },
-            { type: "string", name: "otherTitle", label: "Other Providers Title" },
-            { type: "string", name: "ourTitle", label: "Our Title" },
-            { type: "string", name: "bestChoice", label: "Best Choice Badge" },
-            { type: "string", name: "otherPoints", label: "Other Points", list: true },
-            { type: "string", name: "ourPoints", label: "Our Points", list: true }
-          ] },
-          { type: "object", name: "globalAudienceCta", label: "Global Audience CTA", fields: [
-            { type: "string", name: "title", label: "Title" },
-            { type: "string", name: "titleHighlight", label: "Title Highlight" },
-            { type: "string", name: "paragraph1", label: "Paragraph 1" },
-            { type: "string", name: "paragraph2", label: "Paragraph 2" }
-          ] }
+          {
+            type: "object",
+            name: "hero",
+            label: "Hero",
+            fields: [
+              { type: "string", name: "badge", label: "Badge Text" },
+              { type: "string", name: "title", label: "Title", ui: { component: "textarea" } },
+              { type: "string", name: "subtitle", label: "Subtitle", ui: { component: "textarea" } },
+              { type: "string", name: "ctaPrimary", label: "Primary CTA Button Text" },
+              { type: "string", name: "ctaPrimaryLink", label: "Primary CTA Link" },
+              { type: "string", name: "ctaSecondary", label: "Secondary CTA Button Text" },
+              { type: "string", name: "ctaSecondaryLink", label: "Secondary CTA Link" },
+              { type: "string", name: "lastOrder", label: "Last Order Text" },
+              { type: "string", name: "activeCampaigns", label: "Active Campaigns Text" },
+              { type: "image", name: "heroImage", label: "Hero Image", description: "Upload or select hero image from Media Manager" },
+              { type: "string", name: "heroImageAlt", label: "Hero Image Alt Text", description: "Alt text for SEO and accessibility" }
+            ]
+          },
+          {
+            type: "object",
+            name: "servicesSection",
+            label: "Services Section",
+            fields: [
+              { type: "string", name: "googleServices", label: "Google Services", list: true },
+              { type: "string", name: "tiktokServices", label: "TikTok Services", list: true }
+            ]
+          },
+          {
+            type: "object",
+            name: "whyChooseUs",
+            label: "Why Choose Us",
+            fields: [
+              { type: "string", name: "title", label: "Title" },
+              {
+                type: "object",
+                name: "features",
+                label: "Features",
+                list: true,
+                fields: [
+                  { type: "string", name: "title", label: "Title" }
+                ]
+              }
+            ]
+          },
+          {
+            type: "object",
+            name: "faq",
+            label: "FAQ",
+            fields: [
+              { type: "string", name: "heading", label: "Heading" },
+              {
+                type: "object",
+                name: "items",
+                label: "Items",
+                list: true,
+                fields: [
+                  { type: "string", name: "question", label: "Question" },
+                  { type: "string", name: "answer", label: "Answer", ui: { component: "textarea" } }
+                ]
+              }
+            ]
+          },
+          {
+            type: "object",
+            name: "comparison",
+            label: "Comparison",
+            fields: [
+              { type: "string", name: "heading", label: "Heading" },
+              { type: "string", name: "better", label: "Better" },
+              { type: "string", name: "otherTitle", label: "Other Providers Title" },
+              { type: "string", name: "ourTitle", label: "Our Title" },
+              { type: "string", name: "bestChoice", label: "Best Choice Badge" },
+              { type: "string", name: "otherPoints", label: "Other Points", list: true },
+              { type: "string", name: "ourPoints", label: "Our Points", list: true }
+            ]
+          },
+          {
+            type: "object",
+            name: "globalAudienceCta",
+            label: "Global Audience CTA",
+            fields: [
+              { type: "string", name: "title", label: "Title" },
+              { type: "string", name: "titleHighlight", label: "Title Highlight" },
+              { type: "string", name: "paragraph1", label: "Paragraph 1" },
+              { type: "string", name: "paragraph2", label: "Paragraph 2" }
+            ]
+          }
         ]
       },
       {

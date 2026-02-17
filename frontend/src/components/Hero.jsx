@@ -46,10 +46,16 @@ export default function Hero() {
             {hero.subtitle || "Experience rapid growth with YouTubeAdWords' premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide."}
           </p>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
-            <a href="#" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-brand-red text-white font-semibold text-sm sm:text-base hover:bg-brand-red-dark transition-colors">
+            <a
+              href={hero.ctaPrimaryLink || '#'}
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-brand-red text-white font-semibold text-sm sm:text-base hover:bg-brand-red-dark transition-colors"
+            >
               {hero.ctaPrimary || 'Start Your Campaign'}
             </a>
-            <a href="#" className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-white border-2 border-gray-300 text-gray-800 font-semibold text-sm sm:text-base hover:border-gray-400 hover:bg-gray-50 transition-colors">
+            <a
+              href={hero.ctaSecondaryLink || '#'}
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-white border-2 border-gray-300 text-gray-800 font-semibold text-sm sm:text-base hover:border-gray-400 hover:bg-gray-50 transition-colors"
+            >
               {hero.ctaSecondary || 'View Pricing'}
             </a>
           </div>
@@ -71,7 +77,7 @@ export default function Hero() {
 
         <div className="flex-1 relative w-full max-w-2xl min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] flex items-center justify-center">
           <img
-            src="/youtubeadwords_1.webp"
+            src={hero.heroImage || '/youtubeadwords_1.webp'}
             alt={hero.heroImageAlt || 'YouTube AdWords - Boost your Google Ads & TikTok campaigns'}
             className="w-full h-auto max-h-[280px] sm:max-h-[400px] lg:max-h-[520px] object-contain object-center rounded-lg"
           />

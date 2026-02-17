@@ -86,9 +86,13 @@ export const HomePartsFragmentDoc = gql`
     title
     subtitle
     ctaPrimary
+    ctaPrimaryLink
     ctaSecondary
+    ctaSecondaryLink
     lastOrder
     activeCampaigns
+    heroImage
+    heroImageAlt
   }
   servicesSection {
     __typename
