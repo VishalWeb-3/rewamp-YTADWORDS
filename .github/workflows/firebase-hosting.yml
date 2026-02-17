@@ -23,20 +23,14 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Sync Tina schema to Tina Cloud
-        working-directory: frontend
-        env:
-          VITE_TINA_CLIENT_ID: ${{ secrets.VITE_TINA_CLIENT_ID }}
-          VITE_TINA_TOKEN: ${{ secrets.VITE_TINA_TOKEN }}
-        run: npx tinacms build --skip-cloud-checks
-        continue-on-error: true
-
       - name: Build
         working-directory: frontend
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_TINA_CLIENT_ID: ${{ secrets.VITE_TINA_CLIENT_ID }}
           VITE_TINA_TOKEN: ${{ secrets.VITE_TINA_TOKEN }}
+          TINA_CLIENT_ID: ${{ secrets.VITE_TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.VITE_TINA_TOKEN }}
         run: npm run build
 
       - name: Install Firebase CLI
