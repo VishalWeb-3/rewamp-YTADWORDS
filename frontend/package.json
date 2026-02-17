@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tinacms build && vite build",
+    "build": "tinacms build --skip-cloud-checks && vite build",
     "preview": "vite preview",
     "build:admin": "node -r dotenv/config ./node_modules/.bin/tinacms build --skip-cloud-checks",
     "build:admin:local": "node -r dotenv/config ./node_modules/.bin/tinacms build --skip-cloud-checks",
