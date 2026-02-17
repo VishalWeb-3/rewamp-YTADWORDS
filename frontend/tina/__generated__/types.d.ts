@@ -92,6 +92,8 @@ export type Query = {
   pricingConnection: PricingConnection;
   pricingPageContent: PricingPageContent;
   pricingPageContentConnection: PricingPageContentConnection;
+  legal: Legal;
+  legalConnection: LegalConnection;
 };
 
 
@@ -190,12 +192,28 @@ export type QueryPricingPageContentConnectionArgs = {
   filter?: InputMaybe<PricingPageContentFilter>;
 };
 
+
+export type QueryLegalArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryLegalConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+};
+
 export type DocumentFilter = {
   global?: InputMaybe<GlobalFilter>;
   home?: InputMaybe<HomeFilter>;
   contact?: InputMaybe<ContactFilter>;
   pricing?: InputMaybe<PricingFilter>;
   pricingPageContent?: InputMaybe<PricingPageContentFilter>;
+  legal?: InputMaybe<LegalFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -235,7 +253,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Folder;
+export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Legal | Folder;
 
 export type GlobalHeaderNavLinks = {
   __typename?: 'GlobalHeaderNavLinks';
@@ -946,6 +964,191 @@ export type PricingPageContentConnection = Connection & {
   edges?: Maybe<Array<Maybe<PricingPageContentConnectionEdges>>>;
 };
 
+export type LegalPrivacySections = {
+  __typename?: 'LegalPrivacySections';
+  heading?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  listItems?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type LegalPrivacy = {
+  __typename?: 'LegalPrivacy';
+  title?: Maybe<Scalars['String']['output']>;
+  lastUpdated?: Maybe<Scalars['String']['output']>;
+  sections?: Maybe<Array<Maybe<LegalPrivacySections>>>;
+};
+
+export type LegalTermsSectionsSubsections = {
+  __typename?: 'LegalTermsSectionsSubsections';
+  subheading?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  listItems?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type LegalTermsSections = {
+  __typename?: 'LegalTermsSections';
+  heading?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  listItems?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  subsections?: Maybe<Array<Maybe<LegalTermsSectionsSubsections>>>;
+};
+
+export type LegalTerms = {
+  __typename?: 'LegalTerms';
+  title?: Maybe<Scalars['String']['output']>;
+  lastUpdated?: Maybe<Scalars['String']['output']>;
+  sections?: Maybe<Array<Maybe<LegalTermsSections>>>;
+};
+
+export type LegalRefundSectionsSubsections = {
+  __typename?: 'LegalRefundSectionsSubsections';
+  subheading?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+};
+
+export type LegalRefundSections = {
+  __typename?: 'LegalRefundSections';
+  heading?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  listItems?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  subsections?: Maybe<Array<Maybe<LegalRefundSectionsSubsections>>>;
+};
+
+export type LegalRefund = {
+  __typename?: 'LegalRefund';
+  title?: Maybe<Scalars['String']['output']>;
+  lastUpdated?: Maybe<Scalars['String']['output']>;
+  sections?: Maybe<Array<Maybe<LegalRefundSections>>>;
+};
+
+export type LegalCookiesSections = {
+  __typename?: 'LegalCookiesSections';
+  heading?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+};
+
+export type LegalCookiesCookieTypes = {
+  __typename?: 'LegalCookiesCookieTypes';
+  name?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  alwaysOn?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type LegalCookies = {
+  __typename?: 'LegalCookies';
+  title?: Maybe<Scalars['String']['output']>;
+  lastUpdated?: Maybe<Scalars['String']['output']>;
+  sections?: Maybe<Array<Maybe<LegalCookiesSections>>>;
+  cookieTypes?: Maybe<Array<Maybe<LegalCookiesCookieTypes>>>;
+  saveButtonText?: Maybe<Scalars['String']['output']>;
+  savedButtonText?: Maybe<Scalars['String']['output']>;
+};
+
+export type Legal = Node & Document & {
+  __typename?: 'Legal';
+  privacy?: Maybe<LegalPrivacy>;
+  terms?: Maybe<LegalTerms>;
+  refund?: Maybe<LegalRefund>;
+  cookies?: Maybe<LegalCookies>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type LegalPrivacySectionsFilter = {
+  heading?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  listItems?: InputMaybe<StringFilter>;
+};
+
+export type LegalPrivacyFilter = {
+  title?: InputMaybe<StringFilter>;
+  lastUpdated?: InputMaybe<StringFilter>;
+  sections?: InputMaybe<LegalPrivacySectionsFilter>;
+};
+
+export type LegalTermsSectionsSubsectionsFilter = {
+  subheading?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  listItems?: InputMaybe<StringFilter>;
+};
+
+export type LegalTermsSectionsFilter = {
+  heading?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  listItems?: InputMaybe<StringFilter>;
+  subsections?: InputMaybe<LegalTermsSectionsSubsectionsFilter>;
+};
+
+export type LegalTermsFilter = {
+  title?: InputMaybe<StringFilter>;
+  lastUpdated?: InputMaybe<StringFilter>;
+  sections?: InputMaybe<LegalTermsSectionsFilter>;
+};
+
+export type LegalRefundSectionsSubsectionsFilter = {
+  subheading?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+};
+
+export type LegalRefundSectionsFilter = {
+  heading?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+  listItems?: InputMaybe<StringFilter>;
+  subsections?: InputMaybe<LegalRefundSectionsSubsectionsFilter>;
+};
+
+export type LegalRefundFilter = {
+  title?: InputMaybe<StringFilter>;
+  lastUpdated?: InputMaybe<StringFilter>;
+  sections?: InputMaybe<LegalRefundSectionsFilter>;
+};
+
+export type LegalCookiesSectionsFilter = {
+  heading?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+};
+
+export type BooleanFilter = {
+  eq?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type LegalCookiesCookieTypesFilter = {
+  name?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  alwaysOn?: InputMaybe<BooleanFilter>;
+};
+
+export type LegalCookiesFilter = {
+  title?: InputMaybe<StringFilter>;
+  lastUpdated?: InputMaybe<StringFilter>;
+  sections?: InputMaybe<LegalCookiesSectionsFilter>;
+  cookieTypes?: InputMaybe<LegalCookiesCookieTypesFilter>;
+  saveButtonText?: InputMaybe<StringFilter>;
+  savedButtonText?: InputMaybe<StringFilter>;
+};
+
+export type LegalFilter = {
+  privacy?: InputMaybe<LegalPrivacyFilter>;
+  terms?: InputMaybe<LegalTermsFilter>;
+  refund?: InputMaybe<LegalRefundFilter>;
+  cookies?: InputMaybe<LegalCookiesFilter>;
+};
+
+export type LegalConnectionEdges = {
+  __typename?: 'LegalConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Legal>;
+};
+
+export type LegalConnection = Connection & {
+  __typename?: 'LegalConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -963,6 +1166,8 @@ export type Mutation = {
   createPricing: Pricing;
   updatePricingPageContent: PricingPageContent;
   createPricingPageContent: PricingPageContent;
+  updateLegal: Legal;
+  createLegal: Legal;
 };
 
 
@@ -1058,12 +1263,25 @@ export type MutationCreatePricingPageContentArgs = {
   params: PricingPageContentMutation;
 };
 
+
+export type MutationUpdateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
+
+export type MutationCreateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
 export type DocumentUpdateMutation = {
   global?: InputMaybe<GlobalMutation>;
   home?: InputMaybe<HomeMutation>;
   contact?: InputMaybe<ContactMutation>;
   pricing?: InputMaybe<PricingMutation>;
   pricingPageContent?: InputMaybe<PricingPageContentMutation>;
+  legal?: InputMaybe<LegalMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1073,6 +1291,7 @@ export type DocumentMutation = {
   contact?: InputMaybe<ContactMutation>;
   pricing?: InputMaybe<PricingMutation>;
   pricingPageContent?: InputMaybe<PricingPageContentMutation>;
+  legal?: InputMaybe<LegalMutation>;
 };
 
 export type GlobalHeaderNavLinksMutation = {
@@ -1363,6 +1582,82 @@ export type PricingPageContentMutation = {
   pages?: InputMaybe<Array<InputMaybe<PricingPageContentPagesMutation>>>;
 };
 
+export type LegalPrivacySectionsMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  listItems?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type LegalPrivacyMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  lastUpdated?: InputMaybe<Scalars['String']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<LegalPrivacySectionsMutation>>>;
+};
+
+export type LegalTermsSectionsSubsectionsMutation = {
+  subheading?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  listItems?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type LegalTermsSectionsMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  listItems?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  subsections?: InputMaybe<Array<InputMaybe<LegalTermsSectionsSubsectionsMutation>>>;
+};
+
+export type LegalTermsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  lastUpdated?: InputMaybe<Scalars['String']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<LegalTermsSectionsMutation>>>;
+};
+
+export type LegalRefundSectionsSubsectionsMutation = {
+  subheading?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type LegalRefundSectionsMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  listItems?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  subsections?: InputMaybe<Array<InputMaybe<LegalRefundSectionsSubsectionsMutation>>>;
+};
+
+export type LegalRefundMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  lastUpdated?: InputMaybe<Scalars['String']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<LegalRefundSectionsMutation>>>;
+};
+
+export type LegalCookiesSectionsMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type LegalCookiesCookieTypesMutation = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  alwaysOn?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type LegalCookiesMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  lastUpdated?: InputMaybe<Scalars['String']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<LegalCookiesSectionsMutation>>>;
+  cookieTypes?: InputMaybe<Array<InputMaybe<LegalCookiesCookieTypesMutation>>>;
+  saveButtonText?: InputMaybe<Scalars['String']['input']>;
+  savedButtonText?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type LegalMutation = {
+  privacy?: InputMaybe<LegalPrivacyMutation>;
+  terms?: InputMaybe<LegalTermsMutation>;
+  refund?: InputMaybe<LegalRefundMutation>;
+  cookies?: InputMaybe<LegalCookiesMutation>;
+};
+
 export type GlobalPartsFragment = { __typename: 'Global', header?: { __typename: 'GlobalHeader', siteName?: string | null, logo?: string | null, loginLabel?: string | null, signupLabel?: string | null, signedInAs?: string | null, myOrders?: string | null, logout?: string | null, shoppingCartAria?: string | null, navLinks?: Array<{ __typename: 'GlobalHeaderNavLinks', label?: string | null, link?: string | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, ourServicesTitle?: string | null, resourcesTitle?: string | null, companyTitle?: string | null, legalDisclaimer?: string | null, copyright?: string | null, privacyPolicy?: string | null, termsOfService?: string | null, refundPolicy?: string | null, cookiesSettings?: string | null } | null, serviceBar?: { __typename: 'GlobalServiceBar', services?: Array<{ __typename: 'GlobalServiceBarServices', label?: string | null, items?: Array<{ __typename: 'GlobalServiceBarServicesItems', label?: string | null, link?: string | null } | null> | null } | null> | null } | null, cart?: { __typename: 'GlobalCart', title?: string | null, emptyTitle?: string | null, emptySubtext?: string | null, browseServices?: string | null } | null, auth?: { __typename: 'GlobalAuth', loginTitle?: string | null, loginSubtitle?: string | null, emailOrUsernameLabel?: string | null, emailPlaceholder?: string | null, passwordLabel?: string | null, passwordPlaceholder?: string | null, logInButton?: string | null, loggingInButton?: string | null, rememberMe?: string | null, forgotPassword?: string | null, noAccount?: string | null, signUpLinkText?: string | null, signupTitle?: string | null, signupSubtitle?: string | null, hasAccount?: string | null, logInLinkText?: string | null } | null };
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', badge?: string | null, title?: string | null, subtitle?: string | null, ctaPrimary?: string | null, ctaSecondary?: string | null, lastOrder?: string | null, activeCampaigns?: string | null } | null, servicesSection?: { __typename: 'HomeServicesSection', googleServices?: Array<string | null> | null, tiktokServices?: Array<string | null> | null } | null, whyChooseUs?: { __typename: 'HomeWhyChooseUs', title?: string | null, features?: Array<{ __typename: 'HomeWhyChooseUsFeatures', title?: string | null } | null> | null } | null, faq?: { __typename: 'HomeFaq', heading?: string | null, items?: Array<{ __typename: 'HomeFaqItems', question?: string | null, answer?: string | null } | null> | null } | null, comparison?: { __typename: 'HomeComparison', heading?: string | null, better?: string | null, otherTitle?: string | null, ourTitle?: string | null, bestChoice?: string | null, otherPoints?: Array<string | null> | null, ourPoints?: Array<string | null> | null } | null, globalAudienceCta?: { __typename: 'HomeGlobalAudienceCta', title?: string | null, titleHighlight?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null };
@@ -1372,6 +1667,8 @@ export type ContactPartsFragment = { __typename: 'Contact', title?: string | nul
 export type PricingPartsFragment = { __typename: 'Pricing', pages?: Array<{ __typename: 'PricingPages', slug: string, quantityKey: string, regularPackages?: Array<{ __typename: 'PricingPagesRegularPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, fastPackages?: Array<{ __typename: 'PricingPagesFastPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, adsPackages?: Array<{ __typename: 'PricingPagesAdsPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null } | null> | null };
 
 export type PricingPageContentPartsFragment = { __typename: 'PricingPageContent', pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null };
+
+export type LegalPartsFragment = { __typename: 'Legal', privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1467,6 +1764,25 @@ export type PricingPageContentConnectionQueryVariables = Exact<{
 
 
 export type PricingPageContentConnectionQuery = { __typename?: 'Query', pricingPageContentConnection: { __typename?: 'PricingPageContentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PricingPageContentConnectionEdges', cursor: string, node?: { __typename: 'PricingPageContent', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null } | null } | null> | null } };
+
+export type LegalQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null } };
+
+export type LegalConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+}>;
+
+
+export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null } | null } | null> | null } };
 
 export const GlobalPartsFragmentDoc = gql`
     fragment GlobalParts on Global {
@@ -1729,6 +2045,73 @@ export const PricingPageContentPartsFragmentDoc = gql`
         answer
       }
     }
+  }
+}
+    `;
+export const LegalPartsFragmentDoc = gql`
+    fragment LegalParts on Legal {
+  __typename
+  privacy {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+    }
+  }
+  terms {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+      subsections {
+        __typename
+        subheading
+        body
+        listItems
+      }
+    }
+  }
+  refund {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+      subsections {
+        __typename
+        subheading
+        body
+      }
+    }
+  }
+  cookies {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+    }
+    cookieTypes {
+      __typename
+      name
+      description
+      alwaysOn
+    }
+    saveButtonText
+    savedButtonText
   }
 }
     `;
@@ -2017,6 +2400,63 @@ export const PricingPageContentConnectionDocument = gql`
   }
 }
     ${PricingPageContentPartsFragmentDoc}`;
+export const LegalDocument = gql`
+    query legal($relativePath: String!) {
+  legal(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...LegalParts
+  }
+}
+    ${LegalPartsFragmentDoc}`;
+export const LegalConnectionDocument = gql`
+    query legalConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: LegalFilter) {
+  legalConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...LegalParts
+      }
+    }
+  }
+}
+    ${LegalPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -2049,6 +2489,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     pricingPageContentConnection(variables?: PricingPageContentConnectionQueryVariables, options?: C): Promise<{data: PricingPageContentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentConnectionQueryVariables, query: string}> {
         return requester<{data: PricingPageContentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentConnectionQueryVariables, query: string}, PricingPageContentConnectionQueryVariables>(PricingPageContentConnectionDocument, variables, options);
+      },
+    legal(variables: LegalQueryVariables, options?: C): Promise<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}> {
+        return requester<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}, LegalQueryVariables>(LegalDocument, variables, options);
+      },
+    legalConnection(variables?: LegalConnectionQueryVariables, options?: C): Promise<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}> {
+        return requester<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}, LegalConnectionQueryVariables>(LegalConnectionDocument, variables, options);
       }
     };
   }

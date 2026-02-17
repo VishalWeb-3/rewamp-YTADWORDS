@@ -269,6 +269,73 @@ export const PricingPageContentPartsFragmentDoc = gql`
   }
 }
     `;
+export const LegalPartsFragmentDoc = gql`
+    fragment LegalParts on Legal {
+  __typename
+  privacy {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+    }
+  }
+  terms {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+      subsections {
+        __typename
+        subheading
+        body
+        listItems
+      }
+    }
+  }
+  refund {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+      subsections {
+        __typename
+        subheading
+        body
+      }
+    }
+  }
+  cookies {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+    }
+    cookieTypes {
+      __typename
+      name
+      description
+      alwaysOn
+    }
+    saveButtonText
+    savedButtonText
+  }
+}
+    `;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -554,6 +621,63 @@ export const PricingPageContentConnectionDocument = gql`
   }
 }
     ${PricingPageContentPartsFragmentDoc}`;
+export const LegalDocument = gql`
+    query legal($relativePath: String!) {
+  legal(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...LegalParts
+  }
+}
+    ${LegalPartsFragmentDoc}`;
+export const LegalConnectionDocument = gql`
+    query legalConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: LegalFilter) {
+  legalConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...LegalParts
+      }
+    }
+  }
+}
+    ${LegalPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
     global(variables, options) {
@@ -585,6 +709,12 @@ export function getSdk(requester) {
     },
     pricingPageContentConnection(variables, options) {
       return requester(PricingPageContentConnectionDocument, variables, options);
+    },
+    legal(variables, options) {
+      return requester(LegalDocument, variables, options);
+    },
+    legalConnection(variables, options) {
+      return requester(LegalConnectionDocument, variables, options);
     }
   };
 }
