@@ -64,6 +64,8 @@ type Query {
   pricingConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingFilter): PricingConnection!
   pricingPageContent(relativePath: String): PricingPageContent!
   pricingPageContentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingPageContentFilter): PricingPageContentConnection!
+  legal(relativePath: String): Legal!
+  legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
 }
 
 input DocumentFilter {
@@ -72,6 +74,7 @@ input DocumentFilter {
   contact: ContactFilter
   pricing: PricingFilter
   pricingPageContent: PricingPageContentFilter
+  legal: LegalFilter
 }
 
 type DocumentConnectionEdges {
@@ -97,7 +100,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Folder
+union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Legal | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -281,9 +284,13 @@ type HomeHero {
   title: String
   subtitle: String
   ctaPrimary: String
+  ctaPrimaryLink: String
   ctaSecondary: String
+  ctaSecondaryLink: String
   lastOrder: String
   activeCampaigns: String
+  heroImage: String
+  heroImageAlt: String
 }
 
 type HomeServicesSection {
@@ -339,14 +346,25 @@ type Home implements Node & Document {
   _values: JSON!
 }
 
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
 input HomeHeroFilter {
   badge: StringFilter
   title: StringFilter
   subtitle: StringFilter
   ctaPrimary: StringFilter
+  ctaPrimaryLink: StringFilter
   ctaSecondary: StringFilter
+  ctaSecondaryLink: StringFilter
   lastOrder: StringFilter
   activeCampaigns: StringFilter
+  heroImage: ImageFilter
+  heroImageAlt: StringFilter
 }
 
 input HomeServicesSectionFilter {
@@ -650,13 +668,6 @@ type PricingPageContent implements Node & Document {
   _values: JSON!
 }
 
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
-}
-
 input PricingPageContentPagesHeroFilter {
   image: ImageFilter
   title: StringFilter
@@ -759,6 +770,177 @@ type PricingPageContentConnection implements Connection {
   edges: [PricingPageContentConnectionEdges]
 }
 
+type LegalPrivacySections {
+  heading: String
+  body: String
+  listItems: [String]
+}
+
+type LegalPrivacy {
+  title: String
+  lastUpdated: String
+  sections: [LegalPrivacySections]
+}
+
+type LegalTermsSectionsSubsections {
+  subheading: String
+  body: String
+  listItems: [String]
+}
+
+type LegalTermsSections {
+  heading: String
+  body: String
+  listItems: [String]
+  subsections: [LegalTermsSectionsSubsections]
+}
+
+type LegalTerms {
+  title: String
+  lastUpdated: String
+  sections: [LegalTermsSections]
+}
+
+type LegalRefundSectionsSubsections {
+  subheading: String
+  body: String
+}
+
+type LegalRefundSections {
+  heading: String
+  body: String
+  listItems: [String]
+  subsections: [LegalRefundSectionsSubsections]
+}
+
+type LegalRefund {
+  title: String
+  lastUpdated: String
+  sections: [LegalRefundSections]
+}
+
+type LegalCookiesSections {
+  heading: String
+  body: String
+}
+
+type LegalCookiesCookieTypes {
+  name: String
+  description: String
+  alwaysOn: Boolean
+}
+
+type LegalCookies {
+  title: String
+  lastUpdated: String
+  sections: [LegalCookiesSections]
+  cookieTypes: [LegalCookiesCookieTypes]
+  saveButtonText: String
+  savedButtonText: String
+}
+
+type Legal implements Node & Document {
+  privacy: LegalPrivacy
+  terms: LegalTerms
+  refund: LegalRefund
+  cookies: LegalCookies
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input LegalPrivacySectionsFilter {
+  heading: StringFilter
+  body: StringFilter
+  listItems: StringFilter
+}
+
+input LegalPrivacyFilter {
+  title: StringFilter
+  lastUpdated: StringFilter
+  sections: LegalPrivacySectionsFilter
+}
+
+input LegalTermsSectionsSubsectionsFilter {
+  subheading: StringFilter
+  body: StringFilter
+  listItems: StringFilter
+}
+
+input LegalTermsSectionsFilter {
+  heading: StringFilter
+  body: StringFilter
+  listItems: StringFilter
+  subsections: LegalTermsSectionsSubsectionsFilter
+}
+
+input LegalTermsFilter {
+  title: StringFilter
+  lastUpdated: StringFilter
+  sections: LegalTermsSectionsFilter
+}
+
+input LegalRefundSectionsSubsectionsFilter {
+  subheading: StringFilter
+  body: StringFilter
+}
+
+input LegalRefundSectionsFilter {
+  heading: StringFilter
+  body: StringFilter
+  listItems: StringFilter
+  subsections: LegalRefundSectionsSubsectionsFilter
+}
+
+input LegalRefundFilter {
+  title: StringFilter
+  lastUpdated: StringFilter
+  sections: LegalRefundSectionsFilter
+}
+
+input LegalCookiesSectionsFilter {
+  heading: StringFilter
+  body: StringFilter
+}
+
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
+}
+
+input LegalCookiesCookieTypesFilter {
+  name: StringFilter
+  description: StringFilter
+  alwaysOn: BooleanFilter
+}
+
+input LegalCookiesFilter {
+  title: StringFilter
+  lastUpdated: StringFilter
+  sections: LegalCookiesSectionsFilter
+  cookieTypes: LegalCookiesCookieTypesFilter
+  saveButtonText: StringFilter
+  savedButtonText: StringFilter
+}
+
+input LegalFilter {
+  privacy: LegalPrivacyFilter
+  terms: LegalTermsFilter
+  refund: LegalRefundFilter
+  cookies: LegalCookiesFilter
+}
+
+type LegalConnectionEdges {
+  cursor: String!
+  node: Legal
+}
+
+type LegalConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [LegalConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -775,6 +957,8 @@ type Mutation {
   createPricing(relativePath: String!, params: PricingMutation!): Pricing!
   updatePricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
   createPricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
+  updateLegal(relativePath: String!, params: LegalMutation!): Legal!
+  createLegal(relativePath: String!, params: LegalMutation!): Legal!
 }
 
 input DocumentUpdateMutation {
@@ -783,6 +967,7 @@ input DocumentUpdateMutation {
   contact: ContactMutation
   pricing: PricingMutation
   pricingPageContent: PricingPageContentMutation
+  legal: LegalMutation
   relativePath: String
 }
 
@@ -792,6 +977,7 @@ input DocumentMutation {
   contact: ContactMutation
   pricing: PricingMutation
   pricingPageContent: PricingPageContentMutation
+  legal: LegalMutation
 }
 
 input GlobalHeaderNavLinksMutation {
@@ -877,9 +1063,13 @@ input HomeHeroMutation {
   title: String
   subtitle: String
   ctaPrimary: String
+  ctaPrimaryLink: String
   ctaSecondary: String
+  ctaSecondaryLink: String
   lastOrder: String
   activeCampaigns: String
+  heroImage: String
+  heroImageAlt: String
 }
 
 input HomeServicesSectionMutation {
@@ -1080,6 +1270,82 @@ input PricingPageContentPagesMutation {
 
 input PricingPageContentMutation {
   pages: [PricingPageContentPagesMutation]
+}
+
+input LegalPrivacySectionsMutation {
+  heading: String
+  body: String
+  listItems: [String]
+}
+
+input LegalPrivacyMutation {
+  title: String
+  lastUpdated: String
+  sections: [LegalPrivacySectionsMutation]
+}
+
+input LegalTermsSectionsSubsectionsMutation {
+  subheading: String
+  body: String
+  listItems: [String]
+}
+
+input LegalTermsSectionsMutation {
+  heading: String
+  body: String
+  listItems: [String]
+  subsections: [LegalTermsSectionsSubsectionsMutation]
+}
+
+input LegalTermsMutation {
+  title: String
+  lastUpdated: String
+  sections: [LegalTermsSectionsMutation]
+}
+
+input LegalRefundSectionsSubsectionsMutation {
+  subheading: String
+  body: String
+}
+
+input LegalRefundSectionsMutation {
+  heading: String
+  body: String
+  listItems: [String]
+  subsections: [LegalRefundSectionsSubsectionsMutation]
+}
+
+input LegalRefundMutation {
+  title: String
+  lastUpdated: String
+  sections: [LegalRefundSectionsMutation]
+}
+
+input LegalCookiesSectionsMutation {
+  heading: String
+  body: String
+}
+
+input LegalCookiesCookieTypesMutation {
+  name: String
+  description: String
+  alwaysOn: Boolean
+}
+
+input LegalCookiesMutation {
+  title: String
+  lastUpdated: String
+  sections: [LegalCookiesSectionsMutation]
+  cookieTypes: [LegalCookiesCookieTypesMutation]
+  saveButtonText: String
+  savedButtonText: String
+}
+
+input LegalMutation {
+  privacy: LegalPrivacyMutation
+  terms: LegalTermsMutation
+  refund: LegalRefundMutation
+  cookies: LegalCookiesMutation
 }
 
 schema {

@@ -77,9 +77,13 @@ fragment HomeParts on Home {
     title
     subtitle
     ctaPrimary
+    ctaPrimaryLink
     ctaSecondary
+    ctaSecondaryLink
     lastOrder
     activeCampaigns
+    heroImage
+    heroImageAlt
   }
   servicesSection {
     __typename
@@ -254,5 +258,71 @@ fragment PricingPageContentParts on PricingPageContent {
         answer
       }
     }
+  }
+}
+
+fragment LegalParts on Legal {
+  __typename
+  privacy {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+    }
+  }
+  terms {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+      subsections {
+        __typename
+        subheading
+        body
+        listItems
+      }
+    }
+  }
+  refund {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+      listItems
+      subsections {
+        __typename
+        subheading
+        body
+      }
+    }
+  }
+  cookies {
+    __typename
+    title
+    lastUpdated
+    sections {
+      __typename
+      heading
+      body
+    }
+    cookieTypes {
+      __typename
+      name
+      description
+      alwaysOn
+    }
+    saveButtonText
+    savedButtonText
   }
 }

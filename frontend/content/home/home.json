@@ -1,33 +1,4 @@
 {
-  "hero": {
-    "badge": "2.4M+ Quality Ad Views Delivered",
-    "title": "Boost Your Google Ads & TikTok Campaigns with Authentic, High-Quality Traffic",
-    "titleHighlight1": "Google Ads",
-    "titleHighlight2": "TikTok",
-    "subtitle": "Experience rapid growth with YouTubeAdWords' premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.",
-    "ctaPrimary": "Start Your Campaign",
-    "ctaSecondary": "View Pricing",
-    "lastOrder": "Last Order: 15 mins ago",
-    "activeCampaigns": "1,200+ Active Campaigns",
-    "heroImageAlt": "YouTube AdWords - Boost your Google Ads & TikTok campaigns"
-  },
-  "servicesSection": {
-    "googleServices": ["Google Ads Video Views", "Google Display Ads Views", "Google Discovery Views", "Google Search Traffic"],
-    "tiktokServices": ["TikTok Video Views", "TikTok Ads Views", "TikTok Followers", "TikTok Engagement"]
-  },
-  "whyChooseUs": {
-    "title": "Why Choose Us?",
-    "features": [
-      { "title": "100% Growth Guaranteed" },
-      { "title": "Turbocharged Delivery" },
-      { "title": "Secure Purchase" },
-      { "title": "Refill Guaranteed" },
-      { "title": "Real Active Users" },
-      { "title": "Long-Term Impact" },
-      { "title": "Boost Your Ranking" },
-      { "title": "24/7 Customer Support" }
-    ]
-  },
   "socialMediaImpact": {
     "leftTitle": "Maximize Social Media Impact",
     "leftTitleHighlight": "Impact",
@@ -54,6 +25,202 @@
     "block2Title": "Top Reasons to Choose Our Google Services",
     "block2Text": "Our services use legitimate ad tech to deliver safe traffic. You can target specific high-value regions like USA and Tier-1 countries, ensuring premium traffic that drives conversion and engagement for your campaigns."
   },
+  "whyChooseYouTubeAdWords": {
+    "heading1": "Why Should You Choose",
+    "heading2YouTube": "YouTube",
+    "heading2AdWords": "Ad Words?",
+    "card1Title": "Advanced Google Ads & Algorithm Mastery",
+    "card1Text": "YouTube Ad Words leverages precision targeting, deep YouTube algorithm knowledge, and proven Google Ads strategies to deliver authentic traffic that drives real growth, retention, and better ranking for your content.",
+    "card2Title": "100% Safe, Secure & Compliant Growth",
+    "card2Text": "Our \"White-Hat\" approach ensures YouTube Ad Words complies with all platform policies, protects against bot activity, and maintains your account security while delivering genuine, high-quality engagement."
+  },
+  "meetOurExperts": {
+    "title": "Meet Our",
+    "titleHighlight": "Experts",
+    "subtitle": "Our team of certified professionals is dedicated to growing your social media presence safely and organically.",
+    "experts": [
+      {
+        "name": "ALEXANDER STERLING",
+        "role": "Ads Strategy Lead",
+        "description": "Develops comprehensive Google Ads campaigns. He helps clients maximize ROI through strategic ad placement and targeting.",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&q=80"
+      },
+      {
+        "name": "ELEANOR VANCE",
+        "role": "Growth Marketing",
+        "description": "Oversees operations and ensures smooth service delivery. She coordinates teams to deliver exceptional results for every client.",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&q=80"
+      },
+      {
+        "name": "NATHANIEL DRAKE",
+        "role": "Tech & Analytics",
+        "description": "Analyzes performance data and optimizes campaigns. He uses advanced analytics to track growth and improve engagement metrics.",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&q=80"
+      },
+      {
+        "name": "ISABELLA ROSS",
+        "role": "Content Strategist",
+        "description": "Guides clients on content optimization. She helps you understand what type of content goes viral and how to retain viewers.",
+        "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&q=80"
+      },
+      {
+        "name": "CHARLOTTE HALE",
+        "role": "Customer Success",
+        "description": "Ensures client satisfaction and provides ongoing support. She helps creators achieve their goals with personalized guidance.",
+        "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&q=80"
+      }
+    ]
+  },
+  "whatWeEnsure": {
+    "title": "What We",
+    "titleHighlight": "Ensure",
+    "cards": [
+      {
+        "title": "Authentic, Lasting Engagement",
+        "description": "We deliver quality user interactions for YouTube and TikTok. Our services focus on genuine growth and protection against penalties."
+      },
+      {
+        "title": "Commitment to Data Safety",
+        "description": "We are committed to data security. Our advanced encrypted servers and strict policy of never asking for sensitive social media passwords ensure 100% confidentiality."
+      },
+      {
+        "title": "Exceptional Customer Experience",
+        "description": "We prioritize client satisfaction with instant campaign start, diverse packages, and 24/7 expert support. Your success is our mission."
+      }
+    ]
+  },
+  "trustedClients": {
+    "title": "Our Trusted",
+    "titleHighlight": "Clients",
+    "subtitle": "Our mission is to drive progress and enhance the careers of creators by delivering superior Google Ads strategies that exceed expectations.",
+    "testimonials": [
+      {
+        "category": "YT Creator",
+        "rating": "4.9",
+        "quote": "The Google Ads strategy is fantastic. It's motivating to see my subscriber count grow with real people. YouTube Ad Words has a great mix of safety and speed.",
+        "name": "Caleb Sterling",
+        "handle": "@caleb_tech_reviews",
+        "highlighted": true
+      },
+      {
+        "category": "TikToker",
+        "rating": "4.8",
+        "quote": "Finally a service that doesn't use bots. My engagement on TikTok videos skyrocketed within 24 hours. The support team helped me choose the right package.",
+        "name": "Chloe Vance",
+        "handle": "@chloe_vibe_official",
+        "highlighted": false
+      },
+      {
+        "category": "Agency",
+        "rating": "5.0",
+        "quote": "We manage 10+ channels and use YouTube Ad Words for the initial push. The retention rate is amazing compared to other panels. Highly recommended!",
+        "name": "Marcus Thorne",
+        "handle": "Thorne Digital Media",
+        "highlighted": false
+      },
+      {
+        "category": "Musician",
+        "rating": "4.7",
+        "quote": "Used the 'Watch Hours' service to get my music channel monetized. It took about 2 weeks but the delivery was steady and safe. Thanks team!",
+        "name": "Jaxson Reed",
+        "handle": "@jaxson_beats",
+        "highlighted": false
+      },
+      {
+        "category": "Influencer",
+        "rating": "4.9",
+        "quote": "I was skeptical about buying likes, but these look real. No sudden drops, and it helped my reel go viral on the Explore page. Will buy again.",
+        "name": "Elena Brooks",
+        "handle": "@elena_style_nyc",
+        "highlighted": false
+      },
+      {
+        "category": "Gamer",
+        "rating": "4.8",
+        "quote": "Great service for live streamers. The concurrent viewers package helped me rank higher in the gaming category. Stable and reliable.",
+        "name": "Tyler Frost",
+        "handle": "@frost_gaming_live",
+        "highlighted": false
+      }
+    ]
+  },
+  "hero": {
+    "badge": "2.4M+ Quality Ad Views Delivered",
+    "title": "Boost Your Google Ads & TikTok Campaigns with Authentic, High-Quality Traffic",
+    "subtitle": "Experience rapid growth with YouTubeAdWords' premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.",
+    "ctaPrimary": "Start Your Campaign",
+    "ctaSecondary": "View Pricing",
+    "lastOrder": "Last Order: 15 mins ago",
+    "activeCampaigns": "1,200+ Active Campaigns"
+  },
+  "servicesSection": {
+    "googleServices": [
+      "Google Ads Video Views",
+      "Google Display Ads Views",
+      "Google Discovery Views",
+      "Google Search Traffic"
+    ],
+    "tiktokServices": [
+      "TikTok Video Views",
+      "TikTok Ads Views",
+      "TikTok Followers",
+      "TikTok Engagement"
+    ]
+  },
+  "whyChooseUs": {
+    "title": "Why Choose Us?",
+    "features": [
+      {
+        "title": "100% Growth Guaranteed"
+      },
+      {
+        "title": "Turbocharged Delivery"
+      },
+      {
+        "title": "Secure Purchase"
+      },
+      {
+        "title": "Refill Guaranteed"
+      },
+      {
+        "title": "Real Active Users"
+      },
+      {
+        "title": "Long-Term Impact"
+      },
+      {
+        "title": "Boost Your Ranking"
+      },
+      {
+        "title": "24/7 Customer Support"
+      }
+    ]
+  },
+  "faq": {
+    "heading": "Frequently Asked",
+    "items": [
+      {
+        "question": "Is using YouTube Ad Words safe for my channel?",
+        "answer": "Yes, absolutely! YouTube Ad Words uses legitimate Google Ads strategies and complies with all platform policies. We deliver real traffic through official ad networks, ensuring your channel remains safe and secure."
+      },
+      {
+        "question": "Can your services help me get monetized on YouTube?",
+        "answer": "Yes! Our Watch Hours and Subscriber packages are specifically designed to help creators meet YouTube's monetization requirements. We provide authentic engagement that helps you reach the thresholds needed for the YouTube Partner Program."
+      },
+      {
+        "question": "Will my subscribers or followers drop over time?",
+        "answer": "No, our services come with a Non-Drop Lifetime Guarantee. We use real traffic and engagement methods, so your subscribers and followers will remain stable. Unlike bot-based services, our authentic approach ensures long-term retention."
+      },
+      {
+        "question": "How long does it take to see results?",
+        "answer": "Results typically start appearing within 24-48 hours of purchase. Delivery speed depends on the package size and service type. Smaller packages may complete faster, while larger campaigns are delivered gradually over days or weeks to ensure natural growth patterns."
+      },
+      {
+        "question": "How is YouTube Ad Words different from other panels?",
+        "answer": "YouTube Ad Words stands out by using legitimate Google Ads strategies instead of bots or proxies. We offer real traffic, 100% policy compliance, non-drop guarantees, and 24/7 expert support. Our White-Hat approach ensures account safety and authentic engagement that lasts."
+      }
+    ]
+  },
   "comparison": {
     "heading": "Why We Are",
     "better": "Better?",
@@ -75,100 +242,10 @@
       "High-Retention (Sticky) Engagement"
     ]
   },
-  "whyChooseYouTubeAdWords": {
-    "heading1": "Why Should You Choose",
-    "heading2YouTube": "YouTube",
-    "heading2AdWords": "Ad Words?",
-    "card1Title": "Advanced Google Ads & Algorithm Mastery",
-    "card1Text": "YouTube Ad Words leverages precision targeting, deep YouTube algorithm knowledge, and proven Google Ads strategies to deliver authentic traffic that drives real growth, retention, and better ranking for your content.",
-    "card2Title": "100% Safe, Secure & Compliant Growth",
-    "card2Text": "Our \"White-Hat\" approach ensures YouTube Ad Words complies with all platform policies, protects against bot activity, and maintains your account security while delivering genuine, high-quality engagement."
-  },
-  "meetOurExperts": {
-    "title": "Meet Our",
-    "titleHighlight": "Experts",
-    "subtitle": "Our team of certified professionals is dedicated to growing your social media presence safely and organically.",
-    "experts": [
-      { "name": "ALEXANDER STERLING", "role": "Ads Strategy Lead", "description": "Develops comprehensive Google Ads campaigns. He helps clients maximize ROI through strategic ad placement and targeting.", "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&q=80" },
-      { "name": "ELEANOR VANCE", "role": "Growth Marketing", "description": "Oversees operations and ensures smooth service delivery. She coordinates teams to deliver exceptional results for every client.", "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&q=80" },
-      { "name": "NATHANIEL DRAKE", "role": "Tech & Analytics", "description": "Analyzes performance data and optimizes campaigns. He uses advanced analytics to track growth and improve engagement metrics.", "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&q=80" },
-      { "name": "ISABELLA ROSS", "role": "Content Strategist", "description": "Guides clients on content optimization. She helps you understand what type of content goes viral and how to retain viewers.", "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&q=80" },
-      { "name": "CHARLOTTE HALE", "role": "Customer Success", "description": "Ensures client satisfaction and provides ongoing support. She helps creators achieve their goals with personalized guidance.", "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&q=80" }
-    ]
-  },
-  "whatWeEnsure": {
-    "title": "What We",
-    "titleHighlight": "Ensure",
-    "cards": [
-      { "title": "Authentic, Lasting Engagement", "description": "We deliver quality user interactions for YouTube and TikTok. Our services focus on genuine growth and protection against penalties." },
-      { "title": "Commitment to Data Safety", "description": "We are committed to data security. Our advanced encrypted servers and strict policy of never asking for sensitive social media passwords ensure 100% confidentiality." },
-      { "title": "Exceptional Customer Experience", "description": "We prioritize client satisfaction with instant campaign start, diverse packages, and 24/7 expert support. Your success is our mission." }
-    ]
-  },
-  "trustedClients": {
-    "title": "Our Trusted",
-    "titleHighlight": "Clients",
-    "subtitle": "Our mission is to drive progress and enhance the careers of creators by delivering superior Google Ads strategies that exceed expectations.",
-    "testimonials": [
-      { "category": "YT Creator", "rating": "4.9", "quote": "The Google Ads strategy is fantastic. It's motivating to see my subscriber count grow with real people. YouTube Ad Words has a great mix of safety and speed.", "name": "Caleb Sterling", "handle": "@caleb_tech_reviews", "highlighted": true },
-      { "category": "TikToker", "rating": "4.8", "quote": "Finally a service that doesn't use bots. My engagement on TikTok videos skyrocketed within 24 hours. The support team helped me choose the right package.", "name": "Chloe Vance", "handle": "@chloe_vibe_official", "highlighted": false },
-      { "category": "Agency", "rating": "5.0", "quote": "We manage 10+ channels and use YouTube Ad Words for the initial push. The retention rate is amazing compared to other panels. Highly recommended!", "name": "Marcus Thorne", "handle": "Thorne Digital Media", "highlighted": false },
-      { "category": "Musician", "rating": "4.7", "quote": "Used the 'Watch Hours' service to get my music channel monetized. It took about 2 weeks but the delivery was steady and safe. Thanks team!", "name": "Jaxson Reed", "handle": "@jaxson_beats", "highlighted": false },
-      { "category": "Influencer", "rating": "4.9", "quote": "I was skeptical about buying likes, but these look real. No sudden drops, and it helped my reel go viral on the Explore page. Will buy again.", "name": "Elena Brooks", "handle": "@elena_style_nyc", "highlighted": false },
-      { "category": "Gamer", "rating": "4.8", "quote": "Great service for live streamers. The concurrent viewers package helped me rank higher in the gaming category. Stable and reliable.", "name": "Tyler Frost", "handle": "@frost_gaming_live", "highlighted": false }
-    ]
-  },
-  "faq": {
-    "heading": "Frequently Asked",
-    "headingHighlight": "Questions",
-    "items": [
-      { "question": "Is using YouTube Ad Words safe for my channel?", "answer": "Yes, absolutely! YouTube Ad Words uses legitimate Google Ads strategies and complies with all platform policies. We deliver real traffic through official ad networks, ensuring your channel remains safe and secure." },
-      { "question": "Can your services help me get monetized on YouTube?", "answer": "Yes! Our Watch Hours and Subscriber packages are specifically designed to help creators meet YouTube's monetization requirements. We provide authentic engagement that helps you reach the thresholds needed for the YouTube Partner Program." },
-      { "question": "Will my subscribers or followers drop over time?", "answer": "No, our services come with a Non-Drop Lifetime Guarantee. We use real traffic and engagement methods, so your subscribers and followers will remain stable. Unlike bot-based services, our authentic approach ensures long-term retention." },
-      { "question": "How long does it take to see results?", "answer": "Results typically start appearing within 24-48 hours of purchase. Delivery speed depends on the package size and service type. Smaller packages may complete faster, while larger campaigns are delivered gradually over days or weeks to ensure natural growth patterns." },
-      { "question": "How is YouTube Ad Words different from other panels?", "answer": "YouTube Ad Words stands out by using legitimate Google Ads strategies instead of bots or proxies. We offer real traffic, 100% policy compliance, non-drop guarantees, and 24/7 expert support. Our White-Hat approach ensures account safety and authentic engagement that lasts." }
-    ]
-  },
   "globalAudienceCta": {
     "title": "Expanding your reach",
     "titleHighlight": "to a Global Audience",
     "paragraph1": "Stop waiting, start growing. At YouTube Ad Words, we don't just sell stats; we fuel careers. Whether you need to cross the monetization threshold or dominate the TikTok algorithm, our premium packages are designed for instant impact.",
-    "paragraph2": "Join thousands of creators who trust us for safe, affordable, and high-retention growth. Select your platform and launch your campaign in seconds.",
-    "serviceCategories": [
-      { "label": "Google Ads Services", "icon": "G" },
-      { "label": "YouTube Services", "icon": "youtube" },
-      { "label": "TikTok Ads Services", "icon": "tiktok" },
-      { "label": "Buy Google Reviews", "icon": "star" }
-    ],
-    "services": {
-      "google": [
-        { "label": "Google Skip Ads Views", "icon": "play" },
-        { "label": "Google Display Ads Views", "icon": "play" },
-        { "label": "Google Discovery Ads Views", "icon": "play" },
-        { "label": "Google Ads Search Campaign Traffic", "icon": "play" },
-        { "label": "Google Ads Website / App Traffic", "icon": "play" }
-      ],
-      "youtube": [
-        { "label": "Buy YouTube Views", "icon": "play" },
-        { "label": "Buy YouTube Subscribers", "icon": "users" },
-        { "label": "Buy YouTube Likes", "icon": "thumbs" },
-        { "label": "Buy YouTube Watch Hours", "icon": "clock" }
-      ],
-      "tiktok": [
-        { "label": "TikTok Followers Growth", "icon": "users" },
-        { "label": "TikTok Ads Views", "icon": "eye" },
-        { "label": "TikTok Reach / Impressions", "icon": "eye" },
-        { "label": "TikTok Engagement Services", "icon": "heart" },
-        { "label": "TikTok Video Views", "icon": "eye" },
-        { "label": "TikTok Website / App Traffic", "icon": "eye" }
-      ],
-      "reviews": [
-        { "label": "Buy Female Google Reviews", "icon": "star" },
-        { "label": "Buy Male Google Reviews", "icon": "star" },
-        { "label": "Buy USA Google Reviews", "icon": "star" },
-        { "label": "Buy Google Local Guide Reviews", "icon": "star" },
-        { "label": "Buy Google Reviews by Age Group", "icon": "star" }
-      ]
-    }
+    "paragraph2": "Join thousands of creators who trust us for safe, affordable, and high-retention growth. Select your platform and launch your campaign in seconds."
   }
 }
