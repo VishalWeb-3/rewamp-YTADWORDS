@@ -111,7 +111,7 @@ export default function SignupPage() {
               {auth.signupTitle || 'Create Account'}
             </h1>
             <p className="text-gray-600">
-              {auth.signupSubtitle || 'Sign up to start using Views4You services'}
+              {auth.signupSubtitle || 'Sign up to start using YoutubeAdWords services'}
             </p>
           </div>
 

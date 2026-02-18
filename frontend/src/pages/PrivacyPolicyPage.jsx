@@ -4,7 +4,7 @@ import { LegalSection } from '../components/LegalSection';
 import { useLegalContent } from '../contexts/ContentContext';
 
 const DEFAULT_SECTIONS = [
-  { heading: 'Introduction', body: 'Views4You ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.', listItems: [] },
+  { heading: 'Introduction', body: 'YoutubeAdWords ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.', listItems: [] },
   { heading: 'Information We Collect', body: 'We may collect personal information including name, contact info, payment info, and order history. We automatically collect device and usage information.', listItems: [] },
   { heading: 'How We Use Your Information', body: 'We use the information to process orders, provide support, improve services, detect fraud, and comply with legal obligations.', listItems: ['Process and fulfill your orders', 'Provide customer support', 'Send order updates', 'Improve our website', 'Detect and prevent fraud', 'Comply with legal obligations', 'Send marketing (with consent)'] },
   { heading: 'Information Sharing and Disclosure', body: 'We do not sell your information. We may share with service providers, for legal requirements, or with your consent.', listItems: [] },

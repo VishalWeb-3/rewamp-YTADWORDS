@@ -35,7 +35,7 @@ export default function SocialMediaImpact() {
                 {section.rightParagraph1 || 'This increases your engagement on YouTube, Instagram, and TikTok, boosting your influence, popularity, and presence on these platforms.'}
               </p>
               <p className="text-gray-500 leading-relaxed" style={{ fontSize: "13px" }}>
-                {section.rightParagraph2 || 'Views4You can make it a reality! With our YouTube, Instagram and TikTok engagement packages, results arrive instantly, your account remains secure, and you experience rapid organic growth for your profile, pages, and content!'}
+                {section.rightParagraph2 || 'YoutubeAdWords can make it a reality! With our YouTube, Instagram and TikTok engagement packages, results arrive instantly, your account remains secure, and you experience rapid organic growth for your profile, pages, and content!'}
               </p>
             </div>
           </div>

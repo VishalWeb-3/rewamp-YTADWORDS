@@ -53,7 +53,7 @@ export default function ContactPage() {
               {c?.title ?? 'Contact us'}
             </h1>
             <div className="space-y-3 text-gray-700 text-base lg:text-lg max-w-3xl mx-auto">
-              <p>{c?.introParagraph1 ?? 'If you have anything in mind about our social media services, and Views4You please send us a message. Our support team will get back to you within 24 hours.'}</p>
+              <p>{c?.introParagraph1 ?? 'If you have anything in mind about our social media services, and YoutubeAdWords please send us a message. Our support team will get back to you within 24 hours.'}</p>
               <p>
                 {c?.introParagraph2 ?? 'If you have any questions about your order, you can easily track its status '}
                 <a href={c?.trackOrderLinkHref ?? '#'} className="text-brand-red font-semibold hover:underline">{c?.trackOrderLinkText ?? 'here'}</a>.

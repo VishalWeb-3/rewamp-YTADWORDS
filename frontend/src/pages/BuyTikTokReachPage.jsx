@@ -68,7 +68,7 @@ export default function BuyTikTokReachPage() {
     },
     {
       question: 'Are the reach real and from real users?',
-      answer: 'Yes! Views4You provides authentic reach from real users. Our reach come from recommended videos in TikTok Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our reach have high retention rates and help activate TikTok\'s algorithm.',
+      answer: 'Yes! YoutubeAdWords provides authentic reach from real users. Our reach come from recommended videos in TikTok Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our reach have high retention rates and help activate TikTok\'s algorithm.',
     },
     {
       question: 'Will buying reach get my account banned?',
@@ -120,7 +120,7 @@ export default function BuyTikTokReachPage() {
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                Views4You is the safest way to buy TikTok Reach / Impressions with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                YoutubeAdWords is the safest way to buy TikTok Reach / Impressions with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
               </p>
             </div>
           </div>
@@ -275,7 +275,7 @@ export default function BuyTikTokReachPage() {
                 
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                  With Views4You's all-inclusive package, you can{' '}
+                  With YoutubeAdWords's all-inclusive package, you can{' '}
                   <span className="text-blue-600 font-semibold">buy TikTok subscribers</span>, and reach simultaneously. Moreover, you may order{' '}
                   <span className="text-blue-600 font-semibold">TikTok likes service</span> and add it to the package for the best price.
                 </p>
@@ -320,20 +320,20 @@ export default function BuyTikTokReachPage() {
           </div>
         </div>
 
-        {/* Views4You's Guarantee Section */}
+        {/* YoutubeAdWords's Guarantee Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Views4You's Guarantee When You Buy TikTok Reach / Impressions
+                YoutubeAdWords's Guarantee When You Buy TikTok Reach / Impressions
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>
-                  We know that you put in a lot of hours to produce amazing content on TikTok. Views4You works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of reach, just select how many you want!
+                  We know that you put in a lot of hours to produce amazing content on TikTok. YoutubeAdWords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of reach, just select how many you want!
                 </p>
                 <p>
-                  To grow their TikTok subscribers and likes daily with Views4You, our customers buy TikTok reach for every video they produce.
+                  To grow their TikTok subscribers and likes daily with YoutubeAdWords, our customers buy TikTok reach for every video they produce.
                 </p>
               </div>
             </div>
@@ -401,7 +401,7 @@ export default function BuyTikTokReachPage() {
                 Lowest Price Guaranteed
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Views4You services guarantee you the cheapest TikTok reach on the market. If you find the same quality of TikTok reach at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
+                YoutubeAdWords services guarantee you the cheapest TikTok reach on the market. If you find the same quality of TikTok reach at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
               </p>
             </div>
 
@@ -443,7 +443,7 @@ export default function BuyTikTokReachPage() {
                 Slow or Fast Viewing Preference
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Everyone wants the number of reach on their content to grow at different speeds. You can buy slow or fast reach according to your preference. Views4You adapts to whatever your preference is to give you the best satisfaction.
+                Everyone wants the number of reach on their content to grow at different speeds. You can buy slow or fast reach according to your preference. YoutubeAdWords adapts to whatever your preference is to give you the best satisfaction.
               </p>
             </div>
           </div>
@@ -487,7 +487,7 @@ export default function BuyTikTokReachPage() {
             {/* Left Section - Text Content */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; Views4You
+                Numbers, Engagement, and Reputation; YoutubeAdWords
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>
@@ -497,7 +497,7 @@ export default function BuyTikTokReachPage() {
                   Numbers are everything in today's digital world. Buying reach makes a quick and immediate contribution to your numerical superiority, making you seem like a legit account for viewers to flock to.
                 </p>
                 <p>
-                  What number of reach will satisfy you? Would 100,000 reach look good on a video promoting your company? Views4You can provide this for you. Thanks to the quality reach we send to your videos, we're able to activate the TikTok algorithm and make the system work for you.
+                  What number of reach will satisfy you? Would 100,000 reach look good on a video promoting your company? YoutubeAdWords can provide this for you. Thanks to the quality reach we send to your videos, we're able to activate the TikTok algorithm and make the system work for you.
                 </p>
               </div>
             </div>
@@ -613,7 +613,7 @@ export default function BuyTikTokReachPage() {
             {/* Section Title */}
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Why Choose Views4You?
+                Why Choose YoutubeAdWords?
               </h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 See how we compare to other providers across key features

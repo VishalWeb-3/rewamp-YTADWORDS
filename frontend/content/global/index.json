@@ -85,7 +85,7 @@
   },
   "auth": {
     "loginTitle": "Login",
-    "loginSubtitle": "Sign in to your Views4You account",
+    "loginSubtitle": "Sign in to your YoutubeAdWords account",
     "emailOrUsernameLabel": "Email or Username",
     "emailPlaceholder": "email@example.com or username",
     "passwordLabel": "Password",
