@@ -690,7 +690,7 @@ export default function BuyFemaleGoogleReviewsPage() {
                 ))}
               </div>
 
-              {/* Middle Column - YoutubeAdWords */}
+              {/* Middle Column - VIEWS 4 YOU */}
               <div className="border-4 border-green-500 rounded-3xl p-6 lg:p-8 bg-white shadow-xl relative overflow-hidden">
                 {/* Highlighted Badge */}
                 <div className="absolute top-0 right-0 bg-green-500 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
@@ -699,9 +699,9 @@ export default function BuyFemaleGoogleReviewsPage() {
                 
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOUTUBE</span>
-                    <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">AD</span>
-                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">WORDS</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">VIEWS</span>
+                    <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">4</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOU</span>
                   </div>
                 </div>
                 <div className="space-y-3">
