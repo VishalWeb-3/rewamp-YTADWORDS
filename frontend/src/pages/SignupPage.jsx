@@ -170,9 +170,8 @@ export default function SignupPage() {
                   onChange={handleChange}
                   required
                   placeholder="johndoe"
-                  className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 ${
-                    errors.username ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 ${errors.username ? 'border-red-300' : 'border-gray-300'
+                    }`}
                 />
                 {errors.username && (
                   <p className="mt-1 text-sm text-red-600">{errors.username}</p>
@@ -210,9 +209,8 @@ export default function SignupPage() {
                     onChange={handleChange}
                     required
                     placeholder="At least 8 characters"
-                    className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 pr-12 ${
-                      errors.password ? 'border-red-300' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 pr-12 ${errors.password ? 'border-red-300' : 'border-gray-300'
+                      }`}
                   />
                   <button
                     type="button"
@@ -250,9 +248,8 @@ export default function SignupPage() {
                     onChange={handleChange}
                     required
                     placeholder="Confirm your password"
-                    className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 pr-12 ${
-                      errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 pr-12 ${errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
+                      }`}
                   />
                   <button
                     type="button"

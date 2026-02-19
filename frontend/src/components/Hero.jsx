@@ -1,8 +1,10 @@
 import React from 'react';
 import { useHomeContent } from '../contexts/ContentContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Hero() {
   const home = useHomeContent();
+  const { isLoggedIn, logout } = useAuth();
   const hero = home?.hero || {};
   return (
     <section className="min-h-[calc(100vh-140px)] sm:min-h-[calc(100vh-180px)] bg-gray-100 bg-dot-pattern bg-[length:20px_20px]">
@@ -58,6 +60,14 @@ export default function Hero() {
             >
               {hero.ctaSecondary || 'View Pricing'}
             </a>
+            {isLoggedIn && (
+              <button
+                onClick={logout}
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg bg-gray-200 text-gray-700 font-semibold text-sm sm:text-base hover:bg-gray-300 transition-colors"
+              >
+                Logout
+              </button>
+            )}
           </div>
           <p className="text-sm text-gray-500 flex flex-wrap items-center gap-4">
             <span className="inline-flex items-center gap-2">

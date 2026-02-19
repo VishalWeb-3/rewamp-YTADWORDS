@@ -70,11 +70,10 @@ export default function Header() {
           key={item.label}
           to={item.link || '#'}
           onClick={isMobile ? closeMobileMenu : undefined}
-          className={`transition-colors bg-[#E53935] text-white hover:bg-[#C62828] ${
-            isMobile
+          className={`transition-colors bg-[#E53935] text-white hover:bg-[#C62828] ${isMobile
               ? 'block px-6 py-4 text-base font-medium border-b border-white/20'
               : 'px-3 sm:px-4 py-2 rounded-full text-sm font-medium'
-          }`}
+            }`}
         >
           {item.label}
         </Link>
@@ -94,38 +93,38 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => { logout(); closeMobileMenu(); }}
-                className="block w-full text-left px-6 py-4 text-base text-red-300 hover:bg-white/10"
+                className="block w-full text-left px-6 py-4 text-base text-red-500 hover:bg-white/10 font-medium"
               >
                 {header.logout || 'Logout'}
               </button>
             </>
           ) : (
             <>
-          <button
-            type="button"
-            onClick={() => setUserMenuOpen(!userMenuOpen)}
-            className="px-3 sm:px-4 py-2 rounded-full text-sm font-medium bg-brand-red text-white hover:bg-[#C62828] transition-colors"
-          >
-            {displayName}
-          </button>
-          {userMenuOpen && (
-            <div className="absolute right-0 top-full mt-1 py-1 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[140px] z-50">
-              <Link
-                to="/orders"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                onClick={() => setUserMenuOpen(false)}
-              >
-                {header.myOrders || 'My Orders'}
-              </Link>
               <button
                 type="button"
-                onClick={() => { logout(); setUserMenuOpen(false); }}
-                className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="px-3 sm:px-4 py-2 rounded-full text-sm font-medium bg-brand-red text-white hover:bg-[#C62828] transition-colors"
               >
-                {header.logout || 'Logout'}
+                {displayName}
               </button>
-            </div>
-          )}
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full mt-1 py-1 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[140px] z-50">
+                  <Link
+                    to="/orders"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    {header.myOrders || 'My Orders'}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => { logout(); setUserMenuOpen(false); }}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  >
+                    {header.logout || 'Logout'}
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>

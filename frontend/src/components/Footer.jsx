@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalContent } from '../contexts/ContentContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Footer() {
   const globalContent = useGlobalContent();
+  const { isLoggedIn, logout } = useAuth();
   const footer = globalContent?.footer || {};
   const ourServices = footer.ourServices || ['YouTube Views', 'YouTube Subscribers', 'YouTube Watch Hours', 'TikTok Followers', 'Google Ads Views'];
   const resources = footer.resources || ['Blog', 'Affiliate Program', 'Why Choose Us?', 'Actionable Feedback', 'Corrections Policy'];
@@ -99,6 +101,16 @@ export default function Footer() {
                   )}
                 </li>
               ))}
+              {isLoggedIn && (
+                <li>
+                  <button
+                    onClick={logout}
+                    className="text-red-600 text-sm hover:text-red-700 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
