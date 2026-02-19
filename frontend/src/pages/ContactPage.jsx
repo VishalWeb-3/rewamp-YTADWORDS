@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { useContactContent } from '../contexts/ContentContext';
+import { useCtaActions } from '../contexts/CtaActionsContext';
 
 export default function ContactPage() {
   const c = useContactContent();
+  const { isEnabled } = useCtaActions();
+  const canSubmitTicket = isEnabled('submit_ticket');
   const [formData, setFormData] = useState({
     email: '',
     reason: '',
@@ -24,7 +27,7 @@ export default function ContactPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       setShowSuccess(true);
@@ -35,7 +38,7 @@ export default function ContactPage() {
         orderNumber: '',
         message: '',
       });
-      
+
       // Hide success message after 5 seconds
       setTimeout(() => {
         setShowSuccess(false);
@@ -173,15 +176,15 @@ export default function ContactPage() {
 
               {/* Form Footer */}
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-6">
-                
+
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !canSubmitTicket}
                   className="bg-gray-900 text-white font-bold px-8 py-3 rounded-full hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px]"
                 >
-                  {isSubmitting ? (c?.submittingButton ?? 'Submitting...') : (c?.submitButton ?? 'Submit')}
+                  {isSubmitting ? (c?.submittingButton ?? 'Submitting...') : (canSubmitTicket ? (c?.submitButton ?? 'Submit') : 'Submit disabled')}
                 </button>
               </div>
             </form>

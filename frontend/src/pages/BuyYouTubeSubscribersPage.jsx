@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
 import { usePricingPackages } from '../contexts/ContentContext';
+import { useCtaActions } from '../contexts/CtaActionsContext';
 
 const subscriberPackagesFallback = {
   regular: [
@@ -38,6 +39,9 @@ const features = [
 export default function BuyYouTubeSubscribersPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { isEnabled } = useCtaActions();
+  const canBuy = isEnabled('buy');
+  const canAddToCart = isEnabled('add_to_cart');
   const { goToCheckout } = useCheckout();
   const subscriberPackages = usePricingPackages('buy-youtube-subscribers', subscriberPackagesFallback);
   const [activeTab, setActiveTab] = useState('regular');
@@ -143,11 +147,10 @@ export default function BuyYouTubeSubscribersPage() {
                     setActiveTab(tab.id);
                     setSelectedPackageIndex(null);
                   }}
-                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${
-                    activeTab === tab.id
-                      ? 'text-gray-900 border-b-2 border-brand-red'
-                      : 'text-gray-400 hover:text-gray-600'
-                  }`}
+                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${activeTab === tab.id
+                    ? 'text-gray-900 border-b-2 border-brand-red'
+                    : 'text-gray-400 hover:text-gray-600'
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -170,14 +173,12 @@ export default function BuyYouTubeSubscribersPage() {
                   <div
                     key={index}
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`rounded-full transition-colors cursor-pointer flex items-center ${
-                      isSelected ? 'bg-brand-red p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'
-                    }`}
+                    className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-brand-red p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'
+                      }`}
                   >
                     {/* Left Section - Subscribers Quantity (White) */}
-                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
-                      isSelected ? 'border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'
-                    }`}>
+                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'
+                      }`}>
                       <div className="text-lg sm:text-2xl font-bold text-gray-900">
                         {pkg.subscribers}
                       </div>
@@ -185,35 +186,30 @@ export default function BuyYouTubeSubscribersPage() {
                         subscribers
                       </div>
                     </div>
-                    
+
                     {/* Right Section - Price */}
-                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${
-                      isSelected ? 'bg-brand-red' : ''
-                    }`}>
+                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-brand-red' : ''
+                      }`}>
                       {pkg.originalPrice ? (
                         <>
                           <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
-                            <span className={`line-through text-xs sm:text-sm ${
-                              isSelected ? 'text-white' : 'text-gray-400'
-                            }`}>
+                            <span className={`line-through text-xs sm:text-sm ${isSelected ? 'text-white' : 'text-gray-400'
+                              }`}>
                               ${pkg.originalPrice}
                             </span>
-                            <span className={`font-bold text-base sm:text-lg ${
-                              isSelected ? 'text-white' : 'text-brand-red'
-                            }`}>
+                            <span className={`font-bold text-base sm:text-lg ${isSelected ? 'text-white' : 'text-brand-red'
+                              }`}>
                               ${pkg.price}
                             </span>
                           </div>
-                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${
-                            isSelected ? 'bg-black text-white' : 'bg-brand-red text-white'
-                          }`}>
+                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${isSelected ? 'bg-black text-white' : 'bg-brand-red text-white'
+                            }`}>
                             save {pkg.discount}
                           </div>
                         </>
                       ) : (
-                        <div className={`font-bold text-base sm:text-xl ${
-                          isSelected ? 'text-white' : 'text-gray-900'
-                        }`}>
+                        <div className={`font-bold text-base sm:text-xl ${isSelected ? 'text-white' : 'text-gray-900'
+                          }`}>
                           ${pkg.price}
                         </div>
                       )}
@@ -232,17 +228,17 @@ export default function BuyYouTubeSubscribersPage() {
                     goToCheckout(selectedPkg, 'YouTube', `YouTube Subscribers - ${selectedPkg.subscribers}`, 'subscribers');
                   }
                 }}
-                disabled={selectedPackageIndex === null}
+                disabled={selectedPackageIndex === null || !canBuy}
                 className="flex-1 bg-brand-red text-white font-bold py-4 rounded-xl hover:bg-[#C62828] transition-colors text-lg shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
               >
-                Buy now
+                {canBuy ? 'Buy now' : 'Buy disabled'}
               </button>
               <button
                 onClick={() => { if (selectedPackageIndex !== null) handleAddToCart(packages[selectedPackageIndex]); }}
-                disabled={selectedPackageIndex === null}
+                disabled={selectedPackageIndex === null || !canAddToCart}
                 className="flex-1 bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition-colors text-lg shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
               >
-                Add to cart
+                {canAddToCart ? 'Add to cart' : 'Add to cart disabled'}
               </button>
             </div>
 
@@ -273,14 +269,14 @@ export default function BuyYouTubeSubscribersPage() {
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
-            
+
             <div className="grid lg:grid-cols-2 gap-8 relative z-10">
               {/* Left Section */}
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
                   All In One YouTube Subscribers Campaign
                 </h2>
-                
+
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
@@ -288,12 +284,13 @@ export default function BuyYouTubeSubscribersPage() {
                   </div>
                   <button
                     onClick={() => goToCheckout({ subscribers: '5000', price: '47.49' }, 'YouTube', 'All In One YouTube Subscribers Campaign', 'subscribers')}
-                    className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors"
+                    disabled={!canBuy}
+                    className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Buy now
+                    {canBuy ? 'Buy now' : 'Buy disabled'}
                   </button>
                 </div>
-                
+
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   With YoutubeAdWords's all-inclusive package, you can{' '}
@@ -301,7 +298,7 @@ export default function BuyYouTubeSubscribersPage() {
                   <span className="text-brand-red font-semibold">YouTube likes service</span> and add it to the package for the best price.
                 </p>
               </div>
-              
+
               {/* Right Section - Features Grid */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -529,7 +526,7 @@ export default function BuyYouTubeSubscribersPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo1.jpg"
@@ -550,7 +547,7 @@ export default function BuyYouTubeSubscribersPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo2.jpg"
@@ -675,7 +672,7 @@ export default function BuyYouTubeSubscribersPage() {
                 <div className="absolute top-0 right-0 bg-brand-red text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
                   BEST CHOICE
                 </div>
-                
+
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
                     <span className="text-black font-bold text-xl lg:text-2xl">SUBSCRIBERS</span>
@@ -771,7 +768,7 @@ export default function BuyYouTubeSubscribersPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -793,7 +790,7 @@ export default function BuyYouTubeSubscribersPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -815,7 +812,7 @@ export default function BuyYouTubeSubscribersPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -846,7 +843,7 @@ export default function BuyYouTubeSubscribersPage() {
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 transform rotate-45 translate-x-8 -translate-y-8"></div>
               <div className="absolute top-4 right-4 w-16 h-16 bg-white/80 transform rotate-12"></div>
-              
+
               <div className="relative z-10">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
                   Leave a review
@@ -951,7 +948,7 @@ export default function BuyYouTubeSubscribersPage() {
                     </div>
                   )}
 
-             
+
 
                   {/* Send Button */}
                   <button

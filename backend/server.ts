@@ -624,6 +624,50 @@ app.get("/api/youtube/search", async (req, res) => {
   }
 });
 
+// CTA actions status: per-user overrides from UserCtaAction, fallback to global CtaAction settings
+app.get("/api/cta-actions/status", async (req, res) => {
+  const userId = req.query.userId ? parseInt(String(req.query.userId)) : null;
+  const defaultStatus = { add_to_cart: true, buy: true, submit_ticket: true };
+  try {
+    // 1. Fetch Global Status
+    const status = { ...defaultStatus };
+    try {
+      const globalOverrides = await (prisma as any).ctaAction.findMany({
+        select: { actionKey: true, isActive: true },
+      });
+      for (const o of globalOverrides) {
+        (status as any)[o.actionKey] = o.isActive;
+      }
+    } catch (e) {
+      // Table might not exist or other error
+    }
+
+    // 2. Fetch User-specific Status (if userId provided)
+    if (userId) {
+      try {
+        const userOverrides = await (prisma as any).userCtaAction.findMany({
+          where: { userId },
+          select: { actionKey: true, isActive: true },
+        });
+        for (const o of userOverrides) {
+          (status as any)[o.actionKey] = o.isActive;
+        }
+      } catch (e) {
+        // Table might not exist
+      }
+    }
+
+    // 3. Normalize keys for frontend compatibility
+    if ((status as any).buy_now !== undefined) (status as any).buy = (status as any).buy_now;
+    if ((status as any).support_tickets !== undefined) (status as any).submit_ticket = (status as any).support_tickets;
+
+    res.json(status);
+  } catch (error) {
+    console.error("CTA actions status error:", error);
+    res.status(500).json(defaultStatus);
+  }
+});
+
 // Health check (optional: verify DB so Render shows unhealthy if DB is down)
 app.get("/api/health", async (_req, res) => {
   try {
