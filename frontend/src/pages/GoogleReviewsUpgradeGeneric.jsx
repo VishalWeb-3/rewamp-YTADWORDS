@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
+import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -216,230 +217,220 @@ export default function GoogleReviewsUpgradeGeneric() {
   };
 
   return (
-    <Layout>
-      <div className="min-h-screen bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <Link
-            to={getStartedReturnPath}
-            state={location.state}
-            className="inline-flex text-lg items-center text-gray-700 hover:text-gray-900 font-medium"
-          >
-            <span className="mr-1">←</span>
-            Back
-          </Link>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Make Your Order Even More Powerful
-            </h1>
-            <p className="text-gray-600 text-lg">
-              89% of our customers choose at least one add-on to multiply the impact of their purchase.
-              Add them now to get faster, more targeted results - all with a single click.
-            </p>
+    <>
+      <Layout>
+        <div className="min-h-screen bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <Link
+              to={getStartedReturnPath}
+              state={location.state}
+              className="inline-flex text-lg items-center text-gray-700 hover:text-gray-900 font-medium"
+            >
+              <span className="mr-1">←</span>
+              Back
+            </Link>
           </div>
 
-          <div className="space-y-4 mb-8">
-            <div
-              className={`bg-white border-2 rounded-lg p-6 transition-colors ${
-                addOns.verifiedReviewers ? 'border-green-500 border-l-4' : 'border-gray-200'
-              }`}
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-bold text-gray-900">Verified Reviewers</h3>
-                    <div className="flex -space-x-2">
-                      {verifiedProfileImages.slice(0, 4).map((src, i) => (
-                        <img
-                          key={i}
-                          src={src}
-                          alt=""
-                          className="w-8 h-8 rounded-full border-2 border-white object-cover bg-gray-100"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-gray-600 mb-3">
-                    Reviews from trusted Google Local Guides with proven history &amp; high credibility
-                  </p>
-                  <div className="flex items-center justify-left gap-2 text-green-600">
-                    <CheckIcon />
-                    <span className="text-sm font-bold">Google Local Guides - Official Badge</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 sm:ml-6">
-                  <span className="text-green-600 font-bold text-lg">+40%</span>
-                  <button
-                    onClick={() => toggleAddOn('verifiedReviewers')}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
-                      addOns.verifiedReviewers ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        addOns.verifiedReviewers ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
-                </div>
-              </div>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="mb-8">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Make Your Order Even More Powerful
+              </h1>
+              <p className="text-gray-600 text-lg">
+                89% of our customers choose at least one add-on to multiply the impact of their purchase.
+                Add them now to get faster, more targeted results - all with a single click.
+              </p>
             </div>
 
-            <div
-              className={`bg-white border-2 rounded-lg p-6 transition-colors ${
-                addOns.ageGroupTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
-              }`}
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-bold text-gray-900">Age Group Targeting</h3>
+            <div className="space-y-4 mb-8">
+              <div
+                className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.verifiedReviewers ? 'border-green-500 border-l-4' : 'border-gray-200'
+                  }`}
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900">Verified Reviewers</h3>
+                      <div className="flex -space-x-2">
+                        {verifiedProfileImages.slice(0, 4).map((src, i) => (
+                          <img
+                            key={i}
+                            src={src}
+                            alt=""
+                            className="w-8 h-8 rounded-full border-2 border-white object-cover bg-gray-100"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-gray-600 mb-3">
+                      Reviews from trusted Google Local Guides with proven history &amp; high credibility
+                    </p>
+                    <div className="flex items-center justify-left gap-2 text-green-600">
+                      <CheckIcon />
+                      <span className="text-sm font-bold">Google Local Guides - Official Badge</span>
+                    </div>
                   </div>
-                  <p className="text-gray-600 mb-3">
-                    Choose specific age ranges where you want your reviews to appear most frequently.
-                  </p>
-                  {addOns.ageGroupTargeting && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {['18-24', '25-34', '35-44', '45-54', '50-60'].map((age) => (
-                        <button
-                          key={age}
-                          onClick={() => toggleAgeGroup(age)}
-                          className={`px-3 py-1 rounded-full text-sm font-medium border ${
-                            selectedAgeGroups.includes(age)
+                  <div className="flex items-center gap-4 sm:ml-6">
+                    <span className="text-green-600 font-bold text-lg">+40%</span>
+                    <button
+                      onClick={() => toggleAddOn('verifiedReviewers')}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.verifiedReviewers ? 'bg-green-600' : 'bg-gray-300'
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.verifiedReviewers ? 'translate-x-6' : 'translate-x-1'
+                          }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.ageGroupTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
+                  }`}
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900">Age Group Targeting</h3>
+                    </div>
+                    <p className="text-gray-600 mb-3">
+                      Choose specific age ranges where you want your reviews to appear most frequently.
+                    </p>
+                    {addOns.ageGroupTargeting && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {['18-24', '25-34', '35-44', '45-54', '50-60'].map((age) => (
+                          <button
+                            key={age}
+                            onClick={() => toggleAgeGroup(age)}
+                            className={`px-3 py-1 rounded-full text-sm font-medium border ${selectedAgeGroups.includes(age)
                               ? 'bg-green-100 text-green-700 border-green-300'
                               : 'bg-gray-100 text-gray-700 border-gray-300'
+                              }`}
+                          >
+                            {age}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-4 sm:ml-6">
+                    <span className="text-green-600 font-bold text-lg">+30%</span>
+                    <button
+                      onClick={() => toggleAddOn('ageGroupTargeting')}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.ageGroupTargeting ? 'bg-green-600' : 'bg-gray-300'
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.ageGroupTargeting ? 'translate-x-6' : 'translate-x-1'
                           }`}
-                        >
-                          {age}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-4 sm:ml-6">
-                  <span className="text-green-600 font-bold text-lg">+30%</span>
-                  <button
-                    onClick={() => toggleAddOn('ageGroupTargeting')}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
-                      addOns.ageGroupTargeting ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        addOns.ageGroupTargeting ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div
-              className={`bg-white border-2 rounded-lg p-6 transition-colors ${
-                addOns.genderTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
-              }`}
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-bold text-gray-900">Gender Targeting</h3>
-                  </div>
-                  <p className="text-gray-600 mb-3">
-                    Focus your reviews on a specific gender to better match your target audience.
-                  </p>
-                  {addOns.genderTargeting && (
-                    <div className="flex gap-2 mt-2">
-                      {['Male', 'Female', 'Other'].map((gender) => (
-                        <button
-                          key={gender}
-                          onClick={() => toggleGender(gender)}
-                          className={`px-3 py-1 rounded-full text-sm font-medium border ${
-                            selectedGender.includes(gender)
+              <div
+                className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.genderTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
+                  }`}
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900">Gender Targeting</h3>
+                    </div>
+                    <p className="text-gray-600 mb-3">
+                      Focus your reviews on a specific gender to better match your target audience.
+                    </p>
+                    {addOns.genderTargeting && (
+                      <div className="flex gap-2 mt-2">
+                        {['Male', 'Female', 'Other'].map((gender) => (
+                          <button
+                            key={gender}
+                            onClick={() => toggleGender(gender)}
+                            className={`px-3 py-1 rounded-full text-sm font-medium border ${selectedGender.includes(gender)
                               ? 'bg-green-100 text-green-700 border-green-300'
                               : 'bg-gray-100 text-gray-700 border-gray-300'
+                              }`}
+                          >
+                            {gender}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-4 sm:ml-6">
+                    <span className="text-green-600 font-bold text-lg">+30%</span>
+                    <button
+                      onClick={() => toggleAddOn('genderTargeting')}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.genderTargeting ? 'bg-green-600' : 'bg-gray-300'
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.genderTargeting ? 'translate-x-6' : 'translate-x-1'
                           }`}
-                        >
-                          {gender}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                      />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-4 sm:ml-6">
-                  <span className="text-green-600 font-bold text-lg">+30%</span>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-1">Order Summary</h2>
+                  <p className="text-gray-600">
+                    {packageData.reviews} {getReviewTypeLabel(packageData.reviewType)} •{' '}
+                    {getPaymentTypeLabel(packageData.paymentType)}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-500 line-through">
+                    Original: ${Number(packageData.originalPrice).toFixed(2)}
+                  </p>
+                  <p className="text-2xl font-bold text-green-600">Total: ${total.toFixed(2)}</p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-col md:flex-row gap-4">
+                {showCardOption && (
                   <button
-                    onClick={() => toggleAddOn('genderTargeting')}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
-                      addOns.genderTargeting ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        addOns.genderTargeting ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-1">Order Summary</h2>
-                <p className="text-gray-600">
-                  {packageData.reviews} {getReviewTypeLabel(packageData.reviewType)} •{' '}
-                  {getPaymentTypeLabel(packageData.paymentType)}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm text-gray-500 line-through">
-                  Original: ${Number(packageData.originalPrice).toFixed(2)}
-                </p>
-                <p className="text-2xl font-bold text-green-600">Total: ${total.toFixed(2)}</p>
-              </div>
-            </div>
-
-            <div className="mt-6 flex flex-col md:flex-row gap-4">
-              {showCardOption && (
-                <button
-                  type="button"
-                  onClick={() => handleContinue('card')}
-                  disabled={isProcessing}
-                  className={`flex-1 flex items-center justify-center gap-3 px-4 py-3 rounded-lg border-2 transition-colors ${
-                    isProcessing
+                    type="button"
+                    onClick={() => handleContinue('card')}
+                    disabled={isProcessing}
+                    className={`flex-1 flex items-center justify-center gap-3 px-4 py-3 rounded-lg border-2 transition-colors ${isProcessing
                       ? 'border-gray-300 bg-gray-200 text-gray-500 cursor-not-allowed opacity-60'
                       : 'border-green-600 bg-green-50 text-green-700 hover:border-green-700'
-                  }`}
-                >
-                  <CreditCardIcon />
-                  <span className="font-semibold">
-                    {isProcessing ? 'Processing…' : 'Pay with Card'}
-                  </span>
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => handleContinue('crypto')}
-                disabled={isProcessing}
-                className={`flex-1 flex items-center justify-center gap-3 px-4 py-3 rounded-lg border-2 transition-colors ${
-                  isProcessing
+                      }`}
+                  >
+                    <CreditCardIcon />
+                    <span className="font-semibold">
+                      {isProcessing ? 'Processing…' : 'Pay with Card'}
+                    </span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => handleContinue('crypto')}
+                  disabled={isProcessing}
+                  className={`flex-1 flex items-center justify-center gap-3 px-4 py-3 rounded-lg border-2 transition-colors ${isProcessing
                     ? 'border-gray-300 bg-gray-200 text-gray-500 cursor-not-allowed opacity-60'
                     : 'border-amber-500 bg-amber-50 text-amber-700 hover:border-amber-600'
-                }`}
-              >
-                <CoinsIcon />
-                <span className="font-semibold">
-                  {isProcessing ? 'Processing…' : 'Pay with Crypto'}
-                </span>
-              </button>
+                    }`}
+                >
+                  <CoinsIcon />
+                  <span className="font-semibold">
+                    {isProcessing ? 'Processing…' : 'Pay with Crypto'}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+      <PaymentLoadingOverlay isOpen={isProcessing} />
+    </>
   );
 }
