@@ -71,9 +71,12 @@ export default function Footer() {
             <ul className="space-y-2">
               {resources.map((resource, index) => (
                 <li key={index}>
-                  <a href="#" className="text-gray-600 text-sm hover:text-brand-red transition-colors">
+                  <Link
+                    to={resource === 'Blog' ? '/blog' : '#'}
+                    className="text-gray-600 text-sm hover:text-brand-red transition-colors"
+                  >
                     {resource}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

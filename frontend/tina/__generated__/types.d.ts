@@ -92,6 +92,8 @@ export type Query = {
   pricingConnection: PricingConnection;
   pricingPageContent: PricingPageContent;
   pricingPageContentConnection: PricingPageContentConnection;
+  blog: Blog;
+  blogConnection: BlogConnection;
   legal: Legal;
   legalConnection: LegalConnection;
 };
@@ -193,6 +195,21 @@ export type QueryPricingPageContentConnectionArgs = {
 };
 
 
+export type QueryBlogArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryBlogConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<BlogFilter>;
+};
+
+
 export type QueryLegalArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -213,6 +230,7 @@ export type DocumentFilter = {
   contact?: InputMaybe<ContactFilter>;
   pricing?: InputMaybe<PricingFilter>;
   pricingPageContent?: InputMaybe<PricingPageContentFilter>;
+  blog?: InputMaybe<BlogFilter>;
   legal?: InputMaybe<LegalFilter>;
 };
 
@@ -253,7 +271,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Legal | Folder;
+export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | Legal | Folder;
 
 export type GlobalHeaderNavLinks = {
   __typename?: 'GlobalHeaderNavLinks';
@@ -972,6 +990,57 @@ export type PricingPageContentConnection = Connection & {
   edges?: Maybe<Array<Maybe<PricingPageContentConnectionEdges>>>;
 };
 
+export type Blog = Node & Document & {
+  __typename?: 'Blog';
+  title: Scalars['String']['output'];
+  excerpt?: Maybe<Scalars['String']['output']>;
+  author?: Maybe<Scalars['String']['output']>;
+  date?: Maybe<Scalars['String']['output']>;
+  coverImage?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  body?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type DatetimeFilter = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RichTextFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type BlogFilter = {
+  title?: InputMaybe<StringFilter>;
+  excerpt?: InputMaybe<StringFilter>;
+  author?: InputMaybe<StringFilter>;
+  date?: InputMaybe<DatetimeFilter>;
+  coverImage?: InputMaybe<ImageFilter>;
+  tags?: InputMaybe<StringFilter>;
+  body?: InputMaybe<RichTextFilter>;
+};
+
+export type BlogConnectionEdges = {
+  __typename?: 'BlogConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Blog>;
+};
+
+export type BlogConnection = Connection & {
+  __typename?: 'BlogConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<BlogConnectionEdges>>>;
+};
+
 export type LegalPrivacySections = {
   __typename?: 'LegalPrivacySections';
   heading?: Maybe<Scalars['String']['output']>;
@@ -1174,6 +1243,8 @@ export type Mutation = {
   createPricing: Pricing;
   updatePricingPageContent: PricingPageContent;
   createPricingPageContent: PricingPageContent;
+  updateBlog: Blog;
+  createBlog: Blog;
   updateLegal: Legal;
   createLegal: Legal;
 };
@@ -1272,6 +1343,18 @@ export type MutationCreatePricingPageContentArgs = {
 };
 
 
+export type MutationUpdateBlogArgs = {
+  relativePath: Scalars['String']['input'];
+  params: BlogMutation;
+};
+
+
+export type MutationCreateBlogArgs = {
+  relativePath: Scalars['String']['input'];
+  params: BlogMutation;
+};
+
+
 export type MutationUpdateLegalArgs = {
   relativePath: Scalars['String']['input'];
   params: LegalMutation;
@@ -1289,6 +1372,7 @@ export type DocumentUpdateMutation = {
   contact?: InputMaybe<ContactMutation>;
   pricing?: InputMaybe<PricingMutation>;
   pricingPageContent?: InputMaybe<PricingPageContentMutation>;
+  blog?: InputMaybe<BlogMutation>;
   legal?: InputMaybe<LegalMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -1299,6 +1383,7 @@ export type DocumentMutation = {
   contact?: InputMaybe<ContactMutation>;
   pricing?: InputMaybe<PricingMutation>;
   pricingPageContent?: InputMaybe<PricingPageContentMutation>;
+  blog?: InputMaybe<BlogMutation>;
   legal?: InputMaybe<LegalMutation>;
 };
 
@@ -1594,6 +1679,16 @@ export type PricingPageContentMutation = {
   pages?: InputMaybe<Array<InputMaybe<PricingPageContentPagesMutation>>>;
 };
 
+export type BlogMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  author?: InputMaybe<Scalars['String']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  coverImage?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  body?: InputMaybe<Scalars['JSON']['input']>;
+};
+
 export type LegalPrivacySectionsMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -1679,6 +1774,8 @@ export type ContactPartsFragment = { __typename: 'Contact', title?: string | nul
 export type PricingPartsFragment = { __typename: 'Pricing', pages?: Array<{ __typename: 'PricingPages', slug: string, quantityKey: string, regularPackages?: Array<{ __typename: 'PricingPagesRegularPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, fastPackages?: Array<{ __typename: 'PricingPagesFastPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null, adsPackages?: Array<{ __typename: 'PricingPagesAdsPackages', quantity?: string | null, price?: string | null, originalPrice?: string | null, discount?: string | null } | null> | null } | null> | null };
 
 export type PricingPageContentPartsFragment = { __typename: 'PricingPageContent', pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null };
+
+export type BlogPartsFragment = { __typename: 'Blog', title: string, excerpt?: string | null, author?: string | null, date?: string | null, coverImage?: string | null, tags?: Array<string | null> | null, body?: any | null };
 
 export type LegalPartsFragment = { __typename: 'Legal', privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null };
 
@@ -1776,6 +1873,25 @@ export type PricingPageContentConnectionQueryVariables = Exact<{
 
 
 export type PricingPageContentConnectionQuery = { __typename?: 'Query', pricingPageContentConnection: { __typename?: 'PricingPageContentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PricingPageContentConnectionEdges', cursor: string, node?: { __typename: 'PricingPageContent', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null } | null } | null> | null } };
+
+export type BlogQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type BlogQuery = { __typename?: 'Query', blog: { __typename: 'Blog', id: string, title: string, excerpt?: string | null, author?: string | null, date?: string | null, coverImage?: string | null, tags?: Array<string | null> | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type BlogConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<BlogFilter>;
+}>;
+
+
+export type BlogConnectionQuery = { __typename?: 'Query', blogConnection: { __typename?: 'BlogConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'BlogConnectionEdges', cursor: string, node?: { __typename: 'Blog', id: string, title: string, excerpt?: string | null, author?: string | null, date?: string | null, coverImage?: string | null, tags?: Array<string | null> | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type LegalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2062,6 +2178,18 @@ export const PricingPageContentPartsFragmentDoc = gql`
       }
     }
   }
+}
+    `;
+export const BlogPartsFragmentDoc = gql`
+    fragment BlogParts on Blog {
+  __typename
+  title
+  excerpt
+  author
+  date
+  coverImage
+  tags
+  body
 }
     `;
 export const LegalPartsFragmentDoc = gql`
@@ -2416,6 +2544,63 @@ export const PricingPageContentConnectionDocument = gql`
   }
 }
     ${PricingPageContentPartsFragmentDoc}`;
+export const BlogDocument = gql`
+    query blog($relativePath: String!) {
+  blog(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...BlogParts
+  }
+}
+    ${BlogPartsFragmentDoc}`;
+export const BlogConnectionDocument = gql`
+    query blogConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: BlogFilter) {
+  blogConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...BlogParts
+      }
+    }
+  }
+}
+    ${BlogPartsFragmentDoc}`;
 export const LegalDocument = gql`
     query legal($relativePath: String!) {
   legal(relativePath: $relativePath) {
@@ -2505,6 +2690,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     pricingPageContentConnection(variables?: PricingPageContentConnectionQueryVariables, options?: C): Promise<{data: PricingPageContentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentConnectionQueryVariables, query: string}> {
         return requester<{data: PricingPageContentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PricingPageContentConnectionQueryVariables, query: string}, PricingPageContentConnectionQueryVariables>(PricingPageContentConnectionDocument, variables, options);
+      },
+    blog(variables: BlogQueryVariables, options?: C): Promise<{data: BlogQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogQueryVariables, query: string}> {
+        return requester<{data: BlogQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogQueryVariables, query: string}, BlogQueryVariables>(BlogDocument, variables, options);
+      },
+    blogConnection(variables?: BlogConnectionQueryVariables, options?: C): Promise<{data: BlogConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogConnectionQueryVariables, query: string}> {
+        return requester<{data: BlogConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogConnectionQueryVariables, query: string}, BlogConnectionQueryVariables>(BlogConnectionDocument, variables, options);
       },
     legal(variables: LegalQueryVariables, options?: C): Promise<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}> {
         return requester<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}, LegalQueryVariables>(LegalDocument, variables, options);

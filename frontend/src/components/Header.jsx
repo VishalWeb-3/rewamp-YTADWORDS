@@ -37,6 +37,8 @@ export default function Header() {
     { label: 'Google Ads Services', link: '/' },
     { label: 'YouTube Services', link: '/buy-youtube-views' },
     { label: 'TikTok Ads Services', link: '/' },
+    { label: 'Buy Google Reviews', link: '/buy-male-google-reviews' },
+    { label: 'Blog', link: '/blog' },
     { label: 'Contact', link: '/contact' },
   ];
 

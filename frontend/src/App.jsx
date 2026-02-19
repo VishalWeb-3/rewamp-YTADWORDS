@@ -33,10 +33,14 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import CheckoutPage from './pages/CheckoutPage';
 import GetStartedPage from './pages/GetStartedPage';
+import GoogleReviewsGetStartedGeneric from './pages/GoogleReviewsGetStartedGeneric';
+import GoogleReviewsUpgradeGeneric from './pages/GoogleReviewsUpgradeGeneric';
 import MyOrdersPage from './pages/MyOrdersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentFailurePage from './pages/PaymentFailurePage';
+import BlogListPage from './pages/BlogListPage';
+import BlogPostPage from './pages/BlogPostPage';
 
 export default function App() {
   return (
@@ -83,6 +87,10 @@ export default function App() {
           <Route path="/register" element={<SignupPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/get-started" element={<GetStartedPage />} />
+          <Route path="/blog" element={<BlogListPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/google-reviews/get-started" element={<GoogleReviewsGetStartedGeneric />} />
+          <Route path="/google-reviews/upgrade" element={<GoogleReviewsUpgradeGeneric />} />
           <Route path="/orders" element={<MyOrdersPage />} />
           <Route path="/orders/:id" element={<OrderDetailPage />} />
           <Route path="/payment/success" element={<PaymentSuccessPage />} />

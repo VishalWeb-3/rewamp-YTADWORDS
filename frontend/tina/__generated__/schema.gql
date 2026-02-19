@@ -64,6 +64,8 @@ type Query {
   pricingConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingFilter): PricingConnection!
   pricingPageContent(relativePath: String): PricingPageContent!
   pricingPageContentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingPageContentFilter): PricingPageContentConnection!
+  blog(relativePath: String): Blog!
+  blogConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: BlogFilter): BlogConnection!
   legal(relativePath: String): Legal!
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
 }
@@ -74,6 +76,7 @@ input DocumentFilter {
   contact: ContactFilter
   pricing: PricingFilter
   pricingPageContent: PricingPageContentFilter
+  blog: BlogFilter
   legal: LegalFilter
 }
 
@@ -100,7 +103,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Legal | Folder
+union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | Legal | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -770,6 +773,54 @@ type PricingPageContentConnection implements Connection {
   edges: [PricingPageContentConnectionEdges]
 }
 
+type Blog implements Node & Document {
+  title: String!
+  excerpt: String
+  author: String
+  date: String
+  coverImage: String
+  tags: [String]
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input DatetimeFilter {
+  after: String
+  before: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input RichTextFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+}
+
+input BlogFilter {
+  title: StringFilter
+  excerpt: StringFilter
+  author: StringFilter
+  date: DatetimeFilter
+  coverImage: ImageFilter
+  tags: StringFilter
+  body: RichTextFilter
+}
+
+type BlogConnectionEdges {
+  cursor: String!
+  node: Blog
+}
+
+type BlogConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [BlogConnectionEdges]
+}
+
 type LegalPrivacySections {
   heading: String
   body: String
@@ -957,6 +1008,8 @@ type Mutation {
   createPricing(relativePath: String!, params: PricingMutation!): Pricing!
   updatePricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
   createPricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
+  updateBlog(relativePath: String!, params: BlogMutation!): Blog!
+  createBlog(relativePath: String!, params: BlogMutation!): Blog!
   updateLegal(relativePath: String!, params: LegalMutation!): Legal!
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
 }
@@ -967,6 +1020,7 @@ input DocumentUpdateMutation {
   contact: ContactMutation
   pricing: PricingMutation
   pricingPageContent: PricingPageContentMutation
+  blog: BlogMutation
   legal: LegalMutation
   relativePath: String
 }
@@ -977,6 +1031,7 @@ input DocumentMutation {
   contact: ContactMutation
   pricing: PricingMutation
   pricingPageContent: PricingPageContentMutation
+  blog: BlogMutation
   legal: LegalMutation
 }
 
@@ -1270,6 +1325,16 @@ input PricingPageContentPagesMutation {
 
 input PricingPageContentMutation {
   pages: [PricingPageContentPagesMutation]
+}
+
+input BlogMutation {
+  title: String
+  excerpt: String
+  author: String
+  date: String
+  coverImage: String
+  tags: [String]
+  body: JSON
 }
 
 input LegalPrivacySectionsMutation {

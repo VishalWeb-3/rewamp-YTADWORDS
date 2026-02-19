@@ -152,70 +152,44 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
             </div>
 
             {/* Information Banner */}
-            <div className="bg-gray-100 rounded-lg p-4 mb-6">
-              <p className="text-gray-700 text-sm">
-                <span className="font-medium">Information:</span> We recommend our{' '}
-                <span className="text-green-500 font-semibold">Fast Google Reviews by Age Group</span> packages for orders with a high number of reviews.
+            <div className="bg-gray-50 rounded-lg px-4 py-3 mb-5 border border-gray-100">
+              <p className="text-gray-600 text-sm">
+                <span className="font-medium text-gray-700">Tip:</span> We recommend{' '}
+                <span className="text-green-600 font-semibold">Fast Google Reviews by Age Group</span> for larger orders.
               </p>
             </div>
 
-            {/* View Packages Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+            {/* Pricing packages - clean card grid */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
+                const count = pkg.rereviews ?? pkg.reviews ?? '—';
                 return (
-                  <div
+                  <button
                     key={index}
+                    type="button"
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`rounded-full transition-colors cursor-pointer flex items-center ${
-                      isSelected ? 'bg-green-500 p-[2px]' : 'bg-gray-50 hover:border-green-500/50 p-0'
+                    className={`text-left rounded-xl border-2 p-4 transition-all ${
+                      isSelected
+                        ? 'border-green-500 bg-green-50 shadow-sm'
+                        : 'border-gray-200 bg-white hover:border-green-300 hover:bg-gray-50'
                     }`}
                   >
-                    {/* Left Section - Reviews Quantity (White) */}
-                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
-                      isSelected ? 'border-2 border-green-500 border-r-0 rounded-l-full' : 'rounded-l-full'
-                    }`}>
-                      <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                        {pkg.reviews}
-                      </div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        reviews
-                      </div>
+                    <div className="font-bold text-gray-900 text-lg sm:text-xl">
+                      {count} <span className="font-medium text-gray-600 text-base">reviews</span>
                     </div>
-                    
-                    {/* Right Section - Price */}
-                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${
-                      isSelected ? 'bg-green-500' : ''
-                    }`}>
-                      {pkg.originalPrice ? (
-                        <>
-                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
-                            <span className={`line-through text-xs sm:text-sm ${
-                              isSelected ? 'text-white' : 'text-gray-400'
-                            }`}>
-                              ${pkg.originalPrice}
-                            </span>
-                            <span className={`font-bold text-base sm:text-lg ${
-                              isSelected ? 'text-white' : 'text-green-500'
-                            }`}>
-                              ${pkg.price}
-                            </span>
-                          </div>
-                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${
-                            isSelected ? 'bg-black text-white' : 'bg-green-500 text-white'
-                          }`}>
-                            save {pkg.discount}
-                          </div>
-                        </>
-                      ) : (
-                        <div className={`font-bold text-base sm:text-xl ${
-                          isSelected ? 'text-white' : 'text-gray-900'
-                        }`}>
-                          ${pkg.price}
-                        </div>
+                    <div className="mt-2 flex flex-wrap items-baseline gap-2">
+                      {pkg.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through">${pkg.originalPrice}</span>
+                      )}
+                      <span className={isSelected ? 'text-green-600 font-bold' : 'text-green-600 font-semibold'}>
+                        ${pkg.price}
+                      </span>
+                      {pkg.discount && (
+                        <span className="text-xs text-green-600 font-medium">Save {pkg.discount}</span>
                       )}
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -226,15 +200,20 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 onClick={() => {
                   if (selectedPackageIndex !== null) {
                     const selectedPkg = packages[selectedPackageIndex];
-                    navigate('/get-started', {
+                    const reviews = parseInt(selectedPkg.rereviews, 10) || 50;
+                    const price = parseFloat(selectedPkg.price) || 129.9;
+                    const originalPrice = selectedPkg.originalPrice ? parseFloat(selectedPkg.originalPrice) : price;
+                    navigate('/google-reviews/get-started', {
                       state: {
-                        allPackages: ageGroupReviewsPackages,
-                        serviceType: 'Google Reviews by Age Group',
-                        typeLabels: { regular: 'Regular Reviews', fast: 'Fast Reviews', ads: 'Premium Reviews' },
-                        quantityKey: 'rereviews',
-                        unitLabel: 'reviews',
-                        initialType: activeTab,
-                        initialPackage: selectedPkg,
+                        serviceType: 'age-group',
+                        serviceTitle: 'Buy Google Reviews by Age Group',
+                        pricingPath: '/buy-google-reviews-by-age-group',
+                        reviews,
+                        price,
+                        originalPrice,
+                        paymentType: 'one-time',
+                        reviewType: '5-star',
+                        tier: activeTab,
                       },
                     });
                   }

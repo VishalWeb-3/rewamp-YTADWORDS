@@ -273,6 +273,18 @@ export const PricingPageContentPartsFragmentDoc = gql`
   }
 }
     `;
+export const BlogPartsFragmentDoc = gql`
+    fragment BlogParts on Blog {
+  __typename
+  title
+  excerpt
+  author
+  date
+  coverImage
+  tags
+  body
+}
+    `;
 export const LegalPartsFragmentDoc = gql`
     fragment LegalParts on Legal {
   __typename
@@ -625,6 +637,63 @@ export const PricingPageContentConnectionDocument = gql`
   }
 }
     ${PricingPageContentPartsFragmentDoc}`;
+export const BlogDocument = gql`
+    query blog($relativePath: String!) {
+  blog(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...BlogParts
+  }
+}
+    ${BlogPartsFragmentDoc}`;
+export const BlogConnectionDocument = gql`
+    query blogConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: BlogFilter) {
+  blogConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...BlogParts
+      }
+    }
+  }
+}
+    ${BlogPartsFragmentDoc}`;
 export const LegalDocument = gql`
     query legal($relativePath: String!) {
   legal(relativePath: $relativePath) {
@@ -713,6 +782,12 @@ export function getSdk(requester) {
     },
     pricingPageContentConnection(variables, options) {
       return requester(PricingPageContentConnectionDocument, variables, options);
+    },
+    blog(variables, options) {
+      return requester(BlogDocument, variables, options);
+    },
+    blogConnection(variables, options) {
+      return requester(BlogConnectionDocument, variables, options);
     },
     legal(variables, options) {
       return requester(LegalDocument, variables, options);

@@ -261,6 +261,17 @@ fragment PricingPageContentParts on PricingPageContent {
   }
 }
 
+fragment BlogParts on Blog {
+  __typename
+  title
+  excerpt
+  author
+  date
+  coverImage
+  tags
+  body
+}
+
 fragment LegalParts on Legal {
   __typename
   privacy {

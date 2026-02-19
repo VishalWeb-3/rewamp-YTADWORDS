@@ -467,6 +467,21 @@ var config_default = defineConfig({
         ]
       },
       {
+        name: "blog",
+        label: "Blog",
+        path: "content/blog",
+        format: "mdx",
+        fields: [
+          { type: "string", name: "title", label: "Title", isTitle: true, required: true },
+          { type: "string", name: "excerpt", label: "Excerpt", ui: { component: "textarea" } },
+          { type: "string", name: "author", label: "Author" },
+          { type: "datetime", name: "date", label: "Publish Date" },
+          { type: "image", name: "coverImage", label: "Cover Image", description: "Upload or pick from Media Manager" },
+          { type: "string", name: "tags", label: "Tags", list: true },
+          { type: "rich-text", name: "body", label: "Body", isBody: true }
+        ]
+      },
+      {
         name: "legal",
         label: "Legal Pages",
         path: "content/legal",
