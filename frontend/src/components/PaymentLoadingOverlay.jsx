@@ -68,7 +68,7 @@ export default function PaymentLoadingOverlay({ isOpen }) {
                             onError={() => setVideoError(true)}
                             className="w-full h-full object-cover"
                         >
-                            <source src="/loading-payment.mp4" type="video/mp4" />
+                            <source src="/video/paymentload.mp4" type="video/mp4" />
                         </video>
                     ) : renderFallback()}
                 </div>
