@@ -1,3 +1,4 @@
+
 import express from "express";
 
 declare global {
@@ -19,7 +20,7 @@ const SESSION_SECRET = process.env.SESSION_SECRET || "youtubeadwords-secret-chan
 const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = Number(process.env.PORT) || 5001;
 
 // CORS - allow frontend (credentials required for cookies)
 app.use(
