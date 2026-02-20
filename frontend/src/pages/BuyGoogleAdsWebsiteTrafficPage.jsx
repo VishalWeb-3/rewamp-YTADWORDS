@@ -7,21 +7,21 @@ import { usePricingPackages } from '../contexts/ContentContext';
 const websiteTrafficPackagesFallback = {
   regular: [
     { traffic: '100', price: '2.49', originalPrice: null, discount: null },
-    { traffic: '1.0k', price: '19.90', originalPrice: '30.00', discount: '34%' },
-    { traffic: '2.5k', price: '44.90', originalPrice: '68.00', discount: '34%' },
-    { traffic: '5.0k', price: '84.90', originalPrice: '128.00', discount: '34%' },
+    { traffic: '1.0k', price: '27.00', originalPrice: '30.00', discount: '10%' },
+    { traffic: '2.5k', price: '61.20', originalPrice: '68.00', discount: '10%' },
+    { traffic: '5.0k', price: '115.20', originalPrice: '128.00', discount: '10%' },
   ],
   fast: [
     { traffic: '100', price: '4.99', originalPrice: null, discount: null },
-    { traffic: '1.0k', price: '39.90', originalPrice: '60.00', discount: '33%' },
-    { traffic: '2.5k', price: '89.90', originalPrice: '135.00', discount: '33%' },
-    { traffic: '5.0k', price: '169.90', originalPrice: '255.00', discount: '33%' },
+    { traffic: '1.0k', price: '54.00', originalPrice: '60.00', discount: '10%' },
+    { traffic: '2.5k', price: '121.50', originalPrice: '135.00', discount: '10%' },
+    { traffic: '5.0k', price: '229.50', originalPrice: '255.00', discount: '10%' },
   ],
   ads: [
     { traffic: '100', price: '7.49', originalPrice: null, discount: null },
-    { traffic: '1.0k', price: '59.90', originalPrice: '90.00', discount: '33%' },
-    { traffic: '2.5k', price: '139.90', originalPrice: '210.00', discount: '33%' },
-    { traffic: '5.0k', price: '269.90', originalPrice: '405.00', discount: '33%' },
+    { traffic: '1.0k', price: '81.00', originalPrice: '90.00', discount: '10%' },
+    { traffic: '2.5k', price: '189.00', originalPrice: '210.00', discount: '10%' },
+    { traffic: '5.0k', price: '364.50', originalPrice: '405.00', discount: '10%' },
   ],
 };
 

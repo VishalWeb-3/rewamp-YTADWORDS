@@ -7,21 +7,21 @@ import { usePricingPackages } from '../contexts/ContentContext';
 const watchHoursPackagesFallback = {
   regular: [
     { hours: '100', price: '4.99', originalPrice: null, discount: null },
-    { hours: '1.0k', price: '39.90', originalPrice: '60.00', discount: '33%' },
-    { hours: '2.5k', price: '89.90', originalPrice: '135.00', discount: '33%' },
-    { hours: '5.0k', price: '159.90', originalPrice: '240.00', discount: '33%' },
+    { hours: '1.0k', price: '54.00', originalPrice: '60.00', discount: '10%' },
+    { hours: '2.5k', price: '121.50', originalPrice: '135.00', discount: '10%' },
+    { hours: '5.0k', price: '216.00', originalPrice: '240.00', discount: '10%' },
   ],
   fast: [
     { hours: '100', price: '7.99', originalPrice: null, discount: null },
-    { hours: '1.0k', price: '69.90', originalPrice: '105.00', discount: '33%' },
-    { hours: '2.5k', price: '159.90', originalPrice: '240.00', discount: '33%' },
-    { hours: '5.0k', price: '289.90', originalPrice: '435.00', discount: '33%' },
+    { hours: '1.0k', price: '94.50', originalPrice: '105.00', discount: '10%' },
+    { hours: '2.5k', price: '216.00', originalPrice: '240.00', discount: '10%' },
+    { hours: '5.0k', price: '391.50', originalPrice: '435.00', discount: '10%' },
   ],
   ads: [
     { hours: '100', price: '9.99', originalPrice: null, discount: null },
-    { hours: '1.0k', price: '89.90', originalPrice: '135.00', discount: '33%' },
-    { hours: '2.5k', price: '209.90', originalPrice: '315.00', discount: '33%' },
-    { hours: '5.0k', price: '389.90', originalPrice: '585.00', discount: '33%' },
+    { hours: '1.0k', price: '121.50', originalPrice: '135.00', discount: '10%' },
+    { hours: '2.5k', price: '283.50', originalPrice: '315.00', discount: '10%' },
+    { hours: '5.0k', price: '526.50', originalPrice: '585.00', discount: '10%' },
   ],
 };
 

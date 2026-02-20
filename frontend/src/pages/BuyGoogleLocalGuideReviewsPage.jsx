@@ -7,21 +7,21 @@ import { usePricingPackages } from '../contexts/ContentContext';
 const localGuideReviewsPackagesFallback = {
   regular: [
     { rereviews: '10', price: '39.90', originalPrice: null, discount: null },
-    { rereviews: '25', price: '89.90', originalPrice: '135.00', discount: '33%' },
-    { rereviews: '50', price: '169.90', originalPrice: '255.00', discount: '33%' },
-    { rereviews: '100', price: '329.90', originalPrice: '495.00', discount: '33%' },
+    { rereviews: '25', price: '121.50', originalPrice: '135.00', discount: '10%' },
+    { rereviews: '50', price: '229.50', originalPrice: '255.00', discount: '10%' },
+    { rereviews: '100', price: '445.50', originalPrice: '495.00', discount: '10%' },
   ],
   fast: [
     { rereviews: '10', price: '49.90', originalPrice: null, discount: null },
-    { rereviews: '25', price: '109.90', originalPrice: '165.00', discount: '33%' },
-    { rereviews: '50', price: '209.90', originalPrice: '315.00', discount: '33%' },
-    { rereviews: '100', price: '409.90', originalPrice: '615.00', discount: '33%' },
+    { rereviews: '25', price: '148.50', originalPrice: '165.00', discount: '10%' },
+    { rereviews: '50', price: '283.50', originalPrice: '315.00', discount: '10%' },
+    { rereviews: '100', price: '553.50', originalPrice: '615.00', discount: '10%' },
   ],
   ads: [
     { rereviews: '10', price: '59.90', originalPrice: null, discount: null },
-    { rereviews: '25', price: '139.90', originalPrice: '210.00', discount: '33%' },
-    { rereviews: '50', price: '269.90', originalPrice: '405.00', discount: '33%' },
-    { rereviews: '100', price: '529.90', originalPrice: '795.00', discount: '33%' },
+    { rereviews: '25', price: '189.00', originalPrice: '210.00', discount: '10%' },
+    { rereviews: '50', price: '364.50', originalPrice: '405.00', discount: '10%' },
+    { rereviews: '100', price: '715.50', originalPrice: '795.00', discount: '10%' },
   ],
 };
 

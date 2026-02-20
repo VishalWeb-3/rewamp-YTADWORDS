@@ -7,21 +7,21 @@ import { usePricingPackages } from '../contexts/ContentContext';
 const followerPackagesFallback = {
   regular: [
     { followers: '100', price: '2.99', originalPrice: null, discount: null },
-    { followers: '1.0k', price: '24.90', originalPrice: '35.00', discount: '29%' },
-    { followers: '2.5k', price: '54.90', originalPrice: '82.00', discount: '33%' },
-    { followers: '5.0k', price: '99.90', originalPrice: '150.00', discount: '33%' },
+    { followers: '1.0k', price: '31.50', originalPrice: '35.00', discount: '10%' },
+    { followers: '2.5k', price: '73.80', originalPrice: '82.00', discount: '10%' },
+    { followers: '5.0k', price: '135.00', originalPrice: '150.00', discount: '10%' },
   ],
   fast: [
     { followers: '100', price: '4.99', originalPrice: null, discount: null },
-    { followers: '1.0k', price: '39.90', originalPrice: '59.00', discount: '32%' },
-    { followers: '2.5k', price: '89.90', originalPrice: '135.00', discount: '33%' },
-    { followers: '5.0k', price: '169.90', originalPrice: '255.00', discount: '33%' },
+    { followers: '1.0k', price: '53.10', originalPrice: '59.00', discount: '10%' },
+    { followers: '2.5k', price: '121.50', originalPrice: '135.00', discount: '10%' },
+    { followers: '5.0k', price: '229.50', originalPrice: '255.00', discount: '10%' },
   ],
   ads: [
     { followers: '100', price: '6.99', originalPrice: null, discount: null },
-    { followers: '1.0k', price: '59.90', originalPrice: '90.00', discount: '33%' },
-    { followers: '2.5k', price: '139.90', originalPrice: '210.00', discount: '33%' },
-    { followers: '5.0k', price: '259.90', originalPrice: '390.00', discount: '33%' },
+    { followers: '1.0k', price: '81.00', originalPrice: '90.00', discount: '10%' },
+    { followers: '2.5k', price: '189.00', originalPrice: '210.00', discount: '10%' },
+    { followers: '5.0k', price: '351.00', originalPrice: '390.00', discount: '10%' },
   ],
 };
 

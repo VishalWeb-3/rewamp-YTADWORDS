@@ -8,21 +8,21 @@ import { useCtaActions } from '../contexts/CtaActionsContext';
 const likePackagesFallback = {
   regular: [
     { likes: '100', price: '0.99', originalPrice: null, discount: null },
-    { likes: '1.0k', price: '8.90', originalPrice: '13.00', discount: '32%' },
-    { likes: '2.5k', price: '19.90', originalPrice: '30.00', discount: '34%' },
-    { likes: '5.0k', price: '34.90', originalPrice: '52.00', discount: '33%' },
+    { likes: '1.0k', price: '11.70', originalPrice: '13.00', discount: '10%' },
+    { likes: '2.5k', price: '27.00', originalPrice: '30.00', discount: '10%' },
+    { likes: '5.0k', price: '46.80', originalPrice: '52.00', discount: '10%' },
   ],
   fast: [
     { likes: '100', price: '1.99', originalPrice: null, discount: null },
-    { likes: '1.0k', price: '16.90', originalPrice: '25.00', discount: '32%' },
-    { likes: '2.5k', price: '39.90', originalPrice: '60.00', discount: '33%' },
-    { likes: '5.0k', price: '69.90', originalPrice: '105.00', discount: '33%' },
+    { likes: '1.0k', price: '22.50', originalPrice: '25.00', discount: '10%' },
+    { likes: '2.5k', price: '54.00', originalPrice: '60.00', discount: '10%' },
+    { likes: '5.0k', price: '94.50', originalPrice: '105.00', discount: '10%' },
   ],
   ads: [
     { likes: '100', price: '2.99', originalPrice: null, discount: null },
-    { likes: '1.0k', price: '24.90', originalPrice: '38.00', discount: '34%' },
-    { likes: '2.5k', price: '59.90', originalPrice: '90.00', discount: '33%' },
-    { likes: '5.0k', price: '109.90', originalPrice: '165.00', discount: '33%' },
+    { likes: '1.0k', price: '34.20', originalPrice: '38.00', discount: '10%' },
+    { likes: '2.5k', price: '81.00', originalPrice: '90.00', discount: '10%' },
+    { likes: '5.0k', price: '148.50', originalPrice: '165.00', discount: '10%' },
   ],
 };
 

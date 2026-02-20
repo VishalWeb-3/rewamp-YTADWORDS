@@ -7,21 +7,21 @@ import { usePricingPackages } from '../contexts/ContentContext';
 const displayAdsViewsPackagesFallback = {
   regular: [
     { views: '100', price: '1.99', originalPrice: null, discount: null },
-    { views: '1.0k', price: '14.90', originalPrice: '22.00', discount: '32%' },
-    { views: '2.5k', price: '34.90', originalPrice: '52.00', discount: '33%' },
-    { views: '5.0k', price: '64.90', originalPrice: '97.00', discount: '33%' },
+    { views: '1.0k', price: '19.80', originalPrice: '22.00', discount: '10%' },
+    { views: '2.5k', price: '46.80', originalPrice: '52.00', discount: '10%' },
+    { views: '5.0k', price: '87.30', originalPrice: '97.00', discount: '10%' },
   ],
   fast: [
     { views: '100', price: '3.49', originalPrice: null, discount: null },
-    { views: '1.0k', price: '29.90', originalPrice: '44.00', discount: '32%' },
-    { views: '2.5k', price: '69.90', originalPrice: '105.00', discount: '33%' },
-    { views: '5.0k', price: '129.90', originalPrice: '195.00', discount: '33%' },
+    { views: '1.0k', price: '39.60', originalPrice: '44.00', discount: '10%' },
+    { views: '2.5k', price: '94.50', originalPrice: '105.00', discount: '10%' },
+    { views: '5.0k', price: '175.50', originalPrice: '195.00', discount: '10%' },
   ],
   ads: [
     { views: '100', price: '4.99', originalPrice: null, discount: null },
-    { views: '1.0k', price: '44.90', originalPrice: '67.00', discount: '33%' },
-    { views: '2.5k', price: '104.90', originalPrice: '157.00', discount: '33%' },
-    { views: '5.0k', price: '199.90', originalPrice: '300.00', discount: '33%' },
+    { views: '1.0k', price: '60.30', originalPrice: '67.00', discount: '10%' },
+    { views: '2.5k', price: '141.30', originalPrice: '157.00', discount: '10%' },
+    { views: '5.0k', price: '270.00', originalPrice: '300.00', discount: '10%' },
   ],
 };
 

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { CtaActionsProvider } from './contexts/CtaActionsContext';
 import HomePage from './pages/HomePage';
 import BuyYouTubeViewsPage from './pages/BuyYouTubeViewsPage';
 import BuyYouTubeSubscribersPage from './pages/BuyYouTubeSubscribersPage';
@@ -47,6 +48,15 @@ function ScrollToTop() {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;
+}
+
+function AppContentWithProviders() {
+  const { user } = useAuth();
+  return (
+    <CtaActionsProvider userId={user?.id}>
+      <AppContent />
+    </CtaActionsProvider>
+  );
 }
 
 function AppContent() {
@@ -110,7 +120,7 @@ export default function App() {
     <Router>
       <AuthProvider>
         <CartProvider>
-          <AppContent />
+          <AppContentWithProviders />
         </CartProvider>
       </AuthProvider>
     </Router>
