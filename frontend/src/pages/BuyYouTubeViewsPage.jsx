@@ -39,7 +39,7 @@ const featuresFallback = [
 
 const faqsFallback = [
   { question: 'How quickly will I receive my YouTube views?', answer: 'Delivery times vary depending on the package you choose. Regular views typically start within a few hours, while Fast Views begin immediately. Ads Views are delivered through Google Ads campaigns and may take 24-48 hours to start. All packages are designed to deliver views gradually to ensure natural growth patterns.' },
-  { question: 'Are the views real and from real users?', answer: 'Yes! YoutubeAdWords provides authentic views from real users. Our views come from recommended videos in YouTube Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our views have high retention rates and help activate YouTube\'s algorithm.' },
+  { question: 'Are the views real and from real users?', answer: 'Yes! YoutubeADwords provides authentic views from real users. Our views come from recommended videos in YouTube Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our views have high retention rates and help activate YouTube\'s algorithm.' },
   { question: 'Will buying views get my channel banned?', answer: 'No, our service is completely safe. We use legitimate methods that comply with YouTube\'s terms of service. Our views come from real users through organic discovery methods, so there\'s no risk to your channel. We\'ve been providing this service safely for years.' },
   { question: 'Can I choose which country the views come from?', answer: 'Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience. You can also manually select a specific country when placing your order to ensure the views align with your content\'s target demographic.' },
   { question: 'What happens if views drop after delivery?', answer: 'We offer a refill guarantee on all our packages. If you experience any drops in views, we will refill them at no additional cost. Our high-quality views have excellent retention rates, but we stand behind our service with this guarantee.' },
@@ -123,7 +123,7 @@ export default function BuyYouTubeViewsPage() {
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                {hero?.intro ?? 'YoutubeAdWords is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
+                {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -292,7 +292,7 @@ export default function BuyYouTubeViewsPage() {
                   </button>
                 </div>
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                  {content?.allInOne?.description ?? "With YoutubeAdWords's all-inclusive package, you can buy YouTube subscribers, and views simultaneously. Moreover, you may order YouTube likes service and add it to the package for the best price."}
+                  {content?.allInOne?.description ?? "With YoutubeADwords's all-inclusive package, you can buy YouTube subscribers, and views simultaneously. Moreover, you may order YouTube likes service and add it to the package for the best price."}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-6">
@@ -312,24 +312,24 @@ export default function BuyYouTubeViewsPage() {
           </div>
         </div>
 
-        {/* YoutubeAdWords's Guarantee Section */}
+        {/* YoutubeADwords's Guarantee Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                {content?.guarantee?.heading ?? "YoutubeAdWords's Guarantee When You Buy YouTube Views"}
+                {content?.guarantee?.heading ?? "YoutubeADwords's Guarantee When You Buy YouTube Views"}
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>{content?.guarantee?.intro1 ?? "We know that you put in a lot of hours to produce amazing content on YouTube. YoutubeAdWords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of views, just select how many you want!"}</p>
-                <p>{content?.guarantee?.intro2 ?? "To grow their YouTube subscribers and likes daily with YoutubeAdWords, our customers buy YouTube views for every video they produce."}</p>
+                <p>{content?.guarantee?.intro1 ?? "We know that you put in a lot of hours to produce amazing content on YouTube. YoutubeADwords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of views, just select how many you want!"}</p>
+                <p>{content?.guarantee?.intro2 ?? "To grow their YouTube subscribers and likes daily with YoutubeADwords, our customers buy YouTube views for every video they produce."}</p>
               </div>
             </div>
             {(content?.guarantee?.cards?.length ? content.guarantee.cards : [
               { title: 'Know the Specific Source of YouTube Views', body: 'Our customers who buy views from us see in YouTube Analytics that the views come from recommended videos. In this way, it also increases the number of views on your videos organically. You can do a trial of our free YouTube views service before purchasing.' },
               { title: 'Get Views from the Suitable Country for Your Channel', body: 'After selecting the number of views you want to buy, you will be asked to enter the link of your video. Our system will automatically check your channel and will suggest a suitable country for your channel on the next screen. In this way, you will get a boost in views from viewers that are in alignment with your target audience.' },
-              { title: 'Lowest Price Guaranteed', body: "YoutubeAdWords services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price." },
+              { title: 'Lowest Price Guaranteed', body: "YoutubeADwords services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price." },
               { title: 'Support Team Working Every Day of the Week', body: "One side of the world is day meanwhile the other side is night, but this does not affect our service. Our team is available 24/7 to answer your questions about our YouTube growth services, no matter what country you live in." },
-              { title: 'Slow or Fast Viewing Preference', body: "Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. YoutubeAdWords adapts to whatever your preference is to give you the best satisfaction." },
+              { title: 'Slow or Fast Viewing Preference', body: "Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. YoutubeADwords adapts to whatever your preference is to give you the best satisfaction." },
             ]).slice(0, 1).map((card, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
                 <div className="mb-4">
@@ -352,9 +352,9 @@ export default function BuyYouTubeViewsPage() {
             {(content?.guarantee?.cards?.length ? content.guarantee.cards : [
               { title: 'Know the Specific Source of YouTube Views', body: 'Our customers who buy views from us see in YouTube Analytics that the views come from recommended videos. In this way, it also increases the number of views on your videos organically. You can do a trial of our free YouTube views service before purchasing.' },
               { title: 'Get Views from the Suitable Country for Your Channel', body: 'After selecting the number of views you want to buy, you will be asked to enter the link of your video. Our system will automatically check your channel and will suggest a suitable country for your channel on the next screen. In this way, you will get a boost in views from viewers that are in alignment with your target audience.' },
-              { title: 'Lowest Price Guaranteed', body: "YoutubeAdWords services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price." },
+              { title: 'Lowest Price Guaranteed', body: "YoutubeADwords services guarantee you the cheapest YouTube views on the market. If you find the same quality of YouTube views at a cheaper price, please let us know about it, and we promise to provide you with service at that price." },
               { title: 'Support Team Working Every Day of the Week', body: "One side of the world is day meanwhile the other side is night, but this does not affect our service. Our team is available 24/7 to answer your questions about our YouTube growth services, no matter what country you live in." },
-              { title: 'Slow or Fast Viewing Preference', body: "Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. YoutubeAdWords adapts to whatever your preference is to give you the best satisfaction." },
+              { title: 'Slow or Fast Viewing Preference', body: "Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. YoutubeADwords adapts to whatever your preference is to give you the best satisfaction." },
             ]).slice(1).map((card, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 lg:p-8 shadow-md">
                 <div className="mb-4">
@@ -403,12 +403,12 @@ export default function BuyYouTubeViewsPage() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                {content?.numbersSection?.heading ?? 'Numbers, Engagement, and Reputation; YoutubeAdWords'}
+                {content?.numbersSection?.heading ?? 'Numbers, Engagement, and Reputation; YoutubeADwords'}
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>{content?.numbersSection?.paragraph1 ?? "What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?"}</p>
                 <p>{content?.numbersSection?.paragraph2 ?? "Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to."}</p>
-                <p>{content?.numbersSection?.paragraph3 ?? "What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeAdWords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you."}</p>
+                <p>{content?.numbersSection?.paragraph3 ?? "What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you."}</p>
               </div>
             </div>
             <div className="flex justify-center lg:justify-end">
@@ -511,7 +511,7 @@ export default function BuyYouTubeViewsPage() {
             {/* Section Title */}
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Why Choose YoutubeAdWords?
+                Why Choose YoutubeADwords?
               </h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 See how we compare to other providers across key features
@@ -546,7 +546,7 @@ export default function BuyYouTubeViewsPage() {
                 ))}
               </div>
 
-              {/* Middle Column - VIEWS 4 YOU */}
+              {/* Middle Column - YOUTUBE AD WORDS */}
               <div className="border-4 border-brand-red rounded-3xl p-6 lg:p-8 bg-white shadow-xl relative overflow-hidden">
                 {/* Highlighted Badge */}
                 <div className="absolute top-0 right-0 bg-brand-red text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
@@ -555,9 +555,9 @@ export default function BuyYouTubeViewsPage() {
 
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-black font-bold text-xl lg:text-2xl">VIEWS</span>
-                    <span className="bg-brand-red text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg shadow-lg">4</span>
-                    <span className="text-black font-bold text-xl lg:text-2xl">YOU</span>
+                    <span className="text-black font-bold text-xl lg:text-2xl">YOUTUBE</span>
+                    <span className="bg-brand-red text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg shadow-lg">AD</span>
+                    <span className="text-black font-bold text-xl lg:text-2xl">WORDS</span>
                   </div>
                 </div>
                 <div className="space-y-3">

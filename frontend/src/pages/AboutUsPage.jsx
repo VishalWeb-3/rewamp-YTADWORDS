@@ -17,10 +17,10 @@ export default function AboutUsPage() {
           <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 space-y-6">
             <section>
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Welcome to YoutubeAdWords
+                Welcome to YoutubeADwords
               </h2>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeAdWords is a leading provider of social media growth services, specializing in YouTube, TikTok, and Google Ads services. We are committed to helping businesses and content creators enhance their online presence through authentic, high-quality engagement.
+                YoutubeADwords is a leading provider of social media growth services, specializing in YouTube, TikTok, and Google Ads services. We are committed to helping businesses and content creators enhance their online presence through authentic, high-quality engagement.
               </p>
             </section>
 
@@ -67,7 +67,7 @@ export default function AboutUsPage() {
 
             <section>
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Why Choose YoutubeAdWords?
+                Why Choose YoutubeADwords?
               </h2>
               <ul className="space-y-3 text-gray-700 text-base leading-relaxed">
                 <li className="flex items-start gap-3">

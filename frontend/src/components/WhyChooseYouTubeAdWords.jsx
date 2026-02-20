@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHomeContent } from '../contexts/ContentContext';
 
-export default function WhyChooseYouTubeAdWords() {
+export default function WhyChooseYoutubeADwords() {
   const home = useHomeContent();
-  const section = home?.whyChooseYouTubeAdWords || {};
+  const section = home?.whyChooseYoutubeADwords || {};
   return (
     <section className="bg-gray-50 py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -13,8 +13,8 @@ export default function WhyChooseYouTubeAdWords() {
             {section.heading1 || 'Why Should You Choose'}
           </h2>
           <h2 className="font-bold" style={{ fontSize: "22px", lineHeight: "1.2" }}>
-            <span className="text-brand-red">{section.heading2YouTube || 'YouTube'}</span>{' '}
-            <span className="text-blue-700">{section.heading2AdWords || 'Ad Words?'}</span>
+            <span className="text-brand-red">{section.heading2YouTube || 'Youtube'}</span>{' '}
+            <span className="text-blue-700">{section.heading2AdWords || 'ADwords?'}</span>
           </h2>
         </div>
 
@@ -34,7 +34,7 @@ export default function WhyChooseYouTubeAdWords() {
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed" style={{ fontSize: "14px" }}>
-              {section.card1Text || 'YouTube Ad Words leverages precision targeting, deep YouTube algorithm knowledge, and proven Google Ads strategies to deliver authentic traffic that drives real growth, retention, and better ranking for your content.'}
+              {section.card1Text || 'YoutubeADwords leverages precision targeting, deep YouTube algorithm knowledge, and proven Google Ads strategies to deliver authentic traffic that drives real growth, retention, and better ranking for your content.'}
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function WhyChooseYouTubeAdWords() {
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed" style={{ fontSize: "14px" }}>
-              {section.card2Text || 'Our "White-Hat" approach ensures YouTube Ad Words complies with all platform policies, protects against bot activity, and maintains your account security while delivering genuine, high-quality engagement.'}
+              {section.card2Text || 'Our "White-Hat" approach ensures YoutubeADwords complies with all platform policies, protects against bot activity, and maintains your account security while delivering genuine, high-quality engagement.'}
             </p>
           </div>
         </div>

@@ -7,7 +7,7 @@ import SocialMediaImpact from '../components/SocialMediaImpact';
 import PremiumSolutions from '../components/PremiumSolutions';
 import ServiceSections from '../components/ServiceSections';
 import ComparisonSection from '../components/ComparisonSection';
-import WhyChooseYouTubeAdWords from '../components/WhyChooseYouTubeAdWords';
+import WhyChooseYoutubeADwords from '../components/WhyChooseYoutubeADwords';
 import MeetOurExperts from '../components/MeetOurExperts';
 import WhatWeEnsure from '../components/WhatWeEnsure';
 import TrustedClients from '../components/TrustedClients';
@@ -24,7 +24,7 @@ export default function HomePage() {
       <PremiumSolutions />
       <ServiceSections />
       <ComparisonSection />
-      <WhyChooseYouTubeAdWords />
+      <WhyChooseYoutubeADwords />
       <MeetOurExperts />
       <WhatWeEnsure />
       <TrustedClients />

@@ -44,7 +44,7 @@ export default function ComparisonSection() {
             <span className="text-white font-bold text-lg lg:text-xl">VS</span>
           </div>
 
-          {/* Right Card - YouTube Ad Words */}
+          {/* Right Card - YoutubeADwords */}
           <div className="bg-white rounded-2xl border-2 border-brand-red p-8 lg:p-10 flex-1 w-full lg:w-auto relative">
             {/* BEST CHOICE Label */}
             <div className="absolute -top-3 -right-3 bg-brand-red rounded-full px-4 py-1.5 shadow-lg z-20">
@@ -52,7 +52,7 @@ export default function ComparisonSection() {
             </div>
 
             {/* Red Radial Gradient Shadow */}
-            <div 
+            <div
               className="absolute inset-0 rounded-2xl -z-10 blur-xl opacity-60"
               style={{
                 background: 'radial-gradient(ellipse at center, rgba(229, 57, 53, 0.4) 0%, rgba(229, 57, 53, 0.2) 50%, transparent 100%)',
@@ -63,13 +63,13 @@ export default function ComparisonSection() {
             <h3 className="text-xl lg:text-2xl font-bold text-center mb-6">
               {section.ourTitle ? (
                 <>
-                  <span className="text-gray-800">YouTube</span>{' '}
-                  <span className="text-brand-red">Ad Words</span>
+                  <span className="text-gray-800">Youtube</span>{' '}
+                  <span className="text-brand-red">ADwords</span>
                 </>
               ) : (
                 <>
-                  <span className="text-gray-800">YouTube</span>{' '}
-                  <span className="text-brand-red">Ad Words</span>
+                  <span className="text-gray-800">Youtube</span>{' '}
+                  <span className="text-brand-red">ADwords</span>
                 </>
               )}
             </h3>

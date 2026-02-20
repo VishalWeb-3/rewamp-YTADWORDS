@@ -71,7 +71,7 @@ export default function LoginPage() {
               {auth.loginTitle || 'Login'}
             </h1>
             <p className="text-gray-600">
-              {auth.loginSubtitle || 'Sign in to your YoutubeAdWords account'}
+              {auth.loginSubtitle || 'Sign in to your YoutubeADwords account'}
             </p>
           </div>
 

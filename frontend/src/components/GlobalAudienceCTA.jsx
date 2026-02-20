@@ -147,7 +147,7 @@ export default function GlobalAudienceCTA() {
                 {(globalCta?.titleHighlight ?? 'to a Global Audience')}
               </h2>
               <p className="text-white/90 text-sm lg:text-base leading-relaxed mb-4">
-                {globalCta?.paragraph1 ?? "Stop waiting, start growing. At YouTube Ad Words, we don't just sell stats; we fuel careers. Whether you need to cross the monetization threshold or dominate the TikTok algorithm, our premium packages are designed for instant impact."}
+                {globalCta?.paragraph1 ?? "Stop waiting, start growing. At YoutubeADwords, we don't just sell stats; we fuel careers. Whether you need to cross the monetization threshold or dominate the TikTok algorithm, our premium packages are designed for instant impact."}
               </p>
               <p className="text-white/90 text-sm lg:text-base leading-relaxed">
                 {globalCta?.paragraph2 ?? 'Join thousands of creators who trust us for safe, affordable, and high-retention growth. Select your platform and launch your campaign in seconds.'}

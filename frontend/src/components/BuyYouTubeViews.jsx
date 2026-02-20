@@ -54,7 +54,7 @@ export default function BuyYouTubeViews() {
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeAdWords is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                YoutubeADwords is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
               </p>
             </div>
           </div>

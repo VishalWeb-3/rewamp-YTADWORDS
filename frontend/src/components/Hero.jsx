@@ -45,7 +45,7 @@ export default function Hero() {
             )}
           </h1>
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-6 sm:mb-8">
-            {hero.subtitle || "Experience rapid growth with YouTubeAdWords' premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide."}
+            {hero.subtitle || "Experience rapid growth with YoutubeADwords' premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide."}
           </p>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6">
             <a
@@ -88,7 +88,7 @@ export default function Hero() {
         <div className="flex-1 relative w-full max-w-2xl min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] flex items-center justify-center">
           <img
             src={hero.heroImage || '/youtubeadwords_1.webp'}
-            alt={hero.heroImageAlt || 'YouTube AdWords - Boost your Google Ads & TikTok campaigns'}
+            alt={hero.heroImageAlt || 'YoutubeADwords - Boost your Google Ads & TikTok campaigns'}
             className="w-full h-auto max-h-[280px] sm:max-h-[400px] lg:max-h-[520px] object-contain object-center rounded-lg"
           />
         </div>

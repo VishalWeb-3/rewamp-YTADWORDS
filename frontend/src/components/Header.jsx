@@ -5,15 +5,22 @@ import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
 
 function Logo({ siteName }) {
-  const raw = (siteName || 'YOUTUBEADWORDS').trim();
-  const parts = raw.split(/\s+/);
-  let youtube = 'YOUTUBE', ad = 'AD', words = 'WORDS';
-  if (parts.length >= 3) {
-    [youtube, ad, words] = parts;
-  } else if (parts.length === 1 && raw.toUpperCase() === 'YOUTUBEADWORDS') {
-    youtube = 'YOUTUBE'; ad = 'AD'; words = 'WORDS';
-  } else if (parts.length >= 1) {
-    youtube = parts[0] || youtube;
+  const raw = (siteName || 'YoutubeADwords').trim();
+  let youtube = 'Youtube', ad = 'AD', words = 'words';
+
+  if (raw.toLowerCase() === 'youtubeadwords') {
+    youtube = 'Youtube';
+    ad = 'AD';
+    words = 'words';
+  } else {
+    const parts = raw.split(/\s+/);
+    if (parts.length >= 3) {
+      [youtube, ad, words] = parts;
+    } else if (parts.length >= 1) {
+      youtube = parts[0];
+      ad = '';
+      words = '';
+    }
   }
   return (
     <Link to="/" className="flex items-center gap-0.5 font-bold text-base sm:text-xl tracking-tight">
@@ -74,8 +81,8 @@ export default function Header() {
           to={item.link || '#'}
           onClick={isMobile ? closeMobileMenu : undefined}
           className={`transition-colors bg-[#E53935] text-white hover:bg-[#C62828] ${isMobile
-              ? 'block px-6 py-4 text-base font-medium border-b border-white/20'
-              : 'px-3 sm:px-4 py-2 rounded-full text-sm font-medium'
+            ? 'block px-6 py-4 text-base font-medium border-b border-white/20'
+            : 'px-3 sm:px-4 py-2 rounded-full text-sm font-medium'
             }`}
         >
           {item.label}

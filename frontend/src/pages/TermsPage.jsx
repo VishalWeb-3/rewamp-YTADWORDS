@@ -4,8 +4,8 @@ import { LegalSection } from '../components/LegalSection';
 import { useLegalContent } from '../contexts/ContentContext';
 
 const DEFAULT_SECTIONS = [
-  { heading: 'Agreement to Terms', body: 'By accessing and using YoutubeAdWords\'s website and services, you accept and agree to be bound by these terms.', listItems: [], subsections: [] },
-  { heading: 'Service Description', body: 'YoutubeAdWords provides social media growth services. We do not guarantee specific results.', listItems: [], subsections: [] },
+  { heading: 'Agreement to Terms', body: 'By accessing and using YoutubeADwords\'s website and services, you accept and agree to be bound by these terms.', listItems: [], subsections: [] },
+  { heading: 'Service Description', body: 'YoutubeADwords provides social media growth services. We do not guarantee specific results.', listItems: [], subsections: [] },
   { heading: 'Contact Information', body: 'If you have any questions, please contact us through our Contact Us page.', listItems: [], subsections: [] },
 ];
 

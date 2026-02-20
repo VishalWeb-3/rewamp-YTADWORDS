@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function SEO({
-  title = 'YouTube AdWords - Boost Your Google Ads & TikTok Campaigns',
-  description = 'Experience rapid growth with YouTubeAdWords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.',
+  title = 'YoutubeADwords - Boost Your Google Ads & TikTok Campaigns',
+  description = 'Experience rapid growth with YoutubeADwords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.',
   keywords = '',
   ogImage = '/favicon.svg',
   ogType = 'website',
@@ -13,7 +13,7 @@ export default function SEO({
 
   useEffect(() => {
     const head = document.head;
-    const fullTitle = title.includes('YouTube AdWords') ? title : `${title} | YouTube AdWords`;
+    const fullTitle = title.includes('YoutubeADwords') ? title : `${title} | YoutubeADwords`;
 
     const upsertMetaByName = (name, content) => {
       if (!name || content == null) return;
@@ -50,7 +50,7 @@ export default function SEO({
 
     // Set document title
     document.title = fullTitle;
-    
+
     // Basic meta tags
     upsertMetaByName('title', fullTitle);
     upsertMetaByName('description', description);

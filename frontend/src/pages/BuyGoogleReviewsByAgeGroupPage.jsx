@@ -68,7 +68,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
     },
     {
       question: 'Are the reviews real and from real users?',
-      answer: 'Yes! YoutubeAdWords provides authentic reviews from real users. Our reviews come from recommended videos in Google Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our reviews have high retention rates and help activate Google\'s algorithm.',
+      answer: 'Yes! YoutubeADwords provides authentic reviews from real users. Our reviews come from recommended videos in Google Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our reviews have high retention rates and help activate Google\'s algorithm.',
     },
     {
       question: 'Will buying reviews get my business banned?',
@@ -120,7 +120,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeAdWords is the safest way to buy Google Reviews by Age Group with delivery in just a few minutes. We offer multiple packages with real reviewers from specific age groups for all different needs - choose wisely!
+                YoutubeADwords is the safest way to buy Google Reviews by Age Group with delivery in just a few minutes. We offer multiple packages with real reviewers from specific age groups for all different needs - choose wisely!
               </p>
             </div>
           </div>
@@ -279,7 +279,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                  With YoutubeAdWords's all-inclusive package, you can{' '}
+                  With YoutubeADwords's all-inclusive package, you can{' '}
                   <span className="text-green-500 font-semibold">buy Google subscribers</span>, and reviews simultaneously. Moreover, you may order{' '}
                   <span className="text-green-500 font-semibold">Google likes service</span> and add it to the package for the best price.
                 </p>
@@ -324,20 +324,20 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
           </div>
         </div>
 
-        {/* YoutubeAdWords's Guarantee Section */}
+        {/* YoutubeADwords's Guarantee Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                YoutubeAdWords's Guarantee When You Buy Google Reviews by Age Group
+                YoutubeADwords's Guarantee When You Buy Google Reviews by Age Group
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>
-                  We know that you put in a lot of hours to produce amazing content on Google. YoutubeAdWords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of reviews, just select how many you want!
+                  We know that you put in a lot of hours to produce amazing content on Google. YoutubeADwords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of reviews, just select how many you want!
                 </p>
                 <p>
-                  To grow their Google subscribers and likes daily with YoutubeAdWords, our customers buy Google reviews for every video they produce.
+                  To grow their Google subscribers and likes daily with YoutubeADwords, our customers buy Google reviews for every video they produce.
                 </p>
               </div>
             </div>
@@ -405,7 +405,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 Lowest Price Guaranteed
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                YoutubeAdWords services guarantee you the cheapest Google reviews on the market. If you find the same quality of Google reviews at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
+                YoutubeADwords services guarantee you the cheapest Google reviews on the market. If you find the same quality of Google reviews at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
               </p>
             </div>
 
@@ -447,7 +447,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 Slow or Fast Viewing Preference
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Everyone wants the number of reviews on their content to grow at different speeds. You can buy slow or fast reviews according to your preference. YoutubeAdWords adapts to whatever your preference is to give you the best satisfaction.
+                Everyone wants the number of reviews on their content to grow at different speeds. You can buy slow or fast reviews according to your preference. YoutubeADwords adapts to whatever your preference is to give you the best satisfaction.
               </p>
             </div>
           </div>
@@ -491,7 +491,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
             {/* Left Section - Text Content */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; YoutubeAdWords
+                Numbers, Engagement, and Reputation; YoutubeADwords
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>
@@ -501,7 +501,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                   Numbers are everything in today's digital world. Buying reviews makes a quick and immediate contribution to your numerical superiority, making you seem like a legit business for reviewers to flock to.
                 </p>
                 <p>
-                  What number of reviews will satisfy you? Would 100,000 reviews look good on a video promoting your company? YoutubeAdWords can provide this for you. Thanks to the quality reviews we send to your videos, we're able to activate the Google algorithm and make the system work for you.
+                  What number of reviews will satisfy you? Would 100,000 reviews look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality reviews we send to your videos, we're able to activate the Google algorithm and make the system work for you.
                 </p>
               </div>
             </div>
@@ -617,7 +617,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
             {/* Section Title */}
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Why Choose YoutubeAdWords?
+                Why Choose YoutubeADwords?
               </h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 See how we compare to other providers across key features
@@ -652,7 +652,7 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 ))}
               </div>
 
-              {/* Middle Column - VIEWS 4 YOU */}
+              {/* Middle Column - YOUTUBE AD WORDS */}
               <div className="border-4 border-green-500 rounded-3xl p-6 lg:p-8 bg-white shadow-xl relative overflow-hidden">
                 {/* Highlighted Badge */}
                 <div className="absolute top-0 right-0 bg-green-500 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
@@ -661,9 +661,9 @@ export default function BuyGoogleReviewsByAgeGroupPage() {
                 
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">VIEWS</span>
-                    <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">4</span>
-                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOU</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOUTUBE</span>
+                    <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">AD</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">WORDS</span>
                   </div>
                 </div>
                 <div className="space-y-3">

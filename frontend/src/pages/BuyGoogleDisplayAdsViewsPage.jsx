@@ -68,7 +68,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
     },
     {
       question: 'Are the views real and from real users?',
-      answer: 'Yes! YoutubeAdWords provides authentic views from real users. Our views come from recommended videos in Google Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our views have high retention rates and help activate Google\'s algorithm.',
+      answer: 'Yes! YoutubeADwords provides authentic views from real users. Our views come from recommended videos in Google Analytics, ensuring they appear organic and natural. We never use bots or fake accounts, which is why our views have high retention rates and help activate Google\'s algorithm.',
     },
     {
       question: 'Will buying views get my campaign banned?',
@@ -120,7 +120,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeAdWords is the safest way to buy Google Display Ads Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                YoutubeADwords is the safest way to buy Google Display Ads Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
               </p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                  With YoutubeAdWords's all-inclusive package, you can{' '}
+                  With YoutubeADwords's all-inclusive package, you can{' '}
                   <span className="text-#4285F4 font-semibold">buy Google subscribers</span>, and views simultaneously. Moreover, you may order{' '}
                   <span className="text-#4285F4 font-semibold">Google likes service</span> and add it to the package for the best price.
                 </p>
@@ -336,20 +336,20 @@ export default function BuyGoogleDisplayAdsViewsPage() {
           </div>
         </div>
 
-        {/* YoutubeAdWords's Guarantee Section */}
+        {/* YoutubeADwords's Guarantee Section */}
         <div className="mt-12 lg:mt-16">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                YoutubeAdWords's Guarantee When You Buy Google Display Ads Views
+                YoutubeADwords's Guarantee When You Buy Google Display Ads Views
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>
-                  We know that you put in a lot of hours to produce amazing content on Google. YoutubeAdWords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of views, just select how many you want!
+                  We know that you put in a lot of hours to produce amazing content on Google. YoutubeADwords works to give your content the popularity you deserve. With our services, your superb content is crowned with the reward of hundreds of thousands of views, just select how many you want!
                 </p>
                 <p>
-                  To grow their Google subscribers and likes daily with YoutubeAdWords, our customers buy Google views for every video they produce.
+                  To grow their Google subscribers and likes daily with YoutubeADwords, our customers buy Google views for every video they produce.
                 </p>
               </div>
             </div>
@@ -417,7 +417,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 Lowest Price Guaranteed
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                YoutubeAdWords services guarantee you the cheapest Google views on the market. If you find the same quality of Google views at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
+                YoutubeADwords services guarantee you the cheapest Google views on the market. If you find the same quality of Google views at a cheaper price, please let us know about it, and we promise to provide you with service at that price.
               </p>
             </div>
 
@@ -459,7 +459,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 Slow or Fast Viewing Preference
               </h3>
               <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. YoutubeAdWords adapts to whatever your preference is to give you the best satisfaction.
+                Everyone wants the number of views on their content to grow at different speeds. You can buy slow or fast views according to your preference. YoutubeADwords adapts to whatever your preference is to give you the best satisfaction.
               </p>
             </div>
           </div>
@@ -503,7 +503,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
             {/* Left Section - Text Content */}
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; YoutubeAdWords
+                Numbers, Engagement, and Reputation; YoutubeADwords
               </h2>
               <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
                 <p>
@@ -513,7 +513,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                   Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit campaign for viewers to flock to.
                 </p>
                 <p>
-                  What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeAdWords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the Google algorithm and make the system work for you.
+                  What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the Google algorithm and make the system work for you.
                 </p>
               </div>
             </div>
@@ -629,7 +629,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
             {/* Section Title */}
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Why Choose YoutubeAdWords?
+                Why Choose YoutubeADwords?
               </h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                 See how we compare to other providers across key features
@@ -664,7 +664,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 ))}
               </div>
 
-              {/* Middle Column - VIEWS 4 YOU */}
+              {/* Middle Column - YOUTUBE AD WORDS */}
               <div className="border-4 border-#4285F4 rounded-3xl p-6 lg:p-8 bg-white shadow-xl relative overflow-hidden">
                 {/* Highlighted Badge */}
                 <div className="absolute top-0 right-0 bg-#4285F4 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
@@ -673,9 +673,9 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">VIEWS</span>
-                    <span className="bg-#4285F4 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">4</span>
-                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOU</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOUTUBE</span>
+                    <span className="bg-#4285F4 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-base sm:text-lg shadow-lg">AD</span>
+                    <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">WORDS</span>
                   </div>
                 </div>
                 <div className="space-y-3">
