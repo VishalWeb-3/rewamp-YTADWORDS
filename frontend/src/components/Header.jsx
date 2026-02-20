@@ -31,6 +31,7 @@ export default function Header() {
   const { user, displayName, logout, isLoggedIn } = useAuth();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuHover, setUserMenuHover] = useState(false);
   const menuRef = useRef(null);
   const cartCount = getCartCount();
   const navItems = header.navLinks || [
@@ -51,6 +52,8 @@ export default function Header() {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  const showUserDropdown = userMenuOpen || userMenuHover;
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -90,6 +93,13 @@ export default function Header() {
               >
                 {header.myOrders || 'My Orders'}
               </Link>
+              <Link
+                to="/contact"
+                className="block px-6 py-4 text-base text-white hover:bg-white/10"
+                onClick={closeMobileMenu}
+              >
+                {header.ticketsLabel || 'Tickets / Support'}
+              </Link>
               <button
                 type="button"
                 onClick={() => { logout(); closeMobileMenu(); }}
@@ -100,31 +110,49 @@ export default function Header() {
             </>
           ) : (
             <>
-              <button
-                type="button"
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="px-3 sm:px-4 py-2 rounded-full text-sm font-medium bg-brand-red text-white hover:bg-[#C62828] transition-colors"
+              <div
+                ref={menuRef}
+                className="relative"
+                onMouseEnter={() => setUserMenuHover(true)}
+                onMouseLeave={() => setUserMenuHover(false)}
               >
-                {displayName}
-              </button>
-              {userMenuOpen && (
-                <div className="absolute right-0 top-full mt-1 py-1 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[140px] z-50">
-                  <Link
-                    to="/orders"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setUserMenuOpen(false)}
-                  >
-                    {header.myOrders || 'My Orders'}
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => { logout(); setUserMenuOpen(false); }}
-                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                  >
-                    {header.logout || 'Logout'}
-                  </button>
-                </div>
-              )}
+                <button
+                  type="button"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="px-3 sm:px-4 py-2 rounded-full text-sm font-medium bg-brand-red text-white hover:bg-[#C62828] transition-colors"
+                >
+                  {displayName}
+                </button>
+                {showUserDropdown && (
+                  <>
+                    {/* Invisible bridge to prevent gap hover issue */}
+                    <div className="absolute right-0 top-full w-full h-2" />
+                    <div className="absolute right-0 top-full pt-2 py-1 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[160px] z-50">
+                      <Link
+                        to="/orders"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg"
+                        onClick={() => { setUserMenuOpen(false); setUserMenuHover(false); }}
+                      >
+                        {header.myOrders || 'My Orders'}
+                      </Link>
+                      <Link
+                        to="/contact"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => { setUserMenuOpen(false); setUserMenuHover(false); }}
+                      >
+                        {header.ticketsLabel || 'Tickets / Support'}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => { logout(); setUserMenuOpen(false); setUserMenuHover(false); }}
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-b-lg"
+                      >
+                        {header.logout || 'Logout'}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </>
           )}
         </div>

@@ -482,6 +482,56 @@ var config_default = defineConfig({
         ]
       },
       {
+        name: "pageMetadata",
+        label: "Page Metadata",
+        path: "content/pages",
+        format: "mdx",
+        ui: {
+          // No router: use form editor instead of visual editing.
+          // Title/description live in <head> only, so visual editing has nothing to show.
+          // Form editor displays all fields (title, description, keywords, ogImage).
+        },
+        fields: [
+          {
+            type: "string",
+            name: "slug",
+            label: "Page Slug",
+            description: "Route path without leading slash, e.g. buy-youtube-views or about-us. Must match your route exactly.",
+            required: true,
+            isTitle: true
+          },
+          {
+            type: "string",
+            name: "title",
+            label: "Page Title",
+            description: "SEO title (appears in browser tab and search results)",
+            required: true
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Meta Description",
+            description: "SEO description (appears in search results)",
+            ui: { component: "textarea" },
+            required: true
+          },
+          {
+            type: "string",
+            name: "keywords",
+            label: "Keywords",
+            description: "Comma-separated keywords for SEO",
+            required: false
+          },
+          {
+            type: "image",
+            name: "ogImage",
+            label: "Open Graph Image",
+            description: "Image for social media sharing (Facebook, Twitter, etc.)",
+            required: false
+          }
+        ]
+      },
+      {
         name: "legal",
         label: "Legal Pages",
         path: "content/legal",

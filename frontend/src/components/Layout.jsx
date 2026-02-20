@@ -1,12 +1,37 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import ServiceBar from './ServiceBar';
 import Footer from './Footer';
 import CartSidebar from './CartSidebar';
+import SEO from './SEO';
+import { usePageMetadata } from '../contexts/ContentContext';
 
-export default function Layout({ children }) {
+export default function Layout({ children, seoTitle, seoDescription, seoKeywords, seoOgImage }) {
+  const location = useLocation();
+  
+  // Get slug from pathname (remove leading slash)
+  const slug = location.pathname === '/' ? 'home' : location.pathname.replace(/^\//, '').replace(/\/$/, '');
+  
+  // Fetch metadata from TinaCMS
+  const metadata = usePageMetadata(slug);
+  
+  // Use metadata from Tina if available, otherwise props, then defaults
+  const finalMetadata = metadata;
+  
+  const title = finalMetadata?.title || seoTitle || 'YouTube AdWords - Boost Your Google Ads & TikTok Campaigns';
+  const description = finalMetadata?.description || seoDescription || 'Experience rapid growth with YouTubeAdWords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.';
+  const keywords = finalMetadata?.keywords || seoKeywords || '';
+  const ogImage = finalMetadata?.ogImage || seoOgImage || '/favicon.svg';
+
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full">
+      <SEO 
+        title={title}
+        description={description}
+        keywords={keywords}
+        ogImage={ogImage}
+      />
       <Header />
       <ServiceBar />
       {children}

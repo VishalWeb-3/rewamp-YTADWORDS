@@ -7,14 +7,25 @@ export default function Footer() {
   const globalContent = useGlobalContent();
   const { isLoggedIn, logout } = useAuth();
   const footer = globalContent?.footer || {};
-  const ourServices = footer.ourServices || ['YouTube Views', 'YouTube Subscribers', 'YouTube Watch Hours', 'TikTok Followers', 'Google Ads Views'];
-  const resources = footer.resources || ['Blog', 'Affiliate Program', 'Why Choose Us?', 'Actionable Feedback', 'Corrections Policy'];
+  // Only include services that have actual pages
+  const ourServices = footer.ourServices || [
+    { label: 'Buy YouTube Views', link: '/buy-youtube-views' },
+    { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' },
+    { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' },
+    { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' },
+    { label: 'Buy TikTok Followers', link: '/buy-tiktok-followers' },
+    { label: 'Buy Google Reviews', link: '/buy-female-google-reviews' },
+  ];
+  
+  // Only include resources that have actual pages
+  const resources = footer.resources || [
+    { label: 'Blog', link: '/blog' },
+  ];
+  
+  // Only include company pages that exist
   const company = footer.company || [
     { label: 'About Us', link: '/about-us' },
     { label: 'Contact', link: '/contact' },
-    { label: 'Careers', link: '#' },
-    { label: 'Partners', link: '#' },
-    { label: 'Publishing Principles', link: '#' },
   ];
   return (
     <footer className="bg-white border-t border-gray-200 overflow-hidden">
@@ -57,13 +68,20 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-gray-900 mb-4">{footer.ourServicesTitle || 'Our Services'}</h3>
             <ul className="space-y-2">
-              {ourServices.map((service, index) => (
-                <li key={index}>
-                  <a href="#" className="text-gray-600 text-sm hover:text-brand-red transition-colors">
-                    {service}
-                  </a>
-                </li>
-              ))}
+              {ourServices.map((service, index) => {
+                const serviceData = typeof service === 'string' ? { label: service, link: '#' } : service;
+                return (
+                  <li key={index}>
+                    {serviceData.link !== '#' ? (
+                      <Link to={serviceData.link} className="text-gray-600 text-sm hover:text-brand-red transition-colors">
+                        {serviceData.label}
+                      </Link>
+                    ) : (
+                      <span className="text-gray-600 text-sm">{serviceData.label}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -71,16 +89,20 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-gray-900 mb-4">{footer.resourcesTitle || 'Resources'}</h3>
             <ul className="space-y-2">
-              {resources.map((resource, index) => (
-                <li key={index}>
-                  <Link
-                    to={resource === 'Blog' ? '/blog' : '#'}
-                    className="text-gray-600 text-sm hover:text-brand-red transition-colors"
-                  >
-                    {resource}
-                  </Link>
-                </li>
-              ))}
+              {resources.map((resource, index) => {
+                const resourceData = typeof resource === 'string' ? { label: resource, link: resource === 'Blog' ? '/blog' : '#' } : resource;
+                return (
+                  <li key={index}>
+                    {resourceData.link !== '#' ? (
+                      <Link to={resourceData.link} className="text-gray-600 text-sm hover:text-brand-red transition-colors">
+                        {resourceData.label}
+                      </Link>
+                    ) : (
+                      <span className="text-gray-600 text-sm">{resourceData.label}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

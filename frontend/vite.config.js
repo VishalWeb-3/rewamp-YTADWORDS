@@ -24,4 +24,6 @@ export default defineConfig({
       },
     },
   },
+  // Ensure admin assets are served correctly
+  publicDir: 'public',
 })

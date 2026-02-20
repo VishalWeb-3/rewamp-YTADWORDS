@@ -285,6 +285,16 @@ export const BlogPartsFragmentDoc = gql`
   body
 }
     `;
+export const PageMetadataPartsFragmentDoc = gql`
+    fragment PageMetadataParts on PageMetadata {
+  __typename
+  slug
+  title
+  description
+  keywords
+  ogImage
+}
+    `;
 export const LegalPartsFragmentDoc = gql`
     fragment LegalParts on Legal {
   __typename
@@ -694,6 +704,63 @@ export const BlogConnectionDocument = gql`
   }
 }
     ${BlogPartsFragmentDoc}`;
+export const PageMetadataDocument = gql`
+    query pageMetadata($relativePath: String!) {
+  pageMetadata(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PageMetadataParts
+  }
+}
+    ${PageMetadataPartsFragmentDoc}`;
+export const PageMetadataConnectionDocument = gql`
+    query pageMetadataConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PageMetadataFilter) {
+  pageMetadataConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PageMetadataParts
+      }
+    }
+  }
+}
+    ${PageMetadataPartsFragmentDoc}`;
 export const LegalDocument = gql`
     query legal($relativePath: String!) {
   legal(relativePath: $relativePath) {
@@ -789,6 +856,12 @@ export function getSdk(requester) {
     blogConnection(variables, options) {
       return requester(BlogConnectionDocument, variables, options);
     },
+    pageMetadata(variables, options) {
+      return requester(PageMetadataDocument, variables, options);
+    },
+    pageMetadataConnection(variables, options) {
+      return requester(PageMetadataConnectionDocument, variables, options);
+    },
     legal(variables, options) {
       return requester(LegalDocument, variables, options);
     },
@@ -817,7 +890,7 @@ const generateRequester = (client) => {
 export const ExperimentalGetTinaClient = () => getSdk(
   generateRequester(
     createClient({
-      url: "https://content.tinajs.io/2.1/content/722e7af1-e7c6-48b3-a0f5-0cf3c4672195/github/main",
+      url: "http://localhost:4001/graphql",
       queries
     })
   )

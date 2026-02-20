@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { client } from '../../tina/__generated__/client';
 
 // Tina-driven content: import from content/ (editable via Tina Cloud or directly in repo)
 import globalContent from '../../content/global/index.json';
@@ -9,7 +10,6 @@ import pricingPageContent from '../../content/pricing-pages/index.json';
 import legalContent from '../../content/legal/index.json';
 
 // Fetch latest from Tina Cloud at runtime so edits in Tina appear without rebuild
-import { client } from '../../tina/__generated__/client';
 
 function omitSys(obj) {
   if (!obj || typeof obj !== 'object') return obj;
@@ -31,6 +31,7 @@ const staticValue = {
   pricing: pricingContent,
   pricingPageContent,
   legal: legalContent,
+  pageMetadata: {},
 };
 
 export function ContentProvider({ children }) {
@@ -172,4 +173,46 @@ export function usePricingPageContent(slug, fallback) {
     const fromTina = getPricingPageContentBySlug(pricingPageContent, slug);
     return fromTina ?? fallback ?? null;
   }, [pricingPageContent, slug, fallback]);
+}
+
+/**
+ * Hook: get page metadata (title, description) by slug from TinaCMS.
+ * Returns null if no metadata found for that slug.
+ */
+export function usePageMetadata(slug) {
+  const [metadata, setMetadata] = useState(null);
+
+  useEffect(() => {
+    if (!slug) {
+      setMetadata(null);
+      return;
+    }
+
+    let cancelled = false;
+    const fetchMetadata = async () => {
+      try {
+        // Try to fetch from Tina Cloud
+        if (typeof client.queries.pageMetadata === 'function') {
+          const result = await client.queries.pageMetadata({ relativePath: `${slug}.mdx` });
+          if (!cancelled && result?.data?.pageMetadata) {
+            const meta = omitSys(result.data.pageMetadata);
+            // Convert ogImage object to URL string if needed
+            if (meta.ogImage && typeof meta.ogImage === 'object' && meta.ogImage.src) {
+              meta.ogImage = meta.ogImage.src;
+            }
+            setMetadata(meta);
+            return;
+          }
+        }
+      } catch (err) {
+        // If not found in Tina, metadata stays null
+        console.debug(`No metadata found for slug: ${slug}`);
+      }
+    };
+
+    fetchMetadata();
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  return metadata;
 }

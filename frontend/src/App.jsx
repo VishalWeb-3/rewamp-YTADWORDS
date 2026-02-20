@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider } from './contexts/AuthContext';
 import HomePage from './pages/HomePage';
@@ -20,7 +20,6 @@ import BuyGoogleAdsSearchTrafficPage from './pages/BuyGoogleAdsSearchTrafficPage
 import BuyGoogleAdsWebsiteTrafficPage from './pages/BuyGoogleAdsWebsiteTrafficPage';
 import BuyFemaleGoogleReviewsPage from './pages/BuyFemaleGoogleReviewsPage';
 import BuyMaleGoogleReviewsPage from './pages/BuyMaleGoogleReviewsPage';
-import BuyUSAGoogleReviewsPage from './pages/BuyUSAGoogleReviewsPage';
 import BuyGoogleLocalGuideReviewsPage from './pages/BuyGoogleLocalGuideReviewsPage';
 import BuyGoogleReviewsByAgeGroupPage from './pages/BuyGoogleReviewsByAgeGroupPage';
 import ContactPage from './pages/ContactPage';
@@ -42,12 +41,19 @@ import PaymentFailurePage from './pages/PaymentFailurePage';
 import BlogListPage from './pages/BlogListPage';
 import BlogPostPage from './pages/BlogPostPage';
 
-export default function App() {
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function AppContent() {
   return (
-    <Router>
-      <AuthProvider>
-        <CartProvider>
-        <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/buy-youtube-views" element={<BuyYouTubeViewsPage />} />
           <Route path="/buy-youtube-subscribers" element={<BuyYouTubeSubscribersPage />} />
@@ -66,7 +72,6 @@ export default function App() {
           <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
           <Route path="/buy-female-google-reviews" element={<BuyFemaleGoogleReviewsPage />} />
           <Route path="/buy-male-google-reviews" element={<BuyMaleGoogleReviewsPage />} />
-          <Route path="/buy-usa-google-reviews" element={<BuyUSAGoogleReviewsPage />} />
           <Route path="/buy-google-local-guide-reviews" element={<BuyGoogleLocalGuideReviewsPage />} />
           <Route path="/buy-google-reviews-by-age-group" element={<BuyGoogleReviewsByAgeGroupPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -96,6 +101,16 @@ export default function App() {
           <Route path="/payment/success" element={<PaymentSuccessPage />} />
           <Route path="/payment/failure" element={<PaymentFailurePage />} />
         </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <CartProvider>
+          <AppContent />
         </CartProvider>
       </AuthProvider>
     </Router>

@@ -66,6 +66,8 @@ type Query {
   pricingPageContentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PricingPageContentFilter): PricingPageContentConnection!
   blog(relativePath: String): Blog!
   blogConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: BlogFilter): BlogConnection!
+  pageMetadata(relativePath: String): PageMetadata!
+  pageMetadataConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PageMetadataFilter): PageMetadataConnection!
   legal(relativePath: String): Legal!
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
 }
@@ -77,6 +79,7 @@ input DocumentFilter {
   pricing: PricingFilter
   pricingPageContent: PricingPageContentFilter
   blog: BlogFilter
+  pageMetadata: PageMetadataFilter
   legal: LegalFilter
 }
 
@@ -103,7 +106,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | Legal | Folder
+union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | PageMetadata | Legal | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -821,6 +824,36 @@ type BlogConnection implements Connection {
   edges: [BlogConnectionEdges]
 }
 
+type PageMetadata implements Node & Document {
+  slug: String!
+  title: String!
+  description: String!
+  keywords: String
+  ogImage: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input PageMetadataFilter {
+  slug: StringFilter
+  title: StringFilter
+  description: StringFilter
+  keywords: StringFilter
+  ogImage: ImageFilter
+}
+
+type PageMetadataConnectionEdges {
+  cursor: String!
+  node: PageMetadata
+}
+
+type PageMetadataConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PageMetadataConnectionEdges]
+}
+
 type LegalPrivacySections {
   heading: String
   body: String
@@ -1010,6 +1043,8 @@ type Mutation {
   createPricingPageContent(relativePath: String!, params: PricingPageContentMutation!): PricingPageContent!
   updateBlog(relativePath: String!, params: BlogMutation!): Blog!
   createBlog(relativePath: String!, params: BlogMutation!): Blog!
+  updatePageMetadata(relativePath: String!, params: PageMetadataMutation!): PageMetadata!
+  createPageMetadata(relativePath: String!, params: PageMetadataMutation!): PageMetadata!
   updateLegal(relativePath: String!, params: LegalMutation!): Legal!
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
 }
@@ -1021,6 +1056,7 @@ input DocumentUpdateMutation {
   pricing: PricingMutation
   pricingPageContent: PricingPageContentMutation
   blog: BlogMutation
+  pageMetadata: PageMetadataMutation
   legal: LegalMutation
   relativePath: String
 }
@@ -1032,6 +1068,7 @@ input DocumentMutation {
   pricing: PricingMutation
   pricingPageContent: PricingPageContentMutation
   blog: BlogMutation
+  pageMetadata: PageMetadataMutation
   legal: LegalMutation
 }
 
@@ -1335,6 +1372,14 @@ input BlogMutation {
   coverImage: String
   tags: [String]
   body: JSON
+}
+
+input PageMetadataMutation {
+  slug: String
+  title: String
+  description: String
+  keywords: String
+  ogImage: String
 }
 
 input LegalPrivacySectionsMutation {

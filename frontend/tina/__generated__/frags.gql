@@ -272,6 +272,15 @@ fragment BlogParts on Blog {
   body
 }
 
+fragment PageMetadataParts on PageMetadata {
+  __typename
+  slug
+  title
+  description
+  keywords
+  ogImage
+}
+
 fragment LegalParts on Legal {
   __typename
   privacy {

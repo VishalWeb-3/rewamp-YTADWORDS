@@ -42,7 +42,6 @@ const serviceCategories = [
     services: [
       { label: 'Buy Female Google Reviews', icon: 'star', link: '/buy-female-google-reviews' },
       { label: 'Buy Male Google Reviews', icon: 'star', link: '/buy-male-google-reviews' },
-      { label: 'Buy USA Google Reviews', icon: 'star', link: '/buy-usa-google-reviews' },
       { label: 'Buy Google Local Guide Reviews', icon: 'star', link: '/buy-google-local-guide-reviews' },
       { label: 'Buy Google Reviews by Age Group', icon: 'star', link: '/buy-google-reviews-by-age-group' },
     ],

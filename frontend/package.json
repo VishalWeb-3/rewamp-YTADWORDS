@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "tinacms dev -c vite",
+    "dev:vite": "vite",
     "build": "tinacms build --skip-cloud-checks && vite build",
     "preview": "vite preview",
-    "build:admin": "node -r dotenv/config ./node_modules/.bin/tinacms build --skip-cloud-checks",
-    "build:admin:local": "node -r dotenv/config ./node_modules/.bin/tinacms build --skip-cloud-checks",
+    "build:admin": "npx tinacms build --skip-cloud-checks",
+    "build:admin:local": "npx tinacms build --skip-cloud-checks",
     "tina:lock": "node scripts/tina-lock.cjs"
   },
   "dependencies": {

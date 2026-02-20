@@ -94,6 +94,8 @@ export type Query = {
   pricingPageContentConnection: PricingPageContentConnection;
   blog: Blog;
   blogConnection: BlogConnection;
+  pageMetadata: PageMetadata;
+  pageMetadataConnection: PageMetadataConnection;
   legal: Legal;
   legalConnection: LegalConnection;
 };
@@ -210,6 +212,21 @@ export type QueryBlogConnectionArgs = {
 };
 
 
+export type QueryPageMetadataArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPageMetadataConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PageMetadataFilter>;
+};
+
+
 export type QueryLegalArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -231,6 +248,7 @@ export type DocumentFilter = {
   pricing?: InputMaybe<PricingFilter>;
   pricingPageContent?: InputMaybe<PricingPageContentFilter>;
   blog?: InputMaybe<BlogFilter>;
+  pageMetadata?: InputMaybe<PageMetadataFilter>;
   legal?: InputMaybe<LegalFilter>;
 };
 
@@ -271,7 +289,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | Legal | Folder;
+export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | PageMetadata | Legal | Folder;
 
 export type GlobalHeaderNavLinks = {
   __typename?: 'GlobalHeaderNavLinks';
@@ -1041,6 +1059,39 @@ export type BlogConnection = Connection & {
   edges?: Maybe<Array<Maybe<BlogConnectionEdges>>>;
 };
 
+export type PageMetadata = Node & Document & {
+  __typename?: 'PageMetadata';
+  slug: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  keywords?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type PageMetadataFilter = {
+  slug?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  keywords?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type PageMetadataConnectionEdges = {
+  __typename?: 'PageMetadataConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<PageMetadata>;
+};
+
+export type PageMetadataConnection = Connection & {
+  __typename?: 'PageMetadataConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PageMetadataConnectionEdges>>>;
+};
+
 export type LegalPrivacySections = {
   __typename?: 'LegalPrivacySections';
   heading?: Maybe<Scalars['String']['output']>;
@@ -1245,6 +1296,8 @@ export type Mutation = {
   createPricingPageContent: PricingPageContent;
   updateBlog: Blog;
   createBlog: Blog;
+  updatePageMetadata: PageMetadata;
+  createPageMetadata: PageMetadata;
   updateLegal: Legal;
   createLegal: Legal;
 };
@@ -1355,6 +1408,18 @@ export type MutationCreateBlogArgs = {
 };
 
 
+export type MutationUpdatePageMetadataArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PageMetadataMutation;
+};
+
+
+export type MutationCreatePageMetadataArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PageMetadataMutation;
+};
+
+
 export type MutationUpdateLegalArgs = {
   relativePath: Scalars['String']['input'];
   params: LegalMutation;
@@ -1373,6 +1438,7 @@ export type DocumentUpdateMutation = {
   pricing?: InputMaybe<PricingMutation>;
   pricingPageContent?: InputMaybe<PricingPageContentMutation>;
   blog?: InputMaybe<BlogMutation>;
+  pageMetadata?: InputMaybe<PageMetadataMutation>;
   legal?: InputMaybe<LegalMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -1384,6 +1450,7 @@ export type DocumentMutation = {
   pricing?: InputMaybe<PricingMutation>;
   pricingPageContent?: InputMaybe<PricingPageContentMutation>;
   blog?: InputMaybe<BlogMutation>;
+  pageMetadata?: InputMaybe<PageMetadataMutation>;
   legal?: InputMaybe<LegalMutation>;
 };
 
@@ -1689,6 +1756,14 @@ export type BlogMutation = {
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type PageMetadataMutation = {
+  slug?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type LegalPrivacySectionsMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -1776,6 +1851,8 @@ export type PricingPartsFragment = { __typename: 'Pricing', pages?: Array<{ __ty
 export type PricingPageContentPartsFragment = { __typename: 'PricingPageContent', pages?: Array<{ __typename: 'PricingPageContentPages', slug: string, infoBanner?: string | null, hero?: { __typename: 'PricingPageContentPagesHero', image?: string | null, title?: string | null, badge?: string | null, intro?: string | null } | null, tabs?: { __typename: 'PricingPageContentPagesTabs', regular?: string | null, fast?: string | null, ads?: string | null } | null, features?: Array<{ __typename: 'PricingPageContentPagesFeatures', label?: string | null } | null> | null, allInOne?: { __typename: 'PricingPageContentPagesAllInOne', heading?: string | null, description?: string | null, stats?: Array<{ __typename: 'PricingPageContentPagesAllInOneStats', value?: string | null, label?: string | null } | null> | null } | null, guarantee?: { __typename: 'PricingPageContentPagesGuarantee', heading?: string | null, intro1?: string | null, intro2?: string | null, cards?: Array<{ __typename: 'PricingPageContentPagesGuaranteeCards', title?: string | null, body?: string | null } | null> | null } | null, whySection?: { __typename: 'PricingPageContentPagesWhySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, numbersSection?: { __typename: 'PricingPageContentPagesNumbersSection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null, paragraph3?: string | null } | null, strategySection?: { __typename: 'PricingPageContentPagesStrategySection', heading?: string | null, image?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null, faq?: { __typename: 'PricingPageContentPagesFaq', heading?: string | null, items?: Array<{ __typename: 'PricingPageContentPagesFaqItems', question?: string | null, answer?: string | null } | null> | null } | null } | null> | null };
 
 export type BlogPartsFragment = { __typename: 'Blog', title: string, excerpt?: string | null, author?: string | null, date?: string | null, coverImage?: string | null, tags?: Array<string | null> | null, body?: any | null };
+
+export type PageMetadataPartsFragment = { __typename: 'PageMetadata', slug: string, title: string, description: string, keywords?: string | null, ogImage?: string | null };
 
 export type LegalPartsFragment = { __typename: 'Legal', privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null };
 
@@ -1892,6 +1969,25 @@ export type BlogConnectionQueryVariables = Exact<{
 
 
 export type BlogConnectionQuery = { __typename?: 'Query', blogConnection: { __typename?: 'BlogConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'BlogConnectionEdges', cursor: string, node?: { __typename: 'Blog', id: string, title: string, excerpt?: string | null, author?: string | null, date?: string | null, coverImage?: string | null, tags?: Array<string | null> | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type PageMetadataQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PageMetadataQuery = { __typename?: 'Query', pageMetadata: { __typename: 'PageMetadata', id: string, slug: string, title: string, description: string, keywords?: string | null, ogImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type PageMetadataConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PageMetadataFilter>;
+}>;
+
+
+export type PageMetadataConnectionQuery = { __typename?: 'Query', pageMetadataConnection: { __typename?: 'PageMetadataConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PageMetadataConnectionEdges', cursor: string, node?: { __typename: 'PageMetadata', id: string, slug: string, title: string, description: string, keywords?: string | null, ogImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type LegalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2190,6 +2286,16 @@ export const BlogPartsFragmentDoc = gql`
   coverImage
   tags
   body
+}
+    `;
+export const PageMetadataPartsFragmentDoc = gql`
+    fragment PageMetadataParts on PageMetadata {
+  __typename
+  slug
+  title
+  description
+  keywords
+  ogImage
 }
     `;
 export const LegalPartsFragmentDoc = gql`
@@ -2601,6 +2707,63 @@ export const BlogConnectionDocument = gql`
   }
 }
     ${BlogPartsFragmentDoc}`;
+export const PageMetadataDocument = gql`
+    query pageMetadata($relativePath: String!) {
+  pageMetadata(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PageMetadataParts
+  }
+}
+    ${PageMetadataPartsFragmentDoc}`;
+export const PageMetadataConnectionDocument = gql`
+    query pageMetadataConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PageMetadataFilter) {
+  pageMetadataConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PageMetadataParts
+      }
+    }
+  }
+}
+    ${PageMetadataPartsFragmentDoc}`;
 export const LegalDocument = gql`
     query legal($relativePath: String!) {
   legal(relativePath: $relativePath) {
@@ -2697,6 +2860,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
     blogConnection(variables?: BlogConnectionQueryVariables, options?: C): Promise<{data: BlogConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogConnectionQueryVariables, query: string}> {
         return requester<{data: BlogConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogConnectionQueryVariables, query: string}, BlogConnectionQueryVariables>(BlogConnectionDocument, variables, options);
       },
+    pageMetadata(variables: PageMetadataQueryVariables, options?: C): Promise<{data: PageMetadataQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PageMetadataQueryVariables, query: string}> {
+        return requester<{data: PageMetadataQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PageMetadataQueryVariables, query: string}, PageMetadataQueryVariables>(PageMetadataDocument, variables, options);
+      },
+    pageMetadataConnection(variables?: PageMetadataConnectionQueryVariables, options?: C): Promise<{data: PageMetadataConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PageMetadataConnectionQueryVariables, query: string}> {
+        return requester<{data: PageMetadataConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PageMetadataConnectionQueryVariables, query: string}, PageMetadataConnectionQueryVariables>(PageMetadataConnectionDocument, variables, options);
+      },
     legal(variables: LegalQueryVariables, options?: C): Promise<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}> {
         return requester<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}, LegalQueryVariables>(LegalDocument, variables, options);
       },
@@ -2750,7 +2919,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "https://content.tinajs.io/2.1/content/722e7af1-e7c6-48b3-a0f5-0cf3c4672195/github/main",
+        url: "http://localhost:4001/graphql",
         queries,
       })
     )
