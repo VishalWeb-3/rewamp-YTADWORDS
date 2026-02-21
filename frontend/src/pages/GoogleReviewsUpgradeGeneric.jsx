@@ -243,139 +243,143 @@ export default function GoogleReviewsUpgradeGeneric() {
             </div>
 
             <div className="space-y-4 mb-8">
-              <div
-                className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.verifiedReviewers ? 'border-green-500 border-l-4' : 'border-gray-200'
-                  }`}
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-gray-900">Verified Reviewers</h3>
-                      <div className="flex -space-x-2">
-                        {verifiedProfileImages.slice(0, 4).map((src, i) => (
-                          <img
-                            key={i}
-                            src={src}
-                            alt=""
-                            className="w-8 h-8 rounded-full border-2 border-white object-cover bg-gray-100"
-                          />
-                        ))}
+              {packageData.serviceType !== 'local-guide' && (
+                <div
+                  className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.verifiedReviewers ? 'border-green-500 border-l-4' : 'border-gray-200'
+                    }`}
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold text-gray-900">Verified Reviewers (+40%)</h3>
+                        <div className="flex -space-x-2">
+                          {verifiedProfileImages.slice(0, 4).map((src, i) => (
+                            <img
+                              key={i}
+                              src={src}
+                              alt=""
+                              className="w-8 h-8 rounded-full border-2 border-white object-cover bg-gray-100"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-gray-600 mb-3">
+                        Reviews from trusted Google Local Guides with proven history &amp; high credibility
+                      </p>
+                      <div className="flex items-center justify-left gap-2 text-green-600">
+                        <CheckIcon />
+                        <span className="text-sm font-bold">Google Local Guides - Official Badge</span>
                       </div>
                     </div>
-                    <p className="text-gray-600 mb-3">
-                      Reviews from trusted Google Local Guides with proven history &amp; high credibility
-                    </p>
-                    <div className="flex items-center justify-left gap-2 text-green-600">
-                      <CheckIcon />
-                      <span className="text-sm font-bold">Google Local Guides - Official Badge</span>
+                    <div className="flex items-center gap-4 sm:ml-6">
+                      <button
+                        onClick={() => toggleAddOn('verifiedReviewers')}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.verifiedReviewers ? 'bg-green-600' : 'bg-gray-300'
+                          }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.verifiedReviewers ? 'translate-x-6' : 'translate-x-1'
+                            }`}
+                        />
+                      </button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 sm:ml-6">
-                    <span className="text-green-600 font-bold text-lg">+40%</span>
-                    <button
-                      onClick={() => toggleAddOn('verifiedReviewers')}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.verifiedReviewers ? 'bg-green-600' : 'bg-gray-300'
-                        }`}
-                    >
-                      <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.verifiedReviewers ? 'translate-x-6' : 'translate-x-1'
-                          }`}
-                      />
-                    </button>
-                  </div>
                 </div>
-              </div>
+              )}
 
-              <div
-                className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.ageGroupTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
-                  }`}
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-gray-900">Age Group Targeting</h3>
-                    </div>
-                    <p className="text-gray-600 mb-3">
-                      Choose specific age ranges where you want your reviews to appear most frequently.
-                    </p>
-                    {addOns.ageGroupTargeting && (
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {['18-24', '25-34', '35-44', '45-54', '50-60'].map((age) => (
-                          <button
-                            key={age}
-                            onClick={() => toggleAgeGroup(age)}
-                            className={`px-3 py-1 rounded-full text-sm font-medium border ${selectedAgeGroups.includes(age)
-                              ? 'bg-green-100 text-green-700 border-green-300'
-                              : 'bg-gray-100 text-gray-700 border-gray-300'
-                              }`}
-                          >
-                            {age}
-                          </button>
-                        ))}
+              {packageData.serviceType !== 'age-group' && (
+                <div
+                  className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.ageGroupTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
+                    }`}
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold text-gray-900">Age Group Targeting (+30%)</h3>
                       </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-4 sm:ml-6">
-                    <span className="text-green-600 font-bold text-lg">+30%</span>
-                    <button
-                      onClick={() => toggleAddOn('ageGroupTargeting')}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.ageGroupTargeting ? 'bg-green-600' : 'bg-gray-300'
-                        }`}
-                    >
-                      <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.ageGroupTargeting ? 'translate-x-6' : 'translate-x-1'
+                      <p className="text-gray-600 mb-3">
+                        Choose specific age ranges where you want your reviews to appear most frequently.
+                      </p>
+                      {addOns.ageGroupTargeting && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {['18-24', '25-34', '35-44', '45-54', '50-60'].map((age) => (
+                            <button
+                              key={age}
+                              onClick={() => toggleAgeGroup(age)}
+                              className={`px-3 py-1 rounded-full text-sm font-medium border ${selectedAgeGroups.includes(age)
+                                ? 'bg-green-100 text-green-700 border-green-300'
+                                : 'bg-gray-100 text-gray-700 border-gray-300'
+                                }`}
+                            >
+                              {age}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 sm:ml-6">
+                      <button
+                        onClick={() => toggleAddOn('ageGroupTargeting')}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.ageGroupTargeting ? 'bg-green-600' : 'bg-gray-300'
                           }`}
-                      />
-                    </button>
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.ageGroupTargeting ? 'translate-x-6' : 'translate-x-1'
+                            }`}
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-              <div
-                className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.genderTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
-                  }`}
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-gray-900">Gender Targeting</h3>
-                    </div>
-                    <p className="text-gray-600 mb-3">
-                      Focus your reviews on a specific gender to better match your target audience.
-                    </p>
-                    {addOns.genderTargeting && (
-                      <div className="flex gap-2 mt-2">
-                        {['Male', 'Female', 'Other'].map((gender) => (
-                          <button
-                            key={gender}
-                            onClick={() => toggleGender(gender)}
-                            className={`px-3 py-1 rounded-full text-sm font-medium border ${selectedGender.includes(gender)
-                              ? 'bg-green-100 text-green-700 border-green-300'
-                              : 'bg-gray-100 text-gray-700 border-gray-300'
-                              }`}
-                          >
-                            {gender}
-                          </button>
-                        ))}
+              {packageData.serviceType !== 'female' && packageData.serviceType !== 'male' && (
+                <div
+                  className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.genderTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
+                    }`}
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold text-gray-900">Gender Targeting (+30%)</h3>
                       </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-4 sm:ml-6">
-                    <span className="text-green-600 font-bold text-lg">+30%</span>
-                    <button
-                      onClick={() => toggleAddOn('genderTargeting')}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.genderTargeting ? 'bg-green-600' : 'bg-gray-300'
-                        }`}
-                    >
-                      <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.genderTargeting ? 'translate-x-6' : 'translate-x-1'
+                      <p className="text-gray-600 mb-3">
+                        Focus your reviews on a specific gender to better match your target audience.
+                      </p>
+                      {addOns.genderTargeting && (
+                        <div className="flex gap-2 mt-2">
+                          {['Male', 'Female', 'Other'].map((gender) => (
+                            <button
+                              key={gender}
+                              onClick={() => toggleGender(gender)}
+                              className={`px-3 py-1 rounded-full text-sm font-medium border ${selectedGender.includes(gender)
+                                ? 'bg-green-100 text-green-700 border-green-300'
+                                : 'bg-gray-100 text-gray-700 border-gray-300'
+                                }`}
+                            >
+                              {gender}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 sm:ml-6">
+                      <button
+                        onClick={() => toggleAddOn('genderTargeting')}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.genderTargeting ? 'bg-green-600' : 'bg-gray-300'
                           }`}
-                      />
-                    </button>
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${addOns.genderTargeting ? 'translate-x-6' : 'translate-x-1'
+                            }`}
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
+
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">

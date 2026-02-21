@@ -4,24 +4,55 @@ import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages } from '../contexts/ContentContext';
 
-const localGuideReviewsPackagesFallback = {
-  regular: [
-    { rereviews: '10', price: '39.90', originalPrice: null, discount: null },
-    { rereviews: '25', price: '121.50', originalPrice: '135.00', discount: '10%' },
-    { rereviews: '50', price: '229.50', originalPrice: '255.00', discount: '10%' },
-    { rereviews: '100', price: '445.50', originalPrice: '495.00', discount: '10%' },
+const localGuideBasePackages = {
+  'one-time': [
+    { amount: 1, price: 11.53, originalPrice: 12.81, label: '1 REVIEW' },
+    { amount: 2, price: 22.68, originalPrice: 25.20, label: '2 REVIEWS' },
+    { amount: 5, price: 55.44, originalPrice: 61.60, label: '5 REVIEWS', badge: 'Most Popular' },
+    { amount: 10, price: 109.62, originalPrice: 121.80, label: '10 REVIEWS' },
+    { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Best value' },
+    { amount: 50, price: 529.20, originalPrice: 588.00, label: '50 REVIEWS' },
+    { amount: 75, price: 774.90, originalPrice: 861.00, label: '75 REVIEWS' },
   ],
-  fast: [
-    { rereviews: '10', price: '49.90', originalPrice: null, discount: null },
-    { rereviews: '25', price: '148.50', originalPrice: '165.00', discount: '10%' },
-    { rereviews: '50', price: '283.50', originalPrice: '315.00', discount: '10%' },
-    { rereviews: '100', price: '553.50', originalPrice: '615.00', discount: '10%' },
+  'recurring': [
+    { amount: 5, price: 56.70, originalPrice: 63.00, label: '5 REVIEWS / M', badge: 'Most Popular', suffix: '/ M' },
+    { amount: 10, price: 107.10, originalPrice: 119.00, label: '10 REVIEWS / M', suffix: '/ M' },
+    { amount: 25, price: 264.60, originalPrice: 294.00, label: '25 REVIEWS / M', badge: 'Best value', suffix: '/ M' },
+    { amount: 50, price: 516.60, originalPrice: 574.00, label: '50 REVIEWS / M', suffix: '/ M' },
+    { amount: 75, price: 756.00, originalPrice: 840.00, label: '75 REVIEWS / M', suffix: '/ M' },
   ],
-  ads: [
-    { rereviews: '10', price: '59.90', originalPrice: null, discount: null },
-    { rereviews: '25', price: '189.00', originalPrice: '210.00', discount: '10%' },
-    { rereviews: '50', price: '364.50', originalPrice: '405.00', discount: '10%' },
-    { rereviews: '100', price: '715.50', originalPrice: '795.00', discount: '10%' },
+  'drip': [
+    { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Most Popular' },
+    { amount: 50, price: 522.90, originalPrice: 581.00, label: '50 REVIEWS' },
+    { amount: 75, price: 768.60, originalPrice: 854.00, label: '75 REVIEWS', badge: 'Best value' },
+    { amount: 100, price: 1020.60, originalPrice: 1134.00, label: '100 REVIEWS' },
+    { amount: 150, price: 1512.00, originalPrice: 1680.00, label: '150 REVIEWS' },
+  ],
+};
+
+const localGuideCustomPackages = {
+  'one-time': [
+    { amount: 1, price: 15.75, originalPrice: 17.50, label: '1 REVIEW' },
+    { amount: 2, price: 30.24, originalPrice: 33.60, label: '2 REVIEWS' },
+    { amount: 5, price: 73.08, originalPrice: 81.20, label: '5 REVIEWS', badge: 'Most Popular' },
+    { amount: 10, price: 144.90, originalPrice: 161.00, label: '10 REVIEWS' },
+    { amount: 25, price: 352.80, originalPrice: 392.00, label: '25 REVIEWS', badge: 'Best value' },
+    { amount: 50, price: 680.40, originalPrice: 756.00, label: '50 REVIEWS' },
+    { amount: 75, price: 982.80, originalPrice: 1092.00, label: '75 REVIEWS' },
+  ],
+  'recurring': [
+    { amount: 5, price: 75.60, originalPrice: 84.00, label: '5 REVIEWS / M', badge: 'Most Popular', suffix: '/ M' },
+    { amount: 10, price: 144.90, originalPrice: 161.00, label: '10 REVIEWS / M', suffix: '/ M' },
+    { amount: 25, price: 346.50, originalPrice: 385.00, label: '25 REVIEWS / M', badge: 'Best value', suffix: '/ M' },
+    { amount: 50, price: 661.50, originalPrice: 735.00, label: '50 REVIEWS / M', suffix: '/ M' },
+    { amount: 75, price: 957.60, originalPrice: 1064.00, label: '75 REVIEWS / M', suffix: '/ M' },
+  ],
+  'drip': [
+    { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Most Popular' },
+    { amount: 50, price: 522.90, originalPrice: 581.00, label: '50 REVIEWS' },
+    { amount: 75, price: 768.60, originalPrice: 854.00, label: '75 REVIEWS', badge: 'Best value' },
+    { amount: 100, price: 1020.60, originalPrice: 1134.00, label: '100 REVIEWS' },
+    { amount: 150, price: 1512.00, originalPrice: 1680.00, label: '150 REVIEWS' },
   ],
 };
 
@@ -37,9 +68,10 @@ const features = [
 export default function BuyGoogleLocalGuideReviewsPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const localGuideReviewsPackages = usePricingPackages('buy-google-local-guide-reviews', localGuideReviewsPackagesFallback);
-  const [activeTab, setActiveTab] = useState('regular');
+  const [activeTab, setActiveTab] = useState('one-time');
+  const [reviewType, setReviewType] = useState('5-star'); // '5-star' or 'custom'
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
+  const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const [rating, setRating] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
@@ -47,17 +79,20 @@ export default function BuyGoogleLocalGuideReviewsPage() {
     review: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
-  const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
-  const packages = localGuideReviewsPackages ? localGuideReviewsPackages[activeTab] : [];
+
+  const currentPackages = reviewType === '5-star' ? localGuideBasePackages : localGuideCustomPackages;
+  const packages = currentPackages[activeTab] || [];
 
   const handleAddToCart = (pkg) => {
     addToCart({
       serviceType: 'Google Local Guide Reviews',
-      serviceName: `Google Local Guide Reviews - ${pkg.rereviews}`,
-      type: activeTab === 'regular' ? 'Regular Reviews' : activeTab === 'fast' ? 'Fast Reviews' : 'Premium Reviews',
-      quantity: pkg.rereviews,
+      serviceName: `Google Local Guide Reviews - ${pkg.amount}`,
+      type: `${activeTab} - ${reviewType === '5-star' ? '5-Star' : 'Custom'}`,
+      quantity: pkg.amount,
       price: pkg.price,
-      reviews: pkg.rereviews,
+      reviews: pkg.amount,
+      paymentType: activeTab,
+      reviewType: reviewType,
     });
   };
 
@@ -127,12 +162,36 @@ export default function BuyGoogleLocalGuideReviewsPage() {
 
           {/* Right Section - Pricing Card */}
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+            {/* Review Type Selection */}
+            <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
+              <button
+                onClick={() => {
+                  setReviewType('5-star');
+                  setSelectedPackageIndex(null);
+                }}
+                className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${reviewType === '5-star' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                  }`}
+              >
+                5-Star Reviews
+              </button>
+              <button
+                onClick={() => {
+                  setReviewType('custom');
+                  setSelectedPackageIndex(null);
+                }}
+                className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${reviewType === 'custom' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                  }`}
+              >
+                Custom Reviews
+              </button>
+            </div>
+
             {/* Tabs */}
-            <div className="flex gap-4 mb-6 border-b border-gray-200">
+            <div className="flex gap-4 mb-6 border-b border-gray-200 overflow-x-auto pb-1 scrollbar-hide">
               {[
-                { id: 'regular', label: 'Regular Reviews' },
-                { id: 'fast', label: 'Fast Reviews' },
-                { id: 'ads', label: 'Premium Reviews' },
+                { id: 'one-time', label: 'One-time' },
+                { id: 'recurring', label: 'Monthly' },
+                { id: 'drip', label: 'Drip Feed' },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -140,11 +199,10 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                     setActiveTab(tab.id);
                     setSelectedPackageIndex(null);
                   }}
-                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${
-                    activeTab === tab.id
-                      ? 'text-gray-900 border-b-2 border-green-500'
-                      : 'text-gray-400 hover:text-gray-600'
-                  }`}
+                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors whitespace-nowrap ${activeTab === tab.id
+                    ? 'text-gray-900 border-b-2 border-green-500'
+                    : 'text-gray-400 hover:text-gray-600'
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -155,7 +213,9 @@ export default function BuyGoogleLocalGuideReviewsPage() {
             <div className="bg-gray-50 rounded-lg px-4 py-3 mb-5 border border-gray-100">
               <p className="text-gray-600 text-sm">
                 <span className="font-medium text-gray-700">Tip:</span> We recommend{' '}
-                <span className="text-green-600 font-semibold">Fast Google Local Guide Reviews</span> for larger orders.
+                <span className="text-green-600 font-semibold">
+                  {activeTab === 'recurring' ? 'Monthly' : activeTab === 'drip' ? 'Drip' : 'One-time'} Google Local Guide Reviews
+                </span> for consistent growth.
               </p>
             </div>
 
@@ -163,18 +223,22 @@ export default function BuyGoogleLocalGuideReviewsPage() {
             <div className="grid grid-cols-2 gap-3 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
-                const count = pkg.rereviews ?? pkg.reviews ?? '—';
+                const count = pkg.amount;
                 return (
                   <button
                     key={index}
                     type="button"
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`text-left rounded-xl border-2 p-4 transition-all ${
-                      isSelected
-                        ? 'border-green-500 bg-green-50 shadow-sm'
-                        : 'border-gray-200 bg-white hover:border-green-300 hover:bg-gray-50'
-                    }`}
+                    className={`relative text-left rounded-xl border-2 p-4 transition-all ${isSelected
+                      ? 'border-green-500 bg-green-50 shadow-sm'
+                      : 'border-gray-200 bg-white hover:border-green-300 hover:bg-gray-50'
+                      }`}
                   >
+                    {pkg.badge && (
+                      <span className="absolute -top-2.5 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                        {pkg.badge}
+                      </span>
+                    )}
                     <div className="font-bold text-gray-900 text-lg sm:text-xl">
                       {count} <span className="font-medium text-gray-600 text-base">reviews</span>
                     </div>
@@ -183,11 +247,8 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                         <span className="text-sm text-gray-400 line-through">${pkg.originalPrice}</span>
                       )}
                       <span className={isSelected ? 'text-green-600 font-bold' : 'text-green-600 font-semibold'}>
-                        ${pkg.price}
+                        ${pkg.price}{pkg.suffix || ''}
                       </span>
-                      {pkg.discount && (
-                        <span className="text-xs text-green-600 font-medium">Save {pkg.discount}</span>
-                      )}
                     </div>
                   </button>
                 );
@@ -200,20 +261,17 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                 onClick={() => {
                   if (selectedPackageIndex !== null) {
                     const selectedPkg = packages[selectedPackageIndex];
-                    const reviews = parseInt(selectedPkg.rereviews, 10) || 50;
-                    const price = parseFloat(selectedPkg.price) || 129.9;
-                    const originalPrice = selectedPkg.originalPrice ? parseFloat(selectedPkg.originalPrice) : price;
                     navigate('/google-reviews/get-started', {
                       state: {
                         serviceType: 'local-guide',
                         serviceTitle: 'Buy Google Local Guide Reviews',
                         pricingPath: '/buy-google-local-guide-reviews',
-                        reviews,
-                        price,
-                        originalPrice,
-                        paymentType: 'one-time',
-                        reviewType: '5-star',
-                        tier: activeTab,
+                        reviews: selectedPkg.amount,
+                        price: selectedPkg.price,
+                        originalPrice: selectedPkg.originalPrice || selectedPkg.price,
+                        paymentType: activeTab,
+                        reviewType: reviewType,
+                        tier: 'high-quality',
                       },
                     });
                   }
@@ -231,6 +289,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                 Add to cart
               </button>
             </div>
+
 
             {/* Features List */}
             <div className="grid grid-cols-2 gap-3">
@@ -259,14 +318,14 @@ export default function BuyGoogleLocalGuideReviewsPage() {
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
-            
+
             <div className="grid lg:grid-cols-2 gap-8 relative z-10">
               {/* Left Section */}
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
                   All In One Google Local Guide Reviews Campaign
                 </h2>
-                
+
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <div className="bg-green-500 text-white font-bold px-6 py-3 rounded-full text-lg">
@@ -276,7 +335,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                     Buy now
                   </button>
                 </div>
-                
+
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   With YoutubeADwords's all-inclusive package, you can{' '}
@@ -284,7 +343,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                   <span className="text-green-500 font-semibold">Google likes service</span> and add it to the package for the best price.
                 </p>
               </div>
-              
+
               {/* Right Section - Features Grid */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -512,7 +571,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo1.jpg"
@@ -533,7 +592,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo2.jpg"
@@ -658,7 +717,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                 <div className="absolute top-0 right-0 bg-green-500 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
                   BEST CHOICE
                 </div>
-                
+
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
                     <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOUTUBE</span>
@@ -754,7 +813,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -776,7 +835,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -798,7 +857,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -829,7 +888,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-green-500/10 transform rotate-45 translate-x-8 -translate-y-8"></div>
               <div className="absolute top-4 right-4 w-16 h-16 bg-white/80 transform rotate-12"></div>
-              
+
               <div className="relative z-10">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
                   Leave a review
@@ -934,7 +993,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                     </div>
                   )}
 
-             
+
 
                   {/* Send Button */}
                   <button
