@@ -22,16 +22,28 @@ const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const app = express();
 const PORT = Number(process.env.PORT) || 5001;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://youtubeadwords.com",
+  "https://yotubeadwords.web.app",
+  "https://yotubeadwords.firebaseapp.com",
+  "https://youtubeadwords.onrender.com",
+];
+
+if (process.env.FRONTEND_URL) {
+  process.env.FRONTEND_URL.split(",").forEach((url) => {
+    allowedOrigins.push(url.trim().replace(/\/$/, ""));
+  });
+}
+
 // CORS - allow frontend (credentials required for cookies)
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL?.replace(/\/$/, "") || "http://localhost:5173",
-      "http://localhost:5173",
-    ],
+    origin: allowedOrigins,
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
