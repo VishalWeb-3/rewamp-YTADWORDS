@@ -53,7 +53,7 @@ export default function AboutUsPage() {
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Google Ads Services</h3>
                   <p className="text-gray-700 text-base leading-relaxed">
-                    Enhance your Google Ads campaigns with our skip ads views, display ads views, discovery ads views, and search campaign traffic services.
+                    Enhance your Google Ads campaigns with our skip ads views, display ads views, and search campaign traffic services.
                   </p>
                 </div>
                 <div>

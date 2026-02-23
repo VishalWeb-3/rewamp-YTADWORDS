@@ -9,7 +9,7 @@ const serviceCategories = [
     services: [
       { label: 'Google Skip Ads Views', icon: 'play', link: '/buy-google-skip-ads-views' },
       { label: 'Google Display Ads Views', icon: 'play', link: '/buy-google-display-ads-views' },
-      { label: 'Google Discovery Ads Views', icon: 'play', link: '/buy-google-discovery-ads-views' },
+
       { label: 'Google Ads Search Campaign Traffic', icon: 'play', link: '/buy-google-ads-search-traffic' },
       { label: 'Google Ads Website / App Traffic', icon: 'play', link: '/buy-google-ads-website-traffic' },
     ],
@@ -175,15 +175,13 @@ export default function GlobalAudienceCTA() {
 
                     {/* Expanded Dropdown - smooth slide up */}
                     <div
-                      className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                        hoveredIndex === index
+                      className={`overflow-hidden transition-all duration-300 ease-in-out ${hoveredIndex === index
                           ? 'max-h-[500px] opacity-100 mt-2'
                           : 'max-h-0 opacity-0 mt-0'
-                      }`}
+                        }`}
                     >
-                      <div className={`bg-red-50/90 rounded-lg p-4 shadow-md transform transition-transform duration-300 ${
-                        hoveredIndex === index ? 'translate-y-0' : '-translate-y-2'
-                      }`}>
+                      <div className={`bg-red-50/90 rounded-lg p-4 shadow-md transform transition-transform duration-300 ${hoveredIndex === index ? 'translate-y-0' : '-translate-y-2'
+                        }`}>
                         <h3 className="text-[0.625rem] font-bold text-gray-800 uppercase tracking-wider mb-3">
                           {category.label.toUpperCase()}
                         </h3>
@@ -192,11 +190,10 @@ export default function GlobalAudienceCTA() {
                             <Link
                               key={sIndex}
                               to={service.link || '#'}
-                              className={`w-full rounded-lg px-4 py-2.5 flex items-center justify-between transition-colors duration-200 text-xs ${
-                                category.label === 'TikTok Ads Services'
+                              className={`w-full rounded-lg px-4 py-2.5 flex items-center justify-between transition-colors duration-200 text-xs ${category.label === 'TikTok Ads Services'
                                   ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                   : 'bg-white hover:bg-gray-50 text-gray-700'
-                              }`}
+                                }`}
                             >
                               <span className="font-medium">{service.label}</span>
                               <ServiceIcon type={service.icon} />

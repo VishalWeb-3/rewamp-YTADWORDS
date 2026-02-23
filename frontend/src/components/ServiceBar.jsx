@@ -39,17 +39,17 @@ export default function ServiceBar() {
   }, []);
   const services = servicesFromContent.length
     ? servicesFromContent.map((s, i) => ({
-        label: s.label,
-        items: s.items || [],
-        icon: ICONS[iconKeys[i]] || ICONS.google,
-        textClass: i === 1 ? 'text-red-600' : i === 3 ? 'text-green-600' : 'text-gray-800',
-      }))
+      label: s.label,
+      items: s.items || [],
+      icon: ICONS[iconKeys[i]] || ICONS.google,
+      textClass: i === 1 ? 'text-red-600' : i === 3 ? 'text-green-600' : 'text-gray-800',
+    }))
     : [
-        { label: 'Google Ads Services', items: [{ label: 'Google Skip Ads Views', link: '/buy-google-skip-ads-views' }, { label: 'Google Display Ads Views', link: '/buy-google-display-ads-views' }, { label: 'Google Discovery Ads Views', link: '/buy-google-discovery-ads-views' }, { label: 'Google Ads Search Campaign Traffic', link: '/buy-google-ads-search-traffic' }, { label: 'Google Ads Website / App Traffic', link: '/buy-google-ads-website-traffic' }], icon: ICONS.google, textClass: 'text-gray-600' },
-        { label: 'YouTube Services', items: [{ label: 'Buy YouTube Views', link: '/buy-youtube-views' }, { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' }, { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' }, { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' }], icon: ICONS.youtube, textClass: 'text-red-600' },
-        { label: 'TikTok Ads Services', items: [{ label: 'TikTok Followers Growth', link: '/buy-tiktok-followers' }, { label: 'TikTok Ads Views', link: '/buy-tiktok-ads-views' }, { label: 'TikTok Reach / Impressions', link: '/buy-tiktok-reach' }, { label: 'TikTok Engagement Services', link: '/buy-tiktok-engagement' }, { label: 'TikTok Video Views', link: '/buy-tiktok-video-views' }, { label: 'TikTok Website / App Traffic', link: '/buy-tiktok-traffic' }], icon: ICONS.tiktok, textClass: 'text-gray-800' },
-        { label: 'Buy Google Reviews', items: [{ label: 'Buy Female Google Reviews', link: '/buy-female-google-reviews' }, { label: 'Buy Male Google Reviews', link: '/buy-male-google-reviews' }, { label: 'Buy Google Local Guide Reviews', link: '/buy-google-local-guide-reviews' }, { label: 'Buy Google Reviews by Age Group', link: '/buy-google-reviews-by-age-group' }], icon: ICONS.reviews, textClass: 'text-green-600' },
-      ];
+      { label: 'Google Ads Services', items: [{ label: 'Google Skip Ads Views', link: '/buy-google-skip-ads-views' }, { label: 'Google Display Ads Views', link: '/buy-google-display-ads-views' }, { label: 'Google Ads Search Campaign Traffic', link: '/buy-google-ads-search-traffic' }, { label: 'Google Ads Website / App Traffic', link: '/buy-google-ads-website-traffic' }], icon: ICONS.google, textClass: 'text-gray-600' },
+      { label: 'YouTube Services', items: [{ label: 'Buy YouTube Views', link: '/buy-youtube-views' }, { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' }, { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' }, { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' }], icon: ICONS.youtube, textClass: 'text-red-600' },
+      { label: 'TikTok Ads Services', items: [{ label: 'TikTok Followers Growth', link: '/buy-tiktok-followers' }, { label: 'TikTok Ads Views', link: '/buy-tiktok-ads-views' }, { label: 'TikTok Reach / Impressions', link: '/buy-tiktok-reach' }, { label: 'TikTok Engagement Services', link: '/buy-tiktok-engagement' }, { label: 'TikTok Video Views', link: '/buy-tiktok-video-views' }, { label: 'TikTok Website / App Traffic', link: '/buy-tiktok-traffic' }], icon: ICONS.tiktok, textClass: 'text-gray-800' },
+      { label: 'Buy Google Reviews', items: [{ label: 'Buy Female Google Reviews', link: '/buy-female-google-reviews' }, { label: 'Buy Male Google Reviews', link: '/buy-male-google-reviews' }, { label: 'Buy Google Local Guide Reviews', link: '/buy-google-local-guide-reviews' }, { label: 'Buy Google Reviews by Age Group', link: '/buy-google-reviews-by-age-group' }], icon: ICONS.reviews, textClass: 'text-green-600' },
+    ];
 
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -60,58 +60,57 @@ export default function ServiceBar() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-center gap-2 flex-wrap">
           {services.map((s, index) => {
-              const firstItem = s.items && s.items[0];
-              const firstLink = typeof firstItem === 'object' && firstItem?.link && firstItem.link !== '#' ? firstItem.link : null;
-              const ButtonOrLink = firstLink ? Link : 'button';
-              const buttonProps = firstLink
-                ? { to: firstLink }
-                : { onClick: () => handleToggle(index) };
-              return (
-            <div
-              key={s.label}
-              className="relative"
-              onMouseEnter={() => !isTouchDevice && setOpenIndex(index)}
-              onMouseLeave={() => !isTouchDevice && setOpenIndex(null)}
-            >
-              <ButtonOrLink
-                {...buttonProps}
-                className={`flex items-center gap-2 sm:gap-3 px-2.5 sm:px-3 py-2 rounded-full bg-white border shadow-sm transition-all ${
-                  openIndex === index
-                    ? 'border-red-400 shadow-md bg-red-50'
-                    : 'border-gray-200 hover:shadow-md hover:border-gray-300'
-                }`}
+            const firstItem = s.items && s.items[0];
+            const firstLink = typeof firstItem === 'object' && firstItem?.link && firstItem.link !== '#' ? firstItem.link : null;
+            const ButtonOrLink = firstLink ? Link : 'button';
+            const buttonProps = firstLink
+              ? { to: firstLink }
+              : { onClick: () => handleToggle(index) };
+            return (
+              <div
+                key={s.label}
+                className="relative"
+                onMouseEnter={() => !isTouchDevice && setOpenIndex(index)}
+                onMouseLeave={() => !isTouchDevice && setOpenIndex(null)}
               >
-                {typeof s.icon === 'function' ? s.icon() : s.icon}
-                <span className={`text-xs sm:text-sm font-medium whitespace-nowrap ${openIndex === index ? 'text-red-600' : s.textClass}`}>
-                  {s.label}
-                </span>
-              </ButtonOrLink>
+                <ButtonOrLink
+                  {...buttonProps}
+                  className={`flex items-center gap-2 sm:gap-3 px-2.5 sm:px-3 py-2 rounded-full bg-white border shadow-sm transition-all ${openIndex === index
+                      ? 'border-red-400 shadow-md bg-red-50'
+                      : 'border-gray-200 hover:shadow-md hover:border-gray-300'
+                    }`}
+                >
+                  {typeof s.icon === 'function' ? s.icon() : s.icon}
+                  <span className={`text-xs sm:text-sm font-medium whitespace-nowrap ${openIndex === index ? 'text-red-600' : s.textClass}`}>
+                    {s.label}
+                  </span>
+                </ButtonOrLink>
 
-              {openIndex === index && (
-                <div className="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 top-full pt-1 z-50 min-w-[220px] sm:min-w-[240px]">
-                  <div className="rounded-lg border border-gray-200 bg-white shadow-lg py-1">
-                    {s.items.map((item, itemIndex) => {
-                      const itemData = typeof item === 'string' ? { label: item, link: '#' } : item;
-                      const Component = itemData.link !== '#' ? Link : 'a';
-                      const props = itemData.link !== '#' 
-                        ? { to: itemData.link }
-                        : { href: '#' };
-                      
-                      return (
-                        <Component
-                          key={itemIndex}
-                          {...props}
-                          className="block px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
-                        >
-                          {itemData.label}
-                        </Component>
-                      );
-                    })}
+                {openIndex === index && (
+                  <div className="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 top-full pt-1 z-50 min-w-[220px] sm:min-w-[240px]">
+                    <div className="rounded-lg border border-gray-200 bg-white shadow-lg py-1">
+                      {s.items.map((item, itemIndex) => {
+                        const itemData = typeof item === 'string' ? { label: item, link: '#' } : item;
+                        const Component = itemData.link !== '#' ? Link : 'a';
+                        const props = itemData.link !== '#'
+                          ? { to: itemData.link }
+                          : { href: '#' };
+
+                        return (
+                          <Component
+                            key={itemIndex}
+                            {...props}
+                            className="block px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
+                          >
+                            {itemData.label}
+                          </Component>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          );
+                )}
+              </div>
+            );
           })}
         </div>
       </div>

@@ -16,7 +16,7 @@ import BuyTikTokVideoViewsPage from './pages/BuyTikTokVideoViewsPage';
 import BuyTikTokTrafficPage from './pages/BuyTikTokTrafficPage';
 import BuyGoogleSkipAdsViewsPage from './pages/BuyGoogleSkipAdsViewsPage';
 import BuyGoogleDisplayAdsViewsPage from './pages/BuyGoogleDisplayAdsViewsPage';
-import BuyGoogleDiscoveryAdsViewsPage from './pages/BuyGoogleDiscoveryAdsViewsPage';
+
 import BuyGoogleAdsSearchTrafficPage from './pages/BuyGoogleAdsSearchTrafficPage';
 import BuyGoogleAdsWebsiteTrafficPage from './pages/BuyGoogleAdsWebsiteTrafficPage';
 import BuyFemaleGoogleReviewsPage from './pages/BuyFemaleGoogleReviewsPage';
@@ -77,7 +77,7 @@ function AppContent() {
           <Route path="/buy-tiktok-traffic" element={<BuyTikTokTrafficPage />} />
           <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
           <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
-          <Route path="/buy-google-discovery-ads-views" element={<BuyGoogleDiscoveryAdsViewsPage />} />
+
           <Route path="/buy-google-ads-search-traffic" element={<BuyGoogleAdsSearchTrafficPage />} />
           <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
           <Route path="/buy-female-google-reviews" element={<BuyFemaleGoogleReviewsPage />} />
