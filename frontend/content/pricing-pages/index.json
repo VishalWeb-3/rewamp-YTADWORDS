@@ -132,6 +132,193 @@
           }
         ]
       }
+    },
+    {
+      "slug": "buy-youtube-subscribers",
+      "hero": {
+        "image": "/uploadsuploads/pricepage.png",
+        "title": "Buy YouTube Subscribers",
+        "badge": "Instantly",
+        "intro": "YoutubeADwords is the safest way to buy YouTube Subscribers with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!"
+      },
+      "tabs": {
+        "regular": "Regular Subs.",
+        "fast": "Natural Growth popular",
+        "ads": "Influencer+"
+      },
+      "infoBanner": "Information: We recommend our Natural Growth packages for orders with a high number of subscribers.",
+      "features": [
+        {
+          "label": "Real & Organic Subscribers"
+        },
+        {
+          "label": "High Quality"
+        },
+        {
+          "label": "Instant start"
+        },
+        {
+          "label": "Refill Guaranteed"
+        },
+        {
+          "label": "No drops"
+        },
+        {
+          "label": "Privacy and safety"
+        }
+      ],
+      "allInOne": {
+        "heading": "All In One YouTube Subscribers Campaign",
+        "description": "With YoutubeADwords's all-inclusive package, you can buy YouTube subscribers, and views simultaneously. Moreover, you may order YouTube likes service and add it to the package for the best price.",
+        "stats": [
+          {
+            "value": "5000",
+            "label": "Subscribers for your channel"
+          },
+          {
+            "value": "1000",
+            "label": "Likes for chosen video"
+          },
+          {
+            "value": "100",
+            "label": "New active subscribers at once"
+          },
+          {
+            "value": "24/7",
+            "label": "Customer Support"
+          }
+        ]
+      },
+      "faq": {
+        "heading": "Frequently Asked Questions",
+        "items": [
+          {
+            "question": "How quickly will I receive my YouTube subscribers?",
+            "answer": "Delivery times vary depending on the package you choose. Regular subscribers typically start within a few hours, while Natural Growth begin immediately. Influencer+ are delivered through targeted campaigns and may take 24-48 hours to start."
+          },
+          {
+            "question": "Are the subscribers real and from real users?",
+            "answer": "Yes! YoutubeADwords provides authentic subscribers from real users. Our subscribers come from organic discovery methods, ensuring they appear genuine and natural."
+          },
+          {
+            "question": "Will buying subscribers get my channel banned?",
+            "answer": "No, our service is completely safe. We use legitimate methods that comply with YouTube's terms of service. We've been providing this service safely for years."
+          },
+          {
+            "question": "Can I choose which country the subscribers come from?",
+            "answer": "Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience."
+          },
+          {
+            "question": "What happens if subscribers drop after delivery?",
+            "answer": "We offer a refill guarantee on all our packages. If you experience any drops in subscribers, we will refill them at no additional cost."
+          }
+        ]
+      }
+    },
+    {
+      "slug": "buy-youtube-likes",
+      "hero": {
+        "image": "/uploadsuploads/pricepage.png",
+        "title": "Buy YouTube Likes",
+        "badge": "Instantly",
+        "intro": "YoutubeADwords is the safest way to buy YouTube Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!"
+      },
+      "tabs": {
+        "regular": "Slow Likes",
+        "fast": "Turbo Likes"
+      },
+      "infoBanner": "Information: We recommend our Turbo YouTube Likes packages for orders with a high number of likes.",
+      "features": [
+        {
+          "label": "Real & Organic Likes"
+        },
+        {
+          "label": "High Quality"
+        },
+        {
+          "label": "Instant start"
+        },
+        {
+          "label": "Refill Guaranteed"
+        },
+        {
+          "label": "No drops"
+        },
+        {
+          "label": "Privacy and safety"
+        }
+      ],
+      "faq": {
+        "heading": "Frequently Asked Questions",
+        "items": [
+          {
+            "question": "How quickly will I receive my YouTube likes?",
+            "answer": "Delivery times vary depending on the package you choose. Slow likes typically start within a few hours, while Turbo Likes begin immediately."
+          },
+          {
+            "question": "Are the likes real and from real users?",
+            "answer": "Yes! YoutubeADwords provides authentic likes from real users. Our likes come from organic engagement methods, ensuring they appear genuine and natural."
+          },
+          {
+            "question": "Will buying likes get my channel banned?",
+            "answer": "No, our service is completely safe. We use legitimate methods that comply with YouTube's terms of service."
+          },
+          {
+            "question": "Can I choose which country the likes come from?",
+            "answer": "Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience."
+          }
+        ]
+      }
+    },
+    {
+      "slug": "buy-youtube-watch-hours",
+      "hero": {
+        "image": "/uploadsuploads/pricepage.png",
+        "title": "Buy YouTube Watch Hours",
+        "badge": "Instantly",
+        "intro": "YoutubeADwords is the safest way to buy YouTube Watch Hours with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!"
+      },
+      "tabs": {
+        "regular": "Choose Youtube Watch Time Package"
+      },
+      "infoBanner": "Information: We recommend our Verified YouTube Watch Hours packages to boost your monetization.",
+      "features": [
+        {
+          "label": "Real & Organic Watch Hours"
+        },
+        {
+          "label": "High Quality"
+        },
+        {
+          "label": "Instant start"
+        },
+        {
+          "label": "Refill Guaranteed"
+        },
+        {
+          "label": "No drops"
+        },
+        {
+          "label": "Privacy and safety"
+        }
+      ],
+      "faq": {
+        "heading": "Frequently Asked Questions",
+        "items": [
+          {
+            "question": "How quickly will I receive my YouTube watch hours?",
+            "answer": "Delivery times typically start within a few hours. All packages are designed to deliver watch hours gradually to ensure natural growth patterns."
+          },
+          {
+            "question": "Are the watch hours real and from real users?",
+            "answer": "Yes! YoutubeADwords provides authentic watch hours from real users. Our watch hours come from organic viewing methods."
+          },
+          {
+            "question": "Will buying watch hours get my channel banned?",
+            "answer": "No, our service is completely safe. We use legitimate methods that comply with YouTube's terms of service."
+          }
+        ]
+      }
     }
   ]
 }

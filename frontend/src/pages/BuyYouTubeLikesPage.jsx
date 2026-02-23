@@ -2,31 +2,33 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
+import { useCheckout } from '../hooks/useCheckout';
+import { resolveImageUrl } from '../utils/image';
 
 const likePackagesFallback = {
   regular: [
-    { likes: '100', price: '0.99', originalPrice: null, discount: null },
-    { likes: '1.0k', price: '11.70', originalPrice: '13.00', discount: '10%' },
-    { likes: '2.5k', price: '27.00', originalPrice: '30.00', discount: '10%' },
-    { likes: '5.0k', price: '46.80', originalPrice: '52.00', discount: '10%' },
+    { likes: '20', price: '0.53', originalPrice: '0.59', discount: '10%' },
+    { likes: '100', price: '3.15', originalPrice: '3.50', discount: '10%' },
+    { likes: '250', price: '5.63', originalPrice: '6.25', discount: '10%' },
+    { likes: '500', price: '12.60', originalPrice: '14.00', discount: '10%' },
+    { likes: '1.0K', price: '24.30', originalPrice: '27.00', discount: '10%' },
   ],
   fast: [
-    { likes: '100', price: '1.99', originalPrice: null, discount: null },
-    { likes: '1.0k', price: '22.50', originalPrice: '25.00', discount: '10%' },
-    { likes: '2.5k', price: '54.00', originalPrice: '60.00', discount: '10%' },
-    { likes: '5.0k', price: '94.50', originalPrice: '105.00', discount: '10%' },
+    { likes: '500', price: '21.60', originalPrice: '24.00', discount: '10%' },
+    { likes: '1.0K', price: '42.30', originalPrice: '47.00', discount: '10%' },
+    { likes: '2.0K', price: '82.80', originalPrice: '92.00', discount: '10%' },
+    { likes: '3.0K', price: '121.50', originalPrice: '135.00', discount: '10%' },
+    { likes: '5.0K', price: '202.50', originalPrice: '225.00', discount: '10%' },
+    { likes: '10.0K', price: '400.50', originalPrice: '445.00', discount: '10%' },
+    { likes: '20.0K', price: '796.50', originalPrice: '885.00', discount: '10%' },
+    { likes: '50.0K', price: '1980.00', originalPrice: '2200.00', discount: '10%' },
   ],
-  ads: [
-    { likes: '100', price: '2.99', originalPrice: null, discount: null },
-    { likes: '1.0k', price: '34.20', originalPrice: '38.00', discount: '10%' },
-    { likes: '2.5k', price: '81.00', originalPrice: '90.00', discount: '10%' },
-    { likes: '5.0k', price: '148.50', originalPrice: '165.00', discount: '10%' },
-  ],
+  ads: [],
 };
 
-const features = [
+const featuresFallback = [
   { label: 'Real & Organic Likes', icon: 'check' },
   { label: 'High Quality', icon: 'check' },
   { label: 'Instant start', icon: 'check' },
@@ -41,7 +43,9 @@ export default function BuyYouTubeLikesPage() {
   const { isEnabled } = useCtaActions();
   const canBuy = isEnabled('buy');
   const canAddToCart = isEnabled('add_to_cart');
+  const { goToCheckout } = useCheckout();
   const likePackages = usePricingPackages('buy-youtube-likes', likePackagesFallback);
+  const content = usePricingPageContent('buy-youtube-likes', null);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -54,21 +58,14 @@ export default function BuyYouTubeLikesPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = likePackages ? likePackages[activeTab] : [];
 
-  const handleAddToCart = (pkg) => {
-    addToCart({
-      serviceType: 'YouTube Likes',
-      serviceName: `YouTube Likes - ${pkg.likes}`,
-      type: activeTab === 'regular' ? 'Regular Likes' : activeTab === 'fast' ? 'Fast Likes' : 'Ads Likes',
-      quantity: pkg.likes,
-      price: pkg.price,
-      likes: pkg.likes,
-    });
-  };
-
-  const faqs = [
+  const hero = content?.hero;
+  const tabs = content?.tabs;
+  const infoBanner = content?.infoBanner;
+  const features = (content?.features?.length ? content.features : featuresFallback).map((f) => ({ ...f, icon: 'check' }));
+  const faqs = content?.faq?.items?.length ? content.faq.items : [
     {
       question: 'How quickly will I receive my YouTube likes?',
-      answer: 'Delivery times vary depending on the package you choose. Regular likes typically start within a few hours, while Fast Likes begin immediately. Ads Likes are delivered through Google Ads campaigns and may take 24-48 hours to start. All packages are designed to deliver likes gradually to ensure natural growth patterns.',
+      answer: 'Delivery times vary depending on the package you choose. Slow likes typically start within a few hours, while Turbo Likes begin immediately. All packages are designed to deliver likes gradually to ensure natural growth patterns.',
     },
     {
       question: 'Are the likes real and from real users?',
@@ -92,9 +89,26 @@ export default function BuyYouTubeLikesPage() {
     },
   ];
 
+  const handleAddToCart = (pkg) => {
+    addToCart({
+      platform: 'YouTube',
+      serviceType: 'YouTube Likes',
+      serviceName: `YouTube Likes - ${pkg.likes}`,
+      type: activeTab === 'regular' ? 'Slow Likes' : 'Turbo Likes',
+      quantity: pkg.likes,
+      price: pkg.price,
+      likes: pkg.likes,
+    });
+  };
+
   const toggleFAQ = (index) => {
     setOpenFAQIndex(openFAQIndex === index ? null : index);
   };
+
+  const tabList = [
+    { id: 'regular', label: tabs?.regular ?? 'Slow Likes' },
+    { id: 'fast', label: tabs?.fast ?? 'Turbo Likes' },
+  ];
 
   return (
     <Layout>
@@ -111,20 +125,20 @@ export default function BuyYouTubeLikesPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src="/pricepage.png"
-                alt="Buy YouTube Likes"
+                src={resolveImageUrl(hero?.image, '/pricepage.png')}
+                alt={hero?.title ?? 'Buy YouTube Likes'}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
             </div>
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                Buy YouTube Likes{' '}
+                {hero?.title ?? 'Buy YouTube Likes'}{' '}
                 <span className="bg-brand-red text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
-                  Instantly
+                  {hero?.badge ?? 'Instantly'}
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeADwords is the safest way to buy YouTube Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -132,12 +146,8 @@ export default function BuyYouTubeLikesPage() {
           {/* Right Section - Pricing Card */}
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
             {/* Tabs */}
-            <div className="flex gap-4 mb-6 border-b border-gray-200">
-              {[
-                { id: 'regular', label: 'Regular Likes' },
-                { id: 'fast', label: 'Fast Likes' },
-                { id: 'ads', label: 'Ads Likes' },
-              ].map((tab) => (
+            <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
+              {tabList.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => {
@@ -155,12 +165,17 @@ export default function BuyYouTubeLikesPage() {
             </div>
 
             {/* Information Banner */}
-            <div className="bg-gray-100 rounded-lg p-4 mb-6">
-              <p className="text-gray-700 text-sm">
-                <span className="font-medium">Information:</span> We recommend our{' '}
-                <span className="text-brand-red font-semibold">Fast YouTube Likes</span> packages for orders with a high number of likes.
-              </p>
-            </div>
+            {(infoBanner ?? true) && (
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <p className="text-gray-700 text-sm">
+                  {infoBanner ? (
+                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                  ) : (
+                    <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Turbo YouTube Likes</span> packages for orders with a high number of likes.</>
+                  )}
+                </p>
+              </div>
+            )}
 
             {/* View Packages Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
@@ -226,7 +241,7 @@ export default function BuyYouTubeLikesPage() {
                       state: {
                         allPackages: likePackages,
                         serviceType: 'YouTube Likes',
-                        typeLabels: { regular: 'Regular Likes', fast: 'Fast Likes', ads: 'Ads Likes' },
+                        typeLabels: { regular: 'Slow Likes', fast: 'Turbo Likes' },
                         quantityKey: 'likes',
                         unitLabel: 'likes',
                         initialType: activeTab,

@@ -6,7 +6,7 @@ export default function ServicesSection() {
   const home = useHomeContent();
   const section = home?.servicesSection || {};
   const googleServices = section.googleServices || ['Google Ads Video Views', 'Google Display Ads Views', 'Google Discovery Views', 'Google Search Traffic'];
-  const tiktokServices = section.tiktokServices || ['TikTok Video Views', 'TikTok Ads Views', 'TikTok Followers', 'TikTok Engagement'];
+  const tiktokServices = section.tiktokServices || ['TikTok Followers', 'TikTok Likes', 'TikTok Views'];
   return (
     <section className="bg-white py-8 sm:py-10 lg:py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">

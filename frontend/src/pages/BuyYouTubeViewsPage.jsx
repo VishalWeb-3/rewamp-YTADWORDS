@@ -9,22 +9,27 @@ import { useCtaActions } from '../contexts/CtaActionsContext';
 
 const viewPackagesFallback = {
   regular: [
-    { views: '100', price: '1.49', originalPrice: null, discount: null },
-    { views: '1.0k', price: '14.40', originalPrice: '16.00', discount: '10%' },
-    { views: '2.5k', price: '33.30', originalPrice: '37.00', discount: '10%' },
-    { views: '5.0k', price: '60.30', originalPrice: '67.00', discount: '10%' },
+    { views: '100', price: '1.34', originalPrice: '1.49', discount: '10%' },
+    { views: '1.0K', price: '3.96', originalPrice: '4.40', discount: '10%' },
+    { views: '2.5K', price: '9.81', originalPrice: '10.90', discount: '10%' },
+    { views: '5.0K', price: '19.78', originalPrice: '21.98', discount: '10%' },
   ],
   fast: [
-    { views: '100', price: '2.49', originalPrice: null, discount: null },
-    { views: '1.0k', price: '26.10', originalPrice: '29.00', discount: '10%' },
-    { views: '2.5k', price: '60.30', originalPrice: '67.00', discount: '10%' },
-    { views: '5.0k', price: '108.00', originalPrice: '120.00', discount: '10%' },
+    { views: '10.0K', price: '34.11', originalPrice: '37.90', discount: '10%' },
+    { views: '25.0K', price: '85.50', originalPrice: '95.00', discount: '10%' },
+    { views: '50.0K', price: '161.10', originalPrice: '179.00', discount: '10%' },
+    { views: '75.0K', price: '256.50', originalPrice: '285.00', discount: '10%' },
+    { views: '100K', price: '314.10', originalPrice: '349.00', discount: '10%' },
+    { views: '250K', price: '764.10', originalPrice: '849.00', discount: '10%' },
+    { views: '500K', price: '1431.00', originalPrice: '1590.00', discount: '10%' },
+    { views: '750K', price: '2146.50', originalPrice: '2385.00', discount: '10%' },
+    { views: '1.0M', price: '2862.00', originalPrice: '3180.00', discount: '10%' },
   ],
   ads: [
-    { views: '100', price: '3.49', originalPrice: null, discount: null },
-    { views: '1.0k', price: '40.50', originalPrice: '45.00', discount: '10%' },
-    { views: '2.5k', price: '94.50', originalPrice: '105.00', discount: '10%' },
-    { views: '5.0k', price: '175.50', originalPrice: '195.00', discount: '10%' },
+    { views: '500K', price: '882.00', originalPrice: '980.00', discount: '10%' },
+    { views: '1.0M', price: '1665.00', originalPrice: '1850.00', discount: '10%' },
+    { views: '2.5M', price: '3330.00', originalPrice: '3700.00', discount: '10%' },
+    { views: '5.0M', price: '6210.00', originalPrice: '6900.00', discount: '10%' },
   ],
 };
 

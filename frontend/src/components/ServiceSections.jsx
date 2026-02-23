@@ -43,7 +43,7 @@ function ServiceCard({ subtitle, benefits, buttonText, theme = 'red', cardPositi
                   ))}
                 </ul>
               </div>
-              <div 
+              <div
                 className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden"
                 style={{
                   background: `radial-gradient(ellipse at center, ${gradientStart} 0%, ${gradientMid} 50%, ${gradientEnd} 100%)`,
@@ -56,7 +56,7 @@ function ServiceCard({ subtitle, benefits, buttonText, theme = 'red', cardPositi
             </>
           ) : (
             <>
-              <div 
+              <div
                 className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden"
                 style={{
                   background: `radial-gradient(ellipse at center, ${gradientStart} 0%, ${gradientMid} 50%, ${gradientEnd} 100%)`,
@@ -109,11 +109,11 @@ function ServiceCard({ subtitle, benefits, buttonText, theme = 'red', cardPositi
 }
 
 // Benefits data
-const tiktokAdsBenefits = [
-  'Genuine views delivered via TikTok Ads networks',
+const tiktokViewsBenefits = [
+  'Genuine views delivered via TikTok discovery networks',
   'Target Worldwide, USA, India, or Tier-1 Countries',
-  'Includes Video Ads, In-Feed, and Spark Ads traffic',
-  'Scalable packages (Minimum 500 up to 500k+)',
+  'Authentic views that help activate TikTok\'s algorithm',
+  'Scalable packages (Minimum 100 up to 1M+)',
   '100% Manual verification & WhatsApp support',
 ];
 
@@ -176,25 +176,24 @@ const googleReviewsBenefits = [
 export default function ServiceSections() {
   return (
     <>
-      {/* Row 1: 4 sections */}
-      <ServiceCard
-        subtitle="Buy TikTok Ads Services"
-        benefits={tiktokAdsBenefits}
-        buttonText="Start TikTok Ads Campaign"
-        theme="blue"
-        cardPosition="left"
-      />
       <ServiceCard
         subtitle="Buy TikTok Followers"
         benefits={tiktokFollowersBenefits}
         buttonText="Start TikTok Followers Campaign"
         theme="blue"
-        cardPosition="right"
+        cardPosition="left"
       />
       <ServiceCard
         subtitle="Buy TikTok Likes"
         benefits={tiktokLikesBenefits}
         buttonText="Start TikTok Likes Campaign"
+        theme="blue"
+        cardPosition="right"
+      />
+      <ServiceCard
+        subtitle="Buy TikTok Views"
+        benefits={tiktokViewsBenefits}
+        buttonText="Start TikTok Views Campaign"
         theme="blue"
         cardPosition="left"
       />

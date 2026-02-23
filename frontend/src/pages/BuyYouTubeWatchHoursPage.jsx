@@ -2,30 +2,24 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
+import { useCtaActions } from '../contexts/CtaActionsContext';
+import { useCheckout } from '../hooks/useCheckout';
+import { resolveImageUrl } from '../utils/image';
 
 const watchHoursPackagesFallback = {
   regular: [
-    { hours: '100', price: '4.99', originalPrice: null, discount: null },
-    { hours: '1.0k', price: '54.00', originalPrice: '60.00', discount: '10%' },
-    { hours: '2.5k', price: '121.50', originalPrice: '135.00', discount: '10%' },
-    { hours: '5.0k', price: '216.00', originalPrice: '240.00', discount: '10%' },
+    { hours: '1.0K', price: '80.55', originalPrice: '89.50', discount: '10%' },
+    { hours: '1.5K', price: '120.83', originalPrice: '134.25', discount: '10%' },
+    { hours: '2.0K', price: '160.65', originalPrice: '178.50', discount: '10%' },
+    { hours: '3.0K', price: '241.65', originalPrice: '268.50', discount: '10%' },
+    { hours: '4.0K', price: '321.75', originalPrice: '357.50', discount: '10%' },
   ],
-  fast: [
-    { hours: '100', price: '7.99', originalPrice: null, discount: null },
-    { hours: '1.0k', price: '94.50', originalPrice: '105.00', discount: '10%' },
-    { hours: '2.5k', price: '216.00', originalPrice: '240.00', discount: '10%' },
-    { hours: '5.0k', price: '391.50', originalPrice: '435.00', discount: '10%' },
-  ],
-  ads: [
-    { hours: '100', price: '9.99', originalPrice: null, discount: null },
-    { hours: '1.0k', price: '121.50', originalPrice: '135.00', discount: '10%' },
-    { hours: '2.5k', price: '283.50', originalPrice: '315.00', discount: '10%' },
-    { hours: '5.0k', price: '526.50', originalPrice: '585.00', discount: '10%' },
-  ],
+  fast: [],
+  ads: [],
 };
 
-const features = [
+const featuresFallback = [
   { label: 'Real & Organic Watch Hours', icon: 'check' },
   { label: 'High Quality', icon: 'check' },
   { label: 'Instant start', icon: 'check' },
@@ -37,7 +31,12 @@ const features = [
 export default function BuyYouTubeWatchHoursPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { isEnabled } = useCtaActions();
+  const canBuy = isEnabled('buy');
+  const canAddToCart = isEnabled('add_to_cart');
+  const { goToCheckout } = useCheckout();
   const watchHoursPackages = usePricingPackages('buy-youtube-watch-hours', watchHoursPackagesFallback);
+  const content = usePricingPageContent('buy-youtube-watch-hours', null);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -50,47 +49,52 @@ export default function BuyYouTubeWatchHoursPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = watchHoursPackages ? watchHoursPackages[activeTab] : [];
 
+  const hero = content?.hero;
+  const tabs = content?.tabs;
+  const infoBanner = content?.infoBanner;
+  const features = (content?.features?.length ? content.features : featuresFallback).map((f) => ({ ...f, icon: 'check' }));
+  const faqs = content?.faq?.items?.length ? content.faq.items : [
+    {
+      question: 'How quickly will I receive my YouTube watch hours?',
+      answer: 'Delivery times typically start within a few hours. All packages are designed to deliver watch hours gradually to ensure natural growth patterns.',
+    },
+    {
+      question: 'Are the watch hours real and from real users?',
+      answer: 'Yes! YoutubeADwords provides authentic watch hours from real users. Our watch hours come from organic viewing methods, ensuring they appear genuine and natural.',
+    },
+    {
+      question: 'Will buying watch hours get my channel banned?',
+      answer: 'No, our service is completely safe. We use legitimate methods that comply with YouTube\'s terms of service.',
+    },
+    {
+      question: 'Can I choose which country the watch hours come from?',
+      answer: 'Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience.',
+    },
+    {
+      question: 'What happens if watch hours drop after delivery?',
+      answer: 'We offer a refill guarantee on all our packages. If you experience any drops in watch hours, we will refill them at no additional cost.',
+    },
+  ];
+
   const handleAddToCart = (pkg) => {
     addToCart({
+      platform: 'YouTube',
       serviceType: 'YouTube Watch Hours',
       serviceName: `YouTube Watch Hours - ${pkg.hours}`,
-      type: activeTab === 'regular' ? 'Regular' : activeTab === 'fast' ? 'Fast' : 'Ads',
+      type: 'Watch Time',
       quantity: pkg.hours,
       price: pkg.price,
       hours: pkg.hours,
     });
   };
 
-  const faqs = [
-    {
-      question: 'How quickly will I receive my YouTube watch hours?',
-      answer: 'Delivery times vary depending on the package you choose. Regular watch hours typically start within a few hours, while Fast Watch Hours begin immediately. Ads Watch Hours are delivered through Google Ads campaigns and may take 24-48 hours to start. All packages are designed to deliver watch hours gradually to ensure natural growth patterns.',
-    },
-    {
-      question: 'Are the watch hours real and from real users?',
-      answer: 'Yes! YoutubeADwords provides authentic watch hours from real users. Our watch hours come from organic viewing methods, ensuring they appear genuine and natural. We never use bots or fake accounts, which is why our watch hours have high retention rates and help activate YouTube\'s algorithm.',
-    },
-    {
-      question: 'Will buying watch hours get my channel banned?',
-      answer: 'No, our service is completely safe. We use legitimate methods that comply with YouTube\'s terms of service. Our watch hours come from real users through organic viewing methods, so there\'s no risk to your channel. We\'ve been providing this service safely for years.',
-    },
-    {
-      question: 'Can I choose which country the watch hours come from?',
-      answer: 'Yes! Our system automatically analyzes your channel and suggests the most suitable country for your target audience. You can also manually select a specific country when placing your order to ensure the watch hours align with your content\'s target demographic.',
-    },
-    {
-      question: 'What happens if watch hours drop after delivery?',
-      answer: 'We offer a refill guarantee on all our packages. If you experience any drops in watch hours, we will refill them at no additional cost. Our high-quality watch hours have excellent retention rates, but we stand behind our service with this guarantee.',
-    },
-    {
-      question: 'Can I buy watch hours for multiple videos at once?',
-      answer: 'Absolutely! You can purchase watch hours for as many videos as you like. Many of our customers buy watch hours to help meet YouTube\'s monetization requirements and boost their channel\'s performance.',
-    },
-  ];
-
   const toggleFAQ = (index) => {
     setOpenFAQIndex(openFAQIndex === index ? null : index);
   };
+
+  const tabList = [
+    { id: 'regular', label: tabs?.regular ?? 'Choose Youtube Watch Time Package' },
+  ];
 
   return (
     <Layout>
@@ -107,20 +111,20 @@ export default function BuyYouTubeWatchHoursPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src="/pricepage.png"
-                alt="Buy YouTube Watch Hours"
+                src={resolveImageUrl(hero?.image, '/pricepage.png')}
+                alt={hero?.title ?? 'Buy YouTube Watch Hours'}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
             </div>
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                Buy YouTube Watch Hours{' '}
+                {hero?.title ?? 'Buy YouTube Watch Hours'}{' '}
                 <span className="bg-brand-red text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
-                  Instantly
+                  {hero?.badge ?? 'Instantly'}
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeADwords is the safest way to buy YouTube Watch Hours with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Watch Hours with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -128,23 +132,18 @@ export default function BuyYouTubeWatchHoursPage() {
           {/* Right Section - Pricing Card */}
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
             {/* Tabs */}
-            <div className="flex gap-4 mb-6 border-b border-gray-200">
-              {[
-                { id: 'regular', label: 'Regular Watch Hours' },
-                { id: 'fast', label: 'Fast Watch Hours' },
-                { id: 'ads', label: 'Ads Watch Hours' },
-              ].map((tab) => (
+            <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
+              {tabList.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => {
                     setActiveTab(tab.id);
                     setSelectedPackageIndex(null);
                   }}
-                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${
-                    activeTab === tab.id
-                      ? 'text-gray-900 border-b-2 border-brand-red'
-                      : 'text-gray-400 hover:text-gray-600'
-                  }`}
+                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${activeTab === tab.id
+                    ? 'text-gray-900 border-b-2 border-brand-red'
+                    : 'text-gray-400 hover:text-gray-600'
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -152,12 +151,17 @@ export default function BuyYouTubeWatchHoursPage() {
             </div>
 
             {/* Information Banner */}
-            <div className="bg-gray-100 rounded-lg p-4 mb-6">
-              <p className="text-gray-700 text-sm">
-                <span className="font-medium">Information:</span> We recommend our{' '}
-                <span className="text-brand-red font-semibold">Fast YouTube Watch Hours</span> packages for orders with a high number of watch hours.
-              </p>
-            </div>
+            {(infoBanner ?? true) && (
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <p className="text-gray-700 text-sm">
+                  {infoBanner ? (
+                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                  ) : (
+                    <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Verified YouTube Watch Hours</span> packages to boost your monetization.</>
+                  )}
+                </p>
+              </div>
+            )}
 
             {/* View Packages Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
@@ -167,14 +171,12 @@ export default function BuyYouTubeWatchHoursPage() {
                   <div
                     key={index}
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`rounded-full transition-colors cursor-pointer flex items-center ${
-                      isSelected ? 'bg-brand-red p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'
-                    }`}
+                    className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-brand-red p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'
+                      }`}
                   >
                     {/* Left Section - Watch Hours Quantity (White) */}
-                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
-                      isSelected ? 'border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'
-                    }`}>
+                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'
+                      }`}>
                       <div className="text-lg sm:text-2xl font-bold text-gray-900">
                         {pkg.hours}
                       </div>
@@ -182,35 +184,30 @@ export default function BuyYouTubeWatchHoursPage() {
                         hours
                       </div>
                     </div>
-                    
+
                     {/* Right Section - Price */}
-                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${
-                      isSelected ? 'bg-brand-red' : ''
-                    }`}>
+                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-brand-red' : ''
+                      }`}>
                       {pkg.originalPrice ? (
                         <>
                           <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
-                            <span className={`line-through text-xs sm:text-sm ${
-                              isSelected ? 'text-white' : 'text-gray-400'
-                            }`}>
+                            <span className={`line-through text-xs sm:text-sm ${isSelected ? 'text-white' : 'text-gray-400'
+                              }`}>
                               ${pkg.originalPrice}
                             </span>
-                            <span className={`font-bold text-base sm:text-lg ${
-                              isSelected ? 'text-white' : 'text-brand-red'
-                            }`}>
+                            <span className={`font-bold text-base sm:text-lg ${isSelected ? 'text-white' : 'text-brand-red'
+                              }`}>
                               ${pkg.price}
                             </span>
                           </div>
-                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${
-                            isSelected ? 'bg-black text-white' : 'bg-brand-red text-white'
-                          }`}>
+                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${isSelected ? 'bg-black text-white' : 'bg-brand-red text-white'
+                            }`}>
                             save {pkg.discount}
                           </div>
                         </>
                       ) : (
-                        <div className={`font-bold text-base sm:text-xl ${
-                          isSelected ? 'text-white' : 'text-gray-900'
-                        }`}>
+                        <div className={`font-bold text-base sm:text-xl ${isSelected ? 'text-white' : 'text-gray-900'
+                          }`}>
                           ${pkg.price}
                         </div>
                       )}
@@ -230,7 +227,7 @@ export default function BuyYouTubeWatchHoursPage() {
                       state: {
                         allPackages: watchHoursPackages,
                         serviceType: 'YouTube Watch Hours',
-                        typeLabels: { regular: 'Regular', fast: 'Fast', ads: 'Ads' },
+                        typeLabels: { regular: 'Watch Time' },
                         quantityKey: 'hours',
                         unitLabel: 'hours',
                         initialType: activeTab,
@@ -280,14 +277,14 @@ export default function BuyYouTubeWatchHoursPage() {
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
-            
+
             <div className="grid lg:grid-cols-2 gap-8 relative z-10">
               {/* Left Section */}
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
                   All In One YouTube Watch Hours Campaign
                 </h2>
-                
+
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
@@ -297,7 +294,7 @@ export default function BuyYouTubeWatchHoursPage() {
                     Buy now
                   </button>
                 </div>
-                
+
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   With YoutubeADwords's all-inclusive package, you can{' '}
@@ -305,7 +302,7 @@ export default function BuyYouTubeWatchHoursPage() {
                   <span className="text-brand-red font-semibold">YouTube views service</span> and add it to the package for the best price.
                 </p>
               </div>
-              
+
               {/* Right Section - Features Grid */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -533,7 +530,7 @@ export default function BuyYouTubeWatchHoursPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo1.jpg"
@@ -554,7 +551,7 @@ export default function BuyYouTubeWatchHoursPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo2.jpg"
@@ -679,7 +676,7 @@ export default function BuyYouTubeWatchHoursPage() {
                 <div className="absolute top-0 right-0 bg-brand-red text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
                   BEST CHOICE
                 </div>
-                
+
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
                     <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">WATCH HOURS</span>
@@ -775,7 +772,7 @@ export default function BuyYouTubeWatchHoursPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -797,7 +794,7 @@ export default function BuyYouTubeWatchHoursPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -819,7 +816,7 @@ export default function BuyYouTubeWatchHoursPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -850,7 +847,7 @@ export default function BuyYouTubeWatchHoursPage() {
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 transform rotate-45 translate-x-8 -translate-y-8"></div>
               <div className="absolute top-4 right-4 w-16 h-16 bg-white/80 transform rotate-12"></div>
-              
+
               <div className="relative z-10">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
                   Leave a review
@@ -955,7 +952,7 @@ export default function BuyYouTubeWatchHoursPage() {
                     </div>
                   )}
 
-             
+
 
                   {/* Send Button */}
                   <button

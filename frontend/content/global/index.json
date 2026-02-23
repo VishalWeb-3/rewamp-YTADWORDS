@@ -12,7 +12,7 @@
       },
       {
         "label": "TikTok Ads Services",
-        "link": "/"
+        "link": "/buy-tiktok-followers"
       },
       {
         "label": "Contact",
@@ -32,6 +32,8 @@
       "YouTube Subscribers",
       "YouTube Watch Hours",
       "TikTok Followers",
+      "TikTok Likes",
+      "TikTok Views",
       "Google Ads Views"
     ],
     "resourcesTitle": "Resources",
@@ -126,28 +128,16 @@
         "label": "TikTok Ads Services",
         "items": [
           {
-            "label": "TikTok Followers Growth",
+            "label": "TikTok Followers",
             "link": "/buy-tiktok-followers"
           },
           {
-            "label": "TikTok Ads Views",
-            "link": "/buy-tiktok-ads-views"
+            "label": "TikTok Likes",
+            "link": "/buy-tiktok-likes"
           },
           {
-            "label": "TikTok Reach / Impressions",
-            "link": "/buy-tiktok-reach"
-          },
-          {
-            "label": "TikTok Engagement Services",
-            "link": "/buy-tiktok-engagement"
-          },
-          {
-            "label": "TikTok Video Views",
-            "link": "/buy-tiktok-video-views"
-          },
-          {
-            "label": "TikTok Website / App Traffic",
-            "link": "/buy-tiktok-traffic"
+            "label": "TikTok Views",
+            "link": "/buy-tiktok-views"
           }
         ]
       },

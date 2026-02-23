@@ -9,11 +9,8 @@ import BuyYouTubeSubscribersPage from './pages/BuyYouTubeSubscribersPage';
 import BuyYouTubeLikesPage from './pages/BuyYouTubeLikesPage';
 import BuyYouTubeWatchHoursPage from './pages/BuyYouTubeWatchHoursPage';
 import BuyTikTokFollowersPage from './pages/BuyTikTokFollowersPage';
-import BuyTikTokAdsViewsPage from './pages/BuyTikTokAdsViewsPage';
-import BuyTikTokReachPage from './pages/BuyTikTokReachPage';
-import BuyTikTokEngagementPage from './pages/BuyTikTokEngagementPage';
-import BuyTikTokVideoViewsPage from './pages/BuyTikTokVideoViewsPage';
-import BuyTikTokTrafficPage from './pages/BuyTikTokTrafficPage';
+import BuyTikTokLikesPage from './pages/BuyTikTokLikesPage';
+import BuyTikTokViewsPage from './pages/BuyTikTokViewsPage';
 import BuyGoogleSkipAdsViewsPage from './pages/BuyGoogleSkipAdsViewsPage';
 import BuyGoogleDisplayAdsViewsPage from './pages/BuyGoogleDisplayAdsViewsPage';
 
@@ -70,11 +67,8 @@ function AppContent() {
         <Route path="/buy-youtube-likes" element={<BuyYouTubeLikesPage />} />
         <Route path="/buy-youtube-watch-hours" element={<BuyYouTubeWatchHoursPage />} />
         <Route path="/buy-tiktok-followers" element={<BuyTikTokFollowersPage />} />
-        <Route path="/buy-tiktok-ads-views" element={<BuyTikTokAdsViewsPage />} />
-        <Route path="/buy-tiktok-reach" element={<BuyTikTokReachPage />} />
-        <Route path="/buy-tiktok-engagement" element={<BuyTikTokEngagementPage />} />
-        <Route path="/buy-tiktok-video-views" element={<BuyTikTokVideoViewsPage />} />
-        <Route path="/buy-tiktok-traffic" element={<BuyTikTokTrafficPage />} />
+        <Route path="/buy-tiktok-likes" element={<BuyTikTokLikesPage />} />
+        <Route path="/buy-tiktok-views" element={<BuyTikTokViewsPage />} />
         <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
         <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
 

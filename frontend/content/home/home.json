@@ -162,10 +162,9 @@
       "Google Search Traffic"
     ],
     "tiktokServices": [
-      "TikTok Video Views",
-      "TikTok Ads Views",
       "TikTok Followers",
-      "TikTok Engagement"
+      "TikTok Likes",
+      "TikTok Views"
     ]
   },
   "whyChooseUs": {

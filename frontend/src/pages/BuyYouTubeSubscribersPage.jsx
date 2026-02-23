@@ -3,31 +3,34 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
 
 const subscriberPackagesFallback = {
   regular: [
-    { subscribers: '100', price: '2.99', originalPrice: null, discount: null },
-    { subscribers: '1.0k', price: '31.50', originalPrice: '35.00', discount: '10%' },
-    { subscribers: '2.5k', price: '73.80', originalPrice: '82.00', discount: '10%' },
-    { subscribers: '5.0k', price: '135.00', originalPrice: '150.00', discount: '10%' },
+    { subscribers: '100', price: '5.03', originalPrice: '5.59', discount: '10%' },
+    { subscribers: '250', price: '12.59', originalPrice: '13.99', discount: '10%' },
+    { subscribers: '500', price: '24.29', originalPrice: '26.99', discount: '10%' },
+    { subscribers: '1.0K', price: '48.59', originalPrice: '53.99', discount: '10%' },
+    { subscribers: '2.5K', price: '121.49', originalPrice: '134.99', discount: '10%' },
+    { subscribers: '5.0K', price: '242.99', originalPrice: '269.99', discount: '10%' },
+    { subscribers: '10.0K', price: '485.99', originalPrice: '539.99', discount: '10%' },
   ],
   fast: [
-    { subscribers: '100', price: '4.99', originalPrice: null, discount: null },
-    { subscribers: '1.0k', price: '53.10', originalPrice: '59.00', discount: '10%' },
-    { subscribers: '2.5k', price: '121.50', originalPrice: '135.00', discount: '10%' },
-    { subscribers: '5.0k', price: '229.50', originalPrice: '255.00', discount: '10%' },
+    { subscribers: '120', price: '13.41', originalPrice: '14.90', discount: '10%' },
+    { subscribers: '240', price: '26.10', originalPrice: '29.00', discount: '10%' },
+    { subscribers: '480', price: '51.30', originalPrice: '57.00', discount: '10%' },
+    { subscribers: '720', price: '71.10', originalPrice: '79.00', discount: '10%' },
   ],
   ads: [
-    { subscribers: '100', price: '6.99', originalPrice: null, discount: null },
-    { subscribers: '1.0k', price: '81.00', originalPrice: '90.00', discount: '10%' },
-    { subscribers: '2.5k', price: '189.00', originalPrice: '210.00', discount: '10%' },
-    { subscribers: '5.0k', price: '351.00', originalPrice: '390.00', discount: '10%' },
+    { subscribers: '25.0K', price: '1196.99', originalPrice: '1329.99', discount: '10%' },
+    { subscribers: '50.0K', price: '2402.99', originalPrice: '2669.99', discount: '10%' },
+    { subscribers: '100K', price: '4805.99', originalPrice: '5339.99', discount: '10%' },
+    { subscribers: '250K', price: '11969.99', originalPrice: '13299.99', discount: '10%' },
   ],
 };
 
-const features = [
+const featuresFallback = [
   { label: 'Real & Organic Subscribers', icon: 'check' },
   { label: 'High Quality', icon: 'check' },
   { label: 'Instant start', icon: 'check' },
@@ -44,6 +47,7 @@ export default function BuyYouTubeSubscribersPage() {
   const canAddToCart = isEnabled('add_to_cart');
   const { goToCheckout } = useCheckout();
   const subscriberPackages = usePricingPackages('buy-youtube-subscribers', subscriberPackagesFallback);
+  const content = usePricingPageContent('buy-youtube-subscribers', null);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -56,22 +60,14 @@ export default function BuyYouTubeSubscribersPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = subscriberPackages ? subscriberPackages[activeTab] : [];
 
-  const handleAddToCart = (pkg) => {
-    addToCart({
-      platform: 'YouTube',
-      serviceType: 'YouTube Subscribers',
-      serviceName: `YouTube Subscribers - ${pkg.subscribers}`,
-      type: activeTab === 'regular' ? 'Regular Subscribers' : activeTab === 'fast' ? 'Fast Subscribers' : 'Ads Subscribers',
-      quantity: pkg.subscribers,
-      price: pkg.price,
-      subscribers: pkg.subscribers,
-    });
-  };
-
-  const faqs = [
+  const hero = content?.hero;
+  const tabs = content?.tabs;
+  const infoBanner = content?.infoBanner;
+  const features = (content?.features?.length ? content.features : featuresFallback).map((f) => ({ ...f, icon: 'check' }));
+  const faqs = content?.faq?.items?.length ? content.faq.items : [
     {
       question: 'How quickly will I receive my YouTube subscribers?',
-      answer: 'Delivery times vary depending on the package you choose. Regular subscribers typically start within a few hours, while Fast Subscribers begin immediately. Ads Subscribers are delivered through Google Ads campaigns and may take 24-48 hours to start. All packages are designed to deliver subscribers gradually to ensure natural growth patterns.',
+      answer: 'Delivery times vary depending on the package you choose. Regular subscribers typically start within a few hours, while Natural Growth begin immediately. Influencer+ are delivered through targeted campaigns and may take 24-48 hours to start. All packages are designed to deliver subscribers gradually to ensure natural growth patterns.',
     },
     {
       question: 'Are the subscribers real and from real users?',
@@ -95,9 +91,27 @@ export default function BuyYouTubeSubscribersPage() {
     },
   ];
 
+  const handleAddToCart = (pkg) => {
+    addToCart({
+      platform: 'YouTube',
+      serviceType: 'YouTube Subscribers',
+      serviceName: `YouTube Subscribers - ${pkg.subscribers}`,
+      type: activeTab === 'regular' ? 'Regular Subs.' : activeTab === 'fast' ? 'Natural Growth' : 'Influencer+',
+      quantity: pkg.subscribers,
+      price: pkg.price,
+      subscribers: pkg.subscribers,
+    });
+  };
+
   const toggleFAQ = (index) => {
     setOpenFAQIndex(openFAQIndex === index ? null : index);
   };
+
+  const tabList = [
+    { id: 'regular', label: tabs?.regular ?? 'Regular Subs.' },
+    { id: 'fast', label: tabs?.fast ?? 'Natural Growth popular' },
+    { id: 'ads', label: tabs?.ads ?? 'Influencer+' },
+  ];
 
   return (
     <Layout>
@@ -114,20 +128,20 @@ export default function BuyYouTubeSubscribersPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src="/pricepage.png"
-                alt="Buy YouTube Subscribers"
+                src={hero?.image || "/pricepage.png"}
+                alt={hero?.title || "Buy YouTube Subscribers"}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                Buy YouTube Subscribers{' '}
+                {hero?.title || "Buy YouTube Subscribers"}{' '}
                 <span className="bg-brand-red text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-lg sm:text-2xl lg:text-3xl font-bold">
-                  Instantly
+                  {hero?.badge || "Instantly"}
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeADwords is the safest way to buy YouTube Subscribers with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                {hero?.intro || "YoutubeADwords is the safest way to buy YouTube Subscribers with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!"}
               </p>
             </div>
           </div>
@@ -136,11 +150,7 @@ export default function BuyYouTubeSubscribersPage() {
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
             {/* Tabs */}
             <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
-              {[
-                { id: 'regular', label: 'Regular Subscribers' },
-                { id: 'fast', label: 'Fast Subscribers' },
-                { id: 'ads', label: 'Ads Subscribers' },
-              ].map((tab) => (
+              {tabList.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => {
@@ -158,12 +168,18 @@ export default function BuyYouTubeSubscribersPage() {
             </div>
 
             {/* Information Banner */}
-            <div className="bg-gray-100 rounded-lg p-4 mb-6">
-              <p className="text-gray-700 text-sm">
-                <span className="font-medium">Information:</span> We recommend our{' '}
-                <span className="text-brand-red font-semibold">Fast YouTube Subscribers</span> packages for orders with a high number of subscribers.
-              </p>
-            </div>
+            {(infoBanner ?? true) && (
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <p className="text-gray-700 text-sm">
+                  {infoBanner ? (
+                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                  ) : (
+                    <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Natural Growth</span> packages for orders with a high number of subscribers.</>
+                  )}
+                </p>
+              </div>
+            )}
+
 
             {/* View Packages Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
@@ -225,7 +241,17 @@ export default function BuyYouTubeSubscribersPage() {
                 onClick={() => {
                   if (selectedPackageIndex !== null) {
                     const selectedPkg = packages[selectedPackageIndex];
-                    goToCheckout(selectedPkg, 'YouTube', `YouTube Subscribers - ${selectedPkg.subscribers}`, 'subscribers');
+                    navigate('/get-started', {
+                      state: {
+                        allPackages: subscriberPackages,
+                        serviceType: 'YouTube Subscribers',
+                        typeLabels: { regular: 'Regular Subs.', fast: 'Natural Growth', ads: 'Influencer+' },
+                        quantityKey: 'subscribers',
+                        unitLabel: 'subs',
+                        initialType: activeTab,
+                        initialPackage: selectedPkg,
+                      },
+                    });
                   }
                 }}
                 disabled={selectedPackageIndex === null || !canBuy}

@@ -6,78 +6,108 @@
             "regularPackages": [
                 {
                     "quantity": "100",
-                    "price": "1.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "14.40",
-                    "originalPrice": "16.00",
+                    "price": "1.34",
+                    "originalPrice": "1.49",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "33.30",
-                    "originalPrice": "37.00",
+                    "quantity": "1.0K",
+                    "price": "3.96",
+                    "originalPrice": "4.40",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
+                    "quantity": "2.5K",
+                    "price": "9.81",
+                    "originalPrice": "10.90",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "5.0K",
+                    "price": "19.78",
+                    "originalPrice": "21.98",
                     "discount": "10%"
                 }
             ],
             "fastPackages": [
                 {
-                    "quantity": "100",
-                    "price": "2.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "26.10",
-                    "originalPrice": "29.00",
+                    "quantity": "10.0K",
+                    "price": "34.11",
+                    "originalPrice": "37.90",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
+                    "quantity": "25.0K",
+                    "price": "85.50",
+                    "originalPrice": "95.00",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "108.00",
-                    "originalPrice": "120.00",
+                    "quantity": "50.0K",
+                    "price": "161.10",
+                    "originalPrice": "179.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "75.0K",
+                    "price": "256.50",
+                    "originalPrice": "285.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "100K",
+                    "price": "314.10",
+                    "originalPrice": "349.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "250K",
+                    "price": "764.10",
+                    "originalPrice": "849.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "500K",
+                    "price": "1431.00",
+                    "originalPrice": "1590.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "750K",
+                    "price": "2146.50",
+                    "originalPrice": "2385.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "1.0M",
+                    "price": "2862.00",
+                    "originalPrice": "3180.00",
                     "discount": "10%"
                 }
             ],
             "adsPackages": [
                 {
-                    "quantity": "100",
-                    "price": "3.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "40.50",
-                    "originalPrice": "45.00",
+                    "quantity": "500K",
+                    "price": "882.00",
+                    "originalPrice": "980.00",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "94.50",
-                    "originalPrice": "105.00",
+                    "quantity": "1.0M",
+                    "price": "1665.00",
+                    "originalPrice": "1850.00",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "175.50",
-                    "originalPrice": "195.00",
+                    "quantity": "2.5M",
+                    "price": "3330.00",
+                    "originalPrice": "3700.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "5.0M",
+                    "price": "6210.00",
+                    "originalPrice": "6900.00",
                     "discount": "10%"
                 }
             ]
@@ -88,78 +118,96 @@
             "regularPackages": [
                 {
                     "quantity": "100",
-                    "price": "2.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "31.50",
-                    "originalPrice": "35.00",
+                    "price": "5.03",
+                    "originalPrice": "5.59",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "73.80",
-                    "originalPrice": "82.00",
+                    "quantity": "250",
+                    "price": "12.59",
+                    "originalPrice": "13.99",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "135.00",
-                    "originalPrice": "150.00",
+                    "quantity": "500",
+                    "price": "24.29",
+                    "originalPrice": "26.99",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "1.0K",
+                    "price": "48.59",
+                    "originalPrice": "53.99",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "2.5K",
+                    "price": "121.49",
+                    "originalPrice": "134.99",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "5.0K",
+                    "price": "242.99",
+                    "originalPrice": "269.99",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "10.0K",
+                    "price": "485.99",
+                    "originalPrice": "539.99",
                     "discount": "10%"
                 }
             ],
             "fastPackages": [
                 {
-                    "quantity": "100",
-                    "price": "4.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "53.10",
-                    "originalPrice": "59.00",
+                    "quantity": "120",
+                    "price": "13.41",
+                    "originalPrice": "14.90",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "121.50",
-                    "originalPrice": "135.00",
+                    "quantity": "240",
+                    "price": "26.10",
+                    "originalPrice": "29.00",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "229.50",
-                    "originalPrice": "255.00",
+                    "quantity": "480",
+                    "price": "51.30",
+                    "originalPrice": "57.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "720",
+                    "price": "71.10",
+                    "originalPrice": "79.00",
                     "discount": "10%"
                 }
             ],
             "adsPackages": [
                 {
-                    "quantity": "100",
-                    "price": "6.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "81.00",
-                    "originalPrice": "90.00",
+                    "quantity": "25.0K",
+                    "price": "1196.99",
+                    "originalPrice": "1329.99",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "189.00",
-                    "originalPrice": "210.00",
+                    "quantity": "50.0K",
+                    "price": "2402.99",
+                    "originalPrice": "2669.99",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "351.00",
-                    "originalPrice": "390.00",
+                    "quantity": "100K",
+                    "price": "4805.99",
+                    "originalPrice": "5339.99",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "250K",
+                    "price": "11969.99",
+                    "originalPrice": "13299.99",
                     "discount": "10%"
                 }
             ]
@@ -169,53 +217,83 @@
             "quantityKey": "likes",
             "regularPackages": [
                 {
+                    "quantity": "20",
+                    "price": "0.53",
+                    "originalPrice": "0.59",
+                    "discount": "10%"
+                },
+                {
                     "quantity": "100",
-                    "price": "0.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "11.70",
-                    "originalPrice": "13.00",
+                    "price": "3.15",
+                    "originalPrice": "3.50",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "27.00",
-                    "originalPrice": "30.00",
+                    "quantity": "250",
+                    "price": "5.63",
+                    "originalPrice": "6.25",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "46.80",
-                    "originalPrice": "52.00",
+                    "quantity": "500",
+                    "price": "12.60",
+                    "originalPrice": "14.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "1.0K",
+                    "price": "24.30",
+                    "originalPrice": "27.00",
                     "discount": "10%"
                 }
             ],
             "fastPackages": [
                 {
-                    "quantity": "100",
-                    "price": "1.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "22.50",
-                    "originalPrice": "25.00",
+                    "quantity": "500",
+                    "price": "21.60",
+                    "originalPrice": "24.00",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "54.00",
-                    "originalPrice": "60.00",
+                    "quantity": "1.0K",
+                    "price": "42.30",
+                    "originalPrice": "47.00",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "94.50",
-                    "originalPrice": "105.00",
+                    "quantity": "2.0K",
+                    "price": "82.80",
+                    "originalPrice": "92.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "3.0K",
+                    "price": "121.50",
+                    "originalPrice": "135.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "5.0K",
+                    "price": "202.50",
+                    "originalPrice": "225.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "10.0K",
+                    "price": "400.50",
+                    "originalPrice": "445.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "20.0K",
+                    "price": "796.50",
+                    "originalPrice": "885.00",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "50.0K",
+                    "price": "1980.00",
+                    "originalPrice": "2200.00",
                     "discount": "10%"
                 }
             ],
@@ -251,82 +329,38 @@
             "quantityKey": "hours",
             "regularPackages": [
                 {
-                    "quantity": "100",
-                    "price": "4.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "54.00",
-                    "originalPrice": "60.00",
+                    "quantity": "1.0K",
+                    "price": "80.55",
+                    "originalPrice": "89.50",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "121.50",
-                    "originalPrice": "135.00",
+                    "quantity": "1.5K",
+                    "price": "120.83",
+                    "originalPrice": "134.25",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "216.00",
-                    "originalPrice": "240.00",
-                    "discount": "10%"
-                }
-            ],
-            "fastPackages": [
-                {
-                    "quantity": "100",
-                    "price": "7.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "94.50",
-                    "originalPrice": "105.00",
+                    "quantity": "2.0K",
+                    "price": "160.65",
+                    "originalPrice": "178.50",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "2.5k",
-                    "price": "216.00",
-                    "originalPrice": "240.00",
+                    "quantity": "3.0K",
+                    "price": "241.65",
+                    "originalPrice": "268.50",
                     "discount": "10%"
                 },
                 {
-                    "quantity": "5.0k",
-                    "price": "391.50",
-                    "originalPrice": "435.00",
+                    "quantity": "4.0K",
+                    "price": "321.75",
+                    "originalPrice": "357.50",
                     "discount": "10%"
                 }
             ],
-            "adsPackages": [
-                {
-                    "quantity": "100",
-                    "price": "9.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "121.50",
-                    "originalPrice": "135.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "283.50",
-                    "originalPrice": "315.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "526.50",
-                    "originalPrice": "585.00",
-                    "discount": "10%"
-                }
-            ]
+            "fastPackages": [],
+            "adsPackages": []
         },
         {
             "slug": "buy-tiktok-followers",
@@ -411,336 +445,8 @@
             ]
         },
         {
-            "slug": "buy-tiktok-ads-views",
+            "slug": "buy-tiktok-views",
             "quantityKey": "views",
-            "regularPackages": [
-                {
-                    "quantity": "100",
-                    "price": "2.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "31.50",
-                    "originalPrice": "35.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "73.80",
-                    "originalPrice": "82.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "135.00",
-                    "originalPrice": "150.00",
-                    "discount": "10%"
-                }
-            ],
-            "fastPackages": [
-                {
-                    "quantity": "100",
-                    "price": "4.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "53.10",
-                    "originalPrice": "59.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "121.50",
-                    "originalPrice": "135.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "229.50",
-                    "originalPrice": "255.00",
-                    "discount": "10%"
-                }
-            ],
-            "adsPackages": [
-                {
-                    "quantity": "100",
-                    "price": "6.99",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "81.00",
-                    "originalPrice": "90.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "189.00",
-                    "originalPrice": "210.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "351.00",
-                    "originalPrice": "390.00",
-                    "discount": "10%"
-                }
-            ]
-        },
-        {
-            "slug": "buy-tiktok-reach",
-            "quantityKey": "reach",
-            "regularPackages": [
-                {
-                    "quantity": "100",
-                    "price": "1.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "14.40",
-                    "originalPrice": "16.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "33.30",
-                    "originalPrice": "37.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
-                    "discount": "10%"
-                }
-            ],
-            "fastPackages": [
-                {
-                    "quantity": "100",
-                    "price": "2.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "26.10",
-                    "originalPrice": "29.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "108.00",
-                    "originalPrice": "120.00",
-                    "discount": "10%"
-                }
-            ],
-            "adsPackages": [
-                {
-                    "quantity": "100",
-                    "price": "3.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "40.50",
-                    "originalPrice": "45.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "94.50",
-                    "originalPrice": "105.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "175.50",
-                    "originalPrice": "195.00",
-                    "discount": "10%"
-                }
-            ]
-        },
-        {
-            "slug": "buy-tiktok-engagement",
-            "quantityKey": "engagement",
-            "regularPackages": [
-                {
-                    "quantity": "100",
-                    "price": "1.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "14.40",
-                    "originalPrice": "16.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "33.30",
-                    "originalPrice": "37.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
-                    "discount": "10%"
-                }
-            ],
-            "fastPackages": [
-                {
-                    "quantity": "100",
-                    "price": "2.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "26.10",
-                    "originalPrice": "29.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "108.00",
-                    "originalPrice": "120.00",
-                    "discount": "10%"
-                }
-            ],
-            "adsPackages": [
-                {
-                    "quantity": "100",
-                    "price": "3.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "40.50",
-                    "originalPrice": "45.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "94.50",
-                    "originalPrice": "105.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "175.50",
-                    "originalPrice": "195.00",
-                    "discount": "10%"
-                }
-            ]
-        },
-        {
-            "slug": "buy-tiktok-video-views",
-            "quantityKey": "views",
-            "regularPackages": [
-                {
-                    "quantity": "100",
-                    "price": "1.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "14.40",
-                    "originalPrice": "16.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "33.30",
-                    "originalPrice": "37.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
-                    "discount": "10%"
-                }
-            ],
-            "fastPackages": [
-                {
-                    "quantity": "100",
-                    "price": "2.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "26.10",
-                    "originalPrice": "29.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "60.30",
-                    "originalPrice": "67.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "108.00",
-                    "originalPrice": "120.00",
-                    "discount": "10%"
-                }
-            ],
-            "adsPackages": [
-                {
-                    "quantity": "100",
-                    "price": "3.49",
-                    "originalPrice": "",
-                    "discount": ""
-                },
-                {
-                    "quantity": "1.0k",
-                    "price": "40.50",
-                    "originalPrice": "45.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "2.5k",
-                    "price": "94.50",
-                    "originalPrice": "105.00",
-                    "discount": "10%"
-                },
-                {
-                    "quantity": "5.0k",
-                    "price": "175.50",
-                    "originalPrice": "195.00",
-                    "discount": "10%"
-                }
-            ]
-        },
-        {
-            "slug": "buy-tiktok-traffic",
-            "quantityKey": "traffic",
             "regularPackages": [
                 {
                     "quantity": "100",
@@ -1392,6 +1098,26 @@
                     "discount": "10%"
                 }
             ]
+        },
+        {
+            "slug": "buy-tiktok-likes",
+            "quantityKey": "likes",
+            "regularPackages": [
+                {
+                    "quantity": "100",
+                    "price": "2.39",
+                    "originalPrice": "2.65",
+                    "discount": "10%"
+                },
+                {
+                    "quantity": "1.0k",
+                    "price": "10.49",
+                    "originalPrice": "11.65",
+                    "discount": "10%"
+                }
+            ],
+            "fastPackages": [],
+            "adsPackages": []
         }
     ]
 }
