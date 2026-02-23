@@ -45,7 +45,7 @@ export default function ServiceBar() {
       textClass: i === 1 ? 'text-red-600' : i === 3 ? 'text-green-600' : 'text-gray-800',
     }))
     : [
-      { label: 'Google Ads Services', items: [{ label: 'Google Skip Ads Views', link: '/buy-google-skip-ads-views' }, { label: 'Google Display Ads Views', link: '/buy-google-display-ads-views' }, { label: 'Google Ads Search Campaign Traffic', link: '/buy-google-ads-search-traffic' }, { label: 'Google Ads Website / App Traffic', link: '/buy-google-ads-website-traffic' }], icon: ICONS.google, textClass: 'text-gray-600' },
+      { label: 'Google Ads Services', items: [{ label: 'Google Skip Ads Views', link: '/buy-google-skip-ads-views' }, { label: 'Google Display Ads Views', link: '/buy-google-display-ads-views' }, { label: 'Google Apps Download', link: '/buy-google-apps-download' }, { label: 'Google Ads Website / App Traffic', link: '/buy-google-ads-website-traffic' }], icon: ICONS.google, textClass: 'text-gray-600' },
       { label: 'YouTube Services', items: [{ label: 'Buy YouTube Views', link: '/buy-youtube-views' }, { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' }, { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' }, { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' }], icon: ICONS.youtube, textClass: 'text-red-600' },
       { label: 'TikTok Ads Services', items: [{ label: 'TikTok Followers Growth', link: '/buy-tiktok-followers' }, { label: 'TikTok Ads Views', link: '/buy-tiktok-ads-views' }, { label: 'TikTok Reach / Impressions', link: '/buy-tiktok-reach' }, { label: 'TikTok Engagement Services', link: '/buy-tiktok-engagement' }, { label: 'TikTok Video Views', link: '/buy-tiktok-video-views' }, { label: 'TikTok Website / App Traffic', link: '/buy-tiktok-traffic' }], icon: ICONS.tiktok, textClass: 'text-gray-800' },
       { label: 'Buy Google Reviews', items: [{ label: 'Buy Female Google Reviews', link: '/buy-female-google-reviews' }, { label: 'Buy Male Google Reviews', link: '/buy-male-google-reviews' }, { label: 'Buy Google Local Guide Reviews', link: '/buy-google-local-guide-reviews' }, { label: 'Buy Google Reviews by Age Group', link: '/buy-google-reviews-by-age-group' }], icon: ICONS.reviews, textClass: 'text-green-600' },
@@ -76,8 +76,8 @@ export default function ServiceBar() {
                 <ButtonOrLink
                   {...buttonProps}
                   className={`flex items-center gap-2 sm:gap-3 px-2.5 sm:px-3 py-2 rounded-full bg-white border shadow-sm transition-all ${openIndex === index
-                      ? 'border-red-400 shadow-md bg-red-50'
-                      : 'border-gray-200 hover:shadow-md hover:border-gray-300'
+                    ? 'border-red-400 shadow-md bg-red-50'
+                    : 'border-gray-200 hover:shadow-md hover:border-gray-300'
                     }`}
                 >
                   {typeof s.icon === 'function' ? s.icon() : s.icon}

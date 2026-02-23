@@ -283,7 +283,7 @@ var config_default = defineConfig({
             list: true,
             fields: [
               { type: "string", name: "slug", label: "Page Slug", description: "Route path without leading slash, e.g. buy-youtube-views", required: true },
-              { type: "string", name: "quantityKey", label: "Quantity Field", description: "views, subscribers, likes, hours, traffic, followers, reach, rereviews, engagement", required: true, ui: { component: "select", options: ["views", "subscribers", "likes", "hours", "traffic", "followers", "reach", "rereviews", "engagement"] } },
+              { type: "string", name: "quantityKey", label: "Quantity Field", description: "views, subscribers, likes, hours, traffic, followers, reach, rereviews, engagement, installs", required: true, ui: { component: "select", options: ["views", "subscribers", "likes", "hours", "traffic", "followers", "reach", "rereviews", "engagement", "installs"] } },
               {
                 type: "object",
                 name: "regularPackages",

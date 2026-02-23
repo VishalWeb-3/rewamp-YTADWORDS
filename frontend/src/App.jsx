@@ -17,7 +17,7 @@ import BuyTikTokTrafficPage from './pages/BuyTikTokTrafficPage';
 import BuyGoogleSkipAdsViewsPage from './pages/BuyGoogleSkipAdsViewsPage';
 import BuyGoogleDisplayAdsViewsPage from './pages/BuyGoogleDisplayAdsViewsPage';
 
-import BuyGoogleAdsSearchTrafficPage from './pages/BuyGoogleAdsSearchTrafficPage';
+import BuyGoogleAppsDownloadPage from './pages/BuyGoogleAppsDownloadPage';
 import BuyGoogleAdsWebsiteTrafficPage from './pages/BuyGoogleAdsWebsiteTrafficPage';
 import BuyFemaleGoogleReviewsPage from './pages/BuyFemaleGoogleReviewsPage';
 import BuyMaleGoogleReviewsPage from './pages/BuyMaleGoogleReviewsPage';
@@ -64,53 +64,53 @@ function AppContent() {
     <>
       <ScrollToTop />
       <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/buy-youtube-views" element={<BuyYouTubeViewsPage />} />
-          <Route path="/buy-youtube-subscribers" element={<BuyYouTubeSubscribersPage />} />
-          <Route path="/buy-youtube-likes" element={<BuyYouTubeLikesPage />} />
-          <Route path="/buy-youtube-watch-hours" element={<BuyYouTubeWatchHoursPage />} />
-          <Route path="/buy-tiktok-followers" element={<BuyTikTokFollowersPage />} />
-          <Route path="/buy-tiktok-ads-views" element={<BuyTikTokAdsViewsPage />} />
-          <Route path="/buy-tiktok-reach" element={<BuyTikTokReachPage />} />
-          <Route path="/buy-tiktok-engagement" element={<BuyTikTokEngagementPage />} />
-          <Route path="/buy-tiktok-video-views" element={<BuyTikTokVideoViewsPage />} />
-          <Route path="/buy-tiktok-traffic" element={<BuyTikTokTrafficPage />} />
-          <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
-          <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/buy-youtube-views" element={<BuyYouTubeViewsPage />} />
+        <Route path="/buy-youtube-subscribers" element={<BuyYouTubeSubscribersPage />} />
+        <Route path="/buy-youtube-likes" element={<BuyYouTubeLikesPage />} />
+        <Route path="/buy-youtube-watch-hours" element={<BuyYouTubeWatchHoursPage />} />
+        <Route path="/buy-tiktok-followers" element={<BuyTikTokFollowersPage />} />
+        <Route path="/buy-tiktok-ads-views" element={<BuyTikTokAdsViewsPage />} />
+        <Route path="/buy-tiktok-reach" element={<BuyTikTokReachPage />} />
+        <Route path="/buy-tiktok-engagement" element={<BuyTikTokEngagementPage />} />
+        <Route path="/buy-tiktok-video-views" element={<BuyTikTokVideoViewsPage />} />
+        <Route path="/buy-tiktok-traffic" element={<BuyTikTokTrafficPage />} />
+        <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
+        <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
 
-          <Route path="/buy-google-ads-search-traffic" element={<BuyGoogleAdsSearchTrafficPage />} />
-          <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
-          <Route path="/buy-female-google-reviews" element={<BuyFemaleGoogleReviewsPage />} />
-          <Route path="/buy-male-google-reviews" element={<BuyMaleGoogleReviewsPage />} />
-          <Route path="/buy-google-local-guide-reviews" element={<BuyGoogleLocalGuideReviewsPage />} />
-          <Route path="/buy-google-reviews-by-age-group" element={<BuyGoogleReviewsByAgeGroupPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/contact-us" element={<ContactPage />} />
-          <Route path="/about-us" element={<AboutUsPage />} />
-          <Route path="/about" element={<AboutUsPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/privacy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/terms-of-service" element={<TermsPage />} />
-          <Route path="/refund-policy" element={<RefundPolicyPage />} />
-          <Route path="/refunds" element={<RefundPolicyPage />} />
-          <Route path="/cookies" element={<CookiesSettingsPage />} />
-          <Route path="/cookies-settings" element={<CookiesSettingsPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signin" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/register" element={<SignupPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/get-started" element={<GetStartedPage />} />
-          <Route path="/blog" element={<BlogListPage />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />
-          <Route path="/google-reviews/get-started" element={<GoogleReviewsGetStartedGeneric />} />
-          <Route path="/google-reviews/upgrade" element={<GoogleReviewsUpgradeGeneric />} />
-          <Route path="/orders" element={<MyOrdersPage />} />
-          <Route path="/orders/:id" element={<OrderDetailPage />} />
-          <Route path="/payment/success" element={<PaymentSuccessPage />} />
-          <Route path="/payment/failure" element={<PaymentFailurePage />} />
-        </Routes>
+        <Route path="/buy-google-apps-download" element={<BuyGoogleAppsDownloadPage />} />
+        <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
+        <Route path="/buy-female-google-reviews" element={<BuyFemaleGoogleReviewsPage />} />
+        <Route path="/buy-male-google-reviews" element={<BuyMaleGoogleReviewsPage />} />
+        <Route path="/buy-google-local-guide-reviews" element={<BuyGoogleLocalGuideReviewsPage />} />
+        <Route path="/buy-google-reviews-by-age-group" element={<BuyGoogleReviewsByAgeGroupPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contact-us" element={<ContactPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/about" element={<AboutUsPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/terms-of-service" element={<TermsPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/refunds" element={<RefundPolicyPage />} />
+        <Route path="/cookies" element={<CookiesSettingsPage />} />
+        <Route path="/cookies-settings" element={<CookiesSettingsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signin" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/register" element={<SignupPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/get-started" element={<GetStartedPage />} />
+        <Route path="/blog" element={<BlogListPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
+        <Route path="/google-reviews/get-started" element={<GoogleReviewsGetStartedGeneric />} />
+        <Route path="/google-reviews/upgrade" element={<GoogleReviewsUpgradeGeneric />} />
+        <Route path="/orders" element={<MyOrdersPage />} />
+        <Route path="/orders/:id" element={<OrderDetailPage />} />
+        <Route path="/payment/success" element={<PaymentSuccessPage />} />
+        <Route path="/payment/failure" element={<PaymentFailurePage />} />
+      </Routes>
     </>
   );
 }

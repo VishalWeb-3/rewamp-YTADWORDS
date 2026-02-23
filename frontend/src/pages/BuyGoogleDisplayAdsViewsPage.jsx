@@ -6,22 +6,25 @@ import { usePricingPackages } from '../contexts/ContentContext';
 
 const displayAdsViewsPackagesFallback = {
   regular: [
-    { views: '100', price: '1.99', originalPrice: null, discount: null },
-    { views: '1.0k', price: '19.80', originalPrice: '22.00', discount: '10%' },
-    { views: '2.5k', price: '46.80', originalPrice: '52.00', discount: '10%' },
-    { views: '5.0k', price: '87.30', originalPrice: '97.00', discount: '10%' },
+    { views: '50k', price: '80', originalPrice: null, discount: null },
+    { views: '100k', price: '150', originalPrice: null, discount: null },
+    { views: '500k', price: '600', originalPrice: null, discount: null },
+    { views: '1.0M', price: '1000', originalPrice: null, discount: null },
+    { views: 'Custom', price: 'Contact for Price', originalPrice: null, discount: null },
   ],
   fast: [
-    { views: '100', price: '3.49', originalPrice: null, discount: null },
-    { views: '1.0k', price: '39.60', originalPrice: '44.00', discount: '10%' },
-    { views: '2.5k', price: '94.50', originalPrice: '105.00', discount: '10%' },
-    { views: '5.0k', price: '175.50', originalPrice: '195.00', discount: '10%' },
+    { views: '50k', price: '100', originalPrice: null, discount: null },
+    { views: '100k', price: '180', originalPrice: null, discount: null },
+    { views: '500k', price: '880', originalPrice: null, discount: null },
+    { views: '1.0M', price: '1500', originalPrice: null, discount: null },
+    { views: 'Custom', price: 'Contact for Price', originalPrice: null, discount: null },
   ],
   ads: [
-    { views: '100', price: '4.99', originalPrice: null, discount: null },
-    { views: '1.0k', price: '60.30', originalPrice: '67.00', discount: '10%' },
-    { views: '2.5k', price: '141.30', originalPrice: '157.00', discount: '10%' },
-    { views: '5.0k', price: '270.00', originalPrice: '300.00', discount: '10%' },
+    { views: '50k', price: '150', originalPrice: null, discount: null },
+    { views: '100k', price: '280', originalPrice: null, discount: null },
+    { views: '500k', price: '1100', originalPrice: null, discount: null },
+    { views: '1.0M', price: '2000', originalPrice: null, discount: null },
+    { views: 'Custom', price: 'Contact for Price', originalPrice: null, discount: null },
   ],
 };
 
@@ -130,9 +133,9 @@ export default function BuyGoogleDisplayAdsViewsPage() {
             {/* Tabs */}
             <div className="flex gap-4 mb-6 border-b border-gray-200">
               {[
-                { id: 'regular', label: 'Regular Display Ads Views' },
-                { id: 'fast', label: 'Fast Display Ads Views' },
-                { id: 'ads', label: 'Premium Display Ads Views' },
+                { id: 'regular', label: 'Content Targeted Setup' },
+                { id: 'fast', label: 'Worldwide (WW) Display' },
+                { id: 'ads', label: 'Country Targeted Display' },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -140,11 +143,10 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                     setActiveTab(tab.id);
                     setSelectedPackageIndex(null);
                   }}
-                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${
-                    activeTab === tab.id
-                      ? 'text-gray-900 border-b-2 border-[#4285F4]'
-                      : 'text-gray-400 hover:text-gray-600'
-                  }`}
+                  className={`pb-3 px-2 font-medium text-sm lg:text-base transition-colors ${activeTab === tab.id
+                    ? 'text-gray-900 border-b-2 border-[#4285F4]'
+                    : 'text-gray-400 hover:text-gray-600'
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -155,7 +157,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
             <div className="bg-gray-100 rounded-lg p-4 mb-6">
               <p className="text-gray-700 text-sm">
                 <span className="font-medium">Information:</span> We recommend our{' '}
-                <span className="text-[#4285F4] font-semibold">Fast Google Display Ads Views</span> packages for orders with a high number of views.
+                <span className="text-[#4285F4] font-semibold">{activeTab === 'regular' ? 'Content Targeted' : activeTab === 'fast' ? 'Worldwide' : 'Country Targeted'} Display Ads</span> packages for high quality performance.
               </p>
             </div>
 
@@ -163,48 +165,23 @@ export default function BuyGoogleDisplayAdsViewsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
+                const isContact = pkg.price === 'Contact for Price';
                 return (
                   <div
                     key={index}
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`rounded-full transition-colors cursor-pointer flex items-center ${
-                      isSelected ? 'bg-[#4285F4] p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'
-                    }`}
+                    className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'
+                      }`}
                   >
-                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${
-                      isSelected ? 'border-2 border-[#4285F4] border-r-0 rounded-l-full' : 'rounded-l-full'
-                    }`}>
-                      <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                        {pkg.views}
-                      </div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        views
-                      </div>
+                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-2 border-[#4285F4] border-r-0 rounded-l-full' : 'rounded-l-full'
+                      }`}>
+                      <div className="text-lg sm:text-2xl font-bold text-gray-900 leading-none">{pkg.views}</div>
+                      <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-wider font-semibold">views</div>
                     </div>
-                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${
-                      isSelected ? 'bg-[#4285F4]' : ''
-                    }`}>
-                      {pkg.originalPrice ? (
-                        <>
-                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
-                            <span className={`line-through text-xs sm:text-sm ${isSelected ? 'text-white' : 'text-gray-400'}`}>
-                              ${pkg.originalPrice}
-                            </span>
-                            <span className={`font-bold text-base sm:text-lg ${isSelected ? 'text-white' : 'text-[#4285F4]'}`}>
-                              ${pkg.price}
-                            </span>
-                          </div>
-                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${
-                            isSelected ? 'bg-black text-white' : 'bg-[#4285F4] text-white'
-                          }`}>
-                            save {pkg.discount}
-                          </div>
-                        </>
-                      ) : (
-                        <div className={`font-bold text-base sm:text-xl ${isSelected ? 'text-white' : 'text-gray-900'}`}>
-                          ${pkg.price}
-                        </div>
-                      )}
+                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-[#4285F4]' : ''}`}>
+                      <div className={`font-bold ${isContact ? 'text-xs sm:text-sm' : 'text-base sm:text-xl'} ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                        {isContact ? pkg.price : `$${pkg.price}`}
+                      </div>
                     </div>
                   </div>
                 );
@@ -217,23 +194,27 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 onClick={() => {
                   if (selectedPackageIndex !== null) {
                     const selectedPkg = packages[selectedPackageIndex];
-                    navigate('/get-started', {
-                      state: {
-                        allPackages: displayAdsViewsPackages,
-                        serviceType: 'Google Display Ads Views',
-                        typeLabels: { regular: 'Regular Views', fast: 'Fast Views', ads: 'Ads Views' },
-                        quantityKey: 'views',
-                        unitLabel: 'views',
-                        initialType: activeTab,
-                        initialPackage: selectedPkg,
-                      },
-                    });
+                    if (selectedPkg.price === 'Contact for Price') {
+                      navigate('/contact');
+                    } else {
+                      navigate('/get-started', {
+                        state: {
+                          allPackages: displayAdsViewsPackages,
+                          serviceType: 'Google Display Ads Views',
+                          typeLabels: { regular: 'Content Targeted Setup', fast: 'Worldwide (WW) Display', ads: 'Country Targeted Display' },
+                          quantityKey: 'views',
+                          unitLabel: 'views',
+                          initialType: activeTab,
+                          initialPackage: selectedPkg,
+                        },
+                      });
+                    }
                   }
                 }}
                 disabled={selectedPackageIndex === null}
                 className="flex-1 bg-[#4285F4] text-white font-bold py-4 rounded-xl hover:bg-[#3367D6] transition-colors text-lg shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
               >
-                Buy now
+                {selectedPackageIndex !== null && packages[selectedPackageIndex].price === 'Contact for Price' ? 'Contact Us' : 'Buy now'}
               </button>
               <button
                 onClick={() => { if (selectedPackageIndex !== null) handleAddToCart(packages[selectedPackageIndex]); }}
@@ -271,14 +252,14 @@ export default function BuyGoogleDisplayAdsViewsPage() {
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
-            
+
             <div className="grid lg:grid-cols-2 gap-8 relative z-10">
               {/* Left Section */}
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
                   All In One Google Display Ads Views Campaign
                 </h2>
-                
+
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
                   <div className="bg-#4285F4 text-white font-bold px-6 py-3 rounded-full text-lg">
@@ -288,7 +269,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                     Buy now
                   </button>
                 </div>
-                
+
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   With YoutubeADwords's all-inclusive package, you can{' '}
@@ -296,7 +277,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                   <span className="text-#4285F4 font-semibold">Google likes service</span> and add it to the package for the best price.
                 </p>
               </div>
-              
+
               {/* Right Section - Features Grid */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -524,7 +505,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo1.jpg"
@@ -545,7 +526,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 {/* Decorative shapes */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                
+
                 {/* Main image */}
                 <img
                   src="/demo2.jpg"
@@ -670,7 +651,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                 <div className="absolute top-0 right-0 bg-#4285F4 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
                   BEST CHOICE
                 </div>
-                
+
                 <div className="mb-8 flex items-center justify-center pt-2">
                   <div className="flex items-center gap-2">
                     <span className="text-black font-bold text-base sm:text-xl lg:text-2xl">YOUTUBE</span>
@@ -766,7 +747,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-#4285F4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -788,7 +769,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-#4285F4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -810,7 +791,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-md border border-gray-100">
                 <div className="mb-4">
                   <svg className="w-12 h-12 text-#4285F4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-base mb-6 leading-relaxed">
@@ -841,7 +822,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-#4285F4/10 transform rotate-45 translate-x-8 -translate-y-8"></div>
               <div className="absolute top-4 right-4 w-16 h-16 bg-white/80 transform rotate-12"></div>
-              
+
               <div className="relative z-10">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
                   Leave a review
@@ -946,7 +927,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
                     </div>
                   )}
 
-             
+
 
                   {/* Send Button */}
                   <button
@@ -962,6 +943,6 @@ export default function BuyGoogleDisplayAdsViewsPage() {
           </div>
         </div>
       </div>
-    </Layout>
+    </Layout >
   );
 }
