@@ -53,8 +53,9 @@ model Order {
   status          String   @default("PENDING") // PENDING, PROGRESS, COMPLETED, CANCELED
   username        String?
   paymentMethod   String   @default("CARD") // CARD | CRYPTO
-  externalOrderId String?  // ORDER_xxx for payment webhooks
-  uplefOrderId    String?  // Uplef order ID for webhook
+  externalOrderId    String?  // ORDER_xxx for payment webhooks
+  uplefOrderId       String?  // Uplef order ID for webhook
+  cryptomusPaymentId String?  // Cryptomus payment UUID for webhook
   user            User     @relation(fields: [userId], references: [id])
   userId          Int
   createdAt       DateTime @default(now())

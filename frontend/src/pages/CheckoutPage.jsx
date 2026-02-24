@@ -7,6 +7,13 @@ import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
+const CARD_MINIMUM = 35; // same as famoid.com – card only available for orders >= $35
+
+function isValidEmail(value) {
+  const v = (value || '').trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
 // Derive platform from serviceType
 function getPlatform(serviceType) {
   if (!serviceType) return 'Other';
@@ -19,7 +26,7 @@ function getPlatform(serviceType) {
 
 export default function CheckoutPage() {
   const { user } = useAuth();
-  const { cartItems, removeFromCart, getCartTotal, clearCart } = useCart();
+  const { cartItems, removeFromCart, clearCart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -34,7 +41,6 @@ export default function CheckoutPage() {
   const urlPrice = query.get('price');
   const directItem = location.state?.directItem;
   const stateEmail = location.state?.email;
-  const stateUsernames = location.state?.usernames || {};
 
   useEffect(() => {
     if (user?.email && !directItem) setEmail(user.email);
@@ -53,7 +59,9 @@ export default function CheckoutPage() {
         id: directItem.id || 'direct',
         platform: directItem.platform,
         service: directItem.service,
-        amount: typeof directItem.amount === 'number' ? directItem.amount : parseInt(String(directItem.amount), 10) || directItem.amount,
+        amount: typeof directItem.amount === 'number'
+          ? directItem.amount
+          : parseInt(String(directItem.amount), 10) || directItem.amount,
         price: parseFloat(directItem.price || 0),
       }];
     }
@@ -76,14 +84,33 @@ export default function CheckoutPage() {
   }, [cartItems, urlPlatform, urlService, urlAmount, urlPrice, directItem]);
 
   const platforms = useMemo(() => {
-    const unique = [...new Set(displayItems.map((item) => item.platform))];
-    return unique;
+    return [...new Set(displayItems.map((item) => item.platform))];
   }, [displayItems]);
 
   const total = useMemo(() => {
     if (urlPlatform && urlService && urlPrice) return parseFloat(urlPrice);
     return displayItems.reduce((sum, item) => sum + item.price, 0);
   }, [displayItems, urlPlatform, urlService, urlPrice]);
+
+  // --------------------------------------------------
+  // Payment method logic (mirrors famoid.com exactly)
+  //   total < $35   → crypto only (card hidden)
+  //   total >= $35  → card + crypto (card pre-selected)
+  // --------------------------------------------------
+  const showCardOption = total >= CARD_MINIMUM;
+
+  const [paymentMethod, setPaymentMethod] = useState(
+    showCardOption ? 'card' : 'crypto'
+  );
+
+  // Keep payment method in sync when total crosses the $35 threshold
+  useEffect(() => {
+    if (!showCardOption) {
+      setPaymentMethod('crypto');
+    } else if (paymentMethod !== 'card' && paymentMethod !== 'crypto') {
+      setPaymentMethod('card');
+    }
+  }, [showCardOption]);
 
   const handleRemove = (id) => {
     if (id === 'temp' || id === 'direct') {
@@ -96,13 +123,15 @@ export default function CheckoutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!isValidEmail(email)) {
       alert('Please enter a valid email address');
       return;
     }
 
     setIsProcessing(true);
+
+    // Always use crypto when card option is not available
+    const method = showCardOption ? paymentMethod : 'crypto';
 
     try {
       const items = displayItems.map((item) => ({
@@ -122,7 +151,7 @@ export default function CheckoutPage() {
           email,
           usernames,
           items,
-          paymentMethod: 'card',
+          paymentMethod: method,
         }),
       });
 
@@ -141,7 +170,8 @@ export default function CheckoutPage() {
         return;
       }
 
-      alert(data.details || data.error || 'Failed to create order');
+      const errorMsg = data.details || data.error || 'Failed to create order';
+      alert(errorMsg);
     } catch (err) {
       console.error('Checkout error:', err);
       alert('Something went wrong. Please try again.');
@@ -177,11 +207,16 @@ export default function CheckoutPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
             <div className="grid lg:grid-cols-3 gap-8">
+              {/* ── Left: Form ── */}
               <div className="lg:col-span-2">
                 <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8">
                   <div className="space-y-6">
+
+                    {/* Email */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email *
+                      </label>
                       <input
                         type="email"
                         required
@@ -192,35 +227,129 @@ export default function CheckoutPage() {
                       />
                     </div>
 
+                    {/* Platform usernames */}
                     <div>
                       <h3 className="text-sm font-medium text-gray-700 mb-3">Platform usernames</h3>
                       <div className="space-y-4">
                         {platforms.map((platform) => (
                           <div key={platform}>
-                            <label className="block text-xs text-gray-500 mb-1">{platform} username or link</label>
+                            <label className="block text-xs text-gray-500 mb-1">
+                              {platform} username or link
+                            </label>
                             <input
                               type="text"
                               value={usernames[platform] || ''}
-                              onChange={(e) => setUsernames({ ...usernames, [platform]: e.target.value })}
+                              onChange={(e) =>
+                                setUsernames({ ...usernames, [platform]: e.target.value })
+                              }
                               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-transparent"
-                              placeholder={platform === 'YouTube' ? 'youtube.com/watch?v=...' : `@${platform.toLowerCase()}_user`}
+                              placeholder={
+                                platform === 'YouTube'
+                                  ? 'youtube.com/watch?v=...'
+                                  : `@${platform.toLowerCase()}_user`
+                              }
                             />
                           </div>
                         ))}
                       </div>
                     </div>
 
+                    {/* ── Payment Method ── */}
+                    <div>
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-2">
+                        Payment method
+                      </label>
+
+                      {/* Button row: card shown only when total >= $35 */}
+                      <div className={`flex gap-3 ${showCardOption ? '' : 'justify-center'}`}>
+                        {showCardOption && (
+                          <button
+                            type="button"
+                            id="payment-method-card"
+                            onClick={() => setPaymentMethod('card')}
+                            className={`flex-1 min-h-[48px] rounded-xl border-2 text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${paymentMethod === 'card'
+                                ? 'border-brand-red bg-red-50 text-brand-red'
+                                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
+                              }`}
+                          >
+                            {/* Credit card icon */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-5 h-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                              <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            Card
+                          </button>
+                        )}
+
+                        <button
+                          type="button"
+                          id="payment-method-crypto"
+                          onClick={() => setPaymentMethod('crypto')}
+                          className={`${showCardOption ? 'flex-1' : 'w-full'} min-h-[48px] rounded-xl border-2 text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${paymentMethod === 'crypto'
+                              ? 'border-amber-500 bg-amber-50 text-amber-700'
+                              : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
+                            }`}
+                        >
+                          {/* Coin / crypto icon */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                            <line x1="9" y1="9" x2="9.01" y2="9" />
+                            <line x1="15" y1="9" x2="15.01" y2="9" />
+                          </svg>
+                          Crypto
+                        </button>
+                      </div>
+
+                      {/* Note shown only when total < $35 */}
+                      {!showCardOption && total > 0 && (
+                        <p className="mt-2 text-[10px] text-gray-400 text-center">
+                          Card payment available for orders ${CARD_MINIMUM}+
+                        </p>
+                      )}
+
+                      {/* Crypto info banner */}
+                      {paymentMethod === 'crypto' && (
+                        <p className="mt-3 text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 leading-relaxed">
+                          🔒 Pay with BTC, ETH, USDT &amp; 100+ cryptocurrencies via Cryptomus. Your order is confirmed once payment is received on-chain.
+                        </p>
+                      )}
+                    </div>
+
+                    {/* ── Submit ── */}
                     <button
                       type="submit"
                       disabled={isProcessing}
-                      className="w-full bg-brand-red text-white font-bold py-4 rounded-xl hover:bg-[#C62828] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+                      className={`w-full text-white font-bold py-4 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg ${paymentMethod === 'crypto' || !showCardOption
+                          ? 'bg-amber-500 hover:bg-amber-600'
+                          : 'bg-brand-red hover:bg-[#C62828]'
+                        }`}
                     >
-                      {isProcessing ? 'Processing...' : `Pay $${total.toFixed(2)} Securely`}
+                      {isProcessing
+                        ? 'Processing...'
+                        : (paymentMethod === 'crypto' || !showCardOption)
+                          ? `Pay $${total.toFixed(2)} with Crypto`
+                          : `Pay $${total.toFixed(2)} Securely`}
                     </button>
                   </div>
                 </form>
               </div>
 
+              {/* ── Right: Order Summary ── */}
               <div>
                 <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
                   <h2 className="text-xl font-bold text-gray-900 mb-6">Order summary</h2>
@@ -232,10 +361,14 @@ export default function CheckoutPage() {
                       >
                         <div>
                           <p className="font-medium text-gray-900">{item.service}</p>
-                          <p className="text-sm text-gray-500">{item.platform} • {item.amount}</p>
+                          <p className="text-sm text-gray-500">
+                            {item.platform} • {item.amount}
+                          </p>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-brand-red">${item.price.toFixed(2)}</span>
+                          <span className="font-bold text-brand-red">
+                            ${item.price.toFixed(2)}
+                          </span>
                           <button
                             type="button"
                             onClick={() => handleRemove(item.id)}
@@ -247,15 +380,34 @@ export default function CheckoutPage() {
                       </div>
                     ))}
                   </div>
+
                   <div className="border-t border-gray-200 pt-4">
                     <div className="flex justify-between text-lg font-bold text-gray-900">
                       <span>Total</span>
                       <span className="text-brand-red">${total.toFixed(2)}</span>
                     </div>
                   </div>
-                  <p className="mt-4 text-xs text-gray-500 text-center">
-                    Secure payment powered by Uplef
+
+                  <p className="mt-4 text-xs text-gray-400 text-center">
+                    {paymentMethod === 'crypto' || !showCardOption
+                      ? 'Secure crypto payment powered by Cryptomus'
+                      : 'Secure card payment powered by Uplef'}
                   </p>
+
+                  {/* Badge row */}
+                  <div className="mt-4 flex items-center justify-center gap-2">
+                    <span className="text-[10px] bg-green-50 text-green-700 border border-green-100 rounded-full px-2 py-0.5 font-semibold">
+                      🔒 Secure
+                    </span>
+                    <span className="text-[10px] bg-blue-50 text-blue-700 border border-blue-100 rounded-full px-2 py-0.5 font-semibold">
+                      ✓ Encrypted
+                    </span>
+                    {(paymentMethod === 'crypto' || !showCardOption) && (
+                      <span className="text-[10px] bg-amber-50 text-amber-700 border border-amber-100 rounded-full px-2 py-0.5 font-semibold">
+                        ₿ Crypto
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

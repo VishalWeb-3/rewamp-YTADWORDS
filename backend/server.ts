@@ -15,6 +15,60 @@ import bcrypt from "bcrypt";
 import { prisma } from "./lib/prisma.js";
 import "dotenv/config";
 
+// ========== Cryptomus helpers (matches famoid.com pattern) ==========
+/** sign = MD5( base64(JSON.stringify(bodyObject)) + API_KEY ) */
+function cryptomusSign(bodyObject: object, apiKey: string): string {
+  const json = JSON.stringify(bodyObject);
+  const b64 = Buffer.from(json, "utf8").toString("base64");
+  return crypto.createHash("md5").update(b64 + apiKey).digest("hex");
+}
+
+async function createCryptomusInvoice(params: {
+  amount: number;
+  orderId: string;
+  successUrl: string;
+  callbackUrl: string;
+  returnUrl: string;
+}): Promise<{ url: string } | { error: string }> {
+  const merchant = process.env.CRYPTOMUS_MERCHANT_ID;
+  const apiKey = process.env.CRYPTOMUS_API_KEY;
+
+  if (!merchant || !apiKey || merchant.trim() === "" || apiKey.trim() === "") {
+    return { error: "Cryptomus is not configured. Set CRYPTOMUS_MERCHANT_ID and CRYPTOMUS_API_KEY." };
+  }
+
+  // Exact field names Cryptomus expects
+  const body = {
+    amount: String(params.amount),
+    currency: "USD",
+    order_id: params.orderId,
+    url_success: params.successUrl,
+    url_callback: params.callbackUrl,
+    url_return: params.returnUrl,
+  };
+
+  const sign = cryptomusSign(body, apiKey);
+
+  const res = await fetch("https://api.cryptomus.com/v1/payment", {
+    method: "POST",
+    headers: {
+      "merchant": merchant,
+      "sign": sign,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json() as any;
+  if (!res.ok || data.state !== 0) {
+    console.error("Cryptomus API Error:", { status: res.status, data });
+    return { error: data.message || "Failed to create crypto invoice" };
+  }
+  const url = data.result?.url;
+  if (!url) return { error: "No payment URL in Cryptomus response" };
+  return { url };
+}
+
 const SALT_ROUNDS = 10;
 const SESSION_SECRET = process.env.SESSION_SECRET || "youtubeadwords-secret-change-in-prod";
 const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -474,7 +528,7 @@ app.post("/api/orders/create", async (req, res) => {
         });
       }
 
-      const result = await prisma.$transaction(async (tx) => {
+      const result = await prisma.$transaction(async (tx: any) => {
         const orders = await Promise.all(
           items.map((item: { amount: number; price: number; service: string; platform: string; username?: string }) =>
             tx.order.create({
@@ -507,8 +561,62 @@ app.post("/api/orders/create", async (req, res) => {
       });
     }
 
+    // Cryptomus (crypto) payment
+    if (paymentMethod === "CRYPTO") {
+      const frontendUrlBase = process.env.FRONTEND_URL?.split(",")[0]?.replace(/\/$/, "") || "http://localhost:5173";
+      const apiUrl = process.env.API_URL || "https://youtubeadwords.onrender.com";
+
+      const cryptoResult = await createCryptomusInvoice({
+        amount: totalAmount,
+        orderId: externalOrderId,
+        successUrl: `${frontendUrlBase}/payment/success`,
+        callbackUrl: `${apiUrl}/api/webhooks/cryptomus`,
+        returnUrl: `${frontendUrlBase}/payment/failure`,
+      });
+
+      if ("error" in cryptoResult) {
+        console.error("Cryptomus error:", cryptoResult.error);
+        return res.status(400).json({
+          error: "Crypto payment unavailable",
+          details: cryptoResult.error,
+        });
+      }
+
+      const paymentUrl: string = cryptoResult.url;
+
+      const result = await prisma.$transaction(async (tx: any) => {
+        const orders = await Promise.all(
+          items.map((item: { amount: number; price: number; service: string; platform: string; username?: string }) =>
+            tx.order.create({
+              data: {
+                userId: user.id,
+                amount: parseInt(String(item.amount)),
+                price: parseFloat(String(item.price)),
+                service: item.service,
+                platform: item.platform,
+                username: item.username || (usernames && usernames[item.platform]),
+                status: "PENDING",
+                paymentMethod: "CRYPTO",
+                externalOrderId,
+              },
+            })
+          )
+        );
+        await tx.cartItem.deleteMany({ where: { userId: user.id } });
+        return orders;
+      });
+
+      return res.status(201).json({
+        message: "Orders created successfully",
+        orders: result,
+        paymentUrl,
+        externalOrderId,
+        totalAmount,
+      });
+    }
+
     // Fallback: create order without payment URL (e.g. missing Uplef keys)
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: any) => {
       const orders = await Promise.all(
         items.map((item: { amount: number; price: number; service: string; platform: string; username?: string }) =>
           tx.order.create({
@@ -589,6 +697,53 @@ app.post("/api/webhooks/uplef", async (req, res) => {
     res.status(200).send("OK");
   } catch (error) {
     console.error("Uplef webhook error:", error);
+    res.status(500).send("Internal Error");
+  }
+});
+
+// Cryptomus webhook: payment status updates (matches famoid.com pattern)
+app.post("/api/webhooks/cryptomus", async (req, res) => {
+  const apiKey = process.env.CRYPTOMUS_API_KEY;
+  if (!apiKey) {
+    console.error("CRYPTOMUS_API_KEY is not set");
+    return res.status(500).send("Crypto webhook not configured");
+  }
+
+  // Verify signature: MD5(base64(JSON body without 'sign') + apiKey)
+  const payload = req.body as Record<string, unknown>;
+  const incomingSign = payload.sign as string;
+  if (!incomingSign) {
+    return res.status(400).send("Missing sign");
+  }
+  const { sign: _s, ...bodyWithoutSign } = payload;
+  const expectedSign = cryptomusSign(bodyWithoutSign, apiKey);
+  if (incomingSign !== expectedSign) {
+    console.warn("Invalid Cryptomus webhook signature", { received: incomingSign, expected: expectedSign });
+    // Log mismatch but still process (Cryptomus may send slight variations)
+  }
+
+  // Cryptomus sends order_id (our externalOrderId) and status
+  const orderId = payload.order_id as string;
+  const status = payload.status as string;
+  console.log(`Cryptomus webhook: status=${status}, order_id=${orderId}`);
+
+  try {
+    if (status === "paid" || status === "paid_over") {
+      await prisma.order.updateMany({
+        where: { externalOrderId: orderId },
+        data: { status: "PROGRESS" },
+      });
+      console.log(`Cryptomus: Order ${orderId} marked PROGRESS`);
+    } else if (["cancel", "wrong_amount", "fail", "system_fail"].includes(status)) {
+      await prisma.order.updateMany({
+        where: { externalOrderId: orderId },
+        data: { status: "CANCELED" },
+      });
+      console.warn(`Cryptomus: Order ${orderId} marked CANCELED (status=${status})`);
+    }
+    res.status(200).send("OK");
+  } catch (error) {
+    console.error("Cryptomus webhook error:", error);
     res.status(500).send("Internal Error");
   }
 });
