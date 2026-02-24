@@ -21,6 +21,7 @@ model User {
   orders    Order[]
   cartItems CartItem[]
   sessions  Session[]
+  ctaActions UserCtaAction[]
 }
 
 model Session {
@@ -58,5 +59,31 @@ model Order {
   cryptomusPaymentId String?  // Cryptomus payment UUID for webhook
   user            User     @relation(fields: [userId], references: [id])
   userId          Int
+  ipAddress       String?
+  ipCity          String?
+  ipCountry       String?
+  ipRegion        String?
+  ipLatitude      Float?
+  ipLongitude     Float?
   createdAt       DateTime @default(now())
+}
+
+model CtaAction {
+  id        Int      @id @default(autoincrement())
+  actionKey String   @unique
+  label     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserCtaAction {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  actionKey String
+  isActive  Boolean   @default(true)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt DateTime  @updatedAt
+
+  @@unique([userId, actionKey])
 }

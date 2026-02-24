@@ -23,6 +23,29 @@ function cryptomusSign(bodyObject: object, apiKey: string): string {
   return crypto.createHash("md5").update(b64 + apiKey).digest("hex");
 }
 
+async function getGeoLocation(ip: string) {
+  try {
+    // Skip for local addresses
+    if (!ip || ip === "::1" || ip === "127.0.0.1" || ip.startsWith("192.168.") || ip.startsWith("10.")) {
+      return null;
+    }
+    const response = await fetch(`http://ip-api.com/json/${ip}`);
+    const data = (await response.json()) as any;
+    if (data.status === "success") {
+      return {
+        city: data.city,
+        country: data.country,
+        region: data.regionName,
+        lat: data.lat,
+        lon: data.lon,
+      };
+    }
+  } catch (err) {
+    console.error("GeoLocation Error:", err);
+  }
+  return null;
+}
+
 async function createCryptomusInvoice(params: {
   amount: number;
   orderId: string;
@@ -438,6 +461,9 @@ app.post("/api/orders/create", async (req, res) => {
   }
 
   try {
+    const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0] || req.socket.remoteAddress || "";
+    const geo = await getGeoLocation(ip);
+
     let user = await prisma.user.findFirst({
       where: userId ? { id: parseInt(userId) } : { email },
     });
@@ -544,6 +570,12 @@ app.post("/api/orders/create", async (req, res) => {
                 paymentMethod: "CARD",
                 externalOrderId,
                 uplefOrderId,
+                ipAddress: ip,
+                ipCity: geo?.city,
+                ipCountry: geo?.country,
+                ipRegion: geo?.region,
+                ipLatitude: geo?.lat,
+                ipLongitude: geo?.lon,
               },
             })
           )
@@ -598,6 +630,12 @@ app.post("/api/orders/create", async (req, res) => {
                 status: "PENDING",
                 paymentMethod: "CRYPTO",
                 externalOrderId,
+                ipAddress: ip,
+                ipCity: geo?.city,
+                ipCountry: geo?.country,
+                ipRegion: geo?.region,
+                ipLatitude: geo?.lat,
+                ipLongitude: geo?.lon,
               },
             })
           )
@@ -631,6 +669,12 @@ app.post("/api/orders/create", async (req, res) => {
               status: "PENDING",
               paymentMethod,
               externalOrderId,
+              ipAddress: ip,
+              ipCity: geo?.city,
+              ipCountry: geo?.country,
+              ipRegion: geo?.region,
+              ipLatitude: geo?.lat,
+              ipLongitude: geo?.lon,
             },
           })
         )
