@@ -6,17 +6,17 @@ import { usePricingPackages } from '../contexts/ContentContext';
 
 const appsDownloadPackagesFallback = {
     regular: [
-        { installs: '100', price: '15', originalPrice: null, discount: null },
-        { installs: '250', price: '35', originalPrice: null, discount: null },
-        { installs: '500', price: '60', originalPrice: null, discount: null },
-        { installs: '1000', price: '100', originalPrice: null, discount: null },
+        { installs: '5k', price: '300', originalPrice: null, discount: null },
+        { installs: '10k', price: '500', originalPrice: null, discount: null },
+        { installs: '50k', price: '2500', originalPrice: null, discount: null },
+        { installs: '100k', price: '3000', originalPrice: null, discount: null },
         { installs: 'Custom', price: 'Contact for Price', originalPrice: null, discount: null },
     ],
     fast: [
-        { installs: '100', price: '25', originalPrice: null, discount: null },
-        { installs: '250', price: '55', originalPrice: null, discount: null },
-        { installs: '500', price: '90', originalPrice: null, discount: null },
-        { installs: '1000', price: '150', originalPrice: null, discount: null },
+        { installs: '5k', price: '600', originalPrice: null, discount: null },
+        { installs: '10k', price: '1000', originalPrice: null, discount: null },
+        { installs: '50k', price: '4000', originalPrice: null, discount: null },
+        { installs: '100k', price: 'Custom Pricing', originalPrice: null, discount: null },
         { installs: 'Custom', price: 'Contact for Price', originalPrice: null, discount: null },
     ],
 };
@@ -157,7 +157,7 @@ export default function BuyGoogleAppsDownloadPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
                             {packages.map((pkg, index) => {
                                 const isSelected = selectedPackageIndex === index;
-                                const isContact = pkg.price === 'Contact for Price';
+                                const isContact = pkg.price === 'Contact for Price' || pkg.price === 'Custom Pricing';
                                 return (
                                     <div
                                         key={index}

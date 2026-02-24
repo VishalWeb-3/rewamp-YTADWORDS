@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { client } from '../../tina/__generated__/client';
 
 // Tina-driven content: import from content/ (editable via Tina Cloud or directly in repo)
 import globalContent from '../../content/global/index.json';
@@ -35,49 +34,8 @@ const staticValue = {
 };
 
 export function ContentProvider({ children }) {
-  const [value, setValue] = useState(staticValue);
-
-  useEffect(() => {
-    let cancelled = false;
-    const fetchFromTina = async () => {
-      try {
-        const empty = Promise.resolve({ data: {} });
-        const results = await Promise.all([
-          client.queries.global({ relativePath: 'index.json' }),
-          client.queries.home({ relativePath: 'home.json' }),
-          typeof client.queries.contact === 'function' ? client.queries.contact({ relativePath: 'contact.json' }) : empty,
-          typeof client.queries.pricing === 'function' ? client.queries.pricing({ relativePath: 'index.json' }) : empty,
-          typeof client.queries.pricingPageContent === 'function' ? client.queries.pricingPageContent({ relativePath: 'index.json' }) : empty,
-          typeof client.queries.legal === 'function' ? client.queries.legal({ relativePath: 'index.json' }) : empty,
-        ]);
-        if (cancelled) return;
-        const globalData = results[0]?.data?.global;
-        const homeData = results[1]?.data?.home;
-        const contactData = results[2]?.data?.contact;
-        const pricingData = results[3]?.data?.pricing;
-        const pricingPageContentData = results[4]?.data?.pricingPageContent;
-        const legalData = results[5]?.data?.legal;
-        if (globalData || homeData || contactData || pricingData || pricingPageContentData || legalData) {
-          setValue((prev) => ({
-            ...prev,
-            ...(globalData && { global: omitSys(globalData) }),
-            ...(homeData && { home: omitSys(homeData) }),
-            ...(contactData && { contact: omitSys(contactData) }),
-            ...(pricingData && { pricing: omitSys(pricingData) }),
-            ...(pricingPageContentData && { pricingPageContent: omitSys(pricingPageContentData) }),
-            ...(legalData && { legal: omitSys(legalData) }),
-          }));
-        }
-      } catch (_) {
-        // Keep static content on error (e.g. branch not indexed, network, CORS)
-      }
-    };
-    fetchFromTina();
-    return () => { cancelled = true; };
-  }, []);
-
   return (
-    <ContentContext.Provider value={value}>
+    <ContentContext.Provider value={staticValue}>
       {children}
     </ContentContext.Provider>
   );

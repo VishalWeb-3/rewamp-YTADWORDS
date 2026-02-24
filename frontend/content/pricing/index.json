@@ -669,26 +669,26 @@
             "quantityKey": "installs",
             "regularPackages": [
                 {
-                    "quantity": "100",
-                    "price": "15",
+                    "quantity": "5k",
+                    "price": "300",
                     "originalPrice": "",
                     "discount": ""
                 },
                 {
-                    "quantity": "250",
-                    "price": "35",
+                    "quantity": "10k",
+                    "price": "500",
                     "originalPrice": "",
                     "discount": ""
                 },
                 {
-                    "quantity": "500",
-                    "price": "60",
+                    "quantity": "50k",
+                    "price": "2500",
                     "originalPrice": "",
                     "discount": ""
                 },
                 {
-                    "quantity": "1000",
-                    "price": "100",
+                    "quantity": "100k",
+                    "price": "3000",
                     "originalPrice": "",
                     "discount": ""
                 },
@@ -701,26 +701,26 @@
             ],
             "fastPackages": [
                 {
-                    "quantity": "100",
-                    "price": "25",
+                    "quantity": "5k",
+                    "price": "600",
                     "originalPrice": "",
                     "discount": ""
                 },
                 {
-                    "quantity": "250",
-                    "price": "55",
+                    "quantity": "10k",
+                    "price": "1000",
                     "originalPrice": "",
                     "discount": ""
                 },
                 {
-                    "quantity": "500",
-                    "price": "90",
+                    "quantity": "50k",
+                    "price": "4000",
                     "originalPrice": "",
                     "discount": ""
                 },
                 {
-                    "quantity": "1000",
-                    "price": "150",
+                    "quantity": "100k",
+                    "price": "Custom Pricing",
                     "originalPrice": "",
                     "discount": ""
                 },
