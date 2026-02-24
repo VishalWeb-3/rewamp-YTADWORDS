@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { LegalSection } from '../components/LegalSection';
 import { useLegalContent } from '../contexts/ContentContext';
 
@@ -33,6 +34,10 @@ export default function CookiesSettingsPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Cookies Settings | YoutubeADwords"
+        description="Manage your cookie preferences on YoutubeADwords. Learn how we use essential, analytics, and marketing cookies to improve your experience."
+      />
       <div className="bg-white min-h-screen py-12 lg:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 lg:mb-12">

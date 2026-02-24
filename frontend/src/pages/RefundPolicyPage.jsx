@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { LegalSection } from '../components/LegalSection';
 import { useLegalContent } from '../contexts/ContentContext';
 
@@ -17,6 +18,10 @@ export default function RefundPolicyPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Refund Policy | YoutubeADwords"
+        description="Learn about the YoutubeADwords Refund Policy. Find out when refunds are issued and how to request one for our social media growth services."
+      />
       <div className="bg-white min-h-screen py-12 lg:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 lg:mb-12">

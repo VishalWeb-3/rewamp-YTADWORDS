@@ -1,9 +1,14 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 
 export default function AboutUsPage() {
   return (
     <Layout>
+      <SEO
+        title="About Us | YoutubeADwords"
+        description="Learn about YoutubeADwords – a leading provider of YouTube, TikTok, and Google Ads growth services. Authentic engagement, 24/7 support, and best-price guarantee."
+      />
       <div className="bg-white min-h-screen py-12 lg:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* Page Title */}

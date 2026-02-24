@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { useContactContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
 
@@ -48,6 +49,10 @@ export default function ContactPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Contact Us | YoutubeADwords"
+        description="Get in touch with the YoutubeADwords support team. We're here 24/7 to help with your YouTube, TikTok, and Google Ads service questions."
+      />
       <div className="bg-white min-h-screen py-8 sm:py-12 lg:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* Page Title */}

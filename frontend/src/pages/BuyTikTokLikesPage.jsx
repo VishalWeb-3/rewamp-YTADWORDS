@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages } from '../contexts/ContentContext';
 
@@ -78,6 +79,10 @@ export default function BuyTikTokLikesPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Buy TikTok Likes | YoutubeADwords"
+        description="Buy real TikTok likes instantly. Boost your TikTok video engagement with YoutubeADwords' safe, organic likes packages."
+      />
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-64 h-64 bg-red-100/30 transform -rotate-12 -translate-x-20 -translate-y-20"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-100/20 transform rotate-12 -translate-x-32 translate-y-32"></div>

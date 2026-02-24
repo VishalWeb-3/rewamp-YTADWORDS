@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { client } from '../../tina/__generated__/client';
 import { resolveImageSrc } from '../lib/tinaMedia';
 
@@ -79,6 +80,10 @@ export default function BlogPostPage() {
 
   return (
     <Layout>
+      <SEO
+        title={post.title ? `${post.title} | YoutubeADwords` : 'Blog | YoutubeADwords'}
+        description={post.excerpt || 'Read the latest tips and guides on YoutubeADwords blog about YouTube, TikTok, and Google Ads growth.'}
+      />
       <div className="bg-gray-50 min-h-screen pb-20">
         <article className="max-w-7xl mx-auto px-4 pt-8 sm:pt-12">
           <Link

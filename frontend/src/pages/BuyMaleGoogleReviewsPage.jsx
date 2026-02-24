@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages } from '../contexts/ContentContext';
 
@@ -129,6 +130,10 @@ export default function BuyMaleGoogleReviewsPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Buy Male Google Reviews | YoutubeADwords"
+        description="Buy real male Google reviews instantly. Boost your business credibility with YoutubeADwords' authentic male reviewer packages."
+      />
       {/* Background decorative shapes */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-64 h-64 bg-red-100/30 transform -rotate-12 -translate-x-20 -translate-y-20"></div>

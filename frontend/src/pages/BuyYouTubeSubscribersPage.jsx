@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
@@ -115,6 +116,10 @@ export default function BuyYouTubeSubscribersPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Buy YouTube Subscribers | YoutubeADwords"
+        description="Buy real, organic YouTube subscribers instantly. Grow your channel fast with YoutubeADwords' safe, high-quality subscriber packages at the best prices."
+      />
       {/* Background decorative shapes */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-0 w-64 h-64 bg-red-100/30 transform -rotate-12 -translate-x-20 -translate-y-20"></div>

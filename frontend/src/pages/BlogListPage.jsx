@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { client } from '../../tina/__generated__/client';
 import { resolveImageSrc } from '../lib/tinaMedia';
 
@@ -59,6 +60,10 @@ export default function BlogListPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Blog | YoutubeADwords"
+        description="Read the YoutubeADwords blog for tips, guides, and updates on growing your YouTube, TikTok, and Google Ads presence."
+      />
       <div className="bg-gray-50 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-4 py-10 sm:py-14">
           <div className="text-center mb-10 sm:mb-14">
