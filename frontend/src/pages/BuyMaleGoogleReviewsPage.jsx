@@ -42,11 +42,11 @@ const maleCustomPackages = {
     { amount: 75, price: 912.60, originalPrice: 1014.00, label: '75 REVIEWS' },
   ],
   'recurring': [
-    { amount: 5, price: 52.65, originalPrice: 78.00, label: '5 REVIEWS / M', badge: 'Most Popular', suffix: '/ M' },
-    { amount: 10, price: 99.45, originalPrice: 149.50, label: '10 REVIEWS / M', suffix: '/ M' },
-    { amount: 25, price: 245.70, originalPrice: 357.50, label: '25 REVIEWS / M', badge: 'Best value', suffix: '/ M' },
-    { amount: 50, price: 479.70, originalPrice: 682.50, label: '50 REVIEWS / M', suffix: '/ M' },
-    { amount: 75, price: 702.00, originalPrice: 988.00, label: '75 REVIEWS / M', suffix: '/ M' },
+    { amount: 5, price: 70, originalPrice: 78, label: '5 REVIEWS / M', badge: 'Most Popular', suffix: '/ M' },
+    { amount: 10, price: 134, originalPrice: 149, label: '10 REVIEWS / M', suffix: '/ M' },
+    { amount: 25, price: 321, originalPrice: 357, label: '25 REVIEWS / M', badge: 'Best value', suffix: '/ M' },
+    { amount: 50, price: 814, originalPrice: 912, label: '50 REVIEWS / M', suffix: '/ M' },
+    { amount: 75, price: 998, originalPrice: 1108, label: '75 REVIEWS / M', suffix: '/ M' },
   ],
   'drip': [
     { amount: 25, price: 321.75, originalPrice: 357.50, label: '25 REVIEWS', badge: 'Most Popular' },

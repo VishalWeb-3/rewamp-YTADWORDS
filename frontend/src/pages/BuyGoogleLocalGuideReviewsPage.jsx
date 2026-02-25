@@ -49,11 +49,11 @@ const localGuideCustomPackages = {
     { amount: 75, price: 957.60, originalPrice: 1064.00, label: '75 REVIEWS / M', suffix: '/ M' },
   ],
   'drip': [
-    { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Most Popular' },
-    { amount: 50, price: 522.90, originalPrice: 581.00, label: '50 REVIEWS' },
-    { amount: 75, price: 768.60, originalPrice: 854.00, label: '75 REVIEWS', badge: 'Best value' },
-    { amount: 100, price: 1020.60, originalPrice: 1134.00, label: '100 REVIEWS' },
-    { amount: 150, price: 1512.00, originalPrice: 1680.00, label: '150 REVIEWS' },
+    { amount: 25, price: 321.75, originalPrice: 357.50, label: '25 REVIEWS', badge: 'Most Popular' },
+    { amount: 50, price: 620.10, originalPrice: 689.00, label: '50 REVIEWS' },
+    { amount: 75, price: 907.92, originalPrice: 1008.80, label: '75 REVIEWS', badge: 'Best value' },
+    { amount: 100, price: 1205.10, originalPrice: 1339.00, label: '100 REVIEWS' },
+    { amount: 150, price: 1772.55, originalPrice: 1969.50, label: '150 REVIEWS' },
   ],
 };
 

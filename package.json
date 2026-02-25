@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "cd frontend && npm run build",
-    "deploy": "npm run build && firebase deploy --only hosting"
+    "git": "git pull && git add . && git commit -m 'update' && git push",
+    "deploy": "cd frontend &&npm run build && firebase deploy --only hosting:yt-adwords"
   }
 }
