@@ -7,8 +7,6 @@ import { usePricingPackages } from '../contexts/ContentContext';
 
 const maleBasePackages = {
   'one-time': [
-    { amount: 1, price: 10.71, originalPrice: 11.90, label: '1 REVIEW' },
-    { amount: 2, price: 21.06, originalPrice: 23.40, label: '2 REVIEWS' },
     { amount: 5, price: 51.48, originalPrice: 57.20, label: '5 REVIEWS', badge: 'Most Popular' },
     { amount: 10, price: 101.79, originalPrice: 113.10, label: '10 REVIEWS' },
     { amount: 25, price: 251.55, originalPrice: 279.50, label: '25 REVIEWS', badge: 'Best value' },
@@ -33,8 +31,6 @@ const maleBasePackages = {
 
 const maleCustomPackages = {
   'one-time': [
-    { amount: 1, price: 14.63, originalPrice: 16.25, label: '1 REVIEW' },
-    { amount: 2, price: 28.08, originalPrice: 31.20, label: '2 REVIEWS' },
     { amount: 5, price: 67.86, originalPrice: 75.40, label: '5 REVIEWS', badge: 'Most Popular' },
     { amount: 10, price: 134.55, originalPrice: 149.50, label: '10 REVIEWS' },
     { amount: 25, price: 327.60, originalPrice: 364.00, label: '25 REVIEWS', badge: 'Best value' },

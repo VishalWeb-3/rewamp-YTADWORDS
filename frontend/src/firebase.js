@@ -11,11 +11,15 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+const app = firebaseConfig.projectId ? initializeApp(firebaseConfig) : null;
 
 let analytics = null;
-if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
+if (app && typeof window !== "undefined") {
+  try {
+    analytics = getAnalytics(app);
+  } catch (err) {
+    console.warn("Firebase Analytics failed to initialize:", err);
+  }
 }
 
 export { app, analytics };

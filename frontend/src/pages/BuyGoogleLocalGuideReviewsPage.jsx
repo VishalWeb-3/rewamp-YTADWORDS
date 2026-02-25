@@ -7,8 +7,6 @@ import { usePricingPackages } from '../contexts/ContentContext';
 
 const localGuideBasePackages = {
   'one-time': [
-    { amount: 1, price: 11.53, originalPrice: 12.81, label: '1 REVIEW' },
-    { amount: 2, price: 22.68, originalPrice: 25.20, label: '2 REVIEWS' },
     { amount: 5, price: 55.44, originalPrice: 61.60, label: '5 REVIEWS', badge: 'Most Popular' },
     { amount: 10, price: 109.62, originalPrice: 121.80, label: '10 REVIEWS' },
     { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Best value' },
@@ -33,8 +31,6 @@ const localGuideBasePackages = {
 
 const localGuideCustomPackages = {
   'one-time': [
-    { amount: 1, price: 15.75, originalPrice: 17.50, label: '1 REVIEW' },
-    { amount: 2, price: 30.24, originalPrice: 33.60, label: '2 REVIEWS' },
     { amount: 5, price: 73.08, originalPrice: 81.20, label: '5 REVIEWS', badge: 'Most Popular' },
     { amount: 10, price: 144.90, originalPrice: 161.00, label: '10 REVIEWS' },
     { amount: 25, price: 352.80, originalPrice: 392.00, label: '25 REVIEWS', badge: 'Best value' },

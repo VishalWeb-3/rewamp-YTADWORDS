@@ -18,10 +18,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.13.0",
-    "tinacms": "^1.6.7"
+    "tinacms": "^3.5.1"
   },
   "devDependencies": {
-    "@tinacms/cli": "^2.1.5",
+    "@tinacms/cli": "^2.1.7",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "dotenv": "^17.3.1",

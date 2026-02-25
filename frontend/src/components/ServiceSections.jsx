@@ -169,7 +169,7 @@ const googleReviewsBenefits = [
   'Authentic reviews from verified Google users',
   'Target Worldwide, USA, India, or Tier-1 Countries',
   'Improves local SEO and business credibility',
-  'Scalable packages (Minimum 10 up to 1k+)',
+  'Scalable packages (Minimum 5 up to 1k+)',
   '100% Manual verification & WhatsApp support',
 ];
 
