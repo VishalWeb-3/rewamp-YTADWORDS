@@ -113,6 +113,38 @@ export default function GoogleReviewsUpgradeGeneric() {
     }
   }, [showCardOption, paymentMethod]);
 
+  const handleShareLink = async () => {
+    const totalAmount = calculateTotal();
+    const url = new URL('/pay', window.location.origin);
+    url.searchParams.set('amount', String(packageData.reviews));
+    url.searchParams.set('price', String(totalAmount.toFixed(2)));
+    url.searchParams.set('original', String(packageData.originalPrice.toFixed(2)));
+    url.searchParams.set('platform', 'Google Reviews');
+    url.searchParams.set('service', serviceTitle);
+    url.searchParams.set('ts', String(Date.now()));
+    url.searchParams.set('label', 'Shared Google Reviews Order');
+    // Pass the Google Map URL so it's pre-filled on the shared page
+    if (packageData.googleMapUrl) url.searchParams.set('username', packageData.googleMapUrl);
+
+    const shareUrl = url.toString();
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Secure Payment Link',
+          url: shareUrl,
+        });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+        alert('Shareable payment link copied to clipboard.');
+      } else {
+        alert(`Share this link: ${shareUrl}`);
+      }
+    } catch {
+      alert(`Share this link: ${shareUrl}`);
+    }
+  };
+
   const handleContinue = async (methodOverride) => {
     const totalAmount = calculateTotal();
     const method = methodOverride || paymentMethod;
@@ -333,7 +365,8 @@ export default function GoogleReviewsUpgradeGeneric() {
                 </div>
               )}
 
-              {packageData.serviceType !== 'female' && packageData.serviceType !== 'male' && (
+              {/* Gender Targeting - shown on all Google Reviews pages */}
+              {(
                 <div
                   className={`bg-white border-2 rounded-lg p-6 transition-colors ${addOns.genderTargeting ? 'border-green-500 border-l-4' : 'border-gray-200'
                     }`}
@@ -428,6 +461,19 @@ export default function GoogleReviewsUpgradeGeneric() {
                   <span className="font-semibold">
                     {isProcessing ? 'Processing…' : 'Pay with Crypto'}
                   </span>
+                </button>
+              </div>
+
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-gray-100">
+                <p className="text-xs text-gray-500 font-medium">
+                  Want someone else to pay? Generate a shareable payment link instead.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleShareLink}
+                  className="inline-flex items-center justify-center px-4 py-2 rounded-xl border-2 border-gray-200 text-xs font-black uppercase tracking-widest text-gray-600 hover:bg-white hover:border-brand-red hover:text-brand-red transition-all"
+                >
+                  Share payment link
                 </button>
               </div>
             </div>

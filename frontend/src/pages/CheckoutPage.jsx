@@ -180,6 +180,39 @@ export default function CheckoutPage() {
     }
   };
 
+  const handleShareLink = async () => {
+    const firstItem = displayItems[0];
+    const url = new URL('/pay', window.location.origin);
+    url.searchParams.set('amount', String(firstItem.amount));
+    url.searchParams.set('price', String(total.toFixed(2)));
+    url.searchParams.set('original', String((total * 1.5).toFixed(2)));
+    url.searchParams.set('platform', firstItem.platform);
+    url.searchParams.set('service', firstItem.service);
+    url.searchParams.set('ts', String(Date.now()));
+    url.searchParams.set('label', 'Shared Order');
+    // Pass the username/link so it's pre-filled on the shared page
+    const usernameVal = usernames[firstItem.platform] || firstItem.username || '';
+    if (usernameVal) url.searchParams.set('username', usernameVal);
+
+    const shareUrl = url.toString();
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Secure Payment Link',
+          url: shareUrl,
+        });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+        alert('Payment link copied to clipboard.');
+      } else {
+        alert(`Share this link: ${shareUrl}`);
+      }
+    } catch {
+      alert(`Share this link: ${shareUrl}`);
+    }
+  };
+
   if (displayItems.length === 0) {
     return (
       <Layout>
@@ -268,8 +301,8 @@ export default function CheckoutPage() {
                             id="payment-method-card"
                             onClick={() => setPaymentMethod('card')}
                             className={`flex-1 min-h-[48px] rounded-xl border-2 text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${paymentMethod === 'card'
-                                ? 'border-brand-red bg-red-50 text-brand-red'
-                                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
+                              ? 'border-brand-red bg-red-50 text-brand-red'
+                              : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
                               }`}
                           >
                             {/* Credit card icon */}
@@ -293,8 +326,8 @@ export default function CheckoutPage() {
                           id="payment-method-crypto"
                           onClick={() => setPaymentMethod('crypto')}
                           className={`${showCardOption ? 'flex-1' : 'w-full'} min-h-[48px] rounded-xl border-2 text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${paymentMethod === 'crypto'
-                              ? 'border-amber-500 bg-amber-50 text-amber-700'
-                              : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
+                            ? 'border-amber-500 bg-amber-50 text-amber-700'
+                            : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
                             }`}
                         >
                           {/* Coin / crypto icon */}
@@ -335,8 +368,8 @@ export default function CheckoutPage() {
                       type="submit"
                       disabled={isProcessing}
                       className={`w-full text-white font-bold py-4 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg ${paymentMethod === 'crypto' || !showCardOption
-                          ? 'bg-amber-500 hover:bg-amber-600'
-                          : 'bg-brand-red hover:bg-[#C62828]'
+                        ? 'bg-amber-500 hover:bg-amber-600'
+                        : 'bg-brand-red hover:bg-[#C62828]'
                         }`}
                     >
                       {isProcessing
@@ -407,6 +440,23 @@ export default function CheckoutPage() {
                         ₿ Crypto
                       </span>
                     )}
+                  </div>
+
+                  {/* Share Option */}
+                  <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col items-center gap-3">
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center">
+                      Need someone else to pay?
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleShareLink}
+                      className="w-full h-11 rounded-xl border-2 border-gray-200 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:border-brand-red hover:text-brand-red transition-all flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                      </svg>
+                      Share Payment Link
+                    </button>
                   </div>
                 </div>
               </div>

@@ -38,6 +38,8 @@ import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentFailurePage from './pages/PaymentFailurePage';
 import BlogListPage from './pages/BlogListPage';
 import BlogPostPage from './pages/BlogPostPage';
+import SharedPaymentPage from './pages/SharedPaymentPage';
+import PayLinkPage from './pages/PayLinkPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -80,6 +82,8 @@ function AppContent() {
         <Route path="/buy-google-reviews-by-age-group" element={<BuyGoogleReviewsByAgeGroupPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
+        <Route path="/tickets" element={<ContactPage />} />
+        <Route path="/support" element={<ContactPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -104,6 +108,8 @@ function AppContent() {
         <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
         <Route path="/payment/failure" element={<PaymentFailurePage />} />
+        <Route path="/pay" element={<SharedPaymentPage />} />
+        <Route path="/pay/:token" element={<PayLinkPage />} />
       </Routes>
     </>
   );

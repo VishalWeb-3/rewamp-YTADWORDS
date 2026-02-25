@@ -4,7 +4,7 @@
     "navLinks": [
       {
         "label": "Google Ads Services",
-        "link": "/"
+        "link": "/buy-google-skip-ads-views"
       },
       {
         "label": "YouTube Services",
@@ -16,7 +16,7 @@
       },
       {
         "label": "Contact",
-        "link": "/contact"
+        "link": "/tickets"
       }
     ],
     "loginLabel": "Login",
@@ -51,8 +51,8 @@
         "link": "/about-us"
       },
       {
-        "label": "Contact",
-        "link": "/contact"
+        "label": "Tickets / Support",
+        "link": "/tickets"
       },
       {
         "label": "Careers",

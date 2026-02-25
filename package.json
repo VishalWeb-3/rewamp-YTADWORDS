@@ -4,6 +4,6 @@
   "scripts": {
     "build": "cd frontend && npm run build",
     "git": "git add . && git commit -m 'update' && git push",
-    "deploy": "cd frontend &&npm run build && firebase deploy --only hosting:yt-adwords"
+    "deploy": "npm run build && firebase deploy --only hosting:yt-adwords"
   }
 }

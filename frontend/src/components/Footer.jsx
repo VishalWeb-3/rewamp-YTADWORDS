@@ -25,7 +25,7 @@ export default function Footer() {
   // Only include company pages that exist
   const company = footer.company || [
     { label: 'About Us', link: '/about-us' },
-    { label: 'Contact', link: '/contact' },
+    { label: 'Tickets / Support', link: '/tickets' },
   ];
   return (
     <footer className="bg-white border-t border-gray-200 overflow-hidden">

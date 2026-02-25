@@ -42,11 +42,9 @@ export default function Header() {
   const menuRef = useRef(null);
   const cartCount = getCartCount();
   const navItems = header.navLinks || [
-    { label: 'Google Ads Services', link: '/' },
+    { label: 'Google Ads Services', link: '/buy-google-skip-ads-views' },
     { label: 'YouTube Services', link: '/buy-youtube-views' },
-    { label: 'TikTok Ads Services', link: '/' },
-    { label: 'Buy Google Reviews', link: '/buy-male-google-reviews' },
-    { label: 'Blog', link: '/blog' },
+    { label: 'TikTok Ads Services', link: '/buy-tiktok-followers' },
     { label: 'Contact', link: '/contact' },
   ];
 
@@ -101,7 +99,7 @@ export default function Header() {
                 {header.myOrders || 'My Orders'}
               </Link>
               <Link
-                to="/contact"
+                to="/tickets"
                 className="block px-6 py-4 text-base text-white hover:bg-white/10"
                 onClick={closeMobileMenu}
               >
@@ -143,7 +141,7 @@ export default function Header() {
                         {header.myOrders || 'My Orders'}
                       </Link>
                       <Link
-                        to="/contact"
+                        to="/tickets"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => { setUserMenuOpen(false); setUserMenuHover(false); }}
                       >

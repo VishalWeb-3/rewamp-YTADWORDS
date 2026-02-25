@@ -4,8 +4,8 @@ import Layout from '../components/Layout';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
-// YouTube channel suggestions as user types (like buzzoid.com)
-function YouTubeLinkSuggest({ value, onChange, placeholder, className }) {
+// YouTube channel suggestions as user types (only for YouTube services)
+function YouTubeLinkSuggest({ value, onChange, placeholder, className, enableSuggestions = true }) {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const wrapperRef = useRef(null);
@@ -14,7 +14,7 @@ function YouTubeLinkSuggest({ value, onChange, placeholder, className }) {
 
   useEffect(() => {
     const v = (value || '').trim();
-    if (!v || v.length < 3 || looksLikeUrl(v)) {
+    if (!enableSuggestions || !v || v.length < 3 || looksLikeUrl(v)) {
       setSuggestions([]);
       setShowSuggestions(false);
       return;
@@ -53,7 +53,7 @@ function YouTubeLinkSuggest({ value, onChange, placeholder, className }) {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        onFocus={() => value && value.length >= 3 && !looksLikeUrl(value) && suggestions.length > 0 && setShowSuggestions(true)}
+        onFocus={() => enableSuggestions && value && value.length >= 3 && !looksLikeUrl(value) && suggestions.length > 0 && setShowSuggestions(true)}
         className={className}
         autoComplete="off"
       />
@@ -208,12 +208,25 @@ export default function GetStartedPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Your Link <span className="text-red-500">*</span>
                   </label>
-                  <YouTubeLinkSuggest
-                    value={formData.link}
-                    onChange={(link) => setFormData({ ...formData, link })}
-                    placeholder="Paste URL or type channel name for suggestions..."
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent"
-                  />
+                  {(() => {
+                    const platform = getPlatform(serviceType);
+                    const isYouTube = platform === 'YouTube';
+                    const placeholderText =
+                      platform === 'Google'
+                        ? 'Paste your Google Maps link or business URL...'
+                        : platform === 'TikTok'
+                          ? 'Paste your TikTok profile URL or @username...'
+                          : 'Paste URL or type channel name for suggestions...';
+                    return (
+                      <YouTubeLinkSuggest
+                        value={formData.link}
+                        onChange={(link) => setFormData({ ...formData, link })}
+                        placeholder={placeholderText}
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent"
+                        enableSuggestions={isYouTube}
+                      />
+                    );
+                  })()}
                 </div>
 
                 <div>
@@ -273,9 +286,8 @@ export default function GetStartedPage() {
                                     const list = allPackages[type];
                                     setSelectedPackage(list && list[0] ? list[0] : selectedPackage);
                                   }}
-                                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                                    selectedType === type ? 'bg-brand-red text-white' : 'text-gray-700 hover:bg-gray-100'
-                                  }`}
+                                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${selectedType === type ? 'bg-brand-red text-white' : 'text-gray-700 hover:bg-gray-100'
+                                    }`}
                                 >
                                   {typeLabels[type] || type}
                                 </button>
@@ -292,9 +304,8 @@ export default function GetStartedPage() {
                                   setSelectedPackage(pkg);
                                   setIsDropdownOpen(false);
                                 }}
-                                className={`w-full px-4 py-3 rounded-lg flex items-center justify-between hover:bg-gray-50 transition-colors ${
-                                  isSamePackage(selectedPackage, pkg) ? 'bg-red-50 border-2 border-brand-red' : 'border border-transparent'
-                                }`}
+                                className={`w-full px-4 py-3 rounded-lg flex items-center justify-between hover:bg-gray-50 transition-colors ${isSamePackage(selectedPackage, pkg) ? 'bg-red-50 border-2 border-brand-red' : 'border border-transparent'
+                                  }`}
                               >
                                 <div className="flex items-center gap-4">
                                   <span className="font-semibold text-gray-900">{formatPackageLabel(pkg)}</span>
@@ -346,7 +357,7 @@ export default function GetStartedPage() {
               <div className="flex flex-col items-center text-center">
                 <div className="mb-6">
                   <svg className="w-16 h-16 text-brand-red" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
                 <p className="text-gray-700 text-lg mb-6 leading-relaxed">

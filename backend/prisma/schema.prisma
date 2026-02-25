@@ -22,6 +22,7 @@ model User {
   cartItems CartItem[]
   sessions  Session[]
   ctaActions UserCtaAction[]
+  paymentLinks PaymentLink[] @relation("MerchantLinks")
 }
 
 model Session {
@@ -46,26 +47,26 @@ model CartItem {
 }
 
 model Order {
-  id              Int      @id @default(autoincrement())
-  amount          Int
-  price           Float
-  service         String
-  platform        String
-  status          String   @default("PENDING") // PENDING, PROGRESS, COMPLETED, CANCELED
-  username        String?
-  paymentMethod   String   @default("CARD") // CARD | CRYPTO
+  id                 Int      @id @default(autoincrement())
+  amount             Int
+  price              Float
+  service            String
+  platform           String
+  status             String   @default("PENDING") // PENDING, PROGRESS, COMPLETED, CANCELED
+  username           String?
+  paymentMethod      String   @default("CARD") // CARD | CRYPTO
   externalOrderId    String?  // ORDER_xxx for payment webhooks
   uplefOrderId       String?  // Uplef order ID for webhook
   cryptomusPaymentId String?  // Cryptomus payment UUID for webhook
-  user            User     @relation(fields: [userId], references: [id])
-  userId          Int
-  ipAddress       String?
-  ipCity          String?
-  ipCountry       String?
-  ipRegion        String?
-  ipLatitude      Float?
-  ipLongitude     Float?
-  createdAt       DateTime @default(now())
+  user               User     @relation(fields: [userId], references: [id])
+  userId             Int
+  ipAddress          String?
+  ipCity             String?
+  ipCountry          String?
+  ipRegion           String?
+  ipLatitude         Float?
+  ipLongitude        Float?
+  createdAt          DateTime @default(now())
 }
 
 model CtaAction {
@@ -86,4 +87,39 @@ model UserCtaAction {
   updatedAt DateTime  @updatedAt
 
   @@unique([userId, actionKey])
+}
+
+model PaymentLink {
+  id            Int               @id @default(autoincrement())
+  merchantId    Int
+  merchant      User              @relation("MerchantLinks", fields: [merchantId], references: [id])
+  amount        Float
+  currency      String            @default("USD")
+  description   String
+  customerName  String?
+  customerEmail String?
+  customerPhone String?
+  expiry        DateTime?
+  token         String            @unique
+  type          String            @default("ONE_TIME") // ONE_TIME, REUSABLE
+  maxPayments   Int?
+  redirectUrl   String?
+  notes         String?
+  status        String            @default("ACTIVE") // ACTIVE, EXPIRED, CANCELLED
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  transactions  LinkTransaction[]
+}
+
+model LinkTransaction {
+  id             Int         @id @default(autoincrement())
+  paymentLinkId  Int
+  paymentLink    PaymentLink @relation(fields: [paymentLinkId], references: [id])
+  gatewayOrderId String?     @unique
+  status         String      @default("PENDING") // PENDING, SUCCESS, FAILED
+  amount         Float
+  customerEmail  String?
+  metadata       Json?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 }

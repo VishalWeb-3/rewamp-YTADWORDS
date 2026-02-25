@@ -879,6 +879,219 @@ app.get("/api/cta-actions/status", async (req, res) => {
   }
 });
 
+// --- Pay-via-Link System ---
+
+// Create Payment Link
+app.post("/api/payment-links", async (req, res) => {
+  const {
+    merchantId,
+    amount,
+    currency,
+    description,
+    customerName,
+    customerEmail,
+    customerPhone,
+    expiry,
+    type,
+    maxPayments,
+    redirectUrl,
+    notes,
+  } = req.body;
+
+  if (!merchantId || !amount || !description) {
+    return res.status(400).json({ error: "merchantId, amount, and description are required" });
+  }
+
+  try {
+    const token = crypto.randomBytes(32).toString("hex");
+    const paymentLink = await (prisma as any).paymentLink.create({
+      data: {
+        merchantId: parseInt(String(merchantId)),
+        amount: parseFloat(String(amount)),
+        currency: currency || "USD",
+        description,
+        customerName,
+        customerEmail,
+        customerPhone,
+        expiry: expiry ? new Date(expiry) : null,
+        token,
+        type: type || "ONE_TIME",
+        maxPayments: maxPayments ? parseInt(String(maxPayments)) : null,
+        redirectUrl,
+        notes,
+        status: "ACTIVE",
+      },
+    });
+
+    const frontendUrl = process.env.FRONTEND_URL?.split(",")[0]?.replace(/\/$/, "") || "http://localhost:5173";
+    const linkUrl = `${frontendUrl}/pay/${token}`;
+    res.status(201).json({
+      link_url: linkUrl,
+      link_id: paymentLink.id,
+      expiry: paymentLink.expiry,
+    });
+  } catch (error) {
+    console.error("Create Payment Link Error:", error);
+    res.status(500).json({ error: "Failed to create payment link" });
+  }
+});
+
+// Get Payment Link (Public)
+app.get("/api/payment-links/:token", async (req, res) => {
+  const { token } = req.params;
+  try {
+    const link = await (prisma as any).paymentLink.findUnique({
+      where: { token },
+      include: {
+        merchant: { select: { name: true, username: true } },
+        _count: { select: { transactions: { where: { status: "SUCCESS" } } } },
+      },
+    });
+
+    if (!link) return res.status(404).json({ error: "Payment link not found" });
+
+    // Check expiry
+    if (link.expiry && new Date() > link.expiry) {
+      if (link.status === "ACTIVE") {
+        await (prisma as any).paymentLink.update({ where: { id: link.id }, data: { status: "EXPIRED" } });
+      }
+      return res.status(410).json({ error: "Payment link has expired" });
+    }
+
+    // Check if disabled
+    if (link.status !== "ACTIVE") {
+      return res.status(400).json({ error: `This payment link is ${link.status.toLowerCase()}` });
+    }
+
+    res.json(link);
+  } catch (error) {
+    console.error("Fetch Payment Link Error:", error);
+    res.status(500).json({ error: "Failed to fetch payment link" });
+  }
+});
+
+// Get Merchant's Payment Links
+app.get("/api/merchant/payment-links/:merchantId", async (req, res) => {
+  const merchantId = parseInt(req.params.merchantId);
+  try {
+    const links = await (prisma as any).paymentLink.findMany({
+      where: { merchantId },
+      orderBy: { createdAt: "desc" },
+      include: {
+        _count: { select: { transactions: true } },
+        transactions: { orderBy: { createdAt: "desc" }, take: 5 },
+      },
+    });
+    res.json(links);
+  } catch (error) {
+    console.error("Fetch Merchant Links Error:", error);
+    res.status(500).json({ error: "Failed to fetch payment links" });
+  }
+});
+
+// Disable Payment Link
+app.post("/api/payment-links/:id/disable", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updated = await (prisma as any).paymentLink.update({
+      where: { id: parseInt(id) },
+      data: { status: "CANCELLED" },
+    });
+    res.json({ message: "Payment link disabled", link: updated });
+  } catch (error) {
+    console.error("Disable link error:", error);
+    res.status(500).json({ error: "Failed to disable link" });
+  }
+});
+
+// Initiate Payment for Link
+app.post("/api/payment-links/:token/pay", async (req, res) => {
+  const { token } = req.params;
+  const { paymentMethod, email } = req.body;
+
+  try {
+    const link = await (prisma as any).paymentLink.findUnique({
+      where: { token },
+    });
+
+    if (!link || link.status !== "ACTIVE") {
+      return res.status(400).json({ error: "Invalid or inactive payment link" });
+    }
+
+    const externalOrderId = `LINK_${link.id}_${Date.now()}`;
+    const frontendUrl = process.env.FRONTEND_URL?.split(",")[0]?.replace(/\/$/, "") || "http://localhost:5173";
+    const successUrl = `${frontendUrl}/payment/success`;
+    const failureUrl = `${frontendUrl}/payment/failure`;
+
+    let paymentUrl = "";
+    let gatewayId = "";
+
+    if (paymentMethod === "crypto") {
+      const cryptoResult = await createCryptomusInvoice({
+        amount: link.amount,
+        orderId: externalOrderId,
+        successUrl,
+        callbackUrl: `${process.env.API_URL || "https://youtubeadwords.onrender.com"}/api/webhooks/cryptomus`,
+        returnUrl: failureUrl,
+      });
+      if ("error" in cryptoResult) return res.status(400).json({ error: cryptoResult.error });
+      paymentUrl = cryptoResult.url;
+      gatewayId = externalOrderId;
+    } else {
+      // Card: Uplef
+      const apiKey = process.env.UPLEF_API_KEY;
+      const apiSecret = process.env.UPLEF_API_SECRET;
+      if (!apiKey || !apiSecret) {
+        return res.status(400).json({ error: "Card payment not configured" });
+      }
+
+      const uplefResponse = await fetch("https://api.uplef.com/api/v1/orders", {
+        method: "POST",
+        headers: {
+          "X-API-Key": apiKey,
+          "X-API-Secret": apiSecret,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: link.amount,
+          currency: link.currency,
+          externalOrderId,
+          customer: {
+            email: email || link.customerEmail || "customer@example.com",
+            name: link.customerName || "Customer",
+          },
+          successUrl,
+          failureUrl,
+        }),
+      });
+
+      const uplefData = (await uplefResponse.json()) as any;
+      if (!uplefResponse.ok) {
+        return res.status(uplefResponse.status).json({ error: uplefData.message || "Payment gateway error" });
+      }
+      paymentUrl = uplefData.data?.paymentPageUrl || uplefData.paymentPageUrl;
+      gatewayId = uplefData.data?.order?.orderId || uplefData.orderId || externalOrderId;
+    }
+
+    // Create initial transaction record
+    await (prisma as any).linkTransaction.create({
+      data: {
+        paymentLinkId: link.id,
+        gatewayOrderId: gatewayId,
+        amount: link.amount,
+        customerEmail: email || link.customerEmail,
+        status: "PENDING",
+        metadata: { externalOrderId, paymentMethod },
+      },
+    });
+
+    res.json({ paymentUrl });
+  } catch (error) {
+    console.error("Initiate payment error:", error);
+    res.status(500).json({ error: "Failed to initiate payment" });
+  }
+});
+
 // Health check (optional: verify DB so Render shows unhealthy if DB is down)
 app.get("/api/health", async (_req, res) => {
   try {
