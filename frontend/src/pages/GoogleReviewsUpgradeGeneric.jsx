@@ -125,6 +125,7 @@ export default function GoogleReviewsUpgradeGeneric() {
     url.searchParams.set('label', 'Shared Google Reviews Order');
     // Pass the Google Map URL so it's pre-filled on the shared page
     if (packageData.googleMapUrl) url.searchParams.set('username', packageData.googleMapUrl);
+    if (packageData.email) url.searchParams.set('email', packageData.email);
 
     const shareUrl = url.toString();
 

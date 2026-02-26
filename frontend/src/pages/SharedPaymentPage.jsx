@@ -44,14 +44,16 @@ export default function SharedPaymentPage() {
     }, [tsParam]);
 
     // Contact fields (required to place the order)
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState(searchParams.get('email') || '');
     const [targetUrl, setTargetUrl] = useState(searchParams.get('username') || '');
     const [emailError, setEmailError] = useState('');
     const [urlError, setUrlError] = useState('');
 
     useEffect(() => {
-        if (currentUser?.email) setEmail(currentUser.email);
-    }, [currentUser]);
+        if (currentUser?.email && !searchParams.get('email')) {
+            setEmail(currentUser.email);
+        }
+    }, [currentUser, searchParams]);
 
     /* ── Place Order ── */
     const validate = () => {

@@ -193,6 +193,7 @@ export default function CheckoutPage() {
     // Pass the username/link so it's pre-filled on the shared page
     const usernameVal = usernames[firstItem.platform] || firstItem.username || '';
     if (usernameVal) url.searchParams.set('username', usernameVal);
+    if (email) url.searchParams.set('email', email);
 
     const shareUrl = url.toString();
 
