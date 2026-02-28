@@ -3,55 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { useGooglePricing, getGooglePricingBySlug } from '../contexts/ContentContext';
 
-const localGuideBasePackages = {
-  'one-time': [
-    { amount: 5, price: 55.44, originalPrice: 61.60, label: '5 REVIEWS', badge: 'Most Popular' },
-    { amount: 10, price: 109.62, originalPrice: 121.80, label: '10 REVIEWS' },
-    { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Best value' },
-    { amount: 50, price: 529.20, originalPrice: 588.00, label: '50 REVIEWS' },
-    { amount: 75, price: 774.90, originalPrice: 861.00, label: '75 REVIEWS' },
-  ],
-  'recurring': [
-    { amount: 5, price: 56.70, originalPrice: 63.00, label: '5 REVIEWS / M', badge: 'Most Popular', suffix: '/ M' },
-    { amount: 10, price: 107.10, originalPrice: 119.00, label: '10 REVIEWS / M', suffix: '/ M' },
-    { amount: 25, price: 264.60, originalPrice: 294.00, label: '25 REVIEWS / M', badge: 'Best value', suffix: '/ M' },
-    { amount: 50, price: 516.60, originalPrice: 574.00, label: '50 REVIEWS / M', suffix: '/ M' },
-    { amount: 75, price: 756.00, originalPrice: 840.00, label: '75 REVIEWS / M', suffix: '/ M' },
-  ],
-  'drip': [
-    { amount: 25, price: 270.90, originalPrice: 301.00, label: '25 REVIEWS', badge: 'Most Popular' },
-    { amount: 50, price: 522.90, originalPrice: 581.00, label: '50 REVIEWS' },
-    { amount: 75, price: 768.60, originalPrice: 854.00, label: '75 REVIEWS', badge: 'Best value' },
-    { amount: 100, price: 1020.60, originalPrice: 1134.00, label: '100 REVIEWS' },
-    { amount: 150, price: 1512.00, originalPrice: 1680.00, label: '150 REVIEWS' },
-  ],
-};
-
-const localGuideCustomPackages = {
-  'one-time': [
-    { amount: 5, price: 73.08, originalPrice: 81.20, label: '5 REVIEWS', badge: 'Most Popular' },
-    { amount: 10, price: 144.90, originalPrice: 161.00, label: '10 REVIEWS' },
-    { amount: 25, price: 352.80, originalPrice: 392.00, label: '25 REVIEWS', badge: 'Best value' },
-    { amount: 50, price: 680.40, originalPrice: 756.00, label: '50 REVIEWS' },
-    { amount: 75, price: 982.80, originalPrice: 1092.00, label: '75 REVIEWS' },
-  ],
-  'recurring': [
-    { amount: 5, price: 75.60, originalPrice: 84.00, label: '5 REVIEWS / M', badge: 'Most Popular', suffix: '/ M' },
-    { amount: 10, price: 144.90, originalPrice: 161.00, label: '10 REVIEWS / M', suffix: '/ M' },
-    { amount: 25, price: 346.50, originalPrice: 385.00, label: '25 REVIEWS / M', badge: 'Best value', suffix: '/ M' },
-    { amount: 50, price: 661.50, originalPrice: 735.00, label: '50 REVIEWS / M', suffix: '/ M' },
-    { amount: 75, price: 957.60, originalPrice: 1064.00, label: '75 REVIEWS / M', suffix: '/ M' },
-  ],
-  'drip': [
-    { amount: 25, price: 321.75, originalPrice: 357.50, label: '25 REVIEWS', badge: 'Most Popular' },
-    { amount: 50, price: 620.10, originalPrice: 689.00, label: '50 REVIEWS' },
-    { amount: 75, price: 907.92, originalPrice: 1008.80, label: '75 REVIEWS', badge: 'Best value' },
-    { amount: 100, price: 1205.10, originalPrice: 1339.00, label: '100 REVIEWS' },
-    { amount: 150, price: 1772.55, originalPrice: 1969.50, label: '150 REVIEWS' },
-  ],
-};
+// Pricing data is now fetched from TinaCMS
 
 const features = [
   { label: 'Real Local Guide Rereviewers', icon: 'check' },
@@ -77,8 +31,30 @@ export default function BuyGoogleLocalGuideReviewsPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const currentPackages = reviewType === '5-star' ? localGuideBasePackages : localGuideCustomPackages;
-  const packages = currentPackages[activeTab] || [];
+  const googlePricing = useGooglePricing();
+  const pagePricing = getGooglePricingBySlug(googlePricing, 'buy-google-local-guide-reviews');
+
+  const packages = React.useMemo(() => {
+    if (!pagePricing) return [];
+    let section;
+    if (activeTab === 'one-time') section = pagePricing.oneTime;
+    else if (activeTab === 'recurring') section = pagePricing.monthly;
+    else if (activeTab === 'drip') section = pagePricing.drip90;
+
+    if (!section) return [];
+
+    const list = reviewType === '5-star' ? section.basic : section.custom;
+    if (!list) return [];
+
+    return list.map((pkg, idx) => ({
+      amount: pkg.reviews,
+      price: pkg.finalPrice,
+      originalPrice: pkg.currentPrice,
+      label: `${pkg.reviews} REVIEWS${activeTab === 'recurring' ? ' / M' : ''}`,
+      suffix: activeTab === 'recurring' ? ' / M' : '',
+      badge: idx === 0 ? 'Most Popular' : (idx === 2 ? 'Best value' : undefined)
+    }));
+  }, [pagePricing, activeTab, reviewType]);
 
   const handleAddToCart = (pkg) => {
     addToCart({

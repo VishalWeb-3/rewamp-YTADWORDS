@@ -70,6 +70,8 @@ type Query {
   pageMetadataConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PageMetadataFilter): PageMetadataConnection!
   legal(relativePath: String): Legal!
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
+  googlePricing(relativePath: String): GooglePricing!
+  googlePricingConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GooglePricingFilter): GooglePricingConnection!
 }
 
 input DocumentFilter {
@@ -81,6 +83,7 @@ input DocumentFilter {
   blog: BlogFilter
   pageMetadata: PageMetadataFilter
   legal: LegalFilter
+  googlePricing: GooglePricingFilter
 }
 
 type DocumentConnectionEdges {
@@ -106,7 +109,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | PageMetadata | Legal | Folder
+union DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | PageMetadata | Legal | GooglePricing | Folder
 
 type GlobalHeaderNavLinks {
   label: String
@@ -1025,6 +1028,154 @@ type LegalConnection implements Connection {
   edges: [LegalConnectionEdges]
 }
 
+type GooglePricingPagesOneTimeBasic {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+type GooglePricingPagesOneTimeCustom {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+type GooglePricingPagesOneTime {
+  basic: [GooglePricingPagesOneTimeBasic]
+  custom: [GooglePricingPagesOneTimeCustom]
+}
+
+type GooglePricingPagesMonthlyBasic {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+type GooglePricingPagesMonthlyCustom {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+type GooglePricingPagesMonthly {
+  basic: [GooglePricingPagesMonthlyBasic]
+  custom: [GooglePricingPagesMonthlyCustom]
+}
+
+type GooglePricingPagesDrip90Basic {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+type GooglePricingPagesDrip90Custom {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+type GooglePricingPagesDrip90 {
+  basic: [GooglePricingPagesDrip90Basic]
+  custom: [GooglePricingPagesDrip90Custom]
+}
+
+type GooglePricingPages {
+  slug: String!
+  oneTime: GooglePricingPagesOneTime
+  monthly: GooglePricingPagesMonthly
+  drip90: GooglePricingPagesDrip90
+}
+
+type GooglePricing implements Node & Document {
+  pages: [GooglePricingPages]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input GooglePricingPagesOneTimeBasicFilter {
+  reviews: NumberFilter
+  currentPrice: NumberFilter
+  finalPrice: NumberFilter
+}
+
+input GooglePricingPagesOneTimeCustomFilter {
+  reviews: NumberFilter
+  currentPrice: NumberFilter
+  finalPrice: NumberFilter
+}
+
+input GooglePricingPagesOneTimeFilter {
+  basic: GooglePricingPagesOneTimeBasicFilter
+  custom: GooglePricingPagesOneTimeCustomFilter
+}
+
+input GooglePricingPagesMonthlyBasicFilter {
+  reviews: NumberFilter
+  currentPrice: NumberFilter
+  finalPrice: NumberFilter
+}
+
+input GooglePricingPagesMonthlyCustomFilter {
+  reviews: NumberFilter
+  currentPrice: NumberFilter
+  finalPrice: NumberFilter
+}
+
+input GooglePricingPagesMonthlyFilter {
+  basic: GooglePricingPagesMonthlyBasicFilter
+  custom: GooglePricingPagesMonthlyCustomFilter
+}
+
+input GooglePricingPagesDrip90BasicFilter {
+  reviews: NumberFilter
+  currentPrice: NumberFilter
+  finalPrice: NumberFilter
+}
+
+input GooglePricingPagesDrip90CustomFilter {
+  reviews: NumberFilter
+  currentPrice: NumberFilter
+  finalPrice: NumberFilter
+}
+
+input GooglePricingPagesDrip90Filter {
+  basic: GooglePricingPagesDrip90BasicFilter
+  custom: GooglePricingPagesDrip90CustomFilter
+}
+
+input GooglePricingPagesFilter {
+  slug: StringFilter
+  oneTime: GooglePricingPagesOneTimeFilter
+  monthly: GooglePricingPagesMonthlyFilter
+  drip90: GooglePricingPagesDrip90Filter
+}
+
+input GooglePricingFilter {
+  pages: GooglePricingPagesFilter
+}
+
+type GooglePricingConnectionEdges {
+  cursor: String!
+  node: GooglePricing
+}
+
+type GooglePricingConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [GooglePricingConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -1047,6 +1198,8 @@ type Mutation {
   createPageMetadata(relativePath: String!, params: PageMetadataMutation!): PageMetadata!
   updateLegal(relativePath: String!, params: LegalMutation!): Legal!
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
+  updateGooglePricing(relativePath: String!, params: GooglePricingMutation!): GooglePricing!
+  createGooglePricing(relativePath: String!, params: GooglePricingMutation!): GooglePricing!
 }
 
 input DocumentUpdateMutation {
@@ -1058,6 +1211,7 @@ input DocumentUpdateMutation {
   blog: BlogMutation
   pageMetadata: PageMetadataMutation
   legal: LegalMutation
+  googlePricing: GooglePricingMutation
   relativePath: String
 }
 
@@ -1070,6 +1224,7 @@ input DocumentMutation {
   blog: BlogMutation
   pageMetadata: PageMetadataMutation
   legal: LegalMutation
+  googlePricing: GooglePricingMutation
 }
 
 input GlobalHeaderNavLinksMutation {
@@ -1456,6 +1611,68 @@ input LegalMutation {
   terms: LegalTermsMutation
   refund: LegalRefundMutation
   cookies: LegalCookiesMutation
+}
+
+input GooglePricingPagesOneTimeBasicMutation {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+input GooglePricingPagesOneTimeCustomMutation {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+input GooglePricingPagesOneTimeMutation {
+  basic: [GooglePricingPagesOneTimeBasicMutation]
+  custom: [GooglePricingPagesOneTimeCustomMutation]
+}
+
+input GooglePricingPagesMonthlyBasicMutation {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+input GooglePricingPagesMonthlyCustomMutation {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+input GooglePricingPagesMonthlyMutation {
+  basic: [GooglePricingPagesMonthlyBasicMutation]
+  custom: [GooglePricingPagesMonthlyCustomMutation]
+}
+
+input GooglePricingPagesDrip90BasicMutation {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+input GooglePricingPagesDrip90CustomMutation {
+  reviews: Float
+  currentPrice: Float
+  finalPrice: Float
+}
+
+input GooglePricingPagesDrip90Mutation {
+  basic: [GooglePricingPagesDrip90BasicMutation]
+  custom: [GooglePricingPagesDrip90CustomMutation]
+}
+
+input GooglePricingPagesMutation {
+  slug: String
+  oneTime: GooglePricingPagesOneTimeMutation
+  monthly: GooglePricingPagesMonthlyMutation
+  drip90: GooglePricingPagesDrip90Mutation
+}
+
+input GooglePricingMutation {
+  pages: [GooglePricingPagesMutation]
 }
 
 schema {

@@ -657,6 +657,113 @@ var config_default = defineConfig({
             ]
           }
         ]
+      },
+      {
+        name: "googlePricing",
+        label: "Google Reviews Pricing",
+        path: "content/google-pricing",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            type: "object",
+            name: "pages",
+            label: "Pricing Pages",
+            list: true,
+            fields: [
+              { type: "string", name: "slug", label: "Page Slug", required: true },
+              {
+                type: "object",
+                name: "oneTime",
+                label: "One Time",
+                fields: [
+                  {
+                    type: "object",
+                    name: "basic",
+                    label: "Basic",
+                    list: true,
+                    fields: [
+                      { type: "number", name: "reviews", label: "Reviews" },
+                      { type: "number", name: "currentPrice", label: "Current Price" },
+                      { type: "number", name: "finalPrice", label: "Final Price" }
+                    ]
+                  },
+                  {
+                    type: "object",
+                    name: "custom",
+                    label: "Custom",
+                    list: true,
+                    fields: [
+                      { type: "number", name: "reviews", label: "Reviews" },
+                      { type: "number", name: "currentPrice", label: "Current Price" },
+                      { type: "number", name: "finalPrice", label: "Final Price" }
+                    ]
+                  }
+                ]
+              },
+              {
+                type: "object",
+                name: "monthly",
+                label: "Monthly Plan",
+                fields: [
+                  {
+                    type: "object",
+                    name: "basic",
+                    label: "Basic",
+                    list: true,
+                    fields: [
+                      { type: "number", name: "reviews", label: "Reviews" },
+                      { type: "number", name: "currentPrice", label: "Current Price" },
+                      { type: "number", name: "finalPrice", label: "Final Price" }
+                    ]
+                  },
+                  {
+                    type: "object",
+                    name: "custom",
+                    label: "Custom",
+                    list: true,
+                    fields: [
+                      { type: "number", name: "reviews", label: "Reviews" },
+                      { type: "number", name: "currentPrice", label: "Current Price" },
+                      { type: "number", name: "finalPrice", label: "Final Price" }
+                    ]
+                  }
+                ]
+              },
+              {
+                type: "object",
+                name: "drip90",
+                label: "90 Day Drip Reviews",
+                fields: [
+                  {
+                    type: "object",
+                    name: "basic",
+                    label: "Basic",
+                    list: true,
+                    fields: [
+                      { type: "number", name: "reviews", label: "Reviews" },
+                      { type: "number", name: "currentPrice", label: "Current Price" },
+                      { type: "number", name: "finalPrice", label: "Final Price" }
+                    ]
+                  },
+                  {
+                    type: "object",
+                    name: "custom",
+                    label: "Custom",
+                    list: true,
+                    fields: [
+                      { type: "number", name: "reviews", label: "Reviews" },
+                      { type: "number", name: "currentPrice", label: "Current Price" },
+                      { type: "number", name: "finalPrice", label: "Final Price" }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

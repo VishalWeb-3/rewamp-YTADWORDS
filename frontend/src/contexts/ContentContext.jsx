@@ -7,6 +7,7 @@ import contactContent from '../../content/contact/contact.json';
 import pricingContent from '../../content/pricing/index.json';
 import pricingPageContent from '../../content/pricing-pages/index.json';
 import legalContent from '../../content/legal/index.json';
+import googlePricingContent from '../../content/google-pricing/index.json';
 
 // Fetch latest from Tina Cloud at runtime so edits in Tina appear without rebuild
 
@@ -30,6 +31,7 @@ const staticValue = {
   pricing: pricingContent,
   pricingPageContent,
   legal: legalContent,
+  googlePricing: googlePricingContent,
   pageMetadata: {},
 };
 
@@ -173,4 +175,14 @@ export function usePageMetadata(slug) {
   }, [slug]);
 
   return metadata;
+}
+
+export function useGooglePricing() {
+  const { googlePricing } = useContent();
+  return googlePricing;
+}
+
+export function getGooglePricingBySlug(googlePricing, slug) {
+  if (!googlePricing?.pages || !slug) return null;
+  return googlePricing.pages.find((p) => p && p.slug === slug) ?? null;
 }

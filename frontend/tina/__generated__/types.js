@@ -362,6 +362,60 @@ export const LegalPartsFragmentDoc = gql`
   }
 }
     `;
+export const GooglePricingPartsFragmentDoc = gql`
+    fragment GooglePricingParts on GooglePricing {
+  __typename
+  pages {
+    __typename
+    slug
+    oneTime {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+    monthly {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+    drip90 {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+  }
+}
+    `;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -818,6 +872,63 @@ export const LegalConnectionDocument = gql`
   }
 }
     ${LegalPartsFragmentDoc}`;
+export const GooglePricingDocument = gql`
+    query googlePricing($relativePath: String!) {
+  googlePricing(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...GooglePricingParts
+  }
+}
+    ${GooglePricingPartsFragmentDoc}`;
+export const GooglePricingConnectionDocument = gql`
+    query googlePricingConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: GooglePricingFilter) {
+  googlePricingConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...GooglePricingParts
+      }
+    }
+  }
+}
+    ${GooglePricingPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
     global(variables, options) {
@@ -867,6 +978,12 @@ export function getSdk(requester) {
     },
     legalConnection(variables, options) {
       return requester(LegalConnectionDocument, variables, options);
+    },
+    googlePricing(variables, options) {
+      return requester(GooglePricingDocument, variables, options);
+    },
+    googlePricingConnection(variables, options) {
+      return requester(GooglePricingConnectionDocument, variables, options);
     }
   };
 }
@@ -890,7 +1007,7 @@ const generateRequester = (client) => {
 export const ExperimentalGetTinaClient = () => getSdk(
   generateRequester(
     createClient({
-      url: "https://content.tinajs.io/2.1/content/722e7af1-e7c6-48b3-a0f5-0cf3c4672195/github/main",
+      url: "http://localhost:4001/graphql",
       queries
     })
   )

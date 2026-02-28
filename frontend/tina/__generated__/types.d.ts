@@ -98,6 +98,8 @@ export type Query = {
   pageMetadataConnection: PageMetadataConnection;
   legal: Legal;
   legalConnection: LegalConnection;
+  googlePricing: GooglePricing;
+  googlePricingConnection: GooglePricingConnection;
 };
 
 
@@ -241,6 +243,21 @@ export type QueryLegalConnectionArgs = {
   filter?: InputMaybe<LegalFilter>;
 };
 
+
+export type QueryGooglePricingArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGooglePricingConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<GooglePricingFilter>;
+};
+
 export type DocumentFilter = {
   global?: InputMaybe<GlobalFilter>;
   home?: InputMaybe<HomeFilter>;
@@ -250,6 +267,7 @@ export type DocumentFilter = {
   blog?: InputMaybe<BlogFilter>;
   pageMetadata?: InputMaybe<PageMetadataFilter>;
   legal?: InputMaybe<LegalFilter>;
+  googlePricing?: InputMaybe<GooglePricingFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -289,7 +307,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | PageMetadata | Legal | Folder;
+export type DocumentNode = Global | Home | Contact | Pricing | PricingPageContent | Blog | PageMetadata | Legal | GooglePricing | Folder;
 
 export type GlobalHeaderNavLinks = {
   __typename?: 'GlobalHeaderNavLinks';
@@ -1277,6 +1295,167 @@ export type LegalConnection = Connection & {
   edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
 };
 
+export type GooglePricingPagesOneTimeBasic = {
+  __typename?: 'GooglePricingPagesOneTimeBasic';
+  reviews?: Maybe<Scalars['Float']['output']>;
+  currentPrice?: Maybe<Scalars['Float']['output']>;
+  finalPrice?: Maybe<Scalars['Float']['output']>;
+};
+
+export type GooglePricingPagesOneTimeCustom = {
+  __typename?: 'GooglePricingPagesOneTimeCustom';
+  reviews?: Maybe<Scalars['Float']['output']>;
+  currentPrice?: Maybe<Scalars['Float']['output']>;
+  finalPrice?: Maybe<Scalars['Float']['output']>;
+};
+
+export type GooglePricingPagesOneTime = {
+  __typename?: 'GooglePricingPagesOneTime';
+  basic?: Maybe<Array<Maybe<GooglePricingPagesOneTimeBasic>>>;
+  custom?: Maybe<Array<Maybe<GooglePricingPagesOneTimeCustom>>>;
+};
+
+export type GooglePricingPagesMonthlyBasic = {
+  __typename?: 'GooglePricingPagesMonthlyBasic';
+  reviews?: Maybe<Scalars['Float']['output']>;
+  currentPrice?: Maybe<Scalars['Float']['output']>;
+  finalPrice?: Maybe<Scalars['Float']['output']>;
+};
+
+export type GooglePricingPagesMonthlyCustom = {
+  __typename?: 'GooglePricingPagesMonthlyCustom';
+  reviews?: Maybe<Scalars['Float']['output']>;
+  currentPrice?: Maybe<Scalars['Float']['output']>;
+  finalPrice?: Maybe<Scalars['Float']['output']>;
+};
+
+export type GooglePricingPagesMonthly = {
+  __typename?: 'GooglePricingPagesMonthly';
+  basic?: Maybe<Array<Maybe<GooglePricingPagesMonthlyBasic>>>;
+  custom?: Maybe<Array<Maybe<GooglePricingPagesMonthlyCustom>>>;
+};
+
+export type GooglePricingPagesDrip90Basic = {
+  __typename?: 'GooglePricingPagesDrip90Basic';
+  reviews?: Maybe<Scalars['Float']['output']>;
+  currentPrice?: Maybe<Scalars['Float']['output']>;
+  finalPrice?: Maybe<Scalars['Float']['output']>;
+};
+
+export type GooglePricingPagesDrip90Custom = {
+  __typename?: 'GooglePricingPagesDrip90Custom';
+  reviews?: Maybe<Scalars['Float']['output']>;
+  currentPrice?: Maybe<Scalars['Float']['output']>;
+  finalPrice?: Maybe<Scalars['Float']['output']>;
+};
+
+export type GooglePricingPagesDrip90 = {
+  __typename?: 'GooglePricingPagesDrip90';
+  basic?: Maybe<Array<Maybe<GooglePricingPagesDrip90Basic>>>;
+  custom?: Maybe<Array<Maybe<GooglePricingPagesDrip90Custom>>>;
+};
+
+export type GooglePricingPages = {
+  __typename?: 'GooglePricingPages';
+  slug: Scalars['String']['output'];
+  oneTime?: Maybe<GooglePricingPagesOneTime>;
+  monthly?: Maybe<GooglePricingPagesMonthly>;
+  drip90?: Maybe<GooglePricingPagesDrip90>;
+};
+
+export type GooglePricing = Node & Document & {
+  __typename?: 'GooglePricing';
+  pages?: Maybe<Array<Maybe<GooglePricingPages>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
+export type GooglePricingPagesOneTimeBasicFilter = {
+  reviews?: InputMaybe<NumberFilter>;
+  currentPrice?: InputMaybe<NumberFilter>;
+  finalPrice?: InputMaybe<NumberFilter>;
+};
+
+export type GooglePricingPagesOneTimeCustomFilter = {
+  reviews?: InputMaybe<NumberFilter>;
+  currentPrice?: InputMaybe<NumberFilter>;
+  finalPrice?: InputMaybe<NumberFilter>;
+};
+
+export type GooglePricingPagesOneTimeFilter = {
+  basic?: InputMaybe<GooglePricingPagesOneTimeBasicFilter>;
+  custom?: InputMaybe<GooglePricingPagesOneTimeCustomFilter>;
+};
+
+export type GooglePricingPagesMonthlyBasicFilter = {
+  reviews?: InputMaybe<NumberFilter>;
+  currentPrice?: InputMaybe<NumberFilter>;
+  finalPrice?: InputMaybe<NumberFilter>;
+};
+
+export type GooglePricingPagesMonthlyCustomFilter = {
+  reviews?: InputMaybe<NumberFilter>;
+  currentPrice?: InputMaybe<NumberFilter>;
+  finalPrice?: InputMaybe<NumberFilter>;
+};
+
+export type GooglePricingPagesMonthlyFilter = {
+  basic?: InputMaybe<GooglePricingPagesMonthlyBasicFilter>;
+  custom?: InputMaybe<GooglePricingPagesMonthlyCustomFilter>;
+};
+
+export type GooglePricingPagesDrip90BasicFilter = {
+  reviews?: InputMaybe<NumberFilter>;
+  currentPrice?: InputMaybe<NumberFilter>;
+  finalPrice?: InputMaybe<NumberFilter>;
+};
+
+export type GooglePricingPagesDrip90CustomFilter = {
+  reviews?: InputMaybe<NumberFilter>;
+  currentPrice?: InputMaybe<NumberFilter>;
+  finalPrice?: InputMaybe<NumberFilter>;
+};
+
+export type GooglePricingPagesDrip90Filter = {
+  basic?: InputMaybe<GooglePricingPagesDrip90BasicFilter>;
+  custom?: InputMaybe<GooglePricingPagesDrip90CustomFilter>;
+};
+
+export type GooglePricingPagesFilter = {
+  slug?: InputMaybe<StringFilter>;
+  oneTime?: InputMaybe<GooglePricingPagesOneTimeFilter>;
+  monthly?: InputMaybe<GooglePricingPagesMonthlyFilter>;
+  drip90?: InputMaybe<GooglePricingPagesDrip90Filter>;
+};
+
+export type GooglePricingFilter = {
+  pages?: InputMaybe<GooglePricingPagesFilter>;
+};
+
+export type GooglePricingConnectionEdges = {
+  __typename?: 'GooglePricingConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<GooglePricing>;
+};
+
+export type GooglePricingConnection = Connection & {
+  __typename?: 'GooglePricingConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<GooglePricingConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -1300,6 +1479,8 @@ export type Mutation = {
   createPageMetadata: PageMetadata;
   updateLegal: Legal;
   createLegal: Legal;
+  updateGooglePricing: GooglePricing;
+  createGooglePricing: GooglePricing;
 };
 
 
@@ -1431,6 +1612,18 @@ export type MutationCreateLegalArgs = {
   params: LegalMutation;
 };
 
+
+export type MutationUpdateGooglePricingArgs = {
+  relativePath: Scalars['String']['input'];
+  params: GooglePricingMutation;
+};
+
+
+export type MutationCreateGooglePricingArgs = {
+  relativePath: Scalars['String']['input'];
+  params: GooglePricingMutation;
+};
+
 export type DocumentUpdateMutation = {
   global?: InputMaybe<GlobalMutation>;
   home?: InputMaybe<HomeMutation>;
@@ -1440,6 +1633,7 @@ export type DocumentUpdateMutation = {
   blog?: InputMaybe<BlogMutation>;
   pageMetadata?: InputMaybe<PageMetadataMutation>;
   legal?: InputMaybe<LegalMutation>;
+  googlePricing?: InputMaybe<GooglePricingMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1452,6 +1646,7 @@ export type DocumentMutation = {
   blog?: InputMaybe<BlogMutation>;
   pageMetadata?: InputMaybe<PageMetadataMutation>;
   legal?: InputMaybe<LegalMutation>;
+  googlePricing?: InputMaybe<GooglePricingMutation>;
 };
 
 export type GlobalHeaderNavLinksMutation = {
@@ -1840,6 +2035,68 @@ export type LegalMutation = {
   cookies?: InputMaybe<LegalCookiesMutation>;
 };
 
+export type GooglePricingPagesOneTimeBasicMutation = {
+  reviews?: InputMaybe<Scalars['Float']['input']>;
+  currentPrice?: InputMaybe<Scalars['Float']['input']>;
+  finalPrice?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type GooglePricingPagesOneTimeCustomMutation = {
+  reviews?: InputMaybe<Scalars['Float']['input']>;
+  currentPrice?: InputMaybe<Scalars['Float']['input']>;
+  finalPrice?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type GooglePricingPagesOneTimeMutation = {
+  basic?: InputMaybe<Array<InputMaybe<GooglePricingPagesOneTimeBasicMutation>>>;
+  custom?: InputMaybe<Array<InputMaybe<GooglePricingPagesOneTimeCustomMutation>>>;
+};
+
+export type GooglePricingPagesMonthlyBasicMutation = {
+  reviews?: InputMaybe<Scalars['Float']['input']>;
+  currentPrice?: InputMaybe<Scalars['Float']['input']>;
+  finalPrice?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type GooglePricingPagesMonthlyCustomMutation = {
+  reviews?: InputMaybe<Scalars['Float']['input']>;
+  currentPrice?: InputMaybe<Scalars['Float']['input']>;
+  finalPrice?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type GooglePricingPagesMonthlyMutation = {
+  basic?: InputMaybe<Array<InputMaybe<GooglePricingPagesMonthlyBasicMutation>>>;
+  custom?: InputMaybe<Array<InputMaybe<GooglePricingPagesMonthlyCustomMutation>>>;
+};
+
+export type GooglePricingPagesDrip90BasicMutation = {
+  reviews?: InputMaybe<Scalars['Float']['input']>;
+  currentPrice?: InputMaybe<Scalars['Float']['input']>;
+  finalPrice?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type GooglePricingPagesDrip90CustomMutation = {
+  reviews?: InputMaybe<Scalars['Float']['input']>;
+  currentPrice?: InputMaybe<Scalars['Float']['input']>;
+  finalPrice?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type GooglePricingPagesDrip90Mutation = {
+  basic?: InputMaybe<Array<InputMaybe<GooglePricingPagesDrip90BasicMutation>>>;
+  custom?: InputMaybe<Array<InputMaybe<GooglePricingPagesDrip90CustomMutation>>>;
+};
+
+export type GooglePricingPagesMutation = {
+  slug?: InputMaybe<Scalars['String']['input']>;
+  oneTime?: InputMaybe<GooglePricingPagesOneTimeMutation>;
+  monthly?: InputMaybe<GooglePricingPagesMonthlyMutation>;
+  drip90?: InputMaybe<GooglePricingPagesDrip90Mutation>;
+};
+
+export type GooglePricingMutation = {
+  pages?: InputMaybe<Array<InputMaybe<GooglePricingPagesMutation>>>;
+};
+
 export type GlobalPartsFragment = { __typename: 'Global', header?: { __typename: 'GlobalHeader', siteName?: string | null, logo?: string | null, loginLabel?: string | null, signupLabel?: string | null, signedInAs?: string | null, myOrders?: string | null, logout?: string | null, shoppingCartAria?: string | null, navLinks?: Array<{ __typename: 'GlobalHeaderNavLinks', label?: string | null, link?: string | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, ourServicesTitle?: string | null, resourcesTitle?: string | null, companyTitle?: string | null, legalDisclaimer?: string | null, copyright?: string | null, privacyPolicy?: string | null, termsOfService?: string | null, refundPolicy?: string | null, cookiesSettings?: string | null } | null, serviceBar?: { __typename: 'GlobalServiceBar', services?: Array<{ __typename: 'GlobalServiceBarServices', label?: string | null, items?: Array<{ __typename: 'GlobalServiceBarServicesItems', label?: string | null, link?: string | null } | null> | null } | null> | null } | null, cart?: { __typename: 'GlobalCart', title?: string | null, emptyTitle?: string | null, emptySubtext?: string | null, browseServices?: string | null } | null, auth?: { __typename: 'GlobalAuth', loginTitle?: string | null, loginSubtitle?: string | null, emailOrUsernameLabel?: string | null, emailPlaceholder?: string | null, passwordLabel?: string | null, passwordPlaceholder?: string | null, logInButton?: string | null, loggingInButton?: string | null, rememberMe?: string | null, forgotPassword?: string | null, noAccount?: string | null, signUpLinkText?: string | null, signupTitle?: string | null, signupSubtitle?: string | null, hasAccount?: string | null, logInLinkText?: string | null } | null };
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', badge?: string | null, title?: string | null, subtitle?: string | null, ctaPrimary?: string | null, ctaPrimaryLink?: string | null, ctaSecondary?: string | null, ctaSecondaryLink?: string | null, lastOrder?: string | null, activeCampaigns?: string | null, heroImage?: string | null, heroImageAlt?: string | null } | null, servicesSection?: { __typename: 'HomeServicesSection', googleServices?: Array<string | null> | null, tiktokServices?: Array<string | null> | null } | null, whyChooseUs?: { __typename: 'HomeWhyChooseUs', title?: string | null, features?: Array<{ __typename: 'HomeWhyChooseUsFeatures', title?: string | null } | null> | null } | null, faq?: { __typename: 'HomeFaq', heading?: string | null, items?: Array<{ __typename: 'HomeFaqItems', question?: string | null, answer?: string | null } | null> | null } | null, comparison?: { __typename: 'HomeComparison', heading?: string | null, better?: string | null, otherTitle?: string | null, ourTitle?: string | null, bestChoice?: string | null, otherPoints?: Array<string | null> | null, ourPoints?: Array<string | null> | null } | null, globalAudienceCta?: { __typename: 'HomeGlobalAudienceCta', title?: string | null, titleHighlight?: string | null, paragraph1?: string | null, paragraph2?: string | null } | null };
@@ -1855,6 +2112,8 @@ export type BlogPartsFragment = { __typename: 'Blog', title: string, excerpt?: s
 export type PageMetadataPartsFragment = { __typename: 'PageMetadata', slug: string, title: string, description: string, keywords?: string | null, ogImage?: string | null };
 
 export type LegalPartsFragment = { __typename: 'Legal', privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null };
+
+export type GooglePricingPartsFragment = { __typename: 'GooglePricing', pages?: Array<{ __typename: 'GooglePricingPages', slug: string, oneTime?: { __typename: 'GooglePricingPagesOneTime', basic?: Array<{ __typename: 'GooglePricingPagesOneTimeBasic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesOneTimeCustom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null, monthly?: { __typename: 'GooglePricingPagesMonthly', basic?: Array<{ __typename: 'GooglePricingPagesMonthlyBasic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesMonthlyCustom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null, drip90?: { __typename: 'GooglePricingPagesDrip90', basic?: Array<{ __typename: 'GooglePricingPagesDrip90Basic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesDrip90Custom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null } | null> | null };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2007,6 +2266,25 @@ export type LegalConnectionQueryVariables = Exact<{
 
 
 export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, privacy?: { __typename: 'LegalPrivacy', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalPrivacySections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null, terms?: { __typename: 'LegalTerms', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalTermsSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalTermsSectionsSubsections', subheading?: string | null, body?: string | null, listItems?: Array<string | null> | null } | null> | null } | null> | null } | null, refund?: { __typename: 'LegalRefund', title?: string | null, lastUpdated?: string | null, sections?: Array<{ __typename: 'LegalRefundSections', heading?: string | null, body?: string | null, listItems?: Array<string | null> | null, subsections?: Array<{ __typename: 'LegalRefundSectionsSubsections', subheading?: string | null, body?: string | null } | null> | null } | null> | null } | null, cookies?: { __typename: 'LegalCookies', title?: string | null, lastUpdated?: string | null, saveButtonText?: string | null, savedButtonText?: string | null, sections?: Array<{ __typename: 'LegalCookiesSections', heading?: string | null, body?: string | null } | null> | null, cookieTypes?: Array<{ __typename: 'LegalCookiesCookieTypes', name?: string | null, description?: string | null, alwaysOn?: boolean | null } | null> | null } | null } | null } | null> | null } };
+
+export type GooglePricingQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type GooglePricingQuery = { __typename?: 'Query', googlePricing: { __typename: 'GooglePricing', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'GooglePricingPages', slug: string, oneTime?: { __typename: 'GooglePricingPagesOneTime', basic?: Array<{ __typename: 'GooglePricingPagesOneTimeBasic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesOneTimeCustom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null, monthly?: { __typename: 'GooglePricingPagesMonthly', basic?: Array<{ __typename: 'GooglePricingPagesMonthlyBasic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesMonthlyCustom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null, drip90?: { __typename: 'GooglePricingPagesDrip90', basic?: Array<{ __typename: 'GooglePricingPagesDrip90Basic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesDrip90Custom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null } | null> | null } };
+
+export type GooglePricingConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<GooglePricingFilter>;
+}>;
+
+
+export type GooglePricingConnectionQuery = { __typename?: 'Query', googlePricingConnection: { __typename?: 'GooglePricingConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GooglePricingConnectionEdges', cursor: string, node?: { __typename: 'GooglePricing', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pages?: Array<{ __typename: 'GooglePricingPages', slug: string, oneTime?: { __typename: 'GooglePricingPagesOneTime', basic?: Array<{ __typename: 'GooglePricingPagesOneTimeBasic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesOneTimeCustom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null, monthly?: { __typename: 'GooglePricingPagesMonthly', basic?: Array<{ __typename: 'GooglePricingPagesMonthlyBasic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesMonthlyCustom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null, drip90?: { __typename: 'GooglePricingPagesDrip90', basic?: Array<{ __typename: 'GooglePricingPagesDrip90Basic', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null, custom?: Array<{ __typename: 'GooglePricingPagesDrip90Custom', reviews?: number | null, currentPrice?: number | null, finalPrice?: number | null } | null> | null } | null } | null> | null } | null } | null> | null } };
 
 export const GlobalPartsFragmentDoc = gql`
     fragment GlobalParts on Global {
@@ -2362,6 +2640,60 @@ export const LegalPartsFragmentDoc = gql`
     }
     saveButtonText
     savedButtonText
+  }
+}
+    `;
+export const GooglePricingPartsFragmentDoc = gql`
+    fragment GooglePricingParts on GooglePricing {
+  __typename
+  pages {
+    __typename
+    slug
+    oneTime {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+    monthly {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+    drip90 {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
   }
 }
     `;
@@ -2821,6 +3153,63 @@ export const LegalConnectionDocument = gql`
   }
 }
     ${LegalPartsFragmentDoc}`;
+export const GooglePricingDocument = gql`
+    query googlePricing($relativePath: String!) {
+  googlePricing(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...GooglePricingParts
+  }
+}
+    ${GooglePricingPartsFragmentDoc}`;
+export const GooglePricingConnectionDocument = gql`
+    query googlePricingConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: GooglePricingFilter) {
+  googlePricingConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...GooglePricingParts
+      }
+    }
+  }
+}
+    ${GooglePricingPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -2871,6 +3260,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     legalConnection(variables?: LegalConnectionQueryVariables, options?: C): Promise<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}> {
         return requester<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}, LegalConnectionQueryVariables>(LegalConnectionDocument, variables, options);
+      },
+    googlePricing(variables: GooglePricingQueryVariables, options?: C): Promise<{data: GooglePricingQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GooglePricingQueryVariables, query: string}> {
+        return requester<{data: GooglePricingQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GooglePricingQueryVariables, query: string}, GooglePricingQueryVariables>(GooglePricingDocument, variables, options);
+      },
+    googlePricingConnection(variables?: GooglePricingConnectionQueryVariables, options?: C): Promise<{data: GooglePricingConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GooglePricingConnectionQueryVariables, query: string}> {
+        return requester<{data: GooglePricingConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GooglePricingConnectionQueryVariables, query: string}, GooglePricingConnectionQueryVariables>(GooglePricingConnectionDocument, variables, options);
       }
     };
   }
@@ -2919,7 +3314,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "https://content.tinajs.io/2.1/content/722e7af1-e7c6-48b3-a0f5-0cf3c4672195/github/main",
+        url: "http://localhost:4001/graphql",
         queries,
       })
     )

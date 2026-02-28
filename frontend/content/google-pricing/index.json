@@ -1,0 +1,688 @@
+{
+    "pages": [
+        {
+            "slug": "buy-female-google-reviews",
+            "oneTime": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 57.20,
+                        "finalPrice": 51.48
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 113.10,
+                        "finalPrice": 101.79
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 279.50,
+                        "finalPrice": 251.55
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 546.00,
+                        "finalPrice": 491.40
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 799.50,
+                        "finalPrice": 719.55
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 75.40,
+                        "finalPrice": 67.86
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 149.50,
+                        "finalPrice": 134.55
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 364.00,
+                        "finalPrice": 327.60
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 702.00,
+                        "finalPrice": 631.80
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1014.00,
+                        "finalPrice": 912.60
+                    }
+                ]
+            },
+            "monthly": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 58.50,
+                        "finalPrice": 52.65
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 110.50,
+                        "finalPrice": 99.45
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 273.00,
+                        "finalPrice": 245.70
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 533.00,
+                        "finalPrice": 479.70
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 780.00,
+                        "finalPrice": 702.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 78.00,
+                        "finalPrice": 70.20
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 149.50,
+                        "finalPrice": 134.55
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 357.50,
+                        "finalPrice": 321.75
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 682.50,
+                        "finalPrice": 614.25
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 988.00,
+                        "finalPrice": 889.20
+                    }
+                ]
+            },
+            "drip90": {
+                "basic": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 279.50,
+                        "finalPrice": 251.55
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 539.50,
+                        "finalPrice": 485.55
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 793.00,
+                        "finalPrice": 713.70
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1053.00,
+                        "finalPrice": 947.70
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1560.00,
+                        "finalPrice": 1404.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 357.50,
+                        "finalPrice": 321.75
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 689.00,
+                        "finalPrice": 620.10
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1008.80,
+                        "finalPrice": 907.92
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1339.00,
+                        "finalPrice": 1205.10
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1969.50,
+                        "finalPrice": 1772.55
+                    }
+                ]
+            }
+        },
+        {
+            "slug": "buy-male-google-reviews",
+            "oneTime": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 57.20,
+                        "finalPrice": 51.48
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 113.00,
+                        "finalPrice": 101.70
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 279.00,
+                        "finalPrice": 251.10
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 546.00,
+                        "finalPrice": 491.40
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 799.50,
+                        "finalPrice": 719.55
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 75.00,
+                        "finalPrice": 67.50
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 149.00,
+                        "finalPrice": 134.10
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 364.00,
+                        "finalPrice": 327.60
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 702.00,
+                        "finalPrice": 631.80
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1014.00,
+                        "finalPrice": 912.60
+                    }
+                ]
+            },
+            "monthly": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 58.00,
+                        "finalPrice": 52.20
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 110.00,
+                        "finalPrice": 99.00
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 273.00,
+                        "finalPrice": 245.70
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 533.00,
+                        "finalPrice": 479.70
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 780.00,
+                        "finalPrice": 702.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 78.00,
+                        "finalPrice": 70.20
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 149.00,
+                        "finalPrice": 134.10
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 357.50,
+                        "finalPrice": 321.75
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 682.50,
+                        "finalPrice": 614.25
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 988.00,
+                        "finalPrice": 889.20
+                    }
+                ]
+            },
+            "drip90": {
+                "basic": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 279.00,
+                        "finalPrice": 251.10
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 539.50,
+                        "finalPrice": 485.55
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 793.00,
+                        "finalPrice": 713.70
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1053.00,
+                        "finalPrice": 947.70
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1560.00,
+                        "finalPrice": 1404.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 357.00,
+                        "finalPrice": 321.30
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 689.00,
+                        "finalPrice": 620.10
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1008.80,
+                        "finalPrice": 907.92
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1339.00,
+                        "finalPrice": 1205.10
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1969.50,
+                        "finalPrice": 1772.55
+                    }
+                ]
+            }
+        },
+        {
+            "slug": "buy-google-local-guide-reviews",
+            "oneTime": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 61.60,
+                        "finalPrice": 55.44
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 121.80,
+                        "finalPrice": 109.62
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 301.00,
+                        "finalPrice": 270.90
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 588.00,
+                        "finalPrice": 529.20
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 861.00,
+                        "finalPrice": 774.90
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 81.20,
+                        "finalPrice": 73.08
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 161.00,
+                        "finalPrice": 144.90
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 392.00,
+                        "finalPrice": 352.80
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 756.00,
+                        "finalPrice": 680.40
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1092.00,
+                        "finalPrice": 982.80
+                    }
+                ]
+            },
+            "monthly": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 63.00,
+                        "finalPrice": 56.70
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 119.00,
+                        "finalPrice": 107.10
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 294.00,
+                        "finalPrice": 264.60
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 574.00,
+                        "finalPrice": 516.60
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 840.00,
+                        "finalPrice": 756.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 84.00,
+                        "finalPrice": 75.60
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 161.00,
+                        "finalPrice": 144.90
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 385.00,
+                        "finalPrice": 346.50
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 735.00,
+                        "finalPrice": 661.50
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1064.00,
+                        "finalPrice": 957.60
+                    }
+                ]
+            },
+            "drip90": {
+                "basic": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 301.00,
+                        "finalPrice": 270.90
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 581.00,
+                        "finalPrice": 522.90
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 854.00,
+                        "finalPrice": 768.60
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1134.00,
+                        "finalPrice": 1020.60
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1680.00,
+                        "finalPrice": 1512.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 385.00,
+                        "finalPrice": 346.50
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 742.00,
+                        "finalPrice": 667.80
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1086.00,
+                        "finalPrice": 977.40
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1442.00,
+                        "finalPrice": 1297.80
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 2121.00,
+                        "finalPrice": 1908.90
+                    }
+                ]
+            }
+        },
+        {
+            "slug": "buy-google-reviews-by-age-group",
+            "oneTime": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 57.20,
+                        "finalPrice": 51.48
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 113.10,
+                        "finalPrice": 101.79
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 279.50,
+                        "finalPrice": 251.55
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 546.00,
+                        "finalPrice": 491.40
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 799.50,
+                        "finalPrice": 719.55
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 75.40,
+                        "finalPrice": 67.86
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 149.50,
+                        "finalPrice": 134.55
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 364.00,
+                        "finalPrice": 327.60
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 702.00,
+                        "finalPrice": 631.80
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1014.00,
+                        "finalPrice": 912.60
+                    }
+                ]
+            },
+            "monthly": {
+                "basic": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 58.50,
+                        "finalPrice": 52.65
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 110.50,
+                        "finalPrice": 99.45
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 273.00,
+                        "finalPrice": 245.70
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 533.00,
+                        "finalPrice": 479.70
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 780.00,
+                        "finalPrice": 702.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 5,
+                        "currentPrice": 78.00,
+                        "finalPrice": 70.20
+                    },
+                    {
+                        "reviews": 10,
+                        "currentPrice": 149.50,
+                        "finalPrice": 134.10
+                    },
+                    {
+                        "reviews": 25,
+                        "currentPrice": 357.50,
+                        "finalPrice": 321.75
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 682.50,
+                        "finalPrice": 614.25
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 988.00,
+                        "finalPrice": 889.20
+                    }
+                ]
+            },
+            "drip90": {
+                "basic": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 279.50,
+                        "finalPrice": 251.55
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 539.50,
+                        "finalPrice": 485.55
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 793.00,
+                        "finalPrice": 713.70
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1053.00,
+                        "finalPrice": 947.70
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1560.00,
+                        "finalPrice": 1404.00
+                    }
+                ],
+                "custom": [
+                    {
+                        "reviews": 25,
+                        "currentPrice": 357.50,
+                        "finalPrice": 321.75
+                    },
+                    {
+                        "reviews": 50,
+                        "currentPrice": 689.00,
+                        "finalPrice": 620.10
+                    },
+                    {
+                        "reviews": 75,
+                        "currentPrice": 1008.80,
+                        "finalPrice": 907.92
+                    },
+                    {
+                        "reviews": 100,
+                        "currentPrice": 1339.00,
+                        "finalPrice": 1205.10
+                    },
+                    {
+                        "reviews": 150,
+                        "currentPrice": 1969.50,
+                        "finalPrice": 1772.55
+                    }
+                ]
+            }
+        }
+    ]
+}

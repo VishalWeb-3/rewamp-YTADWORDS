@@ -346,3 +346,56 @@ fragment LegalParts on Legal {
     savedButtonText
   }
 }
+
+fragment GooglePricingParts on GooglePricing {
+  __typename
+  pages {
+    __typename
+    slug
+    oneTime {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+    monthly {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+    drip90 {
+      __typename
+      basic {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+      custom {
+        __typename
+        reviews
+        currentPrice
+        finalPrice
+      }
+    }
+  }
+}
