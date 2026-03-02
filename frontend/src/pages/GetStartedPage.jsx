@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { isValidLink, getLinkPlaceholder } from '../utils/linkValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -134,10 +135,15 @@ export default function GetStartedPage() {
   }, [selectedType, allPackages]);
 
   const handleContinue = () => {
-    if (!formData.link || !formData.email || !selectedPackage) return;
+    const platform = getPlatform(serviceType);
+    if (!formData.link || !isValidLink(formData.link, platform) || !formData.email || !selectedPackage) {
+      if (formData.link && !isValidLink(formData.link, platform)) {
+        alert(`Please enter a valid ${platform} link`);
+      }
+      return;
+    }
 
     const quantity = selectedPackage[quantityKey];
-    const platform = getPlatform(serviceType);
     const serviceLabel = `${serviceType} - ${quantity}`;
     const amount = quantity;
     const price = parseFloat(selectedPackage.price);
@@ -211,20 +217,22 @@ export default function GetStartedPage() {
                   {(() => {
                     const platform = getPlatform(serviceType);
                     const isYouTube = platform === 'YouTube';
-                    const placeholderText =
-                      platform === 'Google'
-                        ? 'Paste your Google Maps link or business URL...'
-                        : platform === 'TikTok'
-                          ? 'Paste your TikTok profile URL or @username...'
-                          : 'Paste URL or type channel name for suggestions...';
+                    const placeholderText = getLinkPlaceholder(platform);
+                    const isInvalid = formData.link && !isValidLink(formData.link, platform);
                     return (
-                      <YouTubeLinkSuggest
-                        value={formData.link}
-                        onChange={(link) => setFormData({ ...formData, link })}
-                        placeholder={placeholderText}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent"
-                        enableSuggestions={isYouTube}
-                      />
+                      <div className="space-y-1">
+                        <YouTubeLinkSuggest
+                          value={formData.link}
+                          onChange={(link) => setFormData({ ...formData, link })}
+                          placeholder={placeholderText}
+                          className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-colors ${isInvalid ? 'border-red-500' : 'border-gray-300'
+                            }`}
+                          enableSuggestions={isYouTube}
+                        />
+                        {isInvalid && (
+                          <p className="text-xs text-red-500 font-medium">Please enter a valid {platform} link</p>
+                        )}
+                      </div>
                     );
                   })()}
                 </div>
@@ -345,7 +353,7 @@ export default function GetStartedPage() {
 
                 <button
                   type="submit"
-                  disabled={!formData.link || !formData.email || !selectedPackage}
+                  disabled={!formData.link || !isValidLink(formData.link, getPlatform(serviceType)) || !formData.email || !selectedPackage}
                   className="w-full bg-brand-red text-white font-bold py-4 rounded-xl hover:bg-[#C62828] transition-colors text-lg shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
                 >
                   Continue

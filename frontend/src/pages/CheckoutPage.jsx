@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
+import { isValidLink } from '../utils/linkValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -126,6 +127,15 @@ export default function CheckoutPage() {
     if (!isValidEmail(email)) {
       alert('Please enter a valid email address');
       return;
+    }
+
+    // Validate all platform links
+    for (const platform of platforms) {
+      const link = usernames[platform];
+      if (!link || !isValidLink(link, platform)) {
+        alert(`Please enter a valid ${platform} link`);
+        return;
+      }
     }
 
     setIsProcessing(true);
@@ -276,13 +286,19 @@ export default function CheckoutPage() {
                               onChange={(e) =>
                                 setUsernames({ ...usernames, [platform]: e.target.value })
                               }
-                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-transparent"
+                              className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-brand-red focus:border-transparent transition-colors ${usernames[platform] && !isValidLink(usernames[platform], platform)
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                                }`}
                               placeholder={
                                 platform === 'YouTube'
                                   ? 'youtube.com/watch?v=...'
                                   : `@${platform.toLowerCase()}_user`
                               }
                             />
+                            {usernames[platform] && !isValidLink(usernames[platform], platform) && (
+                              <p className="text-[10px] text-red-500 font-bold mt-1">Please enter a valid {platform} link</p>
+                            )}
                           </div>
                         ))}
                       </div>

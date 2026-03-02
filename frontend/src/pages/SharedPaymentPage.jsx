@@ -6,6 +6,7 @@ import { useCtaActions } from '../contexts/CtaActionsContext';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
+import { isValidLink } from '../utils/linkValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -65,8 +66,8 @@ export default function SharedPaymentPage() {
         } else {
             setEmailError('');
         }
-        if (!targetUrl || targetUrl.trim().length < 2) {
-            setUrlError(`Please enter your ${platform} link or username`);
+        if (!targetUrl || !isValidLink(targetUrl, platform)) {
+            setUrlError(`Please enter a valid ${platform} link or username`);
             ok = false;
         } else {
             setUrlError('');
@@ -236,10 +237,14 @@ export default function SharedPaymentPage() {
                                                 value={targetUrl}
                                                 onChange={(e) => { setTargetUrl(e.target.value); setUrlError(''); }}
                                                 placeholder={`Paste your ${platform} link here`}
-                                                className={`w-full pl-12 pr-4 py-3 rounded-xl border-2 transition-all outline-none text-sm sm:text-base ${urlError ? 'border-red-500' : 'border-gray-100 focus:border-brand-red'}`}
+                                                className={`w-full pl-12 pr-4 py-3 rounded-xl border-2 transition-all outline-none text-sm sm:text-base ${urlError || (targetUrl && !isValidLink(targetUrl, platform)) ? 'border-red-500' : 'border-gray-100 focus:border-brand-red'}`}
                                             />
                                         </div>
-                                        {urlError && <p className="text-[10px] text-red-500 font-bold mt-1">{urlError}</p>}
+                                        {(urlError || (targetUrl && !isValidLink(targetUrl, platform))) && (
+                                            <p className="text-[10px] text-red-500 font-bold mt-1">
+                                                {urlError || `Please enter a valid ${platform} link`}
+                                            </p>
+                                        )}
                                     </div>
 
                                     {/* Payment Buttons */}

@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
+import { isValidLink } from '../utils/linkValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -156,10 +157,14 @@ export default function GoogleReviewsUpgradeGeneric() {
       navigate(getStartedReturnPath, { state: location.state });
       return;
     }
-    if (!packageData.googleMapUrl || packageData.googleMapUrl.trim() === '') {
-      alert('Please enter your Google Map URL. Go back to the previous step.');
-      navigate(getStartedReturnPath, { state: location.state });
-      return;
+    if (!packageData.googleMapUrl || !isValidLink(packageData.googleMapUrl, 'Google')) {
+      // Allow legacy business names if they don't look like URLs
+      const isBusinessName = packageData.googleMapUrl && packageData.googleMapUrl.trim().length >= 2 && !packageData.googleMapUrl.includes('.');
+      if (!isBusinessName) {
+        alert('Please enter a valid Google Map URL or business name. Go back to the previous step.');
+        navigate(getStartedReturnPath, { state: location.state });
+        return;
+      }
     }
 
     setIsProcessing(true);

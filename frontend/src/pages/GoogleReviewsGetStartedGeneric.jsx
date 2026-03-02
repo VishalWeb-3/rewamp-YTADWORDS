@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { isValidLink } from '../utils/linkValidator';
 
 const MailIcon = () => (
   <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,11 +111,11 @@ export default function GoogleReviewsGetStartedGeneric() {
     if (!url || url.trim() === '') {
       return { valid: false, error: 'Google Map URL is required' };
     }
-    const googleMapsUrlPattern = /^https?:\/\/(www\.)?(google\.com\/maps|maps\.google\.com|goo\.gl\/maps|maps\.app\.goo\.gl)/;
-    if (googleMapsUrlPattern.test(url.trim())) {
+    if (isValidLink(url, 'Google')) {
       return { valid: true, error: '' };
     }
-    if (url.trim().length >= 2) {
+    // If it's not a valid link, check if it's at least a name (existing legacy support)
+    if (url.trim().length >= 2 && !url.includes('.')) {
       return { valid: true, error: '' };
     }
     return { valid: false, error: 'Please enter a valid Google Maps URL or business name' };
@@ -339,7 +340,7 @@ export default function GoogleReviewsGetStartedGeneric() {
                   {formData.googleMapUrl &&
                     !errors.googleMapUrl &&
                     !selectedPlace &&
-                    formData.googleMapUrl.match(/^https?:\/\//) && (
+                    isValidLink(formData.googleMapUrl, 'Google') && (
                       <p className="mt-1 text-sm text-green-600">✓ Valid Google Maps URL format</p>
                     )}
                 </div>
