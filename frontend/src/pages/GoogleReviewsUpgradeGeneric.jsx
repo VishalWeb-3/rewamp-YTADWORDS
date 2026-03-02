@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
 import { isValidLink } from '../utils/linkValidator';
+import { isValidEmail } from '../utils/emailValidator';
+import { triggerPaymentRelay } from '../utils/paymentRelay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -151,9 +153,8 @@ export default function GoogleReviewsUpgradeGeneric() {
     const totalAmount = calculateTotal();
     const method = methodOverride || paymentMethod;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!packageData.email || !emailRegex.test(packageData.email)) {
-      alert('Please enter a valid email address. Go back to the previous step.');
+    if (!packageData.email || !isValidEmail(packageData.email)) {
+      alert('Please enter a valid popular email (gmail, outlook, etc.). Go back to the previous step.');
       navigate(getStartedReturnPath, { state: location.state });
       return;
     }
@@ -209,7 +210,11 @@ export default function GoogleReviewsUpgradeGeneric() {
       if (response.ok && contentType && contentType.indexOf('application/json') !== -1) {
         const data = await response.json();
         if (data.paymentUrl) {
-          window.location.href = data.paymentUrl;
+          if (method === 'card') {
+            triggerPaymentRelay(data.paymentUrl);
+          } else {
+            window.location.href = data.paymentUrl;
+          }
           return;
         }
         if (!data.paymentUrl) {

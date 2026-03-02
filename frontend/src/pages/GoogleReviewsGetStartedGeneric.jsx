@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { isValidLink } from '../utils/linkValidator';
+import { isValidEmail } from '../utils/emailValidator';
 
 const MailIcon = () => (
   <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,10 +103,6 @@ export default function GoogleReviewsGetStartedGeneric() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const validateGoogleMapUrl = (url) => {
     if (!url || url.trim() === '') {
@@ -183,8 +180,8 @@ export default function GoogleReviewsGetStartedGeneric() {
   const handleBlur = (e) => {
     const { name, value } = e.target;
     if (name === 'email') {
-      if (value && !validateEmail(value)) {
-        setErrors((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
+      if (value && !isValidEmail(value)) {
+        setErrors((prev) => ({ ...prev, email: 'Please enter a valid popular email (gmail, outlook, etc.)' }));
       } else {
         setErrors((prev) => ({ ...prev, email: '' }));
       }
@@ -195,8 +192,8 @@ export default function GoogleReviewsGetStartedGeneric() {
   };
 
   const handleNext = async () => {
-    if (!formData.email || !validateEmail(formData.email)) {
-      setErrors((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
+    if (!formData.email || !isValidEmail(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: 'Please enter a valid popular email (gmail, outlook, etc.)' }));
       return;
     }
     const urlValidation = validateGoogleMapUrl(formData.googleMapUrl);

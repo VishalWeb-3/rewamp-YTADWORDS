@@ -689,9 +689,13 @@ app.post("/api/orders/create", async (req, res) => {
       externalOrderId,
       totalAmount,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Create Order Error:", error);
-    res.status(500).json({ error: "Failed to create orders" });
+    // Ensure we ALWAYS return JSON, even for unexpected errors
+    res.status(error.status || 500).json({
+      error: error.message || "Failed to create orders",
+      details: error.details || "An unexpected error occurred on the server."
+    });
   }
 });
 

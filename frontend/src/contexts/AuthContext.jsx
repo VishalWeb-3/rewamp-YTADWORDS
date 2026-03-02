@@ -27,7 +27,17 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch(`${API_BASE}/api/auth/me`, {
         credentials: 'include',
       });
-      const data = await res.json().catch(() => ({}));
+      const text = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        // Skip console error for regular session checks to avoid noise
+        if (!res.ok) console.error('Auth check non-JSON:', text);
+        setIsLoading(false);
+        return;
+      }
+
       if (res.ok && data.user) {
         setUserState(data.user);
         setBanned(null);
@@ -38,7 +48,8 @@ export const AuthProvider = ({ children }) => {
         setUserState(null);
         setBanned(null);
       }
-    } catch {
+    } catch (e) {
+      console.error('Fetch user error:', e);
       setUserState(null);
       setBanned(null);
     } finally {

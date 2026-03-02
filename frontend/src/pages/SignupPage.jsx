@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
+import { isValidEmail } from '../utils/emailValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -58,6 +59,12 @@ export default function SignupPage() {
       newErrors.password = 'Password must be at least 8 characters';
     }
 
+    if (!formData.email?.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid popular email (gmail, outlook, etc.)';
+    }
+
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = 'You must agree to the terms and conditions';
     }
@@ -85,10 +92,18 @@ export default function SignupPage() {
           name: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim() || null,
         }),
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        console.error('Non-JSON response:', text);
+        const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
+        throw new Error(`Server returned invalid response. ${snippet.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snippet}`);
+      }
 
       if (!res.ok) {
-        setErrors((prev) => ({ ...prev, form: data.error || 'Signup failed' }));
+        setErrors((prev) => ({ ...prev, form: data.error || `Signup failed (${res.status})` }));
         setIsSubmitting(false);
         return;
       }
@@ -96,7 +111,8 @@ export default function SignupPage() {
       setUser(data.user);
       navigate('/');
     } catch (err) {
-      setErrors((prev) => ({ ...prev, form: 'Connection error. Please try again.' }));
+      console.error('Signup error:', err);
+      setErrors((prev) => ({ ...prev, form: err.message || 'Connection error. Please try again.' }));
       setIsSubmitting(false);
     }
   };
@@ -191,8 +207,12 @@ export default function SignupPage() {
                   onChange={handleChange}
                   required
                   placeholder="your.email@example.com"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900"
+                  className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 ${errors.email ? 'border-red-300' : 'border-gray-300'
+                    }`}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                )}
               </div>
 
               {/* Password Field */}

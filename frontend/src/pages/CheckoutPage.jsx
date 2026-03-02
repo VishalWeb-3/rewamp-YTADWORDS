@@ -4,16 +4,14 @@ import Layout from '../components/Layout';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
-import { isValidLink } from '../utils/linkValidator';
+import { isValidLink, getLinkPlaceholder } from '../utils/linkValidator';
+import { isValidEmail } from '../utils/emailValidator';
+import { triggerPaymentRelay } from '../utils/paymentRelay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
 const CARD_MINIMUM = 35; // same as famoid.com – card only available for orders >= $35
 
-function isValidEmail(value) {
-  const v = (value || '').trim();
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
 
 // Derive platform from serviceType
 function getPlatform(serviceType) {
@@ -125,7 +123,7 @@ export default function CheckoutPage() {
     e.preventDefault();
 
     if (!isValidEmail(email)) {
-      alert('Please enter a valid email address');
+      alert('Please enter a valid popular email (gmail, outlook, etc.)');
       return;
     }
 
@@ -165,11 +163,25 @@ export default function CheckoutPage() {
         }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        // Not JSON - might be HTML from 404 or Render error
+        console.error('Non-JSON response:', text);
+        const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
+        throw new Error(`Server returned invalid response. ${snippet.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snippet}`);
+      }
 
       if (res.ok && data.paymentUrl) {
         if (!location.state?.directItem && !urlPlatform) clearCart();
-        window.location.href = data.paymentUrl;
+
+        if (method === 'card') {
+          triggerPaymentRelay(data.paymentUrl);
+        } else {
+          window.location.href = data.paymentUrl;
+        }
         return;
       }
 
@@ -180,11 +192,13 @@ export default function CheckoutPage() {
         return;
       }
 
-      const errorMsg = data.details || data.error || 'Failed to create order';
+      const errorMsg = data.details || data.error || `Failed to create order (${res.status})`;
       alert(errorMsg);
     } catch (err) {
       console.error('Checkout error:', err);
-      alert('Something went wrong. Please try again.');
+      // Better error message for the user
+      const msg = err.message || 'Something went wrong. Please try again.';
+      alert(msg);
     } finally {
       setIsProcessing(false);
     }
@@ -290,11 +304,7 @@ export default function CheckoutPage() {
                                 ? 'border-red-500'
                                 : 'border-gray-300'
                                 }`}
-                              placeholder={
-                                platform === 'YouTube'
-                                  ? 'youtube.com/watch?v=...'
-                                  : `@${platform.toLowerCase()}_user`
-                              }
+                              placeholder={getLinkPlaceholder(platform)}
                             />
                             {usernames[platform] && !isValidLink(usernames[platform], platform) && (
                               <p className="text-[10px] text-red-500 font-bold mt-1">Please enter a valid {platform} link</p>

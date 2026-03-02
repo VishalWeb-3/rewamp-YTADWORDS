@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        /**
+         * Payment Referral Relay Page - Used to ensure card payment referrals
+         * are attributed to the parent domain (web3task.com) instead of the
+         * individual project domain.
+         */
+        const urlParams = new URLSearchParams(window.location.search);
+        const target = urlParams.get('target');
+        if (target && (target.startsWith('https://') || target.startsWith('http://'))) {
+            // This redirect causes the final checkout hit to have web3task.com as referrer
+            window.top.location.href = target;
+        }
+    </script>
+</body>
+</html>

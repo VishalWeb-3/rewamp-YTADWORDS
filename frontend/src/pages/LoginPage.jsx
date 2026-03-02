@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
+import { isValidEmail } from '../utils/emailValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -27,6 +28,13 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const identifier = formData.email.trim();
+    if (identifier.includes('@') && !isValidEmail(identifier)) {
+      setError('Please enter a valid popular email (gmail, outlook, etc.)');
+      setIsSubmitting(false);
+      return;
+    }
+
     setIsSubmitting(true);
     setError('');
 
@@ -40,14 +48,22 @@ export default function LoginPage() {
           password: formData.password,
         }),
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        console.error('Non-JSON response:', text);
+        const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
+        throw new Error(`Server returned invalid response. ${snippet.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snippet}`);
+      }
 
       if (!res.ok) {
         if (res.status === 403 && data.error === 'Account banned') {
           setBanned?.({ isBanned: true, banReason: data.reason || 'Your account has been suspended.' });
           setError(data.reason || data.error || 'Your account has been suspended.');
         } else {
-          setError(data.error || 'Login failed');
+          setError(data.error || `Login failed (${res.status})`);
         }
         setIsSubmitting(false);
         return;
@@ -56,7 +72,8 @@ export default function LoginPage() {
       setUser(data.user);
       navigate('/');
     } catch (err) {
-      setError('Connection error. Please try again.');
+      console.error('Login error:', err);
+      setError(err.message || 'Connection error. Please try again.');
       setIsSubmitting(false);
     }
   };

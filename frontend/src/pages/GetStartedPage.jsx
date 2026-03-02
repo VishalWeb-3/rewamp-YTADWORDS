@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { isValidLink, getLinkPlaceholder } from '../utils/linkValidator';
+import { isValidEmail } from '../utils/emailValidator';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -136,9 +137,12 @@ export default function GetStartedPage() {
 
   const handleContinue = () => {
     const platform = getPlatform(serviceType);
-    if (!formData.link || !isValidLink(formData.link, platform) || !formData.email || !selectedPackage) {
+    if (!formData.link || !isValidLink(formData.link, platform) || !formData.email || !isValidEmail(formData.email) || !selectedPackage) {
       if (formData.link && !isValidLink(formData.link, platform)) {
         alert(`Please enter a valid ${platform} link`);
+      }
+      if (formData.email && !isValidEmail(formData.email)) {
+        alert('Please enter a valid popular email (gmail, outlook, etc.)');
       }
       return;
     }
@@ -246,9 +250,12 @@ export default function GetStartedPage() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent"
+                    className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent ${formData.email && !isValidEmail(formData.email) ? 'border-red-500' : 'border-gray-300'}`}
                     placeholder="your@email.com"
                   />
+                  {formData.email && !isValidEmail(formData.email) && (
+                    <p className="text-xs text-red-500 font-medium mt-1">Please enter a valid popular email (gmail, outlook, etc.)</p>
+                  )}
                 </div>
 
                 <div>

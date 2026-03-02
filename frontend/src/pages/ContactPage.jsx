@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useContactContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
+import { isValidEmail } from '../utils/emailValidator';
 
 export default function ContactPage() {
   const c = useContactContent();
@@ -16,6 +17,7 @@ export default function ContactPage() {
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +29,13 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setEmailError('');
+
+    if (!isValidEmail(formData.email)) {
+      setEmailError('Please enter a valid popular email (gmail, outlook, etc.)');
+      return;
+    }
+
     setIsSubmitting(true);
 
     // Simulate form submission
@@ -107,11 +116,17 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       value={formData.email}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        if (emailError) setEmailError('');
+                      }}
                       required
                       placeholder={c?.placeholderEmail ?? 'Your Email*'}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900"
+                      className={`w-full px-4 py-3 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 ${emailError ? 'border-red-500' : 'border-gray-300'}`}
                     />
+                    {emailError && (
+                      <p className="mt-1 text-xs text-red-600 font-bold">{emailError}</p>
+                    )}
                   </div>
 
                   {/* Reason for Contact Dropdown */}

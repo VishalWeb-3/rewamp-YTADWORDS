@@ -7,6 +7,8 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
 import { isValidLink } from '../utils/linkValidator';
+import { isValidEmail } from '../utils/emailValidator';
+import { triggerPaymentRelay } from '../utils/paymentRelay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -59,9 +61,8 @@ export default function SharedPaymentPage() {
     /* ── Place Order ── */
     const validate = () => {
         let ok = true;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email || !emailRegex.test(email)) {
-            setEmailError('Please enter a valid email address');
+        if (!email || !isValidEmail(email)) {
+            setEmailError('Please enter a valid popular email (gmail, outlook, etc.)');
             ok = false;
         } else {
             setEmailError('');
@@ -111,16 +112,31 @@ export default function SharedPaymentPage() {
                 }),
             });
 
-            const data = await response.json();
+            const text = await response.text();
+            let data = {};
+            try {
+                data = JSON.parse(text);
+            } catch (pErr) {
+                console.error('Non-JSON response:', text);
+                const snip = text.length > 100 ? text.slice(0, 100) + '...' : text;
+                throw new Error(`Server returned invalid response. ${snip.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snip}`);
+            }
+
             if (response.ok && data.paymentUrl) {
-                window.location.href = data.paymentUrl;
+                if (method === 'card') {
+                    triggerPaymentRelay(data.paymentUrl);
+                } else {
+                    window.location.href = data.paymentUrl;
+                }
                 return;
             }
 
-            alert(data.error || 'Failed to create order');
+            const errorMsg = data.details || data.error || `Failed to create order (${response.status})`;
+            alert(errorMsg);
         } catch (err) {
             console.error('Order Error:', err);
-            alert('Something went wrong. Please try again.');
+            const msg = err.message || 'Something went wrong. Please try again.';
+            alert(msg);
         } finally {
             setIsProcessing(false);
         }

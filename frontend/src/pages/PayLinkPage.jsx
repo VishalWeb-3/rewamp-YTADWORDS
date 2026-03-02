@@ -4,6 +4,8 @@ import { Coins, CreditCard, Loader2, ShieldCheck, AlertCircle, Mail } from 'luci
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
+import { isValidEmail } from '../utils/emailValidator';
+import { triggerPaymentRelay } from '../utils/paymentRelay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -55,9 +57,8 @@ export default function PayLinkPage() {
             setEmailError('Please enter your email address');
             return false;
         }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            setEmailError('Please enter a valid email address');
+        if (!isValidEmail(value)) {
+            setEmailError('Please enter a valid popular email (gmail, outlook, etc.)');
             return false;
         }
         setEmailError('');
@@ -78,19 +79,34 @@ export default function PayLinkPage() {
                     email: email || link.customerEmail,
                 }),
             });
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err.error || 'Failed to initiate payment');
+
+            const text = await res.text();
+            let data = {};
+            try {
+                data = JSON.parse(text);
+            } catch (err) {
+                console.error('Non-JSON response:', text);
+                const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
+                throw new Error(`Server error. ${snippet.includes('<!DOCTYPE') ? 'Check backend or URL.' : 'Details: ' + snippet}`);
             }
-            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.details || data.error || `Failed to initiate payment (${res.status})`);
+            }
+
             if (data.paymentUrl) {
-                window.location.href = data.paymentUrl;
+                if (method === 'card') {
+                    triggerPaymentRelay(data.paymentUrl);
+                } else {
+                    window.location.href = data.paymentUrl;
+                }
                 return;
             }
             throw new Error('Missing payment URL from gateway');
         } catch (e) {
             console.error(e);
-            alert(e.message || 'Failed to start payment. Please try again.');
+            const msg = e.message || 'Failed to start payment. Please try again.';
+            alert(msg);
         } finally {
             setIsProcessing(false);
         }
