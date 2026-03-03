@@ -137,6 +137,7 @@ export default function CheckoutPage() {
     }
 
     setIsProcessing(true);
+    let isRedirecting = false;
 
     // Always use crypto when card option is not available
     const method = showCardOption ? paymentMethod : 'crypto';
@@ -176,7 +177,7 @@ export default function CheckoutPage() {
 
       if (res.ok && data.paymentUrl) {
         if (!location.state?.directItem && !urlPlatform) clearCart();
-
+        isRedirecting = true;
         if (method === 'card') {
           triggerPaymentRelay(data.paymentUrl);
         } else {
@@ -200,7 +201,9 @@ export default function CheckoutPage() {
       const msg = err.message || 'Something went wrong. Please try again.';
       alert(msg);
     } finally {
-      setIsProcessing(false);
+      if (!isRedirecting) {
+        setIsProcessing(false);
+      }
     }
   };
 

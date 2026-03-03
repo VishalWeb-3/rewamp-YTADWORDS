@@ -70,6 +70,7 @@ export default function PayLinkPage() {
         if (!validate()) return;
 
         setIsProcessing(true);
+        let isRedirecting = false;
         try {
             const res = await fetch(`${API_BASE}/api/payment-links/${token}/pay`, {
                 method: 'POST',
@@ -95,6 +96,7 @@ export default function PayLinkPage() {
             }
 
             if (data.paymentUrl) {
+                isRedirecting = true;
                 if (method === 'card') {
                     triggerPaymentRelay(data.paymentUrl);
                 } else {
@@ -108,7 +110,9 @@ export default function PayLinkPage() {
             const msg = e.message || 'Failed to start payment. Please try again.';
             alert(msg);
         } finally {
-            setIsProcessing(false);
+            if (!isRedirecting) {
+                setIsProcessing(false);
+            }
         }
     };
 

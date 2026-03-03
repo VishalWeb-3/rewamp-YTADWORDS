@@ -90,6 +90,7 @@ export default function SharedPaymentPage() {
         }
 
         setIsProcessing(true);
+        let isRedirecting = false;
 
         try {
             const items = [{
@@ -123,6 +124,7 @@ export default function SharedPaymentPage() {
             }
 
             if (response.ok && data.paymentUrl) {
+                isRedirecting = true;
                 if (method === 'card') {
                     triggerPaymentRelay(data.paymentUrl);
                 } else {
@@ -138,7 +140,9 @@ export default function SharedPaymentPage() {
             const msg = err.message || 'Something went wrong. Please try again.';
             alert(msg);
         } finally {
-            setIsProcessing(false);
+            if (!isRedirecting) {
+                setIsProcessing(false);
+            }
         }
     };
 

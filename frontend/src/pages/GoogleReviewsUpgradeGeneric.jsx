@@ -169,6 +169,7 @@ export default function GoogleReviewsUpgradeGeneric() {
     }
 
     setIsProcessing(true);
+    let isRedirecting = false;
 
     try {
       const details = {
@@ -210,6 +211,7 @@ export default function GoogleReviewsUpgradeGeneric() {
       if (response.ok && contentType && contentType.indexOf('application/json') !== -1) {
         const data = await response.json();
         if (data.paymentUrl) {
+          isRedirecting = true;
           if (method === 'card') {
             triggerPaymentRelay(data.paymentUrl);
           } else {
@@ -238,7 +240,9 @@ export default function GoogleReviewsUpgradeGeneric() {
       console.error('Order Error:', error);
       alert('Something went wrong. Please try again.');
     } finally {
-      setIsProcessing(false);
+      if (!isRedirecting) {
+        setIsProcessing(false);
+      }
     }
   };
 
