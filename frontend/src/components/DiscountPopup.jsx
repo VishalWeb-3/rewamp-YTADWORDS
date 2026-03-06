@@ -52,9 +52,14 @@ export default function DiscountPopup() {
         '/get-started'
     ];
 
-    const isPaymentPage = PAYMENT_PAGES.some(path =>
-        location.pathname === path || location.pathname.startsWith('/pay/')
-    );
+    const isExcludedPath = (pathname) => {
+        if (pathname.includes('upgrade')) return true;
+        return PAYMENT_PAGES.some(path =>
+            pathname === path || pathname.startsWith(path + '/') || pathname.startsWith('/pay/')
+        );
+    };
+
+    const isPaymentPage = isExcludedPath(location.pathname);
 
     useEffect(() => {
         const fetchSettings = async () => {
