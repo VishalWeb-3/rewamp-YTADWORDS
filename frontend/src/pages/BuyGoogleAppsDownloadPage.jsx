@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
+import { resolveImageUrl } from '../utils/image';
 
 const appsDownloadPackagesFallback = {
     regular: [
@@ -35,6 +36,7 @@ export default function BuyGoogleAppsDownloadPage() {
     const navigate = useNavigate();
     const { addToCart } = useCart();
     const appsDownloadPackages = usePricingPackages('buy-google-apps-download', appsDownloadPackagesFallback);
+    const content = usePricingPageContent('buy-google-apps-download', null);
     const [activeTab, setActiveTab] = useState('regular');
     const [openFAQIndex, setOpenFAQIndex] = useState(null);
     const [rating, setRating] = useState(0);
@@ -46,6 +48,10 @@ export default function BuyGoogleAppsDownloadPage() {
     const [showSuccess, setShowSuccess] = useState(false);
     const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
     const packages = appsDownloadPackages ? appsDownloadPackages[activeTab] : [];
+
+    const hero = content?.hero;
+    const tabs = content?.tabs;
+    const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
     const handleAddToCart = (pkg) => {
         addToCart({
@@ -108,20 +114,20 @@ export default function BuyGoogleAppsDownloadPage() {
                         {/* Image */}
                         <div className="mb-6 flex justify-center">
                             <img
-                                src="/pricepage.png"
-                                alt="Buy Google Apps Download"
+                                src={resolveImageUrl(hero?.image, '/pricepage.png')}
+                                alt={hero?.title ?? 'Buy Google Apps Download'}
                                 className="w-[200px] h-auto object-cover bg-transparent"
                             />
                         </div>
                         <div>
                             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                                Buy Google Apps Download{' '}
+                                {hero?.title ?? 'Buy Google Apps Download'}{' '}
                                 <span className="bg-[#4285F4] text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
-                                    Instantly
+                                    {hero?.badge ?? 'Instantly'}
                                 </span>
                             </h1>
                             <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                                YoutubeADwords is the safest way to buy Google Apps Download with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                                {hero?.intro ?? 'YoutubeADwords is the safest way to buy Google Apps Download with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
                             </p>
                         </div>
                     </div>
@@ -224,7 +230,7 @@ export default function BuyGoogleAppsDownloadPage() {
 
                         {/* Features List */}
                         <div className="grid grid-cols-2 gap-3">
-                            {features.map((feature, index) => (
+                            {featuresList.map((feature, index) => (
                                 <div key={index} className="flex items-center gap-2">
                                     <svg
                                         className="w-5 h-5 text-[#4285F4] flex-shrink-0"
@@ -240,6 +246,72 @@ export default function BuyGoogleAppsDownloadPage() {
                                     <span className="text-gray-700 text-sm">{feature.label}</span>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* All In One Google Apps Download Campaign Section */}
+                <div className="mt-12 lg:mt-16">
+                    <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
+                        {/* Decorative blue shape */}
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
+
+                        <div className="grid lg:grid-cols-2 gap-8 relative z-10">
+                            {/* Left Section */}
+                            <div className="space-y-4">
+                                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                                    All In One Google Apps Download Campaign
+                                </h2>
+
+                                <div className="flex items-center gap-3 flex-wrap">
+                                    <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                                        Best Offer
+                                    </div>
+                                </div>
+
+                                {/* Description */}
+                                <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
+                                    With YoutubeADwords's all-inclusive package, you can{' '}
+                                    <span className="text-[#4285F4] font-semibold">buy Google app installs</span>, and reviews simultaneously. Moreover, you may order{' '}
+                                    <span className="text-[#4285F4] font-semibold">Google ratings service</span> and add it to the package for the best price.
+                                </p>
+                            </div>
+
+                            {/* Right Section - Features Grid */}
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="text-center">
+                                    <div className="text-4xl lg:text-5xl font-bold text-[#4285F4] mb-2">
+                                        5000
+                                    </div>
+                                    <div className="text-gray-700 text-sm lg:text-base">
+                                        Installs for chosen app
+                                    </div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-4xl lg:text-5xl font-bold text-[#4285F4] mb-2">
+                                        1000
+                                    </div>
+                                    <div className="text-gray-700 text-sm lg:text-base">
+                                        Positive reviews for app
+                                    </div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-4xl lg:text-5xl font-bold text-[#4285F4] mb-2">
+                                        500
+                                    </div>
+                                    <div className="text-gray-700 text-sm lg:text-base">
+                                        App Store Ratings
+                                    </div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-4xl lg:text-5xl font-bold text-[#4285F4] mb-2">
+                                        24/7
+                                    </div>
+                                    <div className="text-gray-700 text-sm lg:text-base">
+                                        Customer Support
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

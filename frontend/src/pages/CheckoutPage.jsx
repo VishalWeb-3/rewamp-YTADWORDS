@@ -10,7 +10,8 @@ import { triggerPaymentRelay } from '../utils/paymentRelay';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
-const CARD_MINIMUM = 35; // same as famoid.com – card only available for orders >= $35
+const CARD_MINIMUM = 35; 
+const CARD_MAXIMUM = 999;
 
 
 // Derive platform from serviceType
@@ -96,7 +97,7 @@ export default function CheckoutPage() {
   //   total < $35   → crypto only (card hidden)
   //   total >= $35  → card + crypto (card pre-selected)
   // --------------------------------------------------
-  const showCardOption = total >= CARD_MINIMUM;
+  const showCardOption = total >= CARD_MINIMUM && total <= CARD_MAXIMUM;
 
   const [paymentMethod, setPaymentMethod] = useState(
     showCardOption ? 'card' : 'crypto'
@@ -378,10 +379,12 @@ export default function CheckoutPage() {
                         </button>
                       </div>
 
-                      {/* Note shown only when total < $35 */}
+                      {/* Note shown only when crypto is mandatory */}
                       {!showCardOption && total > 0 && (
                         <p className="mt-2 text-[10px] text-gray-400 text-center">
-                          Card payment available for orders ${CARD_MINIMUM}+
+                          {total < CARD_MINIMUM 
+                            ? `Card payment available for orders $${CARD_MINIMUM}+` 
+                            : `Card payment available for orders up to $${CARD_MAXIMUM}`}
                         </p>
                       )}
 

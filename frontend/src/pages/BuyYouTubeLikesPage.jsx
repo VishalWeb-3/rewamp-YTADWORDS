@@ -306,15 +306,9 @@ export default function BuyYouTubeLikesPage() {
 
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
-                  <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
-                    $47.49
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
                   </div>
-                  <button
-                    disabled={!canBuy}
-                    className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {canBuy ? 'Buy now' : 'Buy disabled'}
-                  </button>
                 </div>
 
                 {/* Description */}

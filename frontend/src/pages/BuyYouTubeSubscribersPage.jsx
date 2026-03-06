@@ -6,6 +6,7 @@ import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../hooks/useCheckout';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
+import { resolveImageUrl } from '../utils/image';
 
 const subscriberPackagesFallback = {
   regular: [
@@ -133,20 +134,20 @@ export default function BuyYouTubeSubscribersPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src={hero?.image || "/pricepage.png"}
-                alt={hero?.title || "Buy YouTube Subscribers"}
+                src={resolveImageUrl(hero?.image, '/pricepage.png')}
+                alt={hero?.title ?? 'Buy YouTube Subscribers'}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                {hero?.title || "Buy YouTube Subscribers"}{' '}
+                {hero?.title ?? 'Buy YouTube Subscribers'}{' '}
                 <span className="bg-brand-red text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-lg sm:text-2xl lg:text-3xl font-bold">
-                  {hero?.badge || "Instantly"}
+                  {hero?.badge ?? 'Instantly'}
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                {hero?.intro || "YoutubeADwords is the safest way to buy YouTube Subscribers with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!"}
+                {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Subscribers with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -310,16 +311,9 @@ export default function BuyYouTubeSubscribersPage() {
 
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
-                  <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
-                    $47.49
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
                   </div>
-                  <button
-                    onClick={() => goToCheckout({ subscribers: '5000', price: '47.49' }, 'YouTube', 'All In One YouTube Subscribers Campaign', 'subscribers')}
-                    disabled={!canBuy}
-                    className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {canBuy ? 'Buy now' : 'Buy disabled'}
-                  </button>
                 </div>
 
                 {/* Description */}

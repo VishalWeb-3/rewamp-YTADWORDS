@@ -116,7 +116,7 @@ export default function PayLinkPage() {
         }
     };
 
-    const showCard = link ? link.amount >= 35 : true;
+    const showCard = link ? (link.amount >= 35 && link.amount <= 999) : true;
 
     return (
         <Layout>

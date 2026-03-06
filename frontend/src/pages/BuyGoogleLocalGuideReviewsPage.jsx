@@ -293,8 +293,8 @@ export default function BuyGoogleLocalGuideReviewsPage() {
         {/* All In One Google Local Guide Reviews Campaign Section */}
         <div className="mt-12 lg:mt-16">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
-            {/* Decorative red shape */}
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
+            {/* Decorative shape */}
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
 
             <div className="grid lg:grid-cols-2 gap-8 relative z-10">
               {/* Left Section */}
@@ -303,21 +303,17 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                   All In One Google Local Guide Reviews Campaign
                 </h2>
 
-                {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
-                  <div className="bg-green-500 text-white font-bold px-6 py-3 rounded-full text-lg">
-                    $47.49
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
                   </div>
-                  <button className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors">
-                    Buy now
-                  </button>
                 </div>
 
                 {/* Description */}
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   With YoutubeADwords's all-inclusive package, you can{' '}
-                  <span className="text-green-500 font-semibold">buy Google subscribers</span>, and reviews simultaneously. Moreover, you may order{' '}
-                  <span className="text-green-500 font-semibold">Google likes service</span> and add it to the package for the best price.
+                  <span className="text-green-500 font-semibold">buy Google Local Guide reviews</span>, and ratings simultaneously. Moreover, you may order{' '}
+                  <span className="text-green-500 font-semibold">Male/Female reviewer service</span> and add it to the package for the best price.
                 </p>
               </div>
 
@@ -325,10 +321,10 @@ export default function BuyGoogleLocalGuideReviewsPage() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <div className="text-4xl lg:text-5xl font-bold text-green-500 mb-2">
-                    5000
+                    500
                   </div>
                   <div className="text-gray-700 text-sm lg:text-base">
-                    Views for chosen video
+                    Local Guide Reviews
                   </div>
                 </div>
                 <div className="text-center">
@@ -336,7 +332,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                     1000
                   </div>
                   <div className="text-gray-700 text-sm lg:text-base">
-                    Likes for chosen video
+                    Business Profile Views
                   </div>
                 </div>
                 <div className="text-center">
@@ -344,7 +340,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                     100
                   </div>
                   <div className="text-gray-700 text-sm lg:text-base">
-                    New active subscribers at once
+                    Review Photos & Likes
                   </div>
                 </div>
                 <div className="text-center">

@@ -92,18 +92,14 @@ export default function Footer() {
             <h3 className="font-bold text-gray-900 mb-4">{footer.ourServicesTitle || 'Our Services'}</h3>
             <ul className="space-y-2">
               {ourServices.map((service, index) => {
-                const serviceData = typeof service === 'string' ? { label: service, link: '#' } : service;
-                return (
+                const serviceData = typeof service === 'string' ? { label: service, link: null } : service;
+                return serviceData.link ? (
                   <li key={index}>
-                    {serviceData.link !== '#' ? (
-                      <Link to={serviceData.link} className="text-gray-600 text-sm hover:text-brand-red transition-colors">
-                        {serviceData.label}
-                      </Link>
-                    ) : (
-                      <span className="text-gray-600 text-sm">{serviceData.label}</span>
-                    )}
+                    <Link to={serviceData.link} className="text-gray-600 text-sm hover:text-brand-red transition-colors">
+                      {serviceData.label}
+                    </Link>
                   </li>
-                );
+                ) : null;
               })}
             </ul>
           </div>
@@ -113,18 +109,14 @@ export default function Footer() {
             <h3 className="font-bold text-gray-900 mb-4">{footer.resourcesTitle || 'Resources'}</h3>
             <ul className="space-y-2">
               {resources.map((resource, index) => {
-                const resourceData = typeof resource === 'string' ? { label: resource, link: resource === 'Blog' ? '/blog' : '#' } : resource;
-                return (
+                const resourceData = typeof resource === 'string' ? { label: resource, link: null } : resource;
+                return resourceData.link ? (
                   <li key={index}>
-                    {resourceData.link !== '#' ? (
-                      <Link to={resourceData.link} className="text-gray-600 text-sm hover:text-brand-red transition-colors">
-                        {resourceData.label}
-                      </Link>
-                    ) : (
-                      <span className="text-gray-600 text-sm">{resourceData.label}</span>
-                    )}
+                    <Link to={resourceData.link} className="text-gray-600 text-sm hover:text-brand-red transition-colors">
+                      {resourceData.label}
+                    </Link>
                   </li>
-                );
+                ) : null;
               })}
             </ul>
           </div>

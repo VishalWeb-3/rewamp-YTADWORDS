@@ -108,7 +108,7 @@ export default function GoogleReviewsUpgradeGeneric() {
   };
 
   const total = calculateTotal();
-  const showCardOption = total >= 35;
+  const showCardOption = total >= 35 && total <= 999;
 
   useEffect(() => {
     if (!showCardOption && paymentMethod === 'card') {

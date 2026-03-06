@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
+import { resolveImageUrl } from '../utils/image';
 
 const likePackagesFallback = {
   regular: [
@@ -33,10 +34,22 @@ export default function BuyTikTokLikesPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const likePackages = usePricingPackages('buy-tiktok-likes', likePackagesFallback);
+  const content = usePricingPageContent('buy-tiktok-likes', null);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = likePackages ? likePackages[activeTab] : [];
+
+  const hero = content?.hero;
+  const tabs = content?.tabs;
+  const features = (content?.features?.length ? content.features : [
+    { label: 'Real & Organic Likes', icon: 'check' },
+    { label: 'High Quality', icon: 'check' },
+    { label: 'Instant start', icon: 'check' },
+    { label: 'Refill Guaranteed', icon: 'check' },
+    { label: 'No drops', icon: 'check' },
+    { label: 'Privacy and safety', icon: 'check' },
+  ]).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
   const handleAddToCart = (pkg) => {
     addToCart({
@@ -92,14 +105,21 @@ export default function BuyTikTokLikesPage() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="space-y-6">
             <div className="mb-6 flex justify-center">
-              <img src="/pricepage.png" alt="Buy TikTok Likes" className="w-[200px] h-auto object-cover bg-transparent" />
+              <img
+                src={resolveImageUrl(hero?.image, '/pricepage.png')}
+                alt={hero?.title ?? 'Buy TikTok Likes'}
+                className="w-[200px] h-auto object-cover bg-transparent"
+              />
             </div>
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                Buy TikTok Likes <span className="bg-blue-600 text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">Instantly</span>
+                {hero?.title ?? 'Buy TikTok Likes'}{' '}
+                <span className="bg-blue-600 text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
+                  {hero?.badge ?? 'Instantly'}
+                </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeADwords is the safest way to buy TikTok Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                {hero?.intro ?? 'YoutubeADwords is the safest way to buy TikTok Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -187,6 +207,71 @@ export default function BuyTikTokLikesPage() {
                   <span className="text-gray-700 text-sm">{feature.label}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+{/* All In One TikTok Likes Campaign Section */}
+        <div className="mt-12 lg:mt-16">
+          <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
+            {/* Decorative blue shape */}
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
+
+            <div className="grid lg:grid-cols-2 gap-8 relative z-10">
+              {/* Left Section */}
+              <div className="space-y-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                  All In One TikTok Likes Campaign
+                </h2>
+
+                <div className="flex items-center gap-3 flex-wrap">
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
+                  With YoutubeADwords's all-inclusive package, you can{' '}
+                  <span className="text-blue-600 font-semibold">buy TikTok likes</span>, and followers simultaneously. Moreover, you may order{' '}
+                  <span className="text-blue-600 font-semibold">TikTok views service</span> and add it to the package for the best price.
+                </p>
+              </div>
+
+              {/* Right Section - Features Grid */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="text-center">
+                  <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">
+                    5000
+                  </div>
+                  <div className="text-gray-700 text-sm lg:text-base">
+                    Likes for chosen video
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">
+                    1000
+                  </div>
+                  <div className="text-gray-700 text-sm lg:text-base">
+                    Views for chosen video
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">
+                    100
+                  </div>
+                  <div className="text-gray-700 text-sm lg:text-base">
+                    New followers at once
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">
+                    24/7
+                  </div>
+                  <div className="text-gray-700 text-sm lg:text-base">
+                    Customer Support
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

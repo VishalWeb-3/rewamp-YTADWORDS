@@ -28,21 +28,18 @@
     "tagline": "YoutubeADwords empowers creators and brands to transform raw content into viral success. We make growth easier to achieve, understand, and act on.",
     "ourServicesTitle": "Our Services",
     "ourServices": [
-      "YouTube Views",
-      "YouTube Subscribers",
-      "YouTube Watch Hours",
-      "TikTok Followers",
-      "TikTok Likes",
-      "TikTok Views",
-      "Google Ads Views"
+      { "label": "Buy YouTube Views", "link": "/buy-youtube-views" },
+      { "label": "Buy YouTube Subscribers", "link": "/buy-youtube-subscribers" },
+      { "label": "Buy YouTube Likes", "link": "/buy-youtube-likes" },
+      { "label": "Buy YouTube Watch Hours", "link": "/buy-youtube-watch-hours" },
+      { "label": "Buy TikTok Followers", "link": "/buy-tiktok-followers" },
+      { "label": "Buy TikTok Likes", "link": "/buy-tiktok-likes" },
+      { "label": "Buy TikTok Views", "link": "/buy-tiktok-views" },
+      { "label": "Buy Google Skip Ads Views", "link": "/buy-google-skip-ads-views" }
     ],
     "resourcesTitle": "Resources",
     "resources": [
-      "Blog",
-      "Affiliate Program",
-      "Why Choose Us?",
-      "Actionable Feedback",
-      "Corrections Policy"
+      { "label": "Blog", "link": "/blog" }
     ],
     "companyTitle": "Company",
     "company": [
@@ -53,18 +50,6 @@
       {
         "label": "Tickets / Support",
         "link": "/tickets"
-      },
-      {
-        "label": "Careers",
-        "link": "#"
-      },
-      {
-        "label": "Partners",
-        "link": "#"
-      },
-      {
-        "label": "Publishing Principles",
-        "link": "#"
       }
     ],
     "legalDisclaimer": "All the materials offered by YoutubeADwords are safeguarded by copyright laws. Unlawful reproduction or distribution of our materials is strictly forbidden. It's important to understand that YoutubeADwords operates independently and is not associated with any social media platforms. This website is not affiliated with or endorsed by YouTube LLC, Facebook, Pinterest, X, or any other social media platform.",

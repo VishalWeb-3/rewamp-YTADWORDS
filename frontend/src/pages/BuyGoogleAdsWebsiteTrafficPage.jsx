@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
-import { usePricingPackages } from '../contexts/ContentContext';
+import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
+import { resolveImageUrl } from '../utils/image';
 
 const websiteTrafficPackagesFallback = {
   regular: [
@@ -28,6 +29,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const websiteTrafficPackages = usePricingPackages('buy-google-ads-website-traffic', websiteTrafficPackagesFallback);
+  const content = usePricingPageContent('buy-google-ads-website-traffic', null);
   const [activeTab, setActiveTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
@@ -39,6 +41,10 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = websiteTrafficPackages ? websiteTrafficPackages[activeTab] : [];
+
+  const hero = content?.hero;
+  const tabs = content?.tabs;
+  const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
   const handleAddToCart = (pkg) => {
     addToCart({
@@ -101,20 +107,20 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
-                src="/pricepage.png"
-                alt="Buy Google Ads Website / App Traffic"
+                src={resolveImageUrl(hero?.image, '/pricepage.png')}
+                alt={hero?.title ?? 'Buy Google Ads Website / App Traffic'}
                 className="w-[200px] h-auto object-cover bg-transparent"
               />
             </div>
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
-                Buy Google Ads Website / App Traffic{' '}
+                {hero?.title ?? 'Buy Google Ads Website / App Traffic'}{' '}
                 <span className="bg-[#4285F4] text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
-                  Instantly
+                  {hero?.badge ?? 'Instantly'}
                 </span>
               </h1>
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeADwords is the safest way to buy Google Ads Website / App Traffic with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!
+                {hero?.intro ?? 'YoutubeADwords is the safest way to buy Google Ads Website / App Traffic with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
           </div>
@@ -187,10 +193,10 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
 
             {/* Features List */}
             <div className="grid grid-cols-2 gap-3">
-              {features.map((feature, index) => (
+              {featuresList.map((feature, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <svg
-                    className="w-5 h-5 text-#4285F4 flex-shrink-0"
+                    className="w-5 h-5 text-[#4285F4] flex-shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -220,14 +226,10 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                   All In One Google Ads Website / App Traffic Campaign
                 </h2>
 
-                {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
-                  <div className="bg-#4285F4 text-white font-bold px-6 py-3 rounded-full text-lg">
-                    $47.49
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
                   </div>
-                  <button className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors">
-                    Buy now
-                  </button>
                 </div>
 
                 {/* Description */}

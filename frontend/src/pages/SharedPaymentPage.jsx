@@ -269,7 +269,7 @@ export default function SharedPaymentPage() {
 
                                     {/* Payment Buttons */}
                                     <div className="pt-2 sm:pt-4 space-y-3">
-                                        {price >= 35 && (
+                                        {price >= 35 && price <= 999 && (
                                             <button
                                                 onClick={() => handlePay('card')}
                                                 disabled={isProcessing || isExpired}

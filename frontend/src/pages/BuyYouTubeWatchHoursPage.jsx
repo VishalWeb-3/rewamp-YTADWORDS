@@ -292,12 +292,9 @@ export default function BuyYouTubeWatchHoursPage() {
 
                 {/* Price and Buy Now Buttons */}
                 <div className="flex items-center gap-3 flex-wrap">
-                  <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
-                    $47.49
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
                   </div>
-                  <button className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors">
-                    Buy now
-                  </button>
                 </div>
 
                 {/* Description */}

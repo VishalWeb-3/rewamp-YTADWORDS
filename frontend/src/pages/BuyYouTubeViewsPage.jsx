@@ -288,18 +288,9 @@ export default function BuyYouTubeViewsPage() {
                   {content?.allInOne?.heading ?? 'All In One YouTube Views Campaign'}
                 </h2>
                 <div className="flex items-center gap-3 flex-wrap">
-                  <div className="bg-brand-red text-white font-bold px-6 py-3 rounded-full text-lg">
-                    ${(viewPackages?.ads?.find((p) => p.views === '5.0k') || viewPackages?.regular?.find((p) => p.views === '5.0k'))?.price ?? '47.49'}
+                  <div className="bg-yellow-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">
+                    Best Offer
                   </div>
-                  <button
-                    onClick={() => {
-                      const pkg = viewPackages?.ads?.find((p) => p.views === '5.0k') || viewPackages?.regular?.find((p) => p.views === '5.0k') || { views: '5000', price: '47.49' };
-                      goToCheckout(pkg, 'YouTube', content?.allInOne?.heading ?? 'All In One YouTube Views Campaign', 'views');
-                    }}
-                    className="bg-gray-900 text-white font-bold px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition-colors"
-                  >
-                    Buy now
-                  </button>
                 </div>
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   {content?.allInOne?.description ?? "With YoutubeADwords's all-inclusive package, you can buy YouTube subscribers, and views simultaneously. Moreover, you may order YouTube likes service and add it to the package for the best price."}

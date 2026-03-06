@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Service Card Component
-function ServiceCard({ subtitle, benefits, buttonText, theme = 'red', cardPosition = 'left' }) {
+function ServiceCard({ subtitle, benefits, buttonText, link = '/', theme = 'red', cardPosition = 'left' }) {
   const isBlue = theme === 'blue';
   const isGreen = theme === 'green';
   const brandColor = isBlue ? '#2563EB' : isGreen ? '#22C55E' : '#E53935';
@@ -43,29 +44,31 @@ function ServiceCard({ subtitle, benefits, buttonText, theme = 'red', cardPositi
                   ))}
                 </ul>
               </div>
-              <div
-                className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden"
+              <Link
+                to={link}
+                className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden transition-transform hover:scale-[1.02]"
                 style={{
                   background: `radial-gradient(ellipse at center, ${gradientStart} 0%, ${gradientMid} 50%, ${gradientEnd} 100%)`,
                 }}
               >
-                <button className="bg-white rounded-xl px-8 py-4 font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md" style={{ color: brandColor }}>
+                <div className="bg-white rounded-xl px-8 py-4 font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md" style={{ color: brandColor }}>
                   {buttonText}
-                </button>
-              </div>
+                </div>
+              </Link>
             </>
           ) : (
             <>
-              <div
-                className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden"
+              <Link
+                to={link}
+                className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden transition-transform hover:scale-[1.02]"
                 style={{
                   background: `radial-gradient(ellipse at center, ${gradientStart} 0%, ${gradientMid} 50%, ${gradientEnd} 100%)`,
                 }}
               >
-                <button className="bg-white rounded-xl px-8 py-4 font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md" style={{ color: brandColor }}>
+                <div className="bg-white rounded-xl px-8 py-4 font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md" style={{ color: brandColor }}>
                   {buttonText}
-                </button>
-              </div>
+                </div>
+              </Link>
               <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-10">
                 <ul className="space-y-4">
                   {benefits.map((benefit, index) => (
@@ -180,6 +183,7 @@ export default function ServiceSections() {
         subtitle="Buy TikTok Followers"
         benefits={tiktokFollowersBenefits}
         buttonText="Start TikTok Followers Campaign"
+        link="/buy-tiktok-followers"
         theme="blue"
         cardPosition="left"
       />
@@ -187,6 +191,7 @@ export default function ServiceSections() {
         subtitle="Buy TikTok Likes"
         benefits={tiktokLikesBenefits}
         buttonText="Start TikTok Likes Campaign"
+        link="/buy-tiktok-likes"
         theme="blue"
         cardPosition="right"
       />
@@ -194,6 +199,7 @@ export default function ServiceSections() {
         subtitle="Buy TikTok Views"
         benefits={tiktokViewsBenefits}
         buttonText="Start TikTok Views Campaign"
+        link="/buy-tiktok-views"
         theme="blue"
         cardPosition="left"
       />
@@ -201,6 +207,7 @@ export default function ServiceSections() {
         subtitle="Buy YouTube Views"
         benefits={youtubeViewsBenefits}
         buttonText="Start YouTube Views Campaign"
+        link="/buy-youtube-views"
         theme="red"
         cardPosition="right"
       />
@@ -210,6 +217,7 @@ export default function ServiceSections() {
         subtitle="Buy YouTube Subscribers"
         benefits={youtubeSubscribersBenefits}
         buttonText="Start YouTube Subscribers Campaign"
+        link="/buy-youtube-subscribers"
         theme="red"
         cardPosition="left"
       />
@@ -217,6 +225,7 @@ export default function ServiceSections() {
         subtitle="Buy YouTube Likes"
         benefits={youtubeLikesBenefits}
         buttonText="Start YouTube Likes Campaign"
+        link="/buy-youtube-likes"
         theme="red"
         cardPosition="right"
       />
@@ -224,6 +233,7 @@ export default function ServiceSections() {
         subtitle="Buy YouTube Watch Hours"
         benefits={youtubeWatchHoursBenefits}
         buttonText="Start YouTube Watch Hours Campaign"
+        link="/buy-youtube-watch-hours"
         theme="red"
         cardPosition="left"
       />
@@ -231,6 +241,7 @@ export default function ServiceSections() {
         subtitle="Buy Google Reviews"
         benefits={googleReviewsBenefits}
         buttonText="Start Google Reviews Campaign"
+        link="/buy-female-google-reviews"
         theme="green"
         cardPosition="right"
       />

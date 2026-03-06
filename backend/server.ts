@@ -453,6 +453,22 @@ app.get("/api/orders/detail/:orderId", async (req, res) => {
 app.post("/api/orders/create", async (req, res) => {
   const { userId, items, email, usernames, paymentMethod: rawMethod } = req.body;
   // if (userId && (await rejectIfBanned(parseInt(userId), res))) return;
+  
+  const totalAmount = items.reduce(
+    (sum: number, item: { price: number }) => sum + parseFloat(String(item.price)),
+    0
+  );
+
+  // Enforce payment logic: Card only for $35 - $999
+  if (rawMethod === "card" && (totalAmount < 35 || totalAmount > 999)) {
+    return res.status(400).json({ 
+      error: "Invalid payment method", 
+      details: totalAmount < 35 
+        ? "Card payments are only available for orders $35 and above." 
+        : "Card payments are only available for orders up to $999. Please use Crypto for this high-value order." 
+    });
+  }
+
   const paymentMethod = rawMethod === "crypto" ? "CRYPTO" : "CARD";
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

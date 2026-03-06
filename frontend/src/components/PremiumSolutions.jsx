@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useHomeContent } from '../contexts/ContentContext';
 
 const DEFAULT_BENEFITS = [
@@ -43,16 +44,17 @@ export default function PremiumSolutions() {
           </div>
 
           {/* Right Card - CTA with Red Gradient */}
-          <div 
-            className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden"
+          <Link
+            to="/buy-google-skip-ads-views"
+            className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden transition-transform hover:scale-[1.02]"
             style={{
               background: 'radial-gradient(ellipse at center, rgba(255, 200, 200, 0.9) 0%, rgba(229, 57, 53, 0.95) 50%, rgba(198, 40, 40, 1) 100%)',
             }}
           >
-            <button className="bg-white rounded-xl px-8 py-4 text-brand-red font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md">
+            <div className="bg-white rounded-xl px-8 py-4 text-brand-red font-bold text-lg lg:text-md hover:bg-gray-50 transition-colors shadow-md">
               {section.ctaButton || 'Start Google Ads Campaign'}
-            </button>
-          </div>
+            </div>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
