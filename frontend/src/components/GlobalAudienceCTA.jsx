@@ -28,11 +28,8 @@ const serviceCategories = [
     icon: 'tiktok',
     services: [
       { label: 'TikTok Followers Growth', icon: 'users', link: '/buy-tiktok-followers' },
-      { label: 'TikTok Ads Views', icon: 'eye', link: '/buy-tiktok-ads-views' },
-      { label: 'TikTok Reach / Impressions', icon: 'eye', link: '/buy-tiktok-reach' },
-      { label: 'TikTok Engagement Services', icon: 'heart', link: '/buy-tiktok-engagement' },
-      { label: 'TikTok Video Views', icon: 'eye', link: '/buy-tiktok-video-views' },
-      { label: 'TikTok Website / App Traffic', icon: 'eye', link: '/buy-tiktok-traffic' },
+      { label: 'TikTok Likes', icon: 'heart', link: '/buy-tiktok-likes' },
+      { label: 'TikTok Video Views', icon: 'eye', link: '/buy-tiktok-views' },
     ],
   },
   {

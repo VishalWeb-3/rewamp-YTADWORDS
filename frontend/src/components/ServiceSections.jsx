@@ -30,7 +30,10 @@ function ServiceCard({ subtitle, benefits, buttonText, link = '/', theme = 'red'
           {/* Benefits Card - Position alternates */}
           {cardPosition === 'left' ? (
             <>
-              <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-10">
+              <Link
+                to={link}
+                className="bg-white rounded-2xl shadow-lg p-8 lg:p-10 transition-transform hover:scale-[1.02] block"
+              >
                 <ul className="space-y-4">
                   {benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start gap-3">
@@ -43,7 +46,7 @@ function ServiceCard({ subtitle, benefits, buttonText, link = '/', theme = 'red'
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Link>
               <Link
                 to={link}
                 className="rounded-2xl shadow-lg p-8 lg:p-10 flex items-center justify-center relative overflow-hidden transition-transform hover:scale-[1.02]"
@@ -69,7 +72,10 @@ function ServiceCard({ subtitle, benefits, buttonText, link = '/', theme = 'red'
                   {buttonText}
                 </div>
               </Link>
-              <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-10">
+              <Link
+                to={link}
+                className="bg-white rounded-2xl shadow-lg p-8 lg:p-10 transition-transform hover:scale-[1.02] block"
+              >
                 <ul className="space-y-4">
                   {benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start gap-3">
@@ -82,7 +88,7 @@ function ServiceCard({ subtitle, benefits, buttonText, link = '/', theme = 'red'
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Link>
             </>
           )}
         </div>

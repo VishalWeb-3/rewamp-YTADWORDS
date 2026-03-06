@@ -28,7 +28,10 @@ export default function PremiumSolutions() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-10">
+          <Link
+            to="/buy-google-skip-ads-views"
+            className="bg-white rounded-2xl shadow-lg p-8 lg:p-10 transition-transform hover:scale-[1.02] block"
+          >
             <ul className="space-y-4">
               {benefits.map((benefit, index) => (
                 <li key={index} className="flex items-start gap-3">
@@ -41,7 +44,7 @@ export default function PremiumSolutions() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Link>
 
           {/* Right Card - CTA with Red Gradient */}
           <Link
