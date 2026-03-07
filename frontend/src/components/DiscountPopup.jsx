@@ -69,14 +69,20 @@ export default function DiscountPopup() {
                 const data = await res.json();
                 if (data && data.isActive) {
                     setSettings(data);
+                    
                     const isDone = localStorage.getItem('discountPopupSuccess_yt');
                     if (isDone) return;
 
-                    // Show after a short delay for fresh load or refresh
+                    // Logic for delays:
+                    // Default: 15 seconds (15000ms)
+                    // If cancelled before: 125 seconds (125000ms)
+                    const hasCancelled = localStorage.getItem('discountPopupCancelled_yt');
+                    const delay = hasCancelled ? 125000 : 15000;
+
                     const timer = setTimeout(() => {
                         setIsVisible(true);
                         sessionStorage.setItem('discountPopupOpen_yt', 'true');
-                    }, 3000);
+                    }, delay);
                     return () => clearTimeout(timer);
                 }
             } catch (err) {
@@ -84,16 +90,18 @@ export default function DiscountPopup() {
                 const isDone = localStorage.getItem('discountPopupSuccess_yt');
                 if (isDone) return;
 
+                const hasCancelled = localStorage.getItem('discountPopupCancelled_yt');
+                const delay = hasCancelled ? 125000 : 15000;
+
                 const timer = setTimeout(() => {
                     setIsVisible(true);
                     sessionStorage.setItem('discountPopupOpen_yt', 'true');
-                }, 3000);
+                }, delay);
                 return () => clearTimeout(timer);
             }
         };
 
         fetchSettings();
-        // Empty dependency array ensures this only happens once on initial load or refresh
     }, []);
 
     const [error, setError] = useState('');
@@ -139,6 +147,8 @@ export default function DiscountPopup() {
     const closePopup = () => {
         setIsVisible(false);
         sessionStorage.removeItem('discountPopupOpen_yt');
+        // Mark as cancelled in localStorage so next refresh uses 125s timer
+        localStorage.setItem('discountPopupCancelled_yt', 'true');
     };
 
     const isSubscribed = localStorage.getItem('discountPopupSuccess_yt');
