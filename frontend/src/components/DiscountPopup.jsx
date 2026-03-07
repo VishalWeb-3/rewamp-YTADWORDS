@@ -10,13 +10,13 @@ const DiscountCircle = ({ onClick, discountLabel, isVisible }) => {
     return (
         <button
             onClick={onClick}
-            className="fixed bottom-6 right-6 z-[9998] group flex flex-col items-center justify-center w-20 h-20 bg-[#1e293b] text-white rounded-full shadow-2xl hover:bg-black transition-all duration-300 active:scale-95 animate-in slide-in-from-right-10 pointer-events-auto"
+            className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9998] group flex flex-col items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-[#1e293b] text-white rounded-full shadow-2xl hover:bg-black transition-all duration-300 active:scale-95 animate-in slide-in-from-right-10 pointer-events-auto"
         >
             <div className="absolute inset-0 rounded-full border-2 border-white/20 scale-110 group-hover:scale-125 transition-transform duration-500"></div>
 
-            <span className="text-[10px] font-black uppercase tracking-tighter opacity-80 leading-none mb-0.5">Save</span>
-            <span className="text-xl font-bold leading-none">{discountLabel || '20%'}</span>
-            <span className="text-[10px] font-black uppercase tracking-tighter opacity-80 leading-none mt-0.5">OFF</span>
+            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter opacity-80 leading-none mb-0.5">Save</span>
+            <span className="text-lg md:text-xl font-bold leading-none">{discountLabel || '20%'}</span>
+            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter opacity-80 leading-none mt-0.5">OFF</span>
 
             {/* Ripple Effect */}
             <div className="absolute inset-0 rounded-full bg-white/10 animate-ping duration-[2000ms] -z-10"></div>
@@ -167,29 +167,29 @@ export default function DiscountPopup() {
             {/* The Popup */}
             {isVisible && (
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="relative w-full max-w-lg bg-white rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500">
+                    <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500 max-h-[90vh] overflow-y-auto">
                         {/* Close Button */}
                         <button
                             onClick={closePopup}
-                            className="absolute top-6 right-6 p-2 text-gray-400 hover:text-black transition-colors z-10"
+                            className="absolute top-4 right-4 md:top-6 md:right-6 p-2 text-gray-400 hover:text-black transition-colors z-20 bg-white/80 backdrop-blur-sm rounded-full"
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
 
                         {!isSubmitted ? (
-                            <div className="p-8 md:p-12 flex flex-col items-center text-center">
-                                <div className="flex items-center gap-2 mb-8 select-none">
-                                    <span className="text-2xl font-black text-[#1e293b]">YouTube Ads</span>
+                            <div className="p-6 md:p-12 flex flex-col items-center text-center">
+                                <div className="flex items-center gap-2 mb-6 md:mb-8 select-none">
+                                    <span className="text-xl md:text-2xl font-black text-[#1e293b]">YouTube Ads</span>
                                     <div className="w-2 h-2 rounded-full bg-red-600 mt-2"></div>
                                 </div>
 
-                                <div className="w-16 h-1 bg-red-600 rounded-full mb-8"></div>
+                                <div className="w-12 md:w-16 h-1 bg-red-600 rounded-full mb-6 md:mb-8"></div>
 
-                                <span className="text-sm font-black uppercase tracking-[0.3em] text-gray-500 mb-4">{settings.title}</span>
-                                <h2 className="text-6xl md:text-7xl font-black text-[#1e293b] mb-2 leading-none">{settings.discountLabel}</h2>
-                                <p className="text-base font-black text-red-600 uppercase tracking-[0.15em] mb-10">{settings.subTitle}</p>
+                                <span className="text-xs md:text-sm font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-500 mb-2 md:mb-4">{settings.title}</span>
+                                <h2 className="text-5xl md:text-7xl font-black text-[#1e293b] mb-2 leading-none break-words max-w-full px-2">{settings.discountLabel}</h2>
+                                <p className="text-sm md:text-base font-black text-red-600 uppercase tracking-[0.1em] md:tracking-[0.15em] mb-8 md:mb-10">{settings.subTitle}</p>
 
                                 <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
                                     <input
@@ -213,21 +213,21 @@ export default function DiscountPopup() {
                                     >
                                         {loading ? 'Processing...' : settings.buttonText}
                                     </button>
-                                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{settings.footerText}</p>
+                                    <p className="text-[10px] md:text-[11px] font-bold text-gray-400 uppercase tracking-widest">{settings.footerText}</p>
                                 </form>
                             </div>
                         ) : (
                             <div className="p-8 md:p-16 flex flex-col items-center text-center animate-in fade-in zoom-in duration-500">
-                                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-green-500 mb-8 border border-green-100">
-                                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="w-16 h-16 md:w-20 md:h-20 bg-green-50 rounded-full flex items-center justify-center text-green-500 mb-6 md:mb-8 border border-green-100">
+                                    <svg className="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                 </div>
-                                <h2 className="text-3xl font-black text-[#1e293b] mb-4 leading-tight">{settings.successMessage}</h2>
-                                <p className="text-gray-500 font-medium text-lg leading-relaxed mb-10">{settings.successSubMessage}</p>
+                                <h2 className="text-2xl md:text-3xl font-black text-[#1e293b] mb-4 leading-tight">{settings.successMessage}</h2>
+                                <p className="text-gray-500 font-medium text-base md:text-lg leading-relaxed mb-8 md:mb-10">{settings.successSubMessage}</p>
                                 <button
                                     onClick={closePopup}
-                                    className="px-10 py-4 bg-[#1e293b] text-white font-black rounded-xl text-xs uppercase tracking-widest hover:bg-black transition-all active:scale-95 shadow-lg"
+                                    className="w-full md:w-auto px-10 py-4 bg-[#1e293b] text-white font-black rounded-xl text-xs uppercase tracking-widest hover:bg-black transition-all active:scale-95 shadow-lg"
                                 >
                                     Continue Browsing
                                 </button>
