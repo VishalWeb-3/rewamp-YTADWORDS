@@ -165,7 +165,7 @@ export default function BuyGoogleAppsDownloadPage() {
                         </div>
 
                         {/* View Packages Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+                        <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-6">
                             {packages.map((pkg, index) => {
                                 const isSelected = selectedPackageIndex === index;
                                 const isContact = pkg.price === 'Contact for Price' || pkg.price === 'Custom Pricing';
@@ -173,16 +173,14 @@ export default function BuyGoogleAppsDownloadPage() {
                                     <div
                                         key={index}
                                         onClick={() => setSelectedPackageIndex(index)}
-                                        className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'
-                                            }`}
+                                        className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'}`}
                                     >
-                                        <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-2 border-[#4285F4] border-r-0 rounded-l-full' : 'rounded-l-full'
-                                            }`}>
-                                            <div className="text-lg sm:text-2xl font-bold text-gray-900 leading-none">{pkg.installs}</div>
-                                            <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-wider font-semibold">installs</div>
+                                        <div className={`px-2 sm:px-4 py-1.5 sm:py-3 flex flex-col items-center justify-center min-w-[55px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-[1.5px] md:border-2 border-[#4285F4] border-r-0 rounded-l-full' : 'rounded-l-full'}`}>
+                                            <div className="text-sm sm:text-2xl font-bold text-gray-900 leading-tight">{pkg.installs}</div>
+                                            <div className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-tighter">installs</div>
                                         </div>
-                                        <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-[#4285F4]' : ''}`}>
-                                            <div className={`font-bold ${isContact ? 'text-xs sm:text-sm' : 'text-base sm:text-xl'} ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                                        <div className={`flex-1 min-w-0 px-2 sm:px-4 py-1.5 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-[#4285F4]' : ''}`}>
+                                            <div className={`font-bold ${isContact ? 'text-[9px] sm:text-sm' : 'text-sm sm:text-xl'} ${isSelected ? 'text-white' : 'text-gray-900'}`}>
                                                 {isContact ? pkg.price : `$${pkg.price}`}
                                             </div>
                                         </div>

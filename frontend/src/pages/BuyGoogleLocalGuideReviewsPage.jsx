@@ -197,7 +197,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
             </div>
 
             {/* Pricing packages - clean card grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
                 const count = pkg.amount;
@@ -206,24 +206,24 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                     key={index}
                     type="button"
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`relative text-left rounded-xl border-2 p-4 transition-all ${isSelected
+                    className={`relative text-left rounded-xl border-[1.5px] md:border-2 p-2.5 sm:p-4 transition-all ${isSelected
                       ? 'border-green-500 bg-green-50 shadow-sm'
                       : 'border-gray-200 bg-white hover:border-green-300 hover:bg-gray-50'
                       }`}
                   >
                     {pkg.badge && (
-                      <span className="absolute -top-2.5 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                      <span className="absolute -top-2 right-1 sm:-top-2.5 sm:right-2 bg-green-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full shadow-sm">
                         {pkg.badge}
                       </span>
                     )}
-                    <div className="font-bold text-gray-900 text-lg sm:text-xl">
-                      {count} <span className="font-medium text-gray-600 text-base">reviews</span>
+                    <div className="font-bold text-gray-900 text-sm sm:text-lg">
+                      {count} <span className="font-medium text-gray-600 text-[10px] sm:text-base">reviews</span>
                     </div>
-                    <div className="mt-2 flex flex-wrap items-baseline gap-2">
+                    <div className="mt-1 sm:mt-2 flex flex-wrap items-baseline gap-1 sm:gap-2">
                       {pkg.originalPrice && (
-                        <span className="text-sm text-gray-400 line-through">${pkg.originalPrice}</span>
+                        <span className="text-[10px] sm:text-sm text-gray-400 line-through">${pkg.originalPrice}</span>
                       )}
-                      <span className={isSelected ? 'text-green-600 font-bold' : 'text-green-600 font-semibold'}>
+                      <span className={`text-xs sm:text-lg ${isSelected ? 'text-green-600 font-bold' : 'text-green-600 font-semibold'}`}>
                         ${pkg.price}{pkg.suffix || ''}
                       </span>
                     </div>
