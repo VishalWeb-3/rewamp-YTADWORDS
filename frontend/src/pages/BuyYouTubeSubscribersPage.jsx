@@ -188,52 +188,30 @@ export default function BuyYouTubeSubscribersPage() {
 
 
             {/* View Packages Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-6">
               {packages.map((pkg, index) => {
                 const isSelected = selectedPackageIndex === index;
                 return (
                   <div
                     key={index}
                     onClick={() => setSelectedPackageIndex(index)}
-                    className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-brand-red p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'
-                      }`}
+                    className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-brand-red p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'}`}
                   >
-                    {/* Left Section - Subscribers Quantity (White) */}
-                    <div className={`px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'
-                      }`}>
-                      <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                        {pkg.subscribers}
-                      </div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        subscribers
-                      </div>
+                    <div className={`px-2 sm:px-4 py-1.5 sm:py-3 flex flex-col items-center justify-center min-w-[55px] sm:min-w-[90px] bg-white flex-shrink-0 ${isSelected ? 'border-[1.5px] md:border-2 border-brand-red border-r-0 rounded-l-full' : 'rounded-l-full'}`}>
+                      <div className="text-sm sm:text-2xl font-bold text-gray-900 leading-tight">{pkg.subscribers}</div>
+                      <div className="text-[9px] sm:text-xs text-gray-500 uppercase tracking-tighter">subscribers</div>
                     </div>
-
-                    {/* Right Section - Price */}
-                    <div className={`flex-1 min-w-0 px-3 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-brand-red' : ''
-                      }`}>
+                    <div className={`flex-1 min-w-0 px-2 sm:px-4 py-1.5 sm:py-3 flex flex-col items-center justify-center rounded-r-full ${isSelected ? 'bg-brand-red' : ''}`}>
                       {pkg.originalPrice ? (
                         <>
-                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mb-1">
-                            <span className={`line-through text-xs sm:text-sm ${isSelected ? 'text-white' : 'text-gray-400'
-                              }`}>
-                              ${pkg.originalPrice}
-                            </span>
-                            <span className={`font-bold text-base sm:text-lg ${isSelected ? 'text-white' : 'text-brand-red'
-                              }`}>
-                              ${pkg.price}
-                            </span>
+                          <div className="flex flex-col sm:flex-row items-center justify-center gap-0 sm:gap-2">
+                            <span className={`line-through text-[9px] sm:text-sm ${isSelected ? 'text-white/80' : 'text-gray-400'}`}>${pkg.originalPrice}</span>
+                            <span className={`font-bold text-xs sm:text-lg ${isSelected ? 'text-white' : 'text-brand-red'}`}>${pkg.price}</span>
                           </div>
-                          <div className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full ${isSelected ? 'bg-black text-white' : 'bg-brand-red text-white'
-                            }`}>
-                            save {pkg.discount}
-                          </div>
+                          <div className={`text-[8px] sm:text-xs font-black uppercase px-1.5 sm:px-3 py-0.5 rounded-full mt-0.5 ${isSelected ? 'bg-white text-brand-red' : 'bg-brand-red text-white'}`}>save {pkg.discount}</div>
                         </>
                       ) : (
-                        <div className={`font-bold text-base sm:text-xl ${isSelected ? 'text-white' : 'text-gray-900'
-                          }`}>
-                          ${pkg.price}
-                        </div>
+                        <div className={`font-bold text-sm sm:text-xl ${isSelected ? 'text-white' : 'text-gray-900'}`}>${pkg.price}</div>
                       )}
                     </div>
                   </div>
