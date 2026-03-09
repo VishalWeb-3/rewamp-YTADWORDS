@@ -6,6 +6,7 @@ import Footer from './Footer';
 import CartSidebar from './CartSidebar';
 import SEO from './SEO';
 import DiscountPopup from './DiscountPopup';
+import NotificationPopup from './NotificationPopup';
 import { usePageMetadata } from '../contexts/ContentContext';
 
 export default function Layout({ children, seoTitle, seoDescription, seoKeywords, seoOgImage }) {
@@ -39,6 +40,7 @@ export default function Layout({ children, seoTitle, seoDescription, seoKeywords
       <Footer />
       <CartSidebar />
       <DiscountPopup />
+      <NotificationPopup />
     </div>
   );
 }
