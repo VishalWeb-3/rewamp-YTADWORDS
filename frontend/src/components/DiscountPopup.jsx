@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { isValidEmail } from '../utils/emailValidator';
 
-const API_BASE = import.meta.env.VITE_ADMIN_API_URL || 'http://localhost:3001/api';
+// Use same API as rest of app (VITE_API_URL). Empty = same-origin /api.
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 const DiscountCircle = ({ onClick, discountLabel, isVisible }) => {
     if (isVisible) return null; // Hide circle when popup is open
@@ -62,9 +63,11 @@ export default function DiscountPopup() {
     const isPaymentPage = isExcludedPath(location.pathname);
 
     useEffect(() => {
+        if (isPaymentPage) return;
+
         const fetchSettings = async () => {
             try {
-                const res = await fetch(`${API_BASE}/popups/public?site=youtubeadwords`);
+                const res = await fetch(`${API_BASE}/api/popups/public?site=youtubeadwords`);
                 if (!res.ok) throw new Error('Failed to fetch');
                 const data = await res.json();
                 if (data && data.isActive) {
@@ -119,7 +122,7 @@ export default function DiscountPopup() {
 
         setLoading(true);
         try {
-            await fetch(`${API_BASE}/popups/submit-email?site=youtubeadwords`, {
+            await fetch(`${API_BASE}/api/popups/submit-email?site=youtubeadwords`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
