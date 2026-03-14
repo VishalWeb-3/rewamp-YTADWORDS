@@ -233,7 +233,12 @@ export default function GoogleReviewsUpgradeGeneric() {
         errorMessage = errorData.error || errorMessage;
         if (errorData.details) errorMessage = `${errorMessage} - ${errorData.details}`;
       } catch {
-        errorMessage = text || `Server Error (${response.status})`;
+        // Server returned HTML (e.g. 404 page or SPA index) — usually means wrong API URL
+        if (text && (text.trim().startsWith('<') || text.includes('<!DOCTYPE'))) {
+          errorMessage = 'Could not reach the payment server. If you see this on the live site, set VITE_API_URL to your backend (e.g. https://youtubeadwords.onrender.com) when building the frontend.';
+        } else {
+          errorMessage = text || `Server Error (${response.status})`;
+        }
       }
       alert(`Error: ${errorMessage}`);
     } catch (error) {
