@@ -66,6 +66,8 @@ node_modules/
 .env
 **/.env
 *.env
+# Allow committed production API URL so frontend build works everywhere (no secrets in this file)
+!frontend/.env.production
 
 # dataconnect generated files
 .dataconnect
