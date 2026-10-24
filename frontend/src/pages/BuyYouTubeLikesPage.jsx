@@ -7,6 +7,7 @@ import { usePricingPackages, usePricingPageContent } from '../contexts/ContentCo
 import { useCtaActions } from '../contexts/CtaActionsContext';
 import { useCheckout } from '../hooks/useCheckout';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
 
 const likePackagesFallback = {
   regular: [
@@ -146,6 +147,7 @@ export default function BuyYouTubeLikesPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}
@@ -174,7 +176,7 @@ export default function BuyYouTubeLikesPage() {
               <div className="bg-gray-100 rounded-lg p-4 mb-6">
                 <p className="text-gray-700 text-sm">
                   {infoBanner ? (
-                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                    <><span className="font-medium">Information:</span> {String(infoBanner).replace(/^\s*Information:\s*/i, '')}</>
                   ) : (
                     <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Turbo YouTube Likes</span> packages for orders with a high number of likes.</>
                   )}

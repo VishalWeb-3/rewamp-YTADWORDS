@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { useGooglePricing, getGooglePricingBySlug } from '../contexts/ContentContext';
+import ServiceAssurance from '../components/ServiceAssurance';
 
 // Pricing data is now fetched from TinaCMS
 
@@ -135,6 +136,7 @@ export default function BuyGoogleLocalGuideReviewsPage() {
                 YoutubeADwords is the safest way to buy Google Local Guide Reviews with delivery in just a few minutes. We offer multiple packages with real Google Local Guide reviewers for all different needs - choose wisely!
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}

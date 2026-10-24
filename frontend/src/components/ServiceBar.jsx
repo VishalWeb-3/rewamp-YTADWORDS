@@ -58,7 +58,7 @@ export default function ServiceBar() {
   return (
     <div className="bg-white border-b border-gray-100">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-        <div className="flex items-center justify-center gap-2 flex-wrap">
+        <div className="svc-bar flex items-center justify-center gap-2 flex-wrap">
           {services.map((s, index) => {
             const firstItem = s.items && s.items[0];
             const firstLink = typeof firstItem === 'object' && firstItem?.link && firstItem.link !== '#' ? firstItem.link : null;

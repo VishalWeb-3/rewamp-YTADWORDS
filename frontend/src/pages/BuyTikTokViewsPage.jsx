@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
 
 const viewPackagesFallback = {
   regular: [
@@ -123,6 +124,7 @@ export default function BuyTikTokViewsPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy TikTok Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">

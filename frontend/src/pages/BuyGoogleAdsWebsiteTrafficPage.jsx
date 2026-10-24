@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
 
 const websiteTrafficPackagesFallback = {
   regular: [
@@ -123,6 +124,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy Google Ads Website / App Traffic with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}

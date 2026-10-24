@@ -7,6 +7,7 @@ import { useCheckout } from '../hooks/useCheckout';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { resolveImageUrl } from '../utils/image';
 import { useCtaActions } from '../contexts/CtaActionsContext';
+import ServiceAssurance from '../components/ServiceAssurance';
 
 const viewPackagesFallback = {
   regular: [
@@ -136,6 +137,7 @@ export default function BuyYouTubeViewsPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Views with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}
@@ -164,7 +166,7 @@ export default function BuyYouTubeViewsPage() {
               <div className="bg-gray-100 rounded-lg p-4 mb-6">
                 <p className="text-gray-700 text-sm">
                   {infoBanner ? (
-                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                    <><span className="font-medium">Information:</span> {String(infoBanner).replace(/^\s*Information:\s*/i, '')}</>
                   ) : (
                     <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Fast YouTube Views</span> packages for orders with a high number of views.</>
                   )}
