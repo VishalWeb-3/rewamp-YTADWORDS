@@ -1,15 +1,16 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from './Header';
-import ServiceBar from './ServiceBar';
+import LandingHeader from './landing/LandingHeader';
 import Footer from './Footer';
 import CartSidebar from './CartSidebar';
 import SEO from './SEO';
 import DiscountPopup from './DiscountPopup';
 import NotificationPopup from './NotificationPopup';
 import { usePageMetadata } from '../contexts/ContentContext';
+import '../styles/landing.css';
+import '../styles/site.css';
 
-export default function Layout({ children, seoTitle, seoDescription, seoKeywords, seoOgImage }) {
+export default function Layout({ children, variant, seoTitle, seoDescription, seoKeywords, seoOgImage }) {
   const location = useLocation();
 
   // Get slug from pathname (remove leading slash)
@@ -27,15 +28,14 @@ export default function Layout({ children, seoTitle, seoDescription, seoKeywords
   const ogImage = finalMetadata?.ogImage || seoOgImage || '/favicon.svg';
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden w-full">
+    <div className={`min-h-screen overflow-x-hidden w-full ${variant === 'landing' ? '' : 'site'}`}>
       <SEO
         title={title}
         description={description}
         keywords={keywords}
         ogImage={ogImage}
       />
-      <Header />
-      <ServiceBar />
+      <LandingHeader />
       {children}
       <Footer />
       <CartSidebar />

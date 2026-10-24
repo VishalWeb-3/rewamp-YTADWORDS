@@ -1,40 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SEO from '../components/SEO';
 import Layout from '../components/Layout';
-import Hero from '../components/Hero';
-import ServicesSection from '../components/ServicesSection';
-import WhyChooseUs from '../components/WhyChooseUs';
-import SocialMediaImpact from '../components/SocialMediaImpact';
-import PremiumSolutions from '../components/PremiumSolutions';
-import ServiceSections from '../components/ServiceSections';
-import ComparisonSection from '../components/ComparisonSection';
-import WhyChooseYoutubeADwords from '../components/WhyChooseYoutubeADwords';
-import MeetOurExperts from '../components/MeetOurExperts';
-import WhatWeEnsure from '../components/WhatWeEnsure';
-import TrustedClients from '../components/TrustedClients';
-import FAQ from '../components/FAQ';
-import GlobalAudienceCTA from '../components/GlobalAudienceCTA';
+import LandingHero from '../components/landing/LandingHero';
+import { Services, HowItWorks, Solutions, Safety, Compare, Voices, Faq, Closer } from '../components/landing/LandingSections';
 
 export default function HomePage() {
+  useEffect(() => {
+    const root = document.querySelector('.lp');
+    if (!root) return undefined;
+    root.classList.add('lp-js');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    root.querySelectorAll('.lp-reveal').forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <Layout>
+    <Layout variant="landing">
       <SEO
         title="YoutubeADwords - Buy YouTube Views, Google Ads & TikTok Campaigns"
         description="Experience rapid growth with YoutubeADwords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide."
       />
-      <Hero />
-      <ServicesSection />
-      <WhyChooseUs />
-      <SocialMediaImpact />
-      <PremiumSolutions />
-      <ServiceSections />
-      <ComparisonSection />
-      <WhyChooseYoutubeADwords />
-      <MeetOurExperts />
-      <WhatWeEnsure />
-      <TrustedClients />
-      <FAQ />
-      <GlobalAudienceCTA />
+      <main className="lp">
+        <LandingHero />
+        <Services />
+        <HowItWorks />
+        <Solutions />
+        <Safety />
+        <Compare />
+        <Voices />
+        <Faq />
+        <Closer />
+      </main>
     </Layout>
   );
 }

@@ -1,0 +1,117 @@
+/* Site shell shared by every page: footer, plus a skin that re-tones the older Tailwind pages. */
+
+/* Footer */
+.lp-footer { background: var(--ink); color: #c9cfdd; font-family: 'Onest', system-ui, sans-serif; padding-block: clamp(3.5rem, 7vw, 5.5rem) 2rem; line-height: 1.6; }
+.lp-footer .lp-logo { color: #fff; font-size: 1.6rem; }
+.lp-foot-top { display: grid; gap: 2.5rem; padding-bottom: 3rem; }
+@media (min-width: 48rem) { .lp-foot-top { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 64rem) { .lp-foot-top { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 3rem; } }
+.lp-foot-brand p { margin: 1.1rem 0 1.5rem; max-width: 24rem; font-size: 0.95rem; color: #9aa2b6; }
+.lp-socials { display: flex; gap: 0.6rem; }
+.lp-socials a { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.18) inset; transition: background 0.25s, transform 0.35s var(--ease), color 0.25s; }
+.lp-socials a:hover { background: var(--red); transform: translateY(-3px); box-shadow: none; }
+.lp-foot-col h3 { margin: 0 0 1.1rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
+.lp-foot-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.65rem; }
+.lp-foot-col a, .lp-foot-col button { color: #9aa2b6; font-size: 0.95rem; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; transition: color 0.2s, padding-left 0.3s var(--ease); }
+.lp-foot-col a:hover, .lp-foot-col button:hover { color: #fff; padding-left: 0.35rem; }
+.lp-foot-legal { margin: 0 0 1.75rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.12); font-size: 0.78rem; color: #7c849a; max-width: 56rem; }
+.lp-foot-bottom { display: flex; flex-direction: column; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.12); font-size: 0.8rem; color: #7c849a; }
+.lp-foot-bottom p { margin: 0; }
+.lp-foot-bottom nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.lp-foot-bottom a { color: #9aa2b6; transition: color 0.2s; }
+.lp-foot-bottom a:hover { color: #fff; }
+@media (min-width: 48rem) { .lp-foot-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
+.lp-footer :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- Skin for inner pages (Tailwind-built markup) ---------- */
+.site { background: var(--paper); color: var(--ink); font-family: 'Onest', system-ui, sans-serif; }
+.site, .site button, .site input, .site select, .site textarea { font-family: 'Onest', system-ui, sans-serif; }
+.site h1, .site h2, .site h3 { font-family: 'Bricolage Grotesque', 'Onest', sans-serif; letter-spacing: -0.025em; line-height: 1.08; text-wrap: balance; color: var(--ink); }
+.site h1 { font-weight: 800; }
+.site h2, .site h3 { font-weight: 700; }
+.site ::selection { background: var(--red); color: #fff; }
+.site :focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.site .text-gray-900, .site .text-gray-800 { color: var(--ink); }
+.site .text-gray-700, .site .text-gray-600 { color: var(--ink-2); }
+.site .text-gray-500, .site .text-gray-400 { color: var(--ink-3); }
+
+/* retire the old decorative red slabs and stock-photo filler */
+.site [class*="bg-red-100/"], .site [class*="bg-red-400/"] { display: none; }
+
+/* page wrappers that paint their own white/grey field let the paper show through */
+.site > .min-h-screen, .site > div.bg-white, .site > main.bg-white, .site > .bg-gray-50 { background-color: transparent; }
+.site img[class*="w-[200px]"] { display: none; }
+
+/* one accent: the TikTok pages used blue, unify to the signal red */
+.site .bg-blue-600, .site .bg-blue-500 { background-color: var(--red); }
+.site .text-blue-600, .site .text-blue-500 { color: var(--red-deep); }
+.site .border-blue-600, .site .border-blue-500 { border-color: var(--red); }
+
+/* surfaces */
+.site .bg-white { background-color: var(--card); }
+.site .bg-gray-50, .site .bg-gray-100 { background-color: var(--paper-2); }
+.site .rounded-2xl { border-radius: 1.25rem; }
+.site .shadow-xl, .site .shadow-md, .site .shadow-lg { box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 24px 48px -28px rgba(11,16,32,.28), 0 0 0 1px var(--line); }
+.site .border-gray-100, .site .border-gray-200 { border-color: var(--line); }
+
+/* actions: signal red stays reserved for buying */
+.site .bg-brand-red { background-color: var(--red); }
+.site button.bg-brand-red, .site a.bg-brand-red, .site .bg-brand-red.font-bold { transition: transform 0.35s var(--ease), background-color 0.25s; }
+.site button.bg-brand-red:hover:not(:disabled), .site a.bg-brand-red:hover { transform: translateY(-2px); }
+.site .bg-gray-900 { background-color: var(--ink); }
+.site .bg-gray-900:hover { background-color: #1b2340; }
+.site .bg-yellow-400 { background-color: var(--ink); color: #fff; }
+.site .rounded-xl { border-radius: 0.9rem; }
+.site .text-brand-red { color: var(--red-deep); }
+
+/* inputs */
+.site input, .site textarea, .site select { border-radius: 0.8rem; border-color: var(--line); background: #fff; }
+.site input:focus, .site textarea:focus, .site select:focus { outline: 3px solid rgba(229,57,53,.35); outline-offset: 0; border-color: var(--red); }
+
+/* motion for page content: cards lift, section content arrives */
+@keyframes site-in { from { opacity: 0; transform: translateY(14px); } }
+.site > .relative > .relative.z-10 > * { animation: site-in 0.8s var(--ease) both; }
+.site > .relative > .relative.z-10 > *:nth-child(2) { animation-delay: 0.08s; }
+.site > .relative > .relative.z-10 > *:nth-child(3) { animation-delay: 0.16s; }
+
+/* service bar */
+.site > div:has(> div > div > .relative) { background: var(--paper); border-color: var(--line); }
+
+@media (prefers-reduced-motion: reduce) { .site * { animation: none !important; transition: none !important; } }
+
+/* default stock filler photos (sunset) say nothing about the service: drop them and let the copy run as one column */
+.site img[src$="demo1.jpg"], .site img[src$="demo2.jpg"] { display: none; }
+.site div:has(> img[src$="demo1.jpg"]), .site div:has(> img[src$="demo2.jpg"]), .site div:has(> div > img[src$="demo1.jpg"]), .site div:has(> div > img[src$="demo2.jpg"]) > div:has(> img) { display: none; }
+.site .grid:has(img[src$="demo1.jpg"]), .site .grid:has(img[src$="demo2.jpg"]) { grid-template-columns: minmax(0, 1fr); max-width: 52rem; }
+
+.site .min-h-screen.bg-gray-50, .site .min-h-screen.bg-white { background-color: transparent; }
+.site .absolute.pointer-events-none:has(> .rotate-45) { display: none; }
+
+/* service pages: fills the column the stock photo used to hold */
+.svc-assure { margin-top: 1.5rem; padding: 0.75rem 1.5rem 1.25rem; border-radius: 1.25rem; background: var(--card); box-shadow: 0 0 0 1px var(--line); max-width: 34rem; }
+.svc-assure summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; cursor: pointer; list-style: none; min-height: 2.75rem; }
+.svc-assure summary::-webkit-details-marker { display: none; }
+.svc-assure summary::after { content: '+'; font-size: 1.5rem; line-height: 1; color: var(--ink-2); }
+.svc-assure[open] summary::after { content: '2'; }
+.svc-assure h2 { margin: 0; font-size: 1.25rem; }
+.svc-assure[open] summary { margin-bottom: 0.75rem; }
+@media (min-width: 64rem) { .svc-assure summary { pointer-events: none; } .svc-assure summary::after { display: none; } }
+.svc-assure ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.svc-assure li { display: flex; gap: 0.9rem; align-items: flex-start; }
+.svc-assure .n { flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--ink); color: #fff; font-size: 0.85rem; font-weight: 700; }
+.svc-assure b { display: block; font-weight: 650; }
+.svc-assure li p { margin: 0.1rem 0 0; font-size: 0.92rem; color: var(--ink-2); }
+.svc-assure-foot { margin: 1.25rem 0 0; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-2); }
+.svc-assure-foot a { color: var(--red-deep); font-weight: 600; text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* footer headings: the inner-page skin colours every h3 ink, which vanished on the dark footer */
+.lp-footer .lp-foot-col h3 { color: #fff; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; line-height: 1.2; }
+.lp-footer .lp-foot-col h3:empty { display: none; }
+
+/* service bar on phones: an even 2x2 grid instead of ragged wrapping; dropdowns open toward the screen */
+@media (max-width: 39.99rem) {
+  .site .svc-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .site .svc-bar > div > a, .site .svc-bar > div > button { width: 100%; min-height: 2.75rem; }
+  .site .svc-bar > div:nth-child(even) > .absolute { left: auto; right: 0; }
+  .site .svc-bar > div > .absolute { min-width: min(15rem, calc(100vw - 2rem)); }
+}
