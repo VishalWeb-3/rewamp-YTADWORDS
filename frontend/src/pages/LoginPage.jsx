@@ -30,7 +30,7 @@ export default function LoginPage() {
     e.preventDefault();
     const identifier = formData.email.trim();
     if (identifier.includes('@') && !isValidEmail(identifier)) {
-      setError('Please enter a valid popular email (gmail, outlook, etc.)');
+      setError('Please enter a valid email address.');
       setIsSubmitting(false);
       return;
     }

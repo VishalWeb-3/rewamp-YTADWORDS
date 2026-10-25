@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { isValidLink } from '../utils/linkValidator';
 import { isValidEmail } from '../utils/emailValidator';
 
@@ -181,7 +182,7 @@ export default function GoogleReviewsGetStartedGeneric() {
     const { name, value } = e.target;
     if (name === 'email') {
       if (value && !isValidEmail(value)) {
-        setErrors((prev) => ({ ...prev, email: 'Please enter a valid popular email (gmail, outlook, etc.)' }));
+        setErrors((prev) => ({ ...prev, email: 'Please enter a valid email address.' }));
       } else {
         setErrors((prev) => ({ ...prev, email: '' }));
       }
@@ -193,7 +194,7 @@ export default function GoogleReviewsGetStartedGeneric() {
 
   const handleNext = async () => {
     if (!formData.email || !isValidEmail(formData.email)) {
-      setErrors((prev) => ({ ...prev, email: 'Please enter a valid popular email (gmail, outlook, etc.)' }));
+      setErrors((prev) => ({ ...prev, email: 'Please enter a valid email address.' }));
       return;
     }
     const urlValidation = validateGoogleMapUrl(formData.googleMapUrl);
@@ -238,6 +239,7 @@ export default function GoogleReviewsGetStartedGeneric() {
 
   return (
     <Layout>
+      <SEO title="Get Started | YoutubeADwords" description="Tell us where to deliver your Google reviews." />
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
           <Link

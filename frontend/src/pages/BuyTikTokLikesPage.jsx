@@ -54,6 +54,8 @@ export default function BuyTikTokLikesPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-tiktok-likes',
+      tier: activeTab,
       platform: 'TikTok',
       serviceType: 'TikTok Likes',
       serviceName: `TikTok Likes - ${pkg.likes}`,
@@ -145,6 +147,15 @@ export default function BuyTikTokLikesPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-blue-600 p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-600/50 p-0'}`}
                   >
@@ -177,6 +188,7 @@ export default function BuyTikTokLikesPage() {
                     const selectedPkg = packages[selectedPackageIndex];
                     navigate('/get-started', {
                       state: {
+                        slug: 'buy-tiktok-likes',
                         allPackages: likePackages,
                         serviceType: 'TikTok Likes',
                         typeLabels: { regular: 'Real Active' },

@@ -56,6 +56,8 @@ export default function BuyGoogleAppsDownloadPage() {
 
     const handleAddToCart = (pkg) => {
         addToCart({
+            slug: 'buy-google-apps-download',
+            tier: activeTab,
             serviceType: 'Google Apps Download',
             serviceName: `Google Apps Download - ${pkg.installs}`,
             type: activeTab === 'regular' ? 'Worldwide (WW) Installs' : 'Tier-1 Country Installs (USA, UK, Canada, etc.)',
@@ -174,6 +176,15 @@ export default function BuyGoogleAppsDownloadPage() {
                                 return (
                                     <div
                                         key={index}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-pressed={selectedPackageIndex === index}
+                                        onKeyDown={(e) => {
+                                          if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            setSelectedPackageIndex(index);
+                                          }
+                                        }}
                                         onClick={() => setSelectedPackageIndex(index)}
                                         className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'}`}
                                     >
@@ -202,6 +213,7 @@ export default function BuyGoogleAppsDownloadPage() {
                                         } else {
                                             navigate('/get-started', {
                                                 state: {
+                                                    slug: 'buy-google-apps-download',
                                                     allPackages: appsDownloadPackages,
                                                     serviceType: 'Google Apps Download',
                                                     typeLabels: { regular: 'Worldwide (WW) Installs', fast: 'Tier-1 Country Installs (USA, UK, Canada, etc.)' },

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 
 export default function PaymentFailurePage() {
   return (
     <Layout>
+      <SEO title="Payment Failed | YoutubeADwords" description="Your payment could not be completed." />
       <div className="min-h-screen bg-gray-50 py-16 flex flex-col items-center justify-center text-center px-4">
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
           <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -13,7 +15,7 @@ export default function PaymentFailurePage() {
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Failed</h1>
         <p className="text-gray-600 mb-8 max-w-md">
-          Your payment could not be completed. Please try again or contact support if the problem persists.
+          Your payment could not be completed and you have not been charged. Your cart is still saved, so you can try again or contact support if the problem persists.
         </p>
         <Link
           to="/checkout"

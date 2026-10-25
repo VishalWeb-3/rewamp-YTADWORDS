@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { useGooglePricing, getGooglePricingBySlug } from '../contexts/ContentContext';
 import ServiceAssurance from '../components/ServiceAssurance';
+import { submitReview } from '../utils/reviews';
 
 // Pricing data is now fetched from TinaCMS
 
@@ -31,6 +32,7 @@ export default function BuyFemaleGoogleReviewsPage() {
     review: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [reviewError, setReviewError] = useState('');
 
   const googlePricing = useGooglePricing();
   const pagePricing = getGooglePricingBySlug(googlePricing, 'buy-female-google-reviews');
@@ -59,6 +61,9 @@ export default function BuyFemaleGoogleReviewsPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      kind: 'google-reviews',
+      slug: 'buy-female-google-reviews',
+      platform: 'Google Reviews',
       serviceType: 'Female Google Reviews',
       serviceName: `Female Google Reviews - ${pkg.amount}`,
       type: `${activeTab} - ${reviewType === '5-star' ? '5-Star' : 'Custom'}`,
@@ -874,12 +879,18 @@ export default function BuyFemaleGoogleReviewsPage() {
                 </h2>
 
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 5000);
-                    setFormData({ name: '', email: '', review: '' });
-                    setRating(0);
+                    setReviewError('');
+                    try {
+                      await submitReview({ page: 'buy-female-google-reviews', name: formData.name, email: formData.email, rating, text: formData.review });
+                      setShowSuccess(true);
+                      setTimeout(() => setShowSuccess(false), 5000);
+                      setFormData({ name: '', email: '', review: '' });
+                      setRating(0);
+                    } catch (err) {
+                      setReviewError(err.message);
+                    }
                   }}
                   className="space-y-6"
                 >
@@ -968,8 +979,11 @@ export default function BuyFemaleGoogleReviewsPage() {
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">Success!</span>
+                      <span className="font-medium" role="status">Thanks! Your review will appear after moderation.</span>
                     </div>
+                  )}
+                  {reviewError && (
+                    <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">{reviewError}</div>
                   )}
 
 

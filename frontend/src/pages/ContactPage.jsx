@@ -4,6 +4,9 @@ import SEO from '../components/SEO';
 import { useContactContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
 import { isValidEmail } from '../utils/emailValidator';
+import { readJson } from '../utils/orderItems';
+
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export default function ContactPage() {
   const c = useContactContent();
@@ -18,6 +21,7 @@ export default function ContactPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [submitError, setSubmitError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,33 +31,36 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setEmailError('');
+    setSubmitError('');
 
     if (!isValidEmail(formData.email)) {
-      setEmailError('Please enter a valid popular email (gmail, outlook, etc.)');
+      setEmailError('Please enter a valid email address.');
       return;
     }
 
     setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      setShowSuccess(true);
-      setIsSubmitting(false);
-      setFormData({
-        email: '',
-        reason: '',
-        orderNumber: '',
-        message: '',
+    try {
+      const res = await fetch(`${API_BASE}/api/tickets`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(formData),
       });
+      const data = await readJson(res);
+      if (!res.ok) throw new Error(data.error || 'Could not send your message. Please try again.');
 
+      setShowSuccess(true);
+      setFormData({ email: '', reason: '', orderNumber: '', message: '' });
       // Hide success message after 5 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-    }, 1000);
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (err) {
+      setSubmitError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -97,7 +104,12 @@ export default function ContactPage() {
                 <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="font-medium">{c?.successMessage ?? 'Success!'}</span>
+                <span className="font-medium" role="status">{c?.successMessage ?? 'Success!'}</span>
+              </div>
+            )}
+            {submitError && (
+              <div role="alert" className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm relative z-10">
+                {submitError}
               </div>
             )}
 

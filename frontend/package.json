@@ -10,20 +10,27 @@
     "preview": "vite preview",
     "build:admin": "npx tinacms build --skip-cloud-checks",
     "build:admin:local": "npx tinacms build --skip-cloud-checks",
-    "tina:lock": "node scripts/tina-lock.cjs"
+    "tina:lock": "node scripts/tina-lock.cjs",
+    "lint": "eslint src"
   },
   "dependencies": {
     "firebase": "^11.0.0",
+    "lucide-react": "^0.424.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.13.0",
     "tinacms": "^3.5.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@tinacms/cli": "^2.1.7",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "dotenv": "^17.3.1",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.15.0",
     "js-yaml": "^4.1.0",
     "minimatch": "^5.1.6",
     "postcss": "^8.4.32",

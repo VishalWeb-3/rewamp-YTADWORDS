@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 
 // Tina-driven content: import from content/ (editable via Tina Cloud or directly in repo)
 import globalContent from '../../content/global/index.json';
@@ -9,18 +9,29 @@ import pricingPageContent from '../../content/pricing-pages/index.json';
 import legalContent from '../../content/legal/index.json';
 import googlePricingContent from '../../content/google-pricing/index.json';
 
-// Fetch latest from Tina Cloud at runtime so edits in Tina appear without rebuild
+// Page metadata (title, description, keywords) edited in Tina lives in the front matter of content/pages/*.mdx
+const pageFiles = import.meta.glob('../../content/pages/*.mdx', { query: '?raw', import: 'default', eager: true });
 
-function omitSys(obj) {
-  if (!obj || typeof obj !== 'object') return obj;
-  const { _sys, id, __typename, ...rest } = obj;
-  return Object.fromEntries(
-    Object.entries(rest).map(([k, v]) => [
-      k,
-      Array.isArray(v) ? v.map(omitSys) : typeof v === 'object' && v !== null ? omitSys(v) : v,
-    ])
-  );
+function parseFrontMatter(raw) {
+  const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(raw || '');
+  if (!match) return null;
+  const data = {};
+  for (const line of match[1].split(/\r?\n/)) {
+    const kv = /^([A-Za-z0-9_]+):\s*(.*)$/.exec(line);
+    if (kv) data[kv[1]] = kv[2].replace(/^(['"])(.*)\1$/, '$2').trim();
+  }
+  return data;
 }
+
+const pageMetadata = Object.fromEntries(
+  Object.entries(pageFiles)
+    .map(([file, raw]) => {
+      const meta = parseFrontMatter(raw);
+      const slug = meta?.slug || file.split('/').pop().replace(/\.mdx$/, '');
+      return meta ? [slug, meta] : null;
+    })
+    .filter(Boolean)
+);
 
 const ContentContext = createContext(null);
 
@@ -32,7 +43,7 @@ const staticValue = {
   pricingPageContent,
   legal: legalContent,
   googlePricing: googlePricingContent,
-  pageMetadata: {},
+  pageMetadata,
 };
 
 export function ContentProvider({ children }) {
@@ -136,45 +147,12 @@ export function usePricingPageContent(slug, fallback) {
 }
 
 /**
- * Hook: get page metadata (title, description) by slug from TinaCMS.
- * Returns null if no metadata found for that slug.
+ * Hook: get page metadata (title, description, keywords) by slug from content/pages/*.mdx.
+ * Returns null if no metadata exists for that slug.
  */
 export function usePageMetadata(slug) {
-  const [metadata, setMetadata] = useState(null);
-
-  useEffect(() => {
-    if (!slug) {
-      setMetadata(null);
-      return;
-    }
-
-    let cancelled = false;
-    const fetchMetadata = async () => {
-      try {
-        // Try to fetch from Tina Cloud
-        if (typeof client.queries.pageMetadata === 'function') {
-          const result = await client.queries.pageMetadata({ relativePath: `${slug}.mdx` });
-          if (!cancelled && result?.data?.pageMetadata) {
-            const meta = omitSys(result.data.pageMetadata);
-            // Convert ogImage object to URL string if needed
-            if (meta.ogImage && typeof meta.ogImage === 'object' && meta.ogImage.src) {
-              meta.ogImage = meta.ogImage.src;
-            }
-            setMetadata(meta);
-            return;
-          }
-        }
-      } catch (err) {
-        // If not found in Tina, metadata stays null
-        console.debug(`No metadata found for slug: ${slug}`);
-      }
-    };
-
-    fetchMetadata();
-    return () => { cancelled = true; };
-  }, [slug]);
-
-  return metadata;
+  const { pageMetadata: meta } = useContent();
+  return (slug && meta[slug]) || null;
 }
 
 export function useGooglePricing() {

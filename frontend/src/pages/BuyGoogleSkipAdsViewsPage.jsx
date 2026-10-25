@@ -6,6 +6,7 @@ import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { resolveImageUrl } from '../utils/image';
 import ServiceAssurance from '../components/ServiceAssurance';
+import { submitReview } from '../utils/reviews';
 
 const skipAdsViewsPackagesFallback = {
   regular: [
@@ -40,6 +41,7 @@ export default function BuyGoogleSkipAdsViewsPage() {
     review: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [reviewError, setReviewError] = useState('');
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = skipAdsViewsPackages ? skipAdsViewsPackages[activeTab] : [];
 
@@ -49,6 +51,8 @@ export default function BuyGoogleSkipAdsViewsPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-google-skip-ads-views',
+      tier: activeTab,
       serviceType: 'Google Skip Ads Views',
       serviceName: `Google Skip Ads Views - ${pkg.views}`,
       type: activeTab === 'regular' ? 'Regular Views' : activeTab === 'fast' ? 'Fast Views' : 'Ads Views',
@@ -137,6 +141,15 @@ export default function BuyGoogleSkipAdsViewsPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'}`}
                   >
@@ -165,6 +178,7 @@ export default function BuyGoogleSkipAdsViewsPage() {
                     } else {
                       navigate('/get-started', {
                         state: {
+                          slug: 'buy-google-skip-ads-views',
                           allPackages: skipAdsViewsPackages,
                           serviceType: 'Google Skip Ads Views',
                           typeLabels: { regular: 'Regular Views' },
@@ -792,12 +806,18 @@ export default function BuyGoogleSkipAdsViewsPage() {
                 </h2>
 
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 5000);
-                    setFormData({ name: '', email: '', review: '' });
-                    setRating(0);
+                    setReviewError('');
+                    try {
+                      await submitReview({ page: 'buy-google-skip-ads-views', name: formData.name, email: formData.email, rating, text: formData.review });
+                      setShowSuccess(true);
+                      setTimeout(() => setShowSuccess(false), 5000);
+                      setFormData({ name: '', email: '', review: '' });
+                      setRating(0);
+                    } catch (err) {
+                      setReviewError(err.message);
+                    }
                   }}
                   className="space-y-6"
                 >
@@ -886,8 +906,11 @@ export default function BuyGoogleSkipAdsViewsPage() {
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">Success!</span>
+                      <span className="font-medium" role="status">Thanks! Your review will appear after moderation.</span>
                     </div>
+                  )}
+                  {reviewError && (
+                    <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">{reviewError}</div>
                   )}
 
 

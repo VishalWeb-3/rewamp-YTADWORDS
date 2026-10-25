@@ -13,6 +13,7 @@ model User {
   username  String     @unique
   password  String
   name      String?
+  isGuest   Boolean    @default(false) // created by guest checkout; can be claimed at signup
   isBanned  Boolean    @default(false)
   bannedAt  DateTime?
   banReason String?
@@ -23,6 +24,7 @@ model User {
   sessions  Session[]
   ctaActions UserCtaAction[]
   paymentLinks PaymentLink[] @relation("MerchantLinks")
+  tickets   Ticket[]
 }
 
 model Session {
@@ -58,6 +60,8 @@ model Order {
   externalOrderId    String?  // ORDER_xxx for payment webhooks
   uplefOrderId       String?  // Uplef order ID for webhook
   cryptomusPaymentId String?  // Cryptomus payment UUID for webhook
+  email              String?  // checkout email the order was placed with
+  details            Json?    // extra options, e.g. Google review add-ons and custom review texts
   user               User     @relation(fields: [userId], references: [id])
   userId             Int
   ipAddress          String?
@@ -105,7 +109,7 @@ model PaymentLink {
   maxPayments   Int?
   redirectUrl   String?
   notes         String?
-  status        String            @default("ACTIVE") // ACTIVE, EXPIRED, CANCELLED
+  status        String            @default("ACTIVE") // ACTIVE, EXPIRED, CANCELLED, COMPLETED
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
   transactions  LinkTransaction[]
@@ -122,4 +126,27 @@ model LinkTransaction {
   metadata       Json?
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+}
+
+model Ticket {
+  id          Int      @id @default(autoincrement())
+  email       String
+  reason      String
+  orderNumber String?
+  message     String
+  status      String   @default("OPEN") // OPEN, CLOSED
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  page      String   // service page slug the review was left on
+  name      String
+  email     String
+  rating    Int
+  text      String
+  approved  Boolean  @default(false) // reviews stay hidden until moderated
+  createdAt DateTime @default(now())
 }

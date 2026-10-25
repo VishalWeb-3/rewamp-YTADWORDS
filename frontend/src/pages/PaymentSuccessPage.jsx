@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO';
+import { useCart } from '../contexts/CartContext';
+
+const API_BASE = import.meta.env.VITE_API_URL || '';
+const POLL_MS = 3000;
+const MAX_POLLS = 20; // about one minute
 
 /* ─── CSS injected once ─── */
 const STYLE = `
@@ -161,13 +166,69 @@ const IconSparkles = (
 /* ─── Main ─── */
 export default function PaymentSuccessPage() {
   const [searchParams] = useSearchParams();
-  const orderId = searchParams.get('orderId') || searchParams.get('order_id');
-  const [showConfetti, setShowConfetti] = useState(true);
+  const orderId = searchParams.get('order') || searchParams.get('orderId') || searchParams.get('order_id');
+  const { clearCart } = useCart();
+  // checking → PAID | PENDING | CANCELED; "unknown" when there is no order reference to check
+  const [status, setStatus] = useState(orderId ? 'checking' : 'unknown');
+  const [showConfetti, setShowConfetti] = useState(false);
 
+  // Confirm the payment with the server instead of trusting the redirect
   useEffect(() => {
+    if (!orderId) return;
+    let polls = 0;
+    let timer;
+    let cancelled = false;
+    const check = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/orders/status/${encodeURIComponent(orderId)}`);
+        const data = res.ok ? await res.json() : null;
+        if (cancelled) return;
+        const next = data?.status || 'unknown';
+        setStatus(next);
+        if (next === 'PENDING' && ++polls < MAX_POLLS) timer = setTimeout(check, POLL_MS);
+      } catch {
+        if (!cancelled && ++polls < MAX_POLLS) timer = setTimeout(check, POLL_MS);
+      }
+    };
+    check();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [orderId]);
+
+  // Once paid: celebrate, and empty the cart if this checkout came from it
+  useEffect(() => {
+    if (status !== 'PAID') return;
+    try {
+      const pending = JSON.parse(sessionStorage.getItem('pendingCheckout') || 'null');
+      if (pending?.externalOrderId === orderId) {
+        if (pending.fromCart) clearCart();
+        sessionStorage.removeItem('pendingCheckout');
+      }
+    } catch {
+      /* ignore malformed storage */
+    }
+    setShowConfetti(true);
     const t = setTimeout(() => setShowConfetti(false), 5500);
     return () => clearTimeout(t);
-  }, []);
+  }, [status]);
+
+  const isPaid = status === 'PAID';
+  const heading = isPaid
+    ? 'Thank You! 🎉'
+    : status === 'CANCELED'
+      ? 'Payment not completed'
+      : status === 'unknown'
+        ? 'Thanks for your order'
+        : 'Confirming your payment…';
+  const message = isPaid
+    ? "Your payment was successful and your order is now being processed. We'll get started right away!"
+    : status === 'CANCELED'
+      ? 'The payment provider reported that this payment failed or was cancelled. You have not been charged for this order.'
+      : status === 'unknown'
+        ? 'We could not find this order yet. If you completed a payment, it will show in My Orders once confirmed.'
+        : 'We are waiting for the payment provider to confirm your payment. This usually takes less than a minute; crypto payments can take longer. You can safely close this page.';
 
   return (
     <>
@@ -175,8 +236,8 @@ export default function PaymentSuccessPage() {
       <style>{STYLE}</style>
 
       <SEO
-        title="Payment Successful — Thank You! | YoutubeADwords"
-        description="Your payment was successful. Your order is now being processed. Thank you for choosing YoutubeADwords!"
+        title="Order Status | YoutubeADwords"
+        description="Check the payment status of your YoutubeADwords order."
       />
 
       {/* Confetti burst */}
@@ -216,18 +277,17 @@ export default function PaymentSuccessPage() {
 
               <div className="ps-fadeUp" style={{ animationDelay: '.32s' }}>
                 {/* Badge pill */}
-                <p className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-[.18em] text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full mb-4">
+                <p className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-[.18em] text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full mb-4" role="status">
                   {IconSparkles}
-                  Order Confirmed
+                  {isPaid ? 'Order Confirmed' : status === 'CANCELED' ? 'Payment Failed' : 'Order Received'}
                 </p>
 
                 <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
-                  Thank You! 🎉
+                  {heading}
                 </h1>
 
                 <p className="text-gray-500 font-medium text-sm leading-relaxed max-w-sm mx-auto">
-                  Your payment was successful and your order is now being processed.
-                  We'll get started right away!
+                  {message}
                 </p>
 
                 {orderId && (
@@ -240,7 +300,7 @@ export default function PaymentSuccessPage() {
                       Order ID:&nbsp;
                     </span>
                     <span className="text-xs font-black text-gray-900 font-mono">
-                      #{orderId.slice(0, 12).toUpperCase()}
+                      #{orderId.replace(/^(ORDER|LINK)_/, '').slice(0, 8).toUpperCase()}
                     </span>
                   </div>
                 )}
@@ -276,8 +336,8 @@ export default function PaymentSuccessPage() {
                   <StepBadge
                     number="3"
                     icon={IconMail}
-                    label="Email Confirmation"
-                    desc="A receipt and order summary will be sent to your email."
+                    label="Track Your Order"
+                    desc="Follow delivery in My Orders. Guest buyers can sign up with the same email to see it."
                     delay=".6s"
                   />
                 </div>

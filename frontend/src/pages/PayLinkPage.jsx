@@ -17,6 +17,7 @@ export default function PayLinkPage() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
+    const [payError, setPayError] = useState('');
 
     useEffect(() => {
         fetchLink();
@@ -58,7 +59,7 @@ export default function PayLinkPage() {
             return false;
         }
         if (!isValidEmail(value)) {
-            setEmailError('Please enter a valid popular email (gmail, outlook, etc.)');
+            setEmailError('Please enter a valid email address.');
             return false;
         }
         setEmailError('');
@@ -69,6 +70,7 @@ export default function PayLinkPage() {
         if (!link) return;
         if (!validate()) return;
 
+        setPayError('');
         setIsProcessing(true);
         let isRedirecting = false;
         try {
@@ -107,8 +109,7 @@ export default function PayLinkPage() {
             throw new Error('Missing payment URL from gateway');
         } catch (e) {
             console.error(e);
-            const msg = e.message || 'Failed to start payment. Please try again.';
-            alert(msg);
+            setPayError(e.message || 'Failed to start payment. Please try again.');
         } finally {
             if (!isRedirecting) {
                 setIsProcessing(false);
@@ -261,6 +262,12 @@ export default function PayLinkPage() {
                                                 partners. We never store full card numbers.
                                             </span>
                                         </div>
+
+                                        {payError && (
+                                            <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                                                {payError}
+                                            </div>
+                                        )}
 
                                         {/* Pay buttons */}
                                         <div className="space-y-2 pt-2">

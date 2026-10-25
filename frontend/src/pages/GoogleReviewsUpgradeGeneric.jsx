@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { useAuth } from '../contexts/AuthContext';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
 import { isValidLink } from '../utils/linkValidator';
 import { isValidEmail } from '../utils/emailValidator';
 import { triggerPaymentRelay } from '../utils/paymentRelay';
+import { encodeShareItems, readJson } from '../utils/orderItems';
+import SEO from '../components/SEO';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -35,14 +36,15 @@ const CoinsIcon = () => (
 export default function GoogleReviewsUpgradeGeneric() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
-  const currentUser = user ?? null;
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
 
-  const serviceTitle = location.state?.serviceTitle || 'Buy Google Reviews';
   const getStartedReturnPath = location.state?.getStartedReturnPath || '/google-reviews/get-started';
+  // e.g. '/buy-female-google-reviews' → 'buy-female-google-reviews' (the server prices by slug)
+  const slug = (location.state?.pricingReturnPath || '').replace(/^\//, '');
+  const [orderError, setOrderError] = useState(null);
+  const [notice, setNotice] = useState('');
 
   const [packageData, setPackageData] = useState({
     reviews: 50,
@@ -116,54 +118,67 @@ export default function GoogleReviewsUpgradeGeneric() {
     }
   }, [showCardOption, paymentMethod]);
 
+  // Package reference the server prices (it adds the same add-on surcharges as calculateTotal)
+  const buildOrderItem = (link) => ({
+    kind: 'google-reviews',
+    slug,
+    paymentType: packageData.paymentType,
+    reviewType: packageData.reviewType,
+    reviews: packageData.reviews,
+    addOns: {
+      verifiedReviewers: addOns.verifiedReviewers,
+      ageGroupTargeting: addOns.ageGroupTargeting,
+      genderTargeting: addOns.genderTargeting,
+    },
+    details: {
+      ageGroups: addOns.ageGroupTargeting ? selectedAgeGroups : null,
+      genders: addOns.genderTargeting ? selectedGender : null,
+      customReviews: packageData.customReviews,
+      reviewType: packageData.reviewType,
+      tier: packageData.tier,
+      serviceType: packageData.serviceType,
+    },
+    link,
+  });
+
   const handleShareLink = async () => {
-    const totalAmount = calculateTotal();
     const url = new URL('/pay', window.location.origin);
-    url.searchParams.set('amount', String(packageData.reviews));
-    url.searchParams.set('price', String(totalAmount.toFixed(2)));
-    url.searchParams.set('original', String(packageData.originalPrice.toFixed(2)));
-    url.searchParams.set('platform', 'Google Reviews');
-    url.searchParams.set('service', serviceTitle);
-    url.searchParams.set('ts', String(Date.now()));
-    url.searchParams.set('label', 'Shared Google Reviews Order');
+    const { link: _link, ...item } = buildOrderItem();
+    url.searchParams.set('items', encodeShareItems([item]));
     // Pass the Google Map URL so it's pre-filled on the shared page
     if (packageData.googleMapUrl) url.searchParams.set('username', packageData.googleMapUrl);
     if (packageData.email) url.searchParams.set('email', packageData.email);
-
     const shareUrl = url.toString();
 
     try {
       if (navigator.share) {
-        await navigator.share({
-          title: 'Secure Payment Link',
-          url: shareUrl,
-        });
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(shareUrl);
-        alert('Shareable payment link copied to clipboard.');
+        await navigator.share({ title: 'Secure Payment Link', url: shareUrl });
       } else {
-        alert(`Share this link: ${shareUrl}`);
+        await navigator.clipboard.writeText(shareUrl);
+        setNotice('Shareable payment link copied to clipboard.');
       }
     } catch {
-      alert(`Share this link: ${shareUrl}`);
+      setNotice(`Share this link: ${shareUrl}`);
     }
   };
 
   const handleContinue = async (methodOverride) => {
-    const totalAmount = calculateTotal();
     const method = methodOverride || paymentMethod;
+    setOrderError(null);
 
-    if (!packageData.email || !isValidEmail(packageData.email)) {
-      alert('Please enter a valid popular email (gmail, outlook, etc.). Go back to the previous step.');
-      navigate(getStartedReturnPath, { state: location.state });
+    if (!slug) {
+      setOrderError({ message: 'Please choose a Google reviews package first.' });
+      return;
+    }
+    if (!isValidEmail(packageData.email)) {
+      setOrderError({ message: 'Please enter a valid email address on the previous step.', goBack: true });
       return;
     }
     if (!packageData.googleMapUrl || !isValidLink(packageData.googleMapUrl, 'Google')) {
       // Allow legacy business names if they don't look like URLs
       const isBusinessName = packageData.googleMapUrl && packageData.googleMapUrl.trim().length >= 2 && !packageData.googleMapUrl.includes('.');
       if (!isBusinessName) {
-        alert('Please enter a valid Google Map URL or business name. Go back to the previous step.');
-        navigate(getStartedReturnPath, { state: location.state });
+        setOrderError({ message: 'Please enter a valid Google Maps link or business name on the previous step.', goBack: true });
         return;
       }
     }
@@ -172,78 +187,36 @@ export default function GoogleReviewsUpgradeGeneric() {
     let isRedirecting = false;
 
     try {
-      const details = {
-        verifiedReviewers: addOns.verifiedReviewers,
-        ageGroups: addOns.ageGroupTargeting ? selectedAgeGroups : null,
-        genders: addOns.genderTargeting ? selectedGender : null,
-        customReviews: packageData.customReviews,
-        reviewType: packageData.reviewType,
-        tier: packageData.tier,
-        serviceType: packageData.serviceType,
-      };
-
-      const items = [
-        {
-          platform: 'Google Reviews',
-          service: serviceTitle,
-          amount: packageData.reviews,
-          price: totalAmount,
-          username: packageData.googleMapUrl,
-          details,
-          tier: packageData.tier,
-        },
-      ];
-
       const response = await fetch(`${API_BASE}/api/orders/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          userId: currentUser ? currentUser.id : null,
           email: packageData.email,
-          usernames: { 'Google Reviews': packageData.googleMapUrl },
-          items,
+          items: [buildOrderItem(packageData.googleMapUrl)],
           paymentMethod: method,
         }),
       });
+      const data = await readJson(response);
 
-      const contentType = response.headers.get('content-type');
-      if (response.ok && contentType && contentType.indexOf('application/json') !== -1) {
-        const data = await response.json();
-        if (data.paymentUrl) {
-          isRedirecting = true;
-          if (method === 'card') {
-            triggerPaymentRelay(data.paymentUrl);
-          } else {
-            window.location.href = data.paymentUrl;
-          }
-          return;
-        }
-        if (!data.paymentUrl) {
-          alert('Order created successfully');
-          navigate('/orders');
-          return;
-        }
-      }
-
-      const text = await response.text();
-      let errorMessage = 'Failed to create order';
-      try {
-        const errorData = JSON.parse(text);
-        errorMessage = errorData.error || errorMessage;
-        if (errorData.details) errorMessage = `${errorMessage} - ${errorData.details}`;
-      } catch {
-        // Server returned HTML (e.g. 404 page or SPA index) — usually means wrong API URL
-        if (text && (text.trim().startsWith('<') || text.includes('<!DOCTYPE'))) {
-          errorMessage = 'Could not reach the payment server. If you see this on the live site, set VITE_API_URL to your backend (e.g. https://youtubeadwords.onrender.com) when building the frontend.';
+      if (response.ok && data.paymentUrl) {
+        sessionStorage.setItem('pendingCheckout', JSON.stringify({ externalOrderId: data.externalOrderId, fromCart: false }));
+        isRedirecting = true;
+        if (method === 'card') {
+          triggerPaymentRelay(data.paymentUrl);
         } else {
-          errorMessage = text || `Server Error (${response.status})`;
+          window.location.href = data.paymentUrl;
         }
+        return;
       }
-      alert(`Error: ${errorMessage}`);
+
+      setOrderError({
+        message: data.details || data.error || `Failed to create order (${response.status})`,
+        needsLogin: response.status === 409,
+      });
     } catch (error) {
       console.error('Order Error:', error);
-      alert('Something went wrong. Please try again.');
+      setOrderError({ message: error.message || 'Something went wrong. Please try again.' });
     } finally {
       if (!isRedirecting) {
         setIsProcessing(false);
@@ -271,6 +244,7 @@ export default function GoogleReviewsUpgradeGeneric() {
   return (
     <>
       <Layout>
+        <SEO title="Upgrade Your Order | YoutubeADwords" description="Add options to your Google reviews order and pay securely." />
         <div className="min-h-screen bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             <Link
@@ -451,6 +425,18 @@ export default function GoogleReviewsUpgradeGeneric() {
                 </div>
               </div>
 
+              {orderError && (
+                <div role="alert" className="mt-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  {orderError.message}{' '}
+                  {orderError.goBack && (
+                    <button type="button" className="font-bold underline" onClick={() => navigate(getStartedReturnPath, { state: location.state })}>
+                      Go back
+                    </button>
+                  )}
+                  {orderError.needsLogin && <Link to="/login" className="font-bold underline">Log in</Link>}
+                </div>
+              )}
+
               <div className="mt-6 flex flex-col md:flex-row gap-4">
                 {showCardOption && (
                   <button
@@ -496,6 +482,7 @@ export default function GoogleReviewsUpgradeGeneric() {
                   Share payment link
                 </button>
               </div>
+              {notice && <p role="status" className="mt-2 text-xs text-gray-500 break-all">{notice}</p>}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useGlobalContent } from '../contexts/ContentContext';
@@ -15,6 +15,14 @@ export default function CartSidebar() {
     getCartCount,
   } = useCart();
 
+  // Escape closes the drawer
+  useEffect(() => {
+    if (!isCartOpen) return;
+    const onKey = (e) => e.key === 'Escape' && setIsCartOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isCartOpen, setIsCartOpen]);
+
   if (!isCartOpen) return null;
 
   return (
@@ -26,12 +34,14 @@ export default function CartSidebar() {
       />
 
       {/* Sidebar */}
-      <div className="fixed right-0 top-0 h-full w-full sm:max-w-md bg-white shadow-2xl z-50 flex flex-col">
+      <div role="dialog" aria-modal="true" aria-labelledby="cart-title" className="fixed right-0 top-0 h-full w-full sm:max-w-md bg-white shadow-2xl z-50 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900">{cart.title || 'Your Cart'}</h2>
+          <h2 id="cart-title" className="text-2xl font-bold text-gray-900">{cart.title || 'Your Cart'}</h2>
           <button
             onClick={() => setIsCartOpen(false)}
+            aria-label="Close cart"
+            autoFocus
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <svg
@@ -114,6 +124,7 @@ export default function CartSidebar() {
                       onClick={() => removeFromCart(item.id)}
                       className="ml-4 p-2 hover:bg-red-100 rounded-full transition-colors"
                       title="Remove item"
+                      aria-label={`Remove ${item.serviceName || item.serviceType} from cart`}
                     >
                       <svg
                         className="w-5 h-5 text-red-600"

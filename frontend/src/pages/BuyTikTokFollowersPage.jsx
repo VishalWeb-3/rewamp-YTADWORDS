@@ -53,6 +53,8 @@ export default function BuyTikTokFollowersPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-tiktok-followers',
+      tier: activeTab,
       platform: 'TikTok',
       serviceType: 'TikTok Followers',
       serviceName: `TikTok Followers - ${pkg.followers}`,
@@ -144,6 +146,15 @@ export default function BuyTikTokFollowersPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-blue-600 p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-600/50 p-0'}`}
                   >
@@ -176,6 +187,7 @@ export default function BuyTikTokFollowersPage() {
                     const selectedPkg = packages[selectedPackageIndex];
                     navigate('/get-started', {
                       state: {
+                        slug: 'buy-tiktok-followers',
                         allPackages: followerPackages,
                         serviceType: 'TikTok Followers',
                         typeLabels: { regular: 'High Quality' },

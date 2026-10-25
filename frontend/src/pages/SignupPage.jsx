@@ -62,7 +62,7 @@ export default function SignupPage() {
     if (!formData.email?.trim()) {
       newErrors.email = 'Email is required';
     } else if (!isValidEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid popular email (gmail, outlook, etc.)';
+      newErrors.email = 'Please enter a valid email address.';
     }
 
     if (!formData.agreeToTerms) {

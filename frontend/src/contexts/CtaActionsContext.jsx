@@ -15,11 +15,8 @@ export function CtaActionsProvider({ children, userId }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const url = userId
-            ? `${API_BASE}/api/cta-actions/status?userId=${userId}`
-            : `${API_BASE}/api/cta-actions/status`;
-
-        fetch(url)
+        // The server reads the user from the session cookie; userId only triggers a refetch on login/logout
+        fetch(`${API_BASE}/api/cta-actions/status`, { credentials: 'include' })
             .then((res) => (res.ok ? res.json() : Promise.reject(new Error('Not found'))))
             .then((data) => setStatus({ ...defaultStatus, ...data }))
             .catch(() => setStatus(defaultStatus))

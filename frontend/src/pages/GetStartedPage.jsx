@@ -99,6 +99,7 @@ export default function GetStartedPage() {
 
   const state = location.state || {};
   const {
+    slug = null,
     allPackages = null,
     serviceType = 'YouTube Views',
     typeLabels = { regular: 'Regular', fast: 'Fast', ads: 'Ads' },
@@ -117,6 +118,7 @@ export default function GetStartedPage() {
   const [selectedType, setSelectedType] = useState(initialType);
   const [selectedPackage, setSelectedPackage] = useState(initialPackage);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const packages = allPackages?.[selectedType] || [];
 
@@ -137,29 +139,35 @@ export default function GetStartedPage() {
 
   const handleContinue = () => {
     const platform = getPlatform(serviceType);
-    if (!formData.link || !isValidLink(formData.link, platform) || !formData.email || !isValidEmail(formData.email) || !selectedPackage) {
-      if (formData.link && !isValidLink(formData.link, platform)) {
-        alert(`Please enter a valid ${platform} link`);
-      }
-      if (formData.email && !isValidEmail(formData.email)) {
-        alert('Please enter a valid popular email (gmail, outlook, etc.)');
-      }
+    if (!formData.link || !isValidLink(formData.link, platform)) {
+      setFormError(`Please enter a valid ${platform} link.`);
       return;
     }
+    if (!isValidEmail(formData.email)) {
+      setFormError('Please enter a valid email address.');
+      return;
+    }
+    if (!selectedPackage || !slug) {
+      setFormError('Please choose a package.');
+      return;
+    }
+    setFormError('');
 
     const quantity = selectedPackage[quantityKey];
     const serviceLabel = `${serviceType} - ${quantity}`;
-    const amount = quantity;
     const price = parseFloat(selectedPackage.price);
 
-    // Direct buy: pass single item to checkout without adding to cart
+    // Direct buy: pass single item to checkout without adding to cart.
+    // The server prices it from slug + tier + quantity.
     navigate('/checkout', {
       state: {
         directItem: {
           id: 'direct',
+          slug,
+          tier: selectedType,
+          quantity: String(quantity),
           platform,
           service: serviceLabel,
-          amount: typeof amount === 'string' ? parseInt(amount, 10) || amount : amount,
           price,
         },
         email: formData.email,
@@ -213,6 +221,12 @@ export default function GetStartedPage() {
 
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">Get started</h2>
 
+              {formError && (
+                <div role="alert" className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  {formError}
+                </div>
+              )}
+
               <form onSubmit={(e) => { e.preventDefault(); handleContinue(); }} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -254,7 +268,7 @@ export default function GetStartedPage() {
                     placeholder="your@email.com"
                   />
                   {formData.email && !isValidEmail(formData.email) && (
-                    <p className="text-xs text-red-500 font-medium mt-1">Please enter a valid popular email (gmail, outlook, etc.)</p>
+                    <p className="text-xs text-red-500 font-medium mt-1">Please enter a valid email address.</p>
                   )}
                 </div>
 

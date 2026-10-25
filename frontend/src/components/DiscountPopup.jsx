@@ -11,12 +11,13 @@ const DiscountCircle = ({ onClick, discountLabel, isVisible }) => {
     return (
         <button
             onClick={onClick}
+            aria-label={`Open discount offer: ${discountLabel || '20% off'}`}
             className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9998] group flex flex-col items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-[#1e293b] text-white rounded-full shadow-2xl hover:bg-black transition-all duration-300 active:scale-95 animate-in slide-in-from-right-10 pointer-events-auto"
         >
             <div className="absolute inset-0 rounded-full border-2 border-white/20 scale-110 group-hover:scale-125 transition-transform duration-500"></div>
 
             <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter opacity-80 leading-none mb-0.5">Save</span>
-            <span className="text-lg md:text-xl font-bold leading-none">{discountLabel || '20%'}</span>
+            <span className="text-lg md:text-xl font-bold leading-none">{(discountLabel || '20%').replace(/\s*off$/i, '')}</span>
             <span className="text-[8px] md:text-[10px] font-black uppercase tracking-tighter opacity-80 leading-none mt-0.5">OFF</span>
 
             {/* Ripple Effect */}
@@ -27,20 +28,20 @@ const DiscountCircle = ({ onClick, discountLabel, isVisible }) => {
 
 export default function DiscountPopup() {
     const location = useLocation();
-    const [settings, setSettings] = useState({
-        title: 'UNLOCK',
-        discountLabel: '20% OFF',
-        subTitle: 'YOUR ORDER',
-        buttonText: 'GET 20% OFF NOW',
-        footerText: 'when you sign up for emails',
-        successMessage: 'Thank you for signing up!',
-        successSubMessage: 'Check your email for the discount code.',
-        isActive: true
-    });
+    // Settings come from the popup service; without them no offer is shown (nothing to honour)
+    const [settings, setSettings] = useState(null);
     const [isVisible, setIsVisible] = useState(false);
     const [email, setEmail] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [isSubscribed] = useState(() => {
+        try {
+            return !!localStorage.getItem('discountPopupSuccess_yt');
+        } catch {
+            return false;
+        }
+    });
 
     // List of payment pages to exclude
     const PAYMENT_PAGES = [
@@ -63,66 +64,44 @@ export default function DiscountPopup() {
     const isPaymentPage = isExcludedPath(location.pathname);
 
     useEffect(() => {
-        if (isPaymentPage) return;
+        if (isPaymentPage || isSubscribed) return;
+        let cancelled = false;
+        let timer;
 
-        const fetchSettings = async () => {
-            try {
-                const res = await fetch(`${API_BASE}/api/popups/public?site=youtubeadwords`);
-                if (!res.ok) throw new Error('Failed to fetch');
-                const data = await res.json();
-                if (data && data.isActive) {
-                    setSettings(data);
-                    
-                    const isDone = localStorage.getItem('discountPopupSuccess_yt');
-                    if (isDone) return;
-
-                    // Logic for delays:
-                    // Default: 15 seconds (15000ms)
-                    // If cancelled before: 125 seconds (125000ms)
-                    const hasCancelled = localStorage.getItem('discountPopupCancelled_yt');
-                    const delay = hasCancelled ? 125000 : 15000;
-
-                    const timer = setTimeout(() => {
-                        setIsVisible(true);
-                        sessionStorage.setItem('discountPopupOpen_yt', 'true');
-                    }, delay);
-                    return () => clearTimeout(timer);
-                }
-            } catch (err) {
-                console.error('Failed to load popup settings, using defaults:', err);
-                const isDone = localStorage.getItem('discountPopupSuccess_yt');
-                if (isDone) return;
-
+        fetch(`${API_BASE}/api/popups/public?site=youtubeadwords`)
+            .then((res) => (res.ok ? res.json() : null))
+            .then((data) => {
+                if (cancelled || !data?.isActive) return;
+                setSettings(data);
+                // Default: 15 seconds. If dismissed before: 125 seconds.
                 const hasCancelled = localStorage.getItem('discountPopupCancelled_yt');
-                const delay = hasCancelled ? 125000 : 15000;
-
-                const timer = setTimeout(() => {
+                timer = setTimeout(() => {
                     setIsVisible(true);
                     sessionStorage.setItem('discountPopupOpen_yt', 'true');
-                }, delay);
-                return () => clearTimeout(timer);
-            }
+                }, hasCancelled ? 125000 : 15000);
+            })
+            .catch(() => {
+                /* popup service unavailable: show nothing */
+            });
+
+        return () => {
+            cancelled = true;
+            clearTimeout(timer);
         };
-
-        fetchSettings();
-    }, []);
-
-    const [error, setError] = useState('');
+    }, [isPaymentPage, isSubscribed]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
-        if (!email) return;
-
         if (!isValidEmail(email)) {
-            setError('Please enter a valid business or personal email (e.g. gmail, outlook).');
+            setError('Please enter a valid email address.');
             return;
         }
 
         setLoading(true);
         try {
-            await fetch(`${API_BASE}/api/popups/submit-email?site=youtubeadwords`, {
+            const res = await fetch(`${API_BASE}/api/popups/submit-email?site=youtubeadwords`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -130,13 +109,13 @@ export default function DiscountPopup() {
                     details: `YouTube Ads Discount Popup (${settings.discountLabel})`
                 })
             });
+            if (!res.ok) throw new Error(`Signup failed (${res.status})`);
             setIsSubmitted(true);
             localStorage.setItem('discountPopupSuccess_yt', 'true');
             sessionStorage.removeItem('discountPopupOpen_yt');
         } catch (err) {
             console.error('Failed to submit email:', err);
-            setIsSubmitted(true);
-            localStorage.setItem('discountPopupSuccess_yt', 'true');
+            setError('We could not sign you up right now. Please try again later.');
         } finally {
             setLoading(false);
         }
@@ -150,13 +129,19 @@ export default function DiscountPopup() {
     const closePopup = () => {
         setIsVisible(false);
         sessionStorage.removeItem('discountPopupOpen_yt');
-        // Mark as cancelled in localStorage so next refresh uses 125s timer
-        localStorage.setItem('discountPopupCancelled_yt', 'true');
+        // Mark as cancelled so next visit waits 125s (not after a successful signup)
+        if (!isSubmitted) localStorage.setItem('discountPopupCancelled_yt', 'true');
     };
 
-    const isSubscribed = localStorage.getItem('discountPopupSuccess_yt');
+    useEffect(() => {
+        if (!isVisible) return;
+        const onKey = (e) => e.key === 'Escape' && closePopup();
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [isVisible, isSubmitted]);
 
-    if (isPaymentPage || isSubscribed) return null;
+    if (isPaymentPage || !settings || (isSubscribed && !isSubmitted)) return null;
+
 
     return (
         <>
@@ -169,11 +154,12 @@ export default function DiscountPopup() {
 
             {/* The Popup */}
             {isVisible && (
-                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+                <div role="dialog" aria-modal="true" aria-label="Discount offer" className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
                     <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-10 duration-500 max-h-[90vh] overflow-y-auto">
                         {/* Close Button */}
                         <button
                             onClick={closePopup}
+                            aria-label="Close"
                             className="absolute top-4 right-4 md:top-6 md:right-6 p-2 text-gray-400 hover:text-black transition-colors z-20 bg-white/80 backdrop-blur-sm rounded-full"
                         >
                             <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -55,6 +55,8 @@ export default function BuyTikTokViewsPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-tiktok-views',
+      tier: activeTab,
       platform: 'TikTok',
       serviceType: 'TikTok Views',
       serviceName: `TikTok Views - ${pkg.views}`,
@@ -146,6 +148,15 @@ export default function BuyTikTokViewsPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-blue-600 p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-600/50 p-0'}`}
                   >
@@ -178,6 +189,7 @@ export default function BuyTikTokViewsPage() {
                     const selectedPkg = packages[selectedPackageIndex];
                     navigate('/get-started', {
                       state: {
+                        slug: 'buy-tiktok-views',
                         allPackages: viewPackages,
                         serviceType: 'TikTok Views',
                         typeLabels: { regular: 'Active Views' },

@@ -80,3 +80,9 @@ dist/
 .claude/
 .impeccable/
 .playwright-mcp/
+
+# macOS metadata
+.DS_Store
+
+# Generated Prisma client
+backend/generated/

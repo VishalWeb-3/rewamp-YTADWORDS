@@ -62,22 +62,6 @@ export const AuthProvider = ({ children }) => {
   }, [fetchUser]);
 
   useEffect(() => {
-    if (!user?.id) {
-      return;
-    }
-    fetch(`${API_BASE}/api/auth/check/${user.id}`, { credentials: 'include' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.isBanned) {
-          setBanned({ isBanned: true, banReason: data.banReason || 'Your account has been suspended.' });
-        } else {
-          setBanned({ isBanned: false });
-        }
-      })
-      .catch(() => setBanned(null));
-  }, [user?.id]);
-
-  useEffect(() => {
     const onFocus = () => fetchUser();
     window.addEventListener('focus', onFocus);
     return () => window.removeEventListener('focus', onFocus);
