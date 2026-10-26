@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useHomeContent } from '../../contexts/ContentContext';
 import { Arrow, Check, Star, YouTube, TikTok, GoogleG, Hand, Volume, Mute } from './icons';
 
@@ -360,13 +360,106 @@ function usePassPhysics(stageRef, reduced, soundRef) {
   }, [stageRef, reduced, soundRef]);
 }
 
-function Pass({ pass, delivered }) {
+// Click-to-blast: the clicked pass flies to the middle of the screen and bursts into sprinkles. The page
+// changes at the burst and the sprinkle canvas lives on <body>, so it keeps falling over the new page.
+const FLY_MS = 300;
+const BURST_MS = 3000;   // sprinkles; fly + burst stays inside ~4s
+const SPRINKLE_COLORS = ['#e53935', '#4285F4', '#1f9d57', '#fbbc05', '#0b1020', '#ff7ab6', '#7c4dff'];
+let blasting = false;
+
+function sprinkle(chip, done) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const canvas = document.createElement('canvas');
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:9999;pointer-events:none';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const colors = [chip, ...SPRINKLE_COLORS];
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const bits = Array.from({ length: 260 }, () => {
+    const ang = Math.random() * Math.PI * 2;
+    const speed = 250 + Math.random() * 950;
+    return {
+      x: cx, y: cy,
+      vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed - 250,
+      w: 5 + Math.random() * 9, h: 3 + Math.random() * 5,
+      rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 18,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    };
+  });
+  const t0 = performance.now();
+  let prev = t0;
+  const step = (now) => {
+    const dt = Math.min((now - prev) / 1000, 1 / 30);
+    prev = now;
+    const age = now - t0;
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    ctx.globalAlpha = Math.min(1, Math.max(0, (BURST_MS - age) / 700));
+    bits.forEach((b) => {
+      b.vx *= 1 - 1.4 * dt;
+      b.vy = b.vy * (1 - 1.4 * dt) + 700 * dt;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+      b.rot += b.vr * dt;
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.rotate(b.rot);
+      ctx.fillStyle = b.color;
+      ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h);
+      ctx.restore();
+    });
+    if (age < BURST_MS) requestAnimationFrame(step);
+    else { canvas.remove(); done?.(); }
+  };
+  requestAnimationFrame(step);
+}
+
+function blastPass(card, chip, go) {
+  blasting = true;
+  const r = card.getBoundingClientRect();
+  const layer = document.createElement('div');
+  layer.className = 'lp';
+  layer.style.cssText = 'position:fixed;inset:0;z-index:9998;pointer-events:none;background:transparent;min-height:0;overflow:visible';
+  const clone = card.cloneNode(true);
+  clone.removeAttribute('href');
+  clone.setAttribute('aria-hidden', 'true');
+  clone.classList.remove('flip');
+  clone.style.cssText = `position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;margin:0;transition:none;translate:none;transform-origin:center`;
+  layer.appendChild(clone);
+  document.body.appendChild(layer);
+  const dx = window.innerWidth / 2 - (r.left + r.width / 2);
+  const dy = window.innerHeight / 2 - (r.top + r.height / 2);
+  const fly = clone.animate(
+    [
+      { transform: 'translate(0,0) scale(1) rotate(0deg)' },
+      { transform: `translate(${dx}px,${dy}px) scale(1.45) rotate(0deg)`, offset: 0.8 },
+      { transform: `translate(${dx}px,${dy}px) scale(1.5) rotate(-2deg)` },
+    ],
+    { duration: FLY_MS, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'forwards' },
+  );
+  card.style.visibility = 'hidden';
+  fly.onfinish = () => {
+    clone.animate(
+      [{ opacity: 1, transform: clone.style.transform, filter: 'brightness(1)' }, { opacity: 0, filter: 'brightness(2.2)' }],
+      { duration: 160, easing: 'ease-out', fill: 'forwards' },
+    );
+    sprinkle(chip, () => { blasting = false; });
+    go();
+    setTimeout(() => layer.remove(), 200);
+  };
+}
+
+function Pass({ pass, delivered, onOpen }) {
   const Icon = pass.icon;
   return (
     <div className="lp-slot" style={{ '--d': pass.d }}>
       <div className="lp-hang" style={{ '--r': `${pass.r}deg`, '--strap': pass.strap }}>
         <span className="lp-strap" aria-hidden="true" />
-        <Link to={pass.to} className={`lp-pass${pass.dark ? ' dark' : ''}${pass.flip ? ' flip' : ''}`} style={{ '--chip': pass.chip }} aria-label={`${pass.name}: view packages`}>
+        <Link to={pass.to} onClick={(e) => onOpen(e, pass)} className={`lp-pass${pass.dark ? ' dark' : ''}${pass.flip ? ' flip' : ''}`} style={{ '--chip': pass.chip }} aria-label={`${pass.name}: view packages`}>
           <span className="lp-pass-slot" aria-hidden="true" />
           <div className="lp-pass-top lp-mono"><span>SERVICE PASS</span><span>{pass.serial}</span></div>
           <span className="lp-pass-ico"><Icon size={22} /></span>
@@ -417,6 +510,12 @@ export default function LandingHero() {
   const soundRef = useRef(sound);
   soundRef.current = sound;
   usePassPhysics(stage, reduced, soundRef);
+  const navigate = useNavigate();
+  const openPass = (e, pass) => {
+    if (reduced || blasting || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    e.preventDefault();
+    blastPass(e.currentTarget, pass.chip, () => navigate(pass.to));
+  };
   const toggleSound = () => {
     const next = !sound;
     setSound(next);
@@ -469,7 +568,7 @@ export default function LandingHero() {
           )}
           <div className="lp-rig">
             <span className="lp-ring" aria-hidden="true" />
-            {PASSES.map((p) => <Pass key={p.id} pass={p} delivered={delivered} />)}
+            {PASSES.map((p) => <Pass key={p.id} pass={p} delivered={delivered} onOpen={openPass} />)}
           </div>
         </div>
       </div>
