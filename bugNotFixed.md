@@ -41,6 +41,6 @@ Each item says what's blocking it and exactly what's needed to finish it.
 
 ## Repo state
 
-- Nothing has been committed or pushed.
-- `git rm --cached` staged the removal of `frontend/node_modules`, `.DS_Store` and `.firebase/` from git (the files are still on disk). It also staged the deletions of `NotificationPopup.jsx` and the duplicate video. Review with `git status` before committing.
-- `CLAUDE.md` was already modified before this work started and was not touched.
+- The fixes are committed on `feat/ui-revamp` (`b4ce65e68`, `18d99cd6b`). Nothing has been pushed.
+- `frontend/node_modules`, `.DS_Store` and `.firebase/` are untracked from git (the files are still on disk). `NotificationPopup.jsx` and the duplicate video are deleted.
+- The backend test suite needs a running Postgres (`DATABASE_URL`); without one, all 26 tests are skipped.

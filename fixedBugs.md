@@ -90,4 +90,4 @@ Items that are only partly fixed say so, and the remaining part is in [bugNotFix
 - **Root:** `package.json`, `.gitignore`, `render.yaml`, `README.md`.
 - **Removed:** `frontend/src/components/NotificationPopup.jsx`, `frontend/public/videos/payment-loading.mp4`; `frontend/node_modules`, `.DS_Store`, `.firebase/` untracked from git (files still on disk).
 
-Nothing was committed or pushed; all changes are in the working tree / index for your review.
+These changes are committed on `feat/ui-revamp` (commits `b4ce65e68` and `18d99cd6b`). Nothing has been pushed.
