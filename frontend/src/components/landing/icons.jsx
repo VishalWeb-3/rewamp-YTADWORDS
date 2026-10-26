@@ -8,6 +8,15 @@ export const Arrow = ({ size = 18 }) => (
 export const Check = ({ size = 20 }) => (
   <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
 );
+export const Hand = ({ size = 18 }) => (
+  <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-5.9-2.4L3.4 16a2 2 0 0 1 3.2-2.4L8 15" /></svg>
+);
+export const Volume = ({ size = 18 }) => (
+  <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" /></svg>
+);
+export const Mute = ({ size = 18 }) => (
+  <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5zM22 9l-6 6M16 9l6 6" /></svg>
+);
 export const Cross = ({ size = 18 }) => (
   <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
 );
