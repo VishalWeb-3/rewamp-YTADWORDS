@@ -138,6 +138,8 @@ export default function DiscountPopup() {
         const onKey = (e) => e.key === 'Escape' && closePopup();
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
+        // closePopup is recreated each render and only reads isSubmitted, which is already a dependency
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible, isSubmitted]);
 
     if (isPaymentPage || !settings || (isSubscribed && !isSubmitted)) return null;

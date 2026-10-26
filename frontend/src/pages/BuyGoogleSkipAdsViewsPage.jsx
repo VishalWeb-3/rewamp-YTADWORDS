@@ -32,7 +32,7 @@ export default function BuyGoogleSkipAdsViewsPage() {
   const { addToCart } = useCart();
   const skipAdsViewsPackages = usePricingPackages('buy-google-skip-ads-views', skipAdsViewsPackagesFallback);
   const content = usePricingPageContent('buy-google-skip-ads-views', null);
-  const [activeTab, setActiveTab] = useState('regular');
+  const [activeTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
   const [formData, setFormData] = useState({
@@ -45,8 +45,7 @@ export default function BuyGoogleSkipAdsViewsPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = skipAdsViewsPackages ? skipAdsViewsPackages[activeTab] : [];
 
-  const hero = content?.hero;
-  const tabs = content?.tabs;
+  const hero = content?.hero;
   const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
   const handleAddToCart = (pkg) => {

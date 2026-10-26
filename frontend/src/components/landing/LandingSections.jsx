@@ -174,7 +174,7 @@ export function Voices() {
         </R>
       </div>
       <div className="lp-voices scroll-thin" tabIndex={0} aria-label="Customer quotes, scroll sideways">
-        {items.map((v, i) => (
+        {items.map((v) => (
           <figure className="lp-voice" key={v.handle} style={{ margin: 0 }}>
             <span className="lp-pass-slot" aria-hidden="true" />
             <span className="tag lp-mono">{v.category.toUpperCase()}</span>

@@ -4,8 +4,6 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
-import { useCtaActions } from '../contexts/CtaActionsContext';
-import { useCheckout } from '../hooks/useCheckout';
 import { resolveImageUrl } from '../utils/image';
 import ServiceAssurance from '../components/ServiceAssurance';
 import { submitReview } from '../utils/reviews';
@@ -34,10 +32,6 @@ const featuresFallback = [
 export default function BuyYouTubeWatchHoursPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const { isEnabled } = useCtaActions();
-  const canBuy = isEnabled('buy');
-  const canAddToCart = isEnabled('add_to_cart');
-  const { goToCheckout } = useCheckout();
   const watchHoursPackages = usePricingPackages('buy-youtube-watch-hours', watchHoursPackagesFallback);
   const content = usePricingPageContent('buy-youtube-watch-hours', null);
   const [activeTab, setActiveTab] = useState('regular');

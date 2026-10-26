@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       let data = {};
       try {
         data = JSON.parse(text);
-      } catch (err) {
+      } catch {
         // Skip console error for regular session checks to avoid noise
         if (!res.ok) console.error('Auth check non-JSON:', text);
         setIsLoading(false);

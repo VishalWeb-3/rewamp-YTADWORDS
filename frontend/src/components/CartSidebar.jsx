@@ -12,7 +12,6 @@ export default function CartSidebar() {
     isCartOpen,
     setIsCartOpen,
     getCartTotal,
-    getCartCount,
   } = useCart();
 
   // Escape closes the drawer

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
-import { useCheckout } from '../hooks/useCheckout';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
 import { resolveImageUrl } from '../utils/image';
@@ -49,7 +48,6 @@ export default function BuyYouTubeSubscribersPage() {
   const { isEnabled } = useCtaActions();
   const canBuy = isEnabled('buy');
   const canAddToCart = isEnabled('add_to_cart');
-  const { goToCheckout } = useCheckout();
   const subscriberPackages = usePricingPackages('buy-youtube-subscribers', subscriberPackagesFallback);
   const content = usePricingPageContent('buy-youtube-subscribers', null);
   const [activeTab, setActiveTab] = useState('regular');

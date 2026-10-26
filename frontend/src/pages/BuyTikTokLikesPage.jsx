@@ -22,15 +22,6 @@ const likePackagesFallback = {
   ],
 };
 
-const features = [
-  { label: 'Real & Organic Likes', icon: 'check' },
-  { label: 'High Quality', icon: 'check' },
-  { label: 'Instant start', icon: 'check' },
-  { label: 'Refill Guaranteed', icon: 'check' },
-  { label: 'No drops', icon: 'check' },
-  { label: 'Privacy and safety', icon: 'check' },
-];
-
 export default function BuyTikTokLikesPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -41,8 +32,7 @@ export default function BuyTikTokLikesPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = likePackages ? likePackages[activeTab] : [];
 
-  const hero = content?.hero;
-  const tabs = content?.tabs;
+  const hero = content?.hero;
   const features = (content?.features?.length ? content.features : [
     { label: 'Real & Organic Likes', icon: 'check' },
     { label: 'High Quality', icon: 'check' },

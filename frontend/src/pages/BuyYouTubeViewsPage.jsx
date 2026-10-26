@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
@@ -59,8 +58,7 @@ export default function BuyYouTubeViewsPage() {
   const { isEnabled } = useCtaActions();
   const canBuy = isEnabled('buy');
   const canAddToCart = isEnabled('add_to_cart');
-  const { goToCheckout, isLoggedIn } = useCheckout();
-  const navigate = useNavigate();
+  const { goToCheckout } = useCheckout();
   const viewPackages = usePricingPackages('buy-youtube-views', viewPackagesFallback);
   const content = usePricingPageContent('buy-youtube-views', null);
   const [activeTab, setActiveTab] = useState('regular');

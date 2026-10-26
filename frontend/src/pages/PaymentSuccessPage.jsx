@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
@@ -212,6 +212,8 @@ export default function PaymentSuccessPage() {
     setShowConfetti(true);
     const t = setTimeout(() => setShowConfetti(false), 5500);
     return () => clearTimeout(t);
+    // Run once when the status flips to PAID; `clearCart` changes identity and would replay the confetti
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const isPaid = status === 'PAID';

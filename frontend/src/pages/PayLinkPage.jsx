@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Coins, CreditCard, Loader2, ShieldCheck, AlertCircle, Mail } from 'lucide-react';
 import Layout from '../components/Layout';
@@ -19,11 +19,7 @@ export default function PayLinkPage() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [payError, setPayError] = useState('');
 
-    useEffect(() => {
-        fetchLink();
-    }, [token]);
-
-    const fetchLink = async () => {
+    const fetchLink = useCallback(async () => {
         setLoading(true);
         setError('');
         try {
@@ -50,7 +46,11 @@ export default function PayLinkPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [token]);
+
+    useEffect(() => {
+        fetchLink();
+    }, [fetchLink]);
 
     const validate = () => {
         const value = email || link?.customerEmail || '';
@@ -87,7 +87,7 @@ export default function PayLinkPage() {
             let data = {};
             try {
                 data = JSON.parse(text);
-            } catch (err) {
+            } catch {
                 console.error('Non-JSON response:', text);
                 const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
                 throw new Error(`Server error. ${snippet.includes('<!DOCTYPE') ? 'Check backend or URL.' : 'Details: ' + snippet}`);

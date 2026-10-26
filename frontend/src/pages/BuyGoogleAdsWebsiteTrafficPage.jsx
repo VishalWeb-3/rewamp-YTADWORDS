@@ -32,7 +32,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
   const { addToCart } = useCart();
   const websiteTrafficPackages = usePricingPackages('buy-google-ads-website-traffic', websiteTrafficPackagesFallback);
   const content = usePricingPageContent('buy-google-ads-website-traffic', null);
-  const [activeTab, setActiveTab] = useState('regular');
+  const [activeTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
   const [formData, setFormData] = useState({
@@ -45,8 +45,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = websiteTrafficPackages ? websiteTrafficPackages[activeTab] : [];
 
-  const hero = content?.hero;
-  const tabs = content?.tabs;
+  const hero = content?.hero;
   const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
   const handleAddToCart = (pkg) => {

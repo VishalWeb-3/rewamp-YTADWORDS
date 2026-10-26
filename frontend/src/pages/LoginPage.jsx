@@ -52,7 +52,7 @@ export default function LoginPage() {
       let data = {};
       try {
         data = JSON.parse(text);
-      } catch (err) {
+      } catch {
         console.error('Non-JSON response:', text);
         const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
         throw new Error(`Server returned invalid response. ${snippet.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snippet}`);

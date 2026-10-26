@@ -5,7 +5,6 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
-import { useCheckout } from '../hooks/useCheckout';
 import { resolveImageUrl } from '../utils/image';
 import ServiceAssurance from '../components/ServiceAssurance';
 import { submitReview } from '../utils/reviews';
@@ -46,7 +45,6 @@ export default function BuyYouTubeLikesPage() {
   const { isEnabled } = useCtaActions();
   const canBuy = isEnabled('buy');
   const canAddToCart = isEnabled('add_to_cart');
-  const { goToCheckout } = useCheckout();
   const likePackages = usePricingPackages('buy-youtube-likes', likePackagesFallback);
   const content = usePricingPageContent('buy-youtube-likes', null);
   const [activeTab, setActiveTab] = useState('regular');

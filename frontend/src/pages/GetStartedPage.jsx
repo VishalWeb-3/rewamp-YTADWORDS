@@ -35,7 +35,7 @@ function YouTubeLinkSuggest({ value, onChange, placeholder, className, enableSug
       }
     }, 400);
     return () => clearTimeout(timer);
-  }, [value]);
+  }, [value, enableSuggestions]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -129,12 +129,16 @@ export default function GetStartedPage() {
     } else if (packages.length > 0 && !selectedPackage) {
       setSelectedPackage(packages[0]);
     }
+    // Seed the selection when the incoming route state changes; `packages` is rebuilt every render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allPackages, initialType, initialPackage]);
 
   useEffect(() => {
     if (packages.length > 0 && (!selectedPackage || !packages.some((p) => p.price === selectedPackage.price && p[quantityKey] === selectedPackage[quantityKey]))) {
       setSelectedPackage(packages[0]);
     }
+    // Reset to the first package only when the type or catalog changes, not on every pick
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedType, allPackages]);
 
   const handleContinue = () => {

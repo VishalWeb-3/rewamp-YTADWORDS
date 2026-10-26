@@ -35,7 +35,7 @@ export default function Header() {
   const globalContent = useGlobalContent();
   const header = globalContent?.header || {};
   const { setIsCartOpen, getCartCount } = useCart();
-  const { user, displayName, logout, isLoggedIn } = useAuth();
+  const { displayName, logout, isLoggedIn } = useAuth();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuHover, setUserMenuHover] = useState(false);

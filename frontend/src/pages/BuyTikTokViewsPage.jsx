@@ -23,15 +23,6 @@ const viewPackagesFallback = {
   ],
 };
 
-const features = [
-  { label: 'Real & Organic Video Views', icon: 'check' },
-  { label: 'High Quality', icon: 'check' },
-  { label: 'Instant start', icon: 'check' },
-  { label: 'Refill Guaranteed', icon: 'check' },
-  { label: 'No drops', icon: 'check' },
-  { label: 'Privacy and safety', icon: 'check' },
-];
-
 export default function BuyTikTokViewsPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -42,8 +33,7 @@ export default function BuyTikTokViewsPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = viewPackages ? viewPackages[activeTab] : [];
 
-  const hero = content?.hero;
-  const tabs = content?.tabs;
+  const hero = content?.hero;
   const features = (content?.features?.length ? content.features : [
     { label: 'Real & Organic Video Views', icon: 'check' },
     { label: 'High Quality', icon: 'check' },

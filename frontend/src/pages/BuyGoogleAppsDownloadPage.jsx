@@ -40,18 +40,10 @@ export default function BuyGoogleAppsDownloadPage() {
     const content = usePricingPageContent('buy-google-apps-download', null);
     const [activeTab, setActiveTab] = useState('regular');
     const [openFAQIndex, setOpenFAQIndex] = useState(null);
-    const [rating, setRating] = useState(0);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        review: '',
-    });
-    const [showSuccess, setShowSuccess] = useState(false);
     const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
     const packages = appsDownloadPackages ? appsDownloadPackages[activeTab] : [];
 
-    const hero = content?.hero;
-    const tabs = content?.tabs;
+    const hero = content?.hero;
     const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
     const handleAddToCart = (pkg) => {

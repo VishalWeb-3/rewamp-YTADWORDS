@@ -59,8 +59,7 @@ export default function BuyGoogleDisplayAdsViewsPage() {
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = displayAdsViewsPackages ? displayAdsViewsPackages[activeTab] : [];
 
-  const hero = content?.hero;
-  const tabs = content?.tabs;
+  const hero = content?.hero;
   const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
   const handleAddToCart = (pkg) => {
