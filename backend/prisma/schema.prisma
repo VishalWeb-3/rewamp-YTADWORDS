@@ -3,15 +3,24 @@ generator client {
   output   = "../generated/prisma"
 }
 
+// Same client for Cloudflare Workers, which can't load the Node build above
+generator workerClient {
+  provider = "prisma-client"
+  output   = "../generated/prisma-worker"
+  runtime  = "cloudflare"
+}
+
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   username  String     @unique
-  password  String
+  usernameLower String @unique // lowercased copy: SQLite can't compare case-insensitively through Prisma
+  password  String // HMAC of the browser-derived key, never the password itself
+  passwordSalt String @default("") // random per-user salt the browser stretches the password with
   name      String?
   isGuest   Boolean    @default(false) // created by guest checkout; can be claimed at signup
   isBanned  Boolean    @default(false)
@@ -33,6 +42,9 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 model CartItem {
@@ -46,6 +58,8 @@ model CartItem {
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model Order {
@@ -71,6 +85,11 @@ model Order {
   ipLatitude         Float?
   ipLongitude        Float?
   createdAt          DateTime @default(now())
+
+  @@index([userId])
+  @@index([externalOrderId])
+  @@index([uplefOrderId])
+  @@index([status])
 }
 
 model CtaAction {
@@ -113,6 +132,8 @@ model PaymentLink {
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
   transactions  LinkTransaction[]
+
+  @@index([merchantId])
 }
 
 model LinkTransaction {
@@ -126,6 +147,8 @@ model LinkTransaction {
   metadata       Json?
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+
+  @@index([paymentLinkId])
 }
 
 model Ticket {
@@ -138,6 +161,9 @@ model Ticket {
   userId      Int?
   user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt   DateTime @default(now())
+
+  @@index([status])
+  @@index([userId])
 }
 
 model Review {
@@ -149,4 +175,6 @@ model Review {
   text      String
   approved  Boolean  @default(false) // reviews stay hidden until moderated
   createdAt DateTime @default(now())
+
+  @@index([page, approved])
 }

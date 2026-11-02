@@ -2,11 +2,10 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import crypto from "crypto";
-import bcrypt from "bcrypt";
-import rateLimit from "express-rate-limit";
 import { z } from "zod";
-import "dotenv/config";
 import { prisma } from "./lib/prisma.js";
+import { clientIp, limiter } from "./lib/rateLimit.js";
+import { adminRouter } from "./lib/admin.js";
 import { priceItem, PricingError, type CatalogItem, type PricedItem } from "./lib/catalog.js";
 
 type SessionUser = { id: number; email: string; username: string; name: string | null };
@@ -20,7 +19,6 @@ declare global {
   }
 }
 
-const SALT_ROUNDS = 10;
 const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const CARD_MINIMUM = 35;
 const CARD_MAXIMUM = 999;
@@ -28,9 +26,21 @@ const isTest = process.env.NODE_ENV === "test";
 
 const firstFrontendUrl = () =>
   process.env.FRONTEND_URL?.split(",")[0]?.trim().replace(/\/$/, "") || "http://localhost:5173";
-const apiUrl = () => process.env.API_URL?.replace(/\/$/, "") || "https://youtubeadwords.onrender.com";
+const apiUrl = () => process.env.API_URL?.replace(/\/$/, "") || "https://youtubeadwords.com";
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
 const round2 = (n: number) => Math.round(n * 100) / 100;
+
+// Passwords are stretched in the browser (PBKDF2), which sends only the derived key. The server keeps an
+// HMAC of that key under a secret pepper, so it never does slow hashing itself (Workers Free allows 10 ms CPU).
+const pepper = () => {
+  const value = process.env.PASSWORD_PEPPER;
+  if (!value) throw new Error("PASSWORD_PEPPER is not set.");
+  return value;
+};
+const hmacHex = (data: string) => crypto.createHmac("sha256", pepper()).update(data).digest("hex");
+const hashPasswordKey = (key: string) => hmacHex(`key:${key}`);
+/** Stable stand-in for accounts that don't exist, so the salt endpoint doesn't reveal who has one. */
+const fakeSalt = (identifier: string) => hmacHex(`salt:${identifier}`).slice(0, 32);
 
 function safeEqual(a: string, b: string): boolean {
   const left = Buffer.from(a);
@@ -159,14 +169,17 @@ const idParam = z.coerce.number().int().positive();
 const signupSchema = z.object({
   email: emailSchema,
   username: z.string().trim().min(3).max(32).regex(/^[a-zA-Z0-9_-]+$/, "Username can only contain letters, numbers, _ and -"),
-  password: z.string().min(8, "Password must be at least 8 characters").max(200),
+  salt: z.string().regex(/^[0-9a-f]{32}$/, "Invalid salt"),
+  passwordKey: z.string().regex(/^[0-9a-f]{64}$/, "Invalid password key"),
   name: z.string().trim().max(100).nullish(),
 });
 
 const loginSchema = z.object({
   loginIdentifier: z.string().trim().min(1, "Email or username is required").max(254),
-  password: z.string().min(1, "Password is required").max(200),
+  passwordKey: z.string().regex(/^[0-9a-f]{64}$/, "Invalid password key"),
 });
+
+const saltSchema = z.object({ loginIdentifier: z.string().trim().min(1).max(254) });
 
 // Orders name a package; the server looks up its price (the browser never sends one)
 const reviewItemFields = {
@@ -262,9 +275,6 @@ const publicOrderSelect = {
 // ========== App ==========
 export const app = express();
 
-// Render and Firebase sit behind one proxy hop; this makes req.ip the real client IP
-app.set("trust proxy", 1);
-
 const allowedOrigins = [
   "http://localhost:5173",
   "https://youtubeadwords.com",
@@ -287,15 +297,6 @@ if (!isTest) {
   });
 }
 
-const limiter = (limit: number, windowMinutes = 15) =>
-  rateLimit({
-    windowMs: windowMinutes * 60 * 1000,
-    limit,
-    standardHeaders: "draft-7",
-    legacyHeaders: false,
-    skip: () => isTest,
-    message: { error: "Too many requests, please try again later." },
-  });
 const authLimiter = limiter(20);
 const orderLimiter = limiter(30);
 const formLimiter = limiter(10);
@@ -334,13 +335,14 @@ async function rejectIfBanned(userId: number, res: express.Response): Promise<bo
   return false;
 }
 
-// SameSite=None + Secure required so cookie is sent when frontend is on a different origin (Firebase → Render)
+// The frontend and API share one origin, so the cookie doesn't need SameSite=None
 function cookieOptions() {
-  const isProduction = process.env.NODE_ENV === "production";
-  return { httpOnly: true, secure: isProduction, sameSite: isProduction ? ("none" as const) : ("lax" as const), path: "/" };
+  return { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" as const, path: "/" };
 }
 
 async function startSession(res: express.Response, userId: number) {
+  // Nothing else deletes expired sessions, so clear this user's old ones at each login
+  await prisma.session.deleteMany({ where: { userId, expiresAt: { lt: new Date() } } });
   const token = crypto.randomBytes(32).toString("hex");
   await prisma.session.create({
     data: { id: token, userId, expiresAt: new Date(Date.now() + SESSION_MAX_AGE_MS) },
@@ -360,25 +362,25 @@ app.post("/api/auth/signup", authLimiter, async (req, res) => {
   const parsed = signupSchema.safeParse(req.body);
   if (!parsed.success) return badRequest(res, parsed.error);
   const email = normalizeEmail(parsed.data.email);
-  const { username, password } = parsed.data;
+  const { username, salt, passwordKey } = parsed.data;
   const name = parsed.data.name || null;
 
-  const existingEmail = await prisma.user.findFirst({ where: { email: { equals: email, mode: "insensitive" } } });
+  const existingEmail = await prisma.user.findFirst({ where: { email } });
   if (existingEmail && !existingEmail.isGuest) return res.status(400).json({ error: "Email already exists" });
 
   const existingUsername = await prisma.user.findFirst({
-    where: { username: { equals: username, mode: "insensitive" }, NOT: existingEmail ? { id: existingEmail.id } : undefined },
+    where: { usernameLower: username.toLowerCase(), NOT: existingEmail ? { id: existingEmail.id } : undefined },
   });
   if (existingUsername) return res.status(400).json({ error: "Username already exists" });
 
-  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+  const passwordHash = hashPasswordKey(passwordKey);
   // A guest account (from guest checkout) is claimed so the buyer keeps their orders
   const user = existingEmail
     ? await prisma.user.update({
         where: { id: existingEmail.id },
-        data: { email, username, password: passwordHash, name, isGuest: false },
+        data: { email, username, usernameLower: username.toLowerCase(), password: passwordHash, passwordSalt: salt, name, isGuest: false },
       })
-    : await prisma.user.create({ data: { email, username, password: passwordHash, name } });
+    : await prisma.user.create({ data: { email, username, usernameLower: username.toLowerCase(), password: passwordHash, passwordSalt: salt, name } });
 
   if (user.isBanned) {
     return res.status(403).json({ error: "Account banned", reason: user.banReason || "Your account has been suspended." });
@@ -388,18 +390,32 @@ app.post("/api/auth/signup", authLimiter, async (req, res) => {
   res.status(201).json({ message: "User created successfully", user: publicUser(user) });
 });
 
+// The browser needs the account's salt before it can derive the key to log in with
+app.post("/api/auth/salt", authLimiter, async (req, res) => {
+  const parsed = saltSchema.safeParse(req.body);
+  if (!parsed.success) return badRequest(res, parsed.error);
+  const identifier = parsed.data.loginIdentifier.includes("@")
+    ? normalizeEmail(parsed.data.loginIdentifier)
+    : parsed.data.loginIdentifier.toLowerCase();
+  const user = await prisma.user.findFirst({
+    where: identifier.includes("@") ? { email: identifier } : { usernameLower: identifier },
+    select: { passwordSalt: true, isGuest: true },
+  });
+  res.json({ salt: user && !user.isGuest && user.passwordSalt ? user.passwordSalt : fakeSalt(identifier) });
+});
+
 app.post("/api/auth/login", authLimiter, async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) return badRequest(res, parsed.error);
-  const { loginIdentifier, password } = parsed.data;
+  const { loginIdentifier, passwordKey } = parsed.data;
 
   const user = await prisma.user.findFirst({
     where: loginIdentifier.includes("@")
-      ? { email: { equals: normalizeEmail(loginIdentifier), mode: "insensitive" } }
-      : { username: { equals: loginIdentifier, mode: "insensitive" } },
+      ? { email: normalizeEmail(loginIdentifier) }
+      : { usernameLower: loginIdentifier.toLowerCase() },
   });
 
-  if (!user || user.isGuest || !(await bcrypt.compare(password, user.password))) {
+  if (!user || user.isGuest || !safeEqual(hashPasswordKey(passwordKey), user.password)) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
   if (user.isBanned) {
@@ -535,7 +551,7 @@ async function resolveBuyer(req: express.Request, res: express.Response, email: 
     if (await rejectIfBanned(req.user.id, res)) return null;
     return req.user;
   }
-  const existing = await prisma.user.findFirst({ where: { email: { equals: email, mode: "insensitive" } } });
+  const existing = await prisma.user.findFirst({ where: { email } });
   if (existing && !existing.isGuest) {
     res.status(409).json({
       error: "An account already uses this email",
@@ -549,11 +565,14 @@ async function resolveBuyer(req: express.Request, res: express.Response, email: 
   }
   if (existing) return existing;
 
+  const guestUsername = `guest_${crypto.randomUUID().replace(/-/g, "").slice(0, 16)}`;
   return prisma.user.create({
     data: {
       email,
-      username: `guest_${crypto.randomUUID().replace(/-/g, "").slice(0, 16)}`,
-      password: await bcrypt.hash(crypto.randomBytes(32).toString("hex"), SALT_ROUNDS),
+      username: guestUsername,
+      usernameLower: guestUsername,
+      // Guests never log in (login rejects them), so they get an unusable placeholder instead of a real hash.
+      password: `!${crypto.randomBytes(32).toString("hex")}`,
       name: null,
       isGuest: true,
     },
@@ -625,35 +644,32 @@ app.post("/api/orders/create", orderLimiter, async (req, res) => {
     paymentUrl = result.url;
   }
 
-  const ip = req.ip || "";
+  const ip = clientIp(req);
   const geo = await getGeoLocation(ip);
-  const orders = await prisma.$transaction(
-    priced.map((item) =>
-      prisma.order.create({
-        data: {
-          userId: user.id,
-          email,
-          amount: item.amount,
-          price: item.price,
-          service: item.service,
-          platform: item.platform,
-          username: item.link,
-          details: item.details as object | undefined,
-          status: "PENDING",
-          paymentMethod: paymentMethod === "card" ? "CARD" : "CRYPTO",
-          externalOrderId,
-          uplefOrderId,
-          ipAddress: ip,
-          ipCity: geo?.city,
-          ipCountry: geo?.country,
-          ipRegion: geo?.region,
-          ipLatitude: geo?.lat,
-          ipLongitude: geo?.lon,
-        },
-        select: publicOrderSelect,
-      })
-    )
-  );
+  // One INSERT, so either every order is created or none is (D1 has no interactive transactions)
+  const orders = await prisma.order.createManyAndReturn({
+    data: priced.map((item) => ({
+      userId: user.id,
+      email,
+      amount: item.amount,
+      price: item.price,
+      service: item.service,
+      platform: item.platform,
+      username: item.link,
+      details: item.details as object | undefined,
+      status: "PENDING",
+      paymentMethod: paymentMethod === "card" ? "CARD" : "CRYPTO",
+      externalOrderId,
+      uplefOrderId,
+      ipAddress: ip,
+      ipCity: geo?.city,
+      ipCountry: geo?.country,
+      ipRegion: geo?.region,
+      ipLatitude: geo?.lat,
+      ipLongitude: geo?.lon,
+    })),
+    select: publicOrderSelect,
+  });
 
   res.status(201).json({ message: "Orders created successfully", orders, paymentUrl, externalOrderId, totalAmount: total });
 });
@@ -664,8 +680,12 @@ async function applyPaymentResult(ref: { externalOrderId?: string; uplefOrderId?
   const where = ref.uplefOrderId ? { uplefOrderId: ref.uplefOrderId } : { externalOrderId: ref.externalOrderId };
   const orders = await prisma.order.findMany({ where, select: { userId: true } });
   if (orders.length) {
-    await prisma.order.updateMany({ where, data: { status: paid ? "PROGRESS" : "CANCELED" } });
-    if (paid) {
+    // Only PENDING orders move: a repeated or late webhook must not reopen or cancel an order already handled
+    const { count } = await prisma.order.updateMany({
+      where: { ...where, status: "PENDING" },
+      data: { status: paid ? "PROGRESS" : "CANCELED" },
+    });
+    if (paid && count > 0) {
       await prisma.cartItem.deleteMany({ where: { userId: { in: [...new Set(orders.map((o) => o.userId))] } } });
     }
   }
@@ -675,8 +695,11 @@ async function applyPaymentResult(ref: { externalOrderId?: string; uplefOrderId?
     ? await prisma.linkTransaction.findUnique({ where: { gatewayOrderId }, include: { paymentLink: true } })
     : null;
   if (transaction) {
-    await prisma.linkTransaction.update({ where: { id: transaction.id }, data: { status: paid ? "SUCCESS" : "FAILED" } });
-    if (paid) {
+    const { count } = await prisma.linkTransaction.updateMany({
+      where: { id: transaction.id, status: "PENDING" },
+      data: { status: paid ? "SUCCESS" : "FAILED" },
+    });
+    if (paid && count > 0) {
       const link = transaction.paymentLink;
       const successCount = await prisma.linkTransaction.count({ where: { paymentLinkId: link.id, status: "SUCCESS" } });
       const exhausted = link.type === "ONE_TIME" || (link.maxPayments != null && successCount >= link.maxPayments);
@@ -971,6 +994,8 @@ app.get("/api/health", async (_req, res) => {
   }
 });
 
+app.use("/api/admin", adminRouter);
+
 // Unknown API routes get JSON, not Express's HTML page
 app.use("/api", (_req, res) => {
   res.status(404).json({ error: "Not found" });
@@ -980,6 +1005,8 @@ app.use("/api", (_req, res) => {
 app.use((err: Error & { type?: string; status?: number }, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   if (err.type === "entity.parse.failed") return res.status(400).json({ error: "Invalid JSON body" });
   if (err.type === "entity.too.large") return res.status(413).json({ error: "Request body too large" });
+  // Two signups racing for the same email or username: the unique index lets only one through
+  if ((err as { code?: string }).code === "P2002") return res.status(409).json({ error: "Email or username already exists" });
   console.error("Unhandled error:", err);
   res.status(500).json({ error: "Internal server error" });
 });

@@ -23,9 +23,15 @@ vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit)
 
 const viewsItem = { slug: "buy-youtube-views", tier: "regular", quantity: "5.0K", link: "https://youtu.be/dQw4w9WgXcQ" };
 
+// The browser derives this key from the password; the API never sees the password itself
+const deriveKey = (password: string, salt: string) =>
+  crypto.pbkdf2Sync(password.normalize("NFKC"), salt, 600000, 32, "sha256").toString("hex");
+const SALT = "0123456789abcdef0123456789abcdef";
+const KEY = deriveKey("password123", SALT);
+
 async function signup(email: string, username: string) {
   const agent = request.agent(app);
-  const res = await agent.post("/api/auth/signup").send({ email, username, password: "password123" });
+  const res = await agent.post("/api/auth/signup").send({ email, username, salt: SALT, passwordKey: KEY });
   expect(res.status).toBe(201);
   return { agent, user: res.body.user as { id: number } };
 }
@@ -36,9 +42,9 @@ function cryptomusSign(body: Record<string, unknown>) {
 }
 
 beforeAll(async () => {
-  await prisma.$executeRawUnsafe(
-    'TRUNCATE "LinkTransaction", "PaymentLink", "Ticket", "Review", "Order", "CartItem", "Session", "UserCtaAction", "CtaAction", "User" RESTART IDENTITY CASCADE'
-  );
+  for (const table of ["LinkTransaction", "PaymentLink", "Ticket", "Review", "Order", "CartItem", "Session", "UserCtaAction", "CtaAction", "User"]) {
+    await prisma.$executeRawUnsafe(`DELETE FROM "${table}"`);
+  }
 });
 
 beforeEach(() => {
@@ -79,20 +85,48 @@ describe("catalog", () => {
 });
 
 describe("auth", () => {
-  it("rejects signup without a password with 400, not 500", async () => {
+  it("rejects signup without a password key with 400, not 500", async () => {
     const res = await request(app).post("/api/auth/signup").send({ email: "carol.test@gmail.com", username: "carol" });
     expect(res.status).toBe(400);
   });
 
+  it("derives the same key in the browser code as the server tests expect", async () => {
+    // @ts-expect-error plain JS module shared with the frontend
+    const { derivePasswordKey } = await import("../../frontend/src/utils/passwordKey.js");
+    expect(await derivePasswordKey("password123", SALT)).toBe(KEY);
+  });
+
+  it("serves each account's salt and a stable fake one for unknown accounts", async () => {
+    await signup("salty.test@gmail.com", "salty");
+    const known = await request(app).post("/api/auth/salt").send({ loginIdentifier: "SALTY" }).expect(200);
+    expect(known.body.salt).toBe(SALT);
+    const byEmail = await request(app).post("/api/auth/salt").send({ loginIdentifier: "Salty.Test@gmail.com" }).expect(200);
+    expect(byEmail.body.salt).toBe(SALT);
+    const fake1 = await request(app).post("/api/auth/salt").send({ loginIdentifier: "nobody-here" }).expect(200);
+    const fake2 = await request(app).post("/api/auth/salt").send({ loginIdentifier: "nobody-here" }).expect(200);
+    expect(fake1.body.salt).toMatch(/^[0-9a-f]{32}$/);
+    expect(fake1.body.salt).toBe(fake2.body.salt);
+    expect(fake1.body.salt).not.toBe(SALT);
+  });
+
+  it("rejects a wrong password key and never stores the key itself", async () => {
+    const { user } = await signup("wrongkey.test@gmail.com", "wrongkey");
+    const bad = await request(app).post("/api/auth/login").send({ loginIdentifier: "wrongkey", passwordKey: deriveKey("other-password", SALT) });
+    expect(bad.status).toBe(401);
+    const row = await prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+    expect(row.password).not.toBe(KEY);
+    expect(row.password).toMatch(/^[0-9a-f]{64}$/);
+  });
+
   it("logs in with a differently-cased email", async () => {
     await signup("Alice.Test@gmail.com", "alice");
-    const res = await request(app).post("/api/auth/login").send({ loginIdentifier: "ALICE.test@gmail.com", password: "password123" });
+    const res = await request(app).post("/api/auth/login").send({ loginIdentifier: "ALICE.test@gmail.com", passwordKey: KEY });
     expect(res.status).toBe(200);
     expect(res.body.user.email).toBe("alice.test@gmail.com");
   });
 
   it("rejects login with a missing identifier", async () => {
-    const res = await request(app).post("/api/auth/login").send({ password: "password123" });
+    const res = await request(app).post("/api/auth/login").send({ passwordKey: KEY });
     expect(res.status).toBe(400);
   });
 
@@ -288,5 +322,79 @@ describe("forms and error handling", () => {
     const missing = await request(app).get("/api/nope");
     expect(missing.status).toBe(404);
     expect(missing.body).toEqual({ error: "Not found" });
+  });
+});
+
+describe("admin API", () => {
+  const admin = { Authorization: "Bearer test-admin-key" };
+
+  it("rejects missing and wrong keys", async () => {
+    expect((await request(app).get("/api/admin/users")).status).toBe(401);
+    expect((await request(app).get("/api/admin/users").set("Authorization", "Bearer nope")).status).toBe(401);
+  });
+
+  it("is disabled when no key is configured", async () => {
+    const key = process.env.ADMIN_API_KEY;
+    delete process.env.ADMIN_API_KEY;
+    try {
+      expect((await request(app).get("/api/admin/users").set(admin)).status).toBe(503);
+    } finally {
+      process.env.ADMIN_API_KEY = key;
+    }
+  });
+
+  it("lists users without exposing password hashes", async () => {
+    await signup("lister.test@gmail.com", "lister");
+    const res = await request(app).get("/api/admin/users?search=lister").set(admin).expect(200);
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0]).not.toHaveProperty("password");
+  });
+
+  it("bans a user, ends their sessions, and unbans them", async () => {
+    const { agent, user } = await signup("banme.test@gmail.com", "banme");
+    await request(app).post(`/api/admin/users/${user.id}/ban`).set(admin).send({ reason: "chargeback" }).expect(200);
+    expect((await agent.get("/api/auth/me")).status).toBe(401);
+    const login = await request(app).post("/api/auth/login").send({ loginIdentifier: "banme", passwordKey: KEY });
+    expect(login.status).toBe(403);
+    expect(login.body.reason).toBe("chargeback");
+
+    await request(app).post(`/api/admin/users/${user.id}/unban`).set(admin).expect(200);
+    await request(app).post("/api/auth/login").send({ loginIdentifier: "banme", passwordKey: KEY }).expect(200);
+    await request(app).post("/api/admin/users/999999/ban").set(admin).send({}).expect(404);
+  });
+
+  it("updates order status and rejects unknown statuses", async () => {
+    await request(app).post("/api/orders/create").send({ email: "adminorder.test@gmail.com", items: [viewsItem], paymentMethod: "crypto" }).expect(201);
+    const list = await request(app).get("/api/admin/orders?status=PENDING").set(admin).expect(200);
+    const order = list.body.items.find((o: { email: string }) => o.email === "adminorder.test@gmail.com");
+    await request(app).patch(`/api/admin/orders/${order.id}`).set(admin).send({ status: "COMPLETED" }).expect(200);
+    expect(await prisma.order.findUnique({ where: { id: order.id } })).toMatchObject({ status: "COMPLETED" });
+    await request(app).patch(`/api/admin/orders/${order.id}`).set(admin).send({ status: "DONE" }).expect(400);
+  });
+
+  it("approves and deletes reviews, and closes tickets", async () => {
+    await request(app).post("/api/reviews").send({ page: "buy-youtube-views", name: "M", email: "mod.test@gmail.com", rating: 4, text: "Fine" }).expect(201);
+    const review = await prisma.review.findFirstOrThrow({ where: { email: "mod.test@gmail.com" } });
+    await request(app).post(`/api/admin/reviews/${review.id}/approve`).set(admin).expect(200);
+    expect(await prisma.review.findUnique({ where: { id: review.id } })).toMatchObject({ approved: true });
+    await request(app).delete(`/api/admin/reviews/${review.id}`).set(admin).expect(200);
+    await request(app).delete(`/api/admin/reviews/${review.id}`).set(admin).expect(404);
+
+    await request(app).post("/api/tickets").send({ email: "tick.test@gmail.com", message: "Help" }).expect(201);
+    const ticket = await prisma.ticket.findFirstOrThrow({ where: { email: "tick.test@gmail.com" } });
+    await request(app).patch(`/api/admin/tickets/${ticket.id}`).set(admin).send({ status: "CLOSED" }).expect(200);
+    expect(await prisma.ticket.findUnique({ where: { id: ticket.id } })).toMatchObject({ status: "CLOSED" });
+  });
+
+  it("switches CTA actions globally and per user", async () => {
+    await request(app).put("/api/admin/cta-actions/buy").set(admin).send({ label: "Buy", isActive: false }).expect(200);
+    expect((await request(app).get("/api/cta-actions/status")).body.buy).toBe(false);
+
+    const { agent, user } = await signup("cta.test@gmail.com", "ctauser");
+    await request(app).put(`/api/admin/users/${user.id}/cta-actions/buy`).set(admin).send({ isActive: true }).expect(200);
+    expect((await agent.get("/api/cta-actions/status")).body.buy).toBe(true);
+    await request(app).delete(`/api/admin/users/${user.id}/cta-actions/buy`).set(admin).expect(200);
+    expect((await agent.get("/api/cta-actions/status")).body.buy).toBe(false);
+    await request(app).put("/api/admin/cta-actions/buy").set(admin).send({ isActive: true }).expect(200);
   });
 });

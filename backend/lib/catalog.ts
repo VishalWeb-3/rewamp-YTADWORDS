@@ -1,12 +1,7 @@
-// Server-side price catalog. Prices are read from the same JSON files TinaCMS edits
-// (frontend/content/pricing and frontend/content/google-pricing). A copy lives in
-// backend/data so the API still works when deployed without the frontend folder;
-// `npm run sync-catalog` refreshes that copy.
-import { existsSync, readFileSync } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const backendRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+// Server-side price catalog. Prices are bundled from the same JSON files TinaCMS edits,
+// so the API always ships with the prices the frontend shows.
+import pricingData from "../../frontend/content/pricing/index.json" with { type: "json" };
+import googlePricingData from "../../frontend/content/google-pricing/index.json" with { type: "json" };
 
 type Package = { quantity?: string | number; price?: string | number };
 type PricingPage = {
@@ -22,19 +17,8 @@ type GooglePricingPage = { slug: string; oneTime?: ReviewSection; monthly?: Revi
 
 export class PricingError extends Error {}
 
-function loadJson<T>(name: string): T {
-  const candidates = [
-    path.resolve(backendRoot, "..", "frontend", "content", name, "index.json"),
-    path.resolve(backendRoot, "data", `${name}.json`),
-  ];
-  for (const file of candidates) {
-    if (existsSync(file)) return JSON.parse(readFileSync(file, "utf8")) as T;
-  }
-  throw new Error(`Pricing data "${name}" not found. Run "npm run sync-catalog" in backend/.`);
-}
-
-const pricingPages = loadJson<{ pages: PricingPage[] }>("pricing").pages;
-const googlePricingPages = loadJson<{ pages: GooglePricingPage[] }>("google-pricing").pages;
+const pricingPages = (pricingData as { pages: PricingPage[] }).pages;
+const googlePricingPages = (googlePricingData as { pages: GooglePricingPage[] }).pages;
 
 const SERVICE_NAMES: Record<string, string> = {
   "buy-youtube-views": "YouTube Views",
