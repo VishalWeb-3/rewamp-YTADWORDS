@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import PageHead from '../components/site/PageHead';
+import Pass from '../components/site/Pass';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
 import { isValidEmail } from '../utils/emailValidator';
@@ -87,20 +89,16 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <div className="bg-white min-h-screen py-12 lg:py-16">
-        <div className="max-w-md mx-auto px-4 sm:px-6">
-          {/* Page Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
-              {auth.loginTitle || 'Login'}
-            </h1>
-            <p className="text-gray-600">
-              {auth.loginSubtitle || 'Sign in to your YoutubeADwords account'}
-            </p>
-          </div>
+      <div className="pg-auth pg-wrap">
+        <div className="pg-auth-main">
+          <PageHead
+            size="md"
+            title={auth.loginTitle || 'Login'}
+            lede={auth.loginSubtitle || 'Sign in to your YoutubeADwords account'}
+          />
 
           {/* Login Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+          <div className="pg-auth-card pg-in">
             {error && (
               <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
@@ -195,6 +193,24 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
+
+        {/* A returning member's pass, already issued */}
+        <aside className="pg-auth-side">
+          <div aria-hidden="true">
+            <Pass
+              kind="Member pass"
+              serial="YAW-0001"
+              tone="dark"
+              strap="var(--red)"
+              title="Welcome back"
+              rows={[
+                { label: 'Signing in as', value: formData.email, mono: true },
+                { label: 'Inside', value: 'Your orders, receipts and support tickets' },
+              ]}
+            />
+          </div>
+          <p className="pg-auth-note pg-in" style={{ '--d': '1.1s' }}>Track every order from My Orders once you are signed in.</p>
+        </aside>
       </div>
     </Layout>
   );

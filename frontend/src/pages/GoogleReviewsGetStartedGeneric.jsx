@@ -240,7 +240,7 @@ export default function GoogleReviewsGetStartedGeneric() {
   return (
     <Layout>
       <SEO title="Get Started | YoutubeADwords" description="Tell us where to deliver your Google reviews." />
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 pg-flow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
           <Link
             to={pricingPath}

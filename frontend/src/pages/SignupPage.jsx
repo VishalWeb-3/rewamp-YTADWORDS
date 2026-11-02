@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import PageHead from '../components/site/PageHead';
+import Pass from '../components/site/Pass';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
 import { isValidEmail } from '../utils/emailValidator';
@@ -123,20 +125,16 @@ export default function SignupPage() {
 
   return (
     <Layout>
-      <div className="bg-white min-h-screen py-12 lg:py-16">
-        <div className="max-w-md mx-auto px-4 sm:px-6">
-          {/* Page Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
-              {auth.signupTitle || 'Create Account'}
-            </h1>
-            <p className="text-gray-600">
-              {auth.signupSubtitle || 'Sign up to start using YoutubeADwords services'}
-            </p>
-          </div>
+      <div className="pg-auth pg-wrap">
+        <div className="pg-auth-main">
+          <PageHead
+            size="md"
+            title={auth.signupTitle || 'Create Account'}
+            lede={auth.signupSubtitle || 'Sign up to start using YoutubeADwords services'}
+          />
 
           {/* Signup Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+          <div className="pg-auth-card pg-in">
             {errors.form && (
               <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {errors.form}
@@ -345,6 +343,23 @@ export default function SignupPage() {
             </div>
           </div>
         </div>
+
+        {/* The member pass fills in as the form does */}
+        <aside className="pg-auth-side">
+          <div aria-hidden="true">
+            <Pass
+              kind="Member pass"
+              serial="YAW-NEW"
+              title={[formData.firstName, formData.lastName].filter(Boolean).join(' ') || 'Your name'}
+              rows={[
+                { label: 'Username', value: formData.username && `@${formData.username}`, mono: true },
+                { label: 'Email', value: formData.email },
+                { label: 'Access', value: 'Every service, one checkout' },
+              ]}
+            />
+          </div>
+          <p className="pg-auth-note pg-in" style={{ '--d': '1.1s' }}>Your account holds your orders and receipts. We never ask for your social media passwords.</p>
+        </aside>
       </div>
     </Layout>
   );

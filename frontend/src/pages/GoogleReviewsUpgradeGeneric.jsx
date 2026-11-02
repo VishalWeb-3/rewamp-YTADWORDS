@@ -245,7 +245,7 @@ export default function GoogleReviewsUpgradeGeneric() {
     <>
       <Layout>
         <SEO title="Upgrade Your Order | YoutubeADwords" description="Add options to your Google reviews order and pay securely." />
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white pg-flow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             <Link
               to={getStartedReturnPath}

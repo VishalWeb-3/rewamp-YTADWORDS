@@ -20,6 +20,8 @@ body {
 /* Prevent horizontal overflow on all screens */
 body {
   overflow-x: hidden;
+  /* clip, not hidden: hidden makes body a scroll box and breaks position: sticky */
+  overflow-x: clip;
   width: 100%;
 }
 

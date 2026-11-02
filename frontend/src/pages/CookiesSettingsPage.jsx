@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { LegalSection } from '../components/LegalSection';
+import LegalShell from '../components/site/LegalShell';
 import { useLegalContent } from '../contexts/ContentContext';
 
 const DEFAULT_COOKIE_TYPES = [
@@ -38,15 +39,7 @@ export default function CookiesSettingsPage() {
         title="Cookies Settings | YoutubeADwords"
         description="Manage your cookie preferences on YoutubeADwords. Learn how we use essential, analytics, and marketing cookies to improve your experience."
       />
-      <div className="bg-white min-h-screen py-12 lg:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8 lg:mb-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              {title}
-            </h1>
-            <p className="text-gray-600 text-sm">Last updated: {lastUpdated}</p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 space-y-6">
+      <LegalShell title={title} lastUpdated={lastUpdated} headings={[...sections.map((s) => s.heading).filter((h) => h !== 'Manage Your Preferences'), 'Manage Your Preferences']}>
             {sections
               .filter((s) => s.heading !== 'Manage Your Preferences')
               .map((section, i) => (
@@ -55,7 +48,7 @@ export default function CookiesSettingsPage() {
 
             {/* Manage Your Preferences - special section with toggles */}
             {(sections.some((s) => s.heading === 'Manage Your Preferences') || cookieTypes.length > 0) && (
-              <section>
+              <section id="manage-your-preferences" className="pg-legal-sec">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                   Manage Your Preferences
                 </h2>
@@ -107,9 +100,7 @@ export default function CookiesSettingsPage() {
                 </button>
               </section>
             )}
-          </div>
-        </div>
-      </div>
+      </LegalShell>
     </Layout>
   );
 }

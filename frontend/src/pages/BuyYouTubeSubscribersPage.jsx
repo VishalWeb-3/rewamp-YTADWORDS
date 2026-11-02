@@ -133,7 +133,7 @@ export default function BuyYouTubeSubscribersPage() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
-          <div className="space-y-6">
+          <div className="space-y-6 svc-hero">
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
@@ -143,7 +143,7 @@ export default function BuyYouTubeSubscribersPage() {
               />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap svc-h1">
                 {hero?.title ?? 'Buy YouTube Subscribers'}{' '}
                 <span className="bg-brand-red text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-lg sm:text-2xl lg:text-3xl font-bold">
                   {hero?.badge ?? 'Instantly'}
@@ -157,7 +157,7 @@ export default function BuyYouTubeSubscribersPage() {
           </div>
 
           {/* Right Section - Pricing Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100 svc-pass">
             {/* Tabs */}
             <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
               {tabList.map((tab) => (
@@ -289,7 +289,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* All In One YouTube Subscribers Campaign Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
@@ -356,7 +356,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* YoutubeADwords's Guarantee Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-guarantee">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
@@ -485,7 +485,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* Why Do You Need To Buy YouTube Subscribers Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-prose lp-reveal">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Section - GIF */}
             <div className="flex justify-center lg:justify-start">
@@ -517,7 +517,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* Numbers, Engagement, and Reputation Section */}
-        <div className="mt-12 lg:mt-32">
+        <div className="mt-12 lg:mt-32 svc-prose lp-reveal">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Section - Text Content */}
             <div className="space-y-4">
@@ -556,7 +556,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* An Excellent Strategy Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-prose lp-reveal">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Section - Image */}
             <div className="flex justify-center lg:justify-start order-2 lg:order-1">
@@ -594,7 +594,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* FAQ Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
           <div className="max-w-4xl mx-auto">
             {/* Heading */}
             <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
@@ -643,7 +643,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* Comparison Chart Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-compare lp-reveal">
           <div className="max-w-7xl mx-auto">
             {/* Section Title */}
             <div className="text-center mb-12">
@@ -760,7 +760,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* Reviews Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-reviews lp-reveal">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
@@ -854,7 +854,7 @@ export default function BuyYouTubeSubscribersPage() {
         </div>
 
         {/* Leave a Review Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-review-form lp-reveal">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100 relative overflow-hidden">
               {/* Decorative elements */}

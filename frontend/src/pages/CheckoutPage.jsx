@@ -223,7 +223,7 @@ export default function CheckoutPage() {
     <>
       <Layout>
         <SEO title="Checkout | YoutubeADwords" description="Review your order and pay securely." />
-        <div className="min-h-screen bg-gray-50 py-12">
+        <div className="min-h-screen bg-gray-50 py-12 pg-flow">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
@@ -395,7 +395,7 @@ export default function CheckoutPage() {
 
               {/* ── Right: Order Summary ── */}
               <div>
-                <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
+                <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4 pg-flow-pass">
                   <h2 className="text-xl font-bold text-gray-900 mb-6">Order summary</h2>
                   <div className="space-y-4 mb-6">
                     {displayItems.map((item, index) => (

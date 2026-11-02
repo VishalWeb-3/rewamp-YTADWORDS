@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
+import PageHead from '../components/site/PageHead';
+import { Arrow } from '../components/landing/icons';
+
+// how far along the delivery bar sits for each status
+const PROGRESS = { pending: 8, processing: 55, completed: 100, cancelled: 0 };
 import { useAuth } from '../contexts/AuthContext';
 import { fetchMyOrders, formatDate, paymentMethodLabel, statusInfo } from '../utils/orders';
 
@@ -32,23 +37,10 @@ export default function MyOrdersPage() {
   const filteredOrders = orders.filter((order) => filter === 'all' || statusInfo(order.status).key === filter);
 
   const renderEmpty = (title, message, cta) => (
-    <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-      <svg
-        className="w-24 h-24 text-gray-300 mx-auto mb-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
-      <p className="text-gray-600 mb-6">{message}</p>
+    <div className="pg-empty pg-in">
+      <span className="pg-empty-slot" aria-hidden="true" />
+      <h2 className="lp-display">{title}</h2>
+      <p>{message}</p>
       {cta}
     </div>
   );
@@ -60,13 +52,9 @@ export default function MyOrdersPage() {
     content = renderEmpty(
       'Log in to see your orders',
       'Orders placed as a guest appear here once you sign up with the same email address.',
-      <div className="flex justify-center gap-3">
-        <Link to="/login" className="inline-block px-6 py-3 bg-brand-red text-white font-semibold rounded-lg hover:bg-[#C62828] transition-colors">
-          Log in
-        </Link>
-        <Link to="/signup" className="inline-block px-6 py-3 bg-gray-100 text-gray-900 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
-          Sign up
-        </Link>
+      <div className="pg-actions" style={{ justifyContent: 'center' }}>
+        <Link to="/login" className="lp-btn lp-btn-red">Log in<Arrow /></Link>
+        <Link to="/signup" className="lp-btn lp-btn-line">Sign up</Link>
       </div>
     );
   } else if (error) {
@@ -75,66 +63,53 @@ export default function MyOrdersPage() {
     content = renderEmpty(
       'No orders found',
       filter === 'all' ? "You haven't placed any orders yet." : `You don't have any ${filter} orders.`,
-      <Link
-        to="/"
-        className="inline-block px-6 py-3 bg-brand-red text-white font-semibold rounded-lg hover:bg-[#C62828] transition-colors"
-      >
-        Start Shopping
-      </Link>
+      <Link to="/" className="lp-btn lp-btn-red">Browse services<Arrow /></Link>
     );
   } else {
     content = (
-      <div className="space-y-6">
-        {filteredOrders.map((order) => {
+      <div className="pg-orders">
+        {filteredOrders.map((order, idx) => {
           const status = statusInfo(order.status);
+          const first = order.items[0];
           return (
-            <div key={order.id} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="flex items-start justify-between mb-4">
+            <article key={order.id} className="pg-order lp-reveal" style={{ '--i': Math.min(idx, 4) }}>
+              <div className="pg-order-head">
                 <div>
-                  <div className="flex items-center gap-4 mb-2">
-                    <h3 className="text-xl font-bold text-gray-900">Order #{order.id}</h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${status.color}`}>{status.label}</span>
-                  </div>
-                  <p className="text-gray-600 text-sm">Placed on {formatDate(order.createdAt)}</p>
+                  <p className="pg-order-id lp-mono">Order #{order.id}</p>
+                  <h3 className="lp-display">
+                    {first?.service || 'Order'}
+                    {order.items.length > 1 && <span> and {order.items.length - 1} more</span>}
+                  </h3>
+                  <p className="pg-order-meta">Placed on {formatDate(order.createdAt)}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-brand-red">${order.total.toFixed(2)}</p>
-                  <p className="text-sm text-gray-600">
-                    {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
-                  </p>
+                <div className="pg-order-total">
+                  <b>${order.total.toFixed(2)}</b>
+                  <span>{order.items.length} {order.items.length === 1 ? 'item' : 'items'}</span>
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 pt-4">
-                <div className="space-y-3">
-                  {order.items.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900">{item.service}</h4>
-                        <p className="text-sm text-gray-600">
-                          {item.platform} • {item.quantity}
-                        </p>
-                      </div>
-                      <span className="font-bold text-gray-900 ml-4">${item.price.toFixed(2)}</span>
+              <div className={`pg-track is-${status.key}`}>
+                <span className="pg-chip">{status.label}</span>
+                <div className="lp-bar" aria-hidden="true"><i style={{ '--p': `${PROGRESS[status.key] ?? 0}%` }} /></div>
+              </div>
+
+              <ul className="pg-order-items">
+                {order.items.map((item) => (
+                  <li key={item.id}>
+                    <div>
+                      <b>{item.service}</b>
+                      <span>{item.platform}, {item.quantity}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <span className="lp-mono">${item.price.toFixed(2)}</span>
+                  </li>
+                ))}
+              </ul>
 
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">Payment Method:</span> {paymentMethodLabel(order.paymentMethod)}
-                  </p>
-                  <Link
-                    to={`/orders/${order.id}`}
-                    className="px-4 py-2 text-brand-red font-semibold hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    View Details
-                  </Link>
-                </div>
+              <div className="pg-order-foot">
+                <p>Paid by {paymentMethodLabel(order.paymentMethod)}</p>
+                <Link to={`/orders/${order.id}`}>View details<Arrow size={16} /></Link>
               </div>
-            </div>
+            </article>
           );
         })}
       </div>
@@ -144,21 +119,16 @@ export default function MyOrdersPage() {
   return (
     <Layout>
       <SEO title="My Orders | YoutubeADwords" description="Track the status of your YoutubeADwords orders." />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">My Orders</h1>
-          <Link
-            to="/"
-            className="px-6 py-3 bg-brand-red text-white font-semibold rounded-lg hover:bg-[#C62828] transition-colors"
-          >
-            Browse Services
-          </Link>
+      <div className="pg-wrap pg-section">
+        <div className="pg-orders-top">
+          <PageHead title="My Orders" lede="Every order you place, and how far its delivery has got." size="md" />
+          <Link to="/" className="lp-btn lp-btn-line pg-in" style={{ '--d': '0.5s' }}>Browse services</Link>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-4 mb-8 border-b border-gray-200" role="tablist">
+        <div className="pg-tabs pg-in" style={{ '--d': '0.55s' }} role="tablist">
           {[
-            { id: 'all', label: 'All Orders' },
+            { id: 'all', label: 'All orders' },
             { id: 'pending', label: 'Awaiting payment' },
             { id: 'processing', label: 'Processing' },
             { id: 'completed', label: 'Completed' },
@@ -168,10 +138,6 @@ export default function MyOrdersPage() {
               role="tab"
               aria-selected={filter === tab.id}
               onClick={() => setFilter(tab.id)}
-              className={`pb-4 px-4 font-medium transition-colors ${filter === tab.id
-                ? 'text-brand-red border-b-2 border-brand-red'
-                : 'text-gray-600 hover:text-gray-900'
-                }`}
             >
               {tab.label}
             </button>

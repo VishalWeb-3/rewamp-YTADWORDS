@@ -3,6 +3,21 @@ import { Link, useParams } from 'react-router-dom';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
+
+// Foil strip across the top that fills as the article is read
+function ReadingBar() {
+  const [p, setP] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setP(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return <div className="pg-readbar" style={{ '--p': p }} aria-hidden="true" />;
+}
 import { client } from '../../tina/__generated__/client';
 import { resolveImageSrc } from '../lib/tinaMedia';
 
@@ -84,11 +99,12 @@ export default function BlogPostPage() {
         title={post.title ? `${post.title} | YoutubeADwords` : 'Blog | YoutubeADwords'}
         description={post.excerpt || 'Read the latest tips and guides on YoutubeADwords blog about YouTube, TikTok, and Google Ads growth.'}
       />
-      <div className="bg-gray-50 min-h-screen pb-20">
-        <article className="max-w-7xl mx-auto px-4 pt-8 sm:pt-12">
+      <ReadingBar />
+      <div className="pg-article">
+        <article className="pg-wrap">
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-brand-red mb-8 transition-colors"
+            className="pg-back"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5" />
@@ -97,16 +113,16 @@ export default function BlogPostPage() {
             Back to blog
           </Link>
 
-          <header className="mb-8 sm:mb-10 max-w-4xl mx-auto text-center">
-            <div className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">
+          <header className="pg-article-head">
+            <div className="pg-post-meta pg-in" style={{ '--d': '0s' }}>
               {formatDate(post.date)}
               {post.author && ` · ${post.author}`}
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
+            <h1 className="lp-display pg-in" style={{ '--d': '0.08s' }}>
               {post.title}
             </h1>
             {post.excerpt && (
-              <p className="mt-4 text-lg text-gray-500 font-medium leading-relaxed">{post.excerpt}</p>
+              <p className="pg-lede">{post.excerpt}</p>
             )}
             {tags.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-2 justify-center">
@@ -123,14 +139,14 @@ export default function BlogPostPage() {
           </header>
 
           {cover && (
-            <div className="max-w-4xl mx-auto mb-8">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+            <div className="pg-article-cover pg-in" style={{ '--d': '0.4s' }}>
+              <div>
                 <img src={cover} alt={post.title} className="w-full h-auto object-cover" />
               </div>
             </div>
           )}
 
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 md:p-10">
+          <div className="pg-article-body pg-in" style={{ '--d': '0.5s' }}>
             <div
               className="prose prose-slate max-w-none
                 prose-headings:font-bold prose-headings:text-gray-900
@@ -179,7 +195,7 @@ export default function BlogPostPage() {
             </div>
           </div>
 
-          <div className="mt-10 text-center">
+          <div className="pg-article-foot">
             <Link to="/blog" className="inline-flex items-center gap-2 text-brand-red font-bold hover:underline">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5" />

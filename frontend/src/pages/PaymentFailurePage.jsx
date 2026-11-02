@@ -2,27 +2,39 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
+import PageHead from '../components/site/PageHead';
+import Pass from '../components/site/Pass';
+import { Arrow } from '../components/landing/icons';
 
 export default function PaymentFailurePage() {
   return (
     <Layout>
       <SEO title="Payment Failed | YoutubeADwords" description="Your payment could not be completed." />
-      <div className="min-h-screen bg-gray-50 py-16 flex flex-col items-center justify-center text-center px-4">
-        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
-          <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+      <div className="pg-status pg-wrap">
+        <div>
+          <PageHead
+            title="Payment didn't go through."
+            lede="You have not been charged. Your cart is still saved, so you can try again, or contact support if it keeps happening."
+          >
+            <div className="pg-actions">
+              <Link to="/checkout" className="lp-btn lp-btn-red">Back to checkout<Arrow /></Link>
+              <Link to="/contact" className="lp-btn lp-btn-line">Contact support</Link>
+            </div>
+          </PageHead>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Failed</h1>
-        <p className="text-gray-600 mb-8 max-w-md">
-          Your payment could not be completed and you have not been charged. Your cart is still saved, so you can try again or contact support if the problem persists.
-        </p>
-        <Link
-          to="/checkout"
-          className="bg-brand-red text-white font-bold px-8 py-3 rounded-xl hover:bg-[#C62828] transition-colors"
-        >
-          Back to Checkout
-        </Link>
+        <div className="pg-status-pass" aria-hidden="true">
+          <Pass
+            kind="Order pass"
+            serial="NOT ISSUED"
+            tone="void"
+            title="Payment failed"
+            rows={[
+              { label: 'Charged', value: 'Nothing', mono: true },
+              { label: 'Your cart', value: 'Saved' },
+            ]}
+            stamp="VOID"
+          />
+        </div>
       </div>
     </Layout>
   );

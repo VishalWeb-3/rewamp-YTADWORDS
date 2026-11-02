@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { slugify } from './site/LegalShell';
 
 /** Render a legal page section with heading, body, optional list, optional subsections */
 export function LegalSection({ section, contactLink = '/contact', contactText = 'Contact Us', privacyLink = '/privacy-policy' }) {
@@ -30,7 +31,7 @@ export function LegalSection({ section, contactLink = '/contact', contactText = 
   };
 
   return (
-    <section>
+    <section id={slugify(heading)} className="pg-legal-sec">
       <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">{heading}</h2>
       {body && (
         <p className="text-gray-700 text-base lg:text-lg leading-relaxed mb-3">

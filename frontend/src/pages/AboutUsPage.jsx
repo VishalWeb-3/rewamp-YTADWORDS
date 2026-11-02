@@ -1,6 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
+import PageHead from '../components/site/PageHead';
+import { Arrow, Check, Star, YouTube, TikTok, GoogleG } from '../components/landing/icons';
+
+const OFFER = [
+  { name: 'YouTube', icon: YouTube, chip: '#e53935', to: '/buy-youtube-views', text: 'Views, subscribers, likes and watch hours, delivered at a pace that looks like normal channel growth.' },
+  { name: 'TikTok', icon: TikTok, chip: '#0b1020', to: '/buy-tiktok-followers', text: 'Followers, likes and views that help creators and businesses reach a wider audience.' },
+  { name: 'Google Ads', icon: GoogleG, chip: '#4285F4', to: '/buy-google-skip-ads-views', text: 'Skip ads views, display ads views, app downloads and search campaign traffic.' },
+  { name: 'Google Reviews', icon: Star, chip: '#1f9d57', to: '/buy-male-google-reviews', text: 'Reviews from verified reviewers, chosen by demographic to match the customers you serve.' },
+];
+
+const WHY = [
+  { title: 'Real engagement', text: 'Organic engagement from genuine users, never bot traffic.' },
+  { title: 'Safe for your account', text: 'We only ask for a public link. Your passwords stay yours.' },
+  { title: 'Support around the clock', text: 'A person answers, whatever your time zone.' },
+  { title: 'Refill guarantee', text: 'If numbers drop after delivery, we top them back up.' },
+  { title: 'Clear pricing', text: 'The price on the package is the price at checkout.' },
+];
 
 export default function AboutUsPage() {
   return (
@@ -9,117 +27,70 @@ export default function AboutUsPage() {
         title="About Us | YoutubeADwords"
         description="Learn about YoutubeADwords – a leading provider of YouTube, TikTok, and Google Ads growth services. Authentic engagement, 24/7 support, and best-price guarantee."
       />
-      <div className="bg-white min-h-screen py-12 lg:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          {/* Page Title */}
-          <div className="text-center mb-8 lg:mb-12">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              About Us
-            </h1>
-          </div>
-
-          {/* Content */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 space-y-6">
-            <section>
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Welcome to YoutubeADwords
-              </h2>
-              <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                YoutubeADwords is a leading provider of social media growth services, specializing in YouTube, TikTok, and Google Ads services. We are committed to helping businesses and content creators enhance their online presence through authentic, high-quality engagement.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Our Mission
-              </h2>
-              <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                Our mission is to provide reliable, safe, and effective social media growth solutions that help our clients achieve their digital marketing goals. We believe in transparency, quality, and customer satisfaction above all else.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                What We Offer
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">YouTube Services</h3>
-                  <p className="text-gray-700 text-base leading-relaxed">
-                    We offer comprehensive YouTube growth services including views, subscribers, likes, and watch hours. All our services are designed to help your channel grow organically and safely.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">TikTok Services</h3>
-                  <p className="text-gray-700 text-base leading-relaxed">
-                    Boost your TikTok presence with our followers, views, engagement, and traffic services. We help creators and businesses reach a wider audience on one of the fastest-growing social media platforms.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Google Ads Services</h3>
-                  <p className="text-gray-700 text-base leading-relaxed">
-                    Enhance your Google Ads campaigns with our skip ads views, display ads views, and search campaign traffic services.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Google Reviews</h3>
-                  <p className="text-gray-700 text-base leading-relaxed">
-                    Build trust and credibility with authentic Google Reviews from verified reviewers. We offer reviews from different demographics to match your target audience.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Why Choose YoutubeADwords?
-              </h2>
-              <ul className="space-y-3 text-gray-700 text-base leading-relaxed">
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-brand-red flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span><strong>Authentic Engagement:</strong> We provide real, organic engagement from genuine users.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-brand-red flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span><strong>Safe & Secure:</strong> All our services comply with platform terms of service.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-brand-red flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span><strong>24/7 Support:</strong> Our customer support team is available around the clock to assist you.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-brand-red flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span><strong>Refill Guarantee:</strong> We offer refill guarantees on all our packages.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-brand-red flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span><strong>Competitive Pricing:</strong> We offer the best prices in the market with transparent pricing.</span>
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Contact Us
-              </h2>
-              <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                Have questions or need assistance? Our support team is here to help. Visit our{' '}
-                <a href="/contact" className="text-brand-red font-semibold hover:underline">Contact Us</a> page to get in touch.
-              </p>
-            </section>
+      <section className="lp-section" style={{ paddingBottom: 0 }}>
+        <div className="lp-wrap lp-split">
+          <PageHead
+            title="Growth services for creators and local businesses."
+            lede="YoutubeADwords helps businesses and content creators grow on YouTube, TikTok and Google with real, high-quality engagement."
+          />
+          <div className="lp-prose pg-in" style={{ '--d': '0.7s', paddingTop: '0.75rem' }}>
+            <h2 className="lp-display">Our mission</h2>
+            <p>Reliable, safe and effective growth that helps our clients reach their marketing goals. We put transparency, quality and customer satisfaction ahead of everything else.</p>
+            <Link to="/contact" className="lp-btn lp-btn-line">Talk to the team<Arrow /></Link>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className="lp-section">
+        <div className="lp-wrap">
+          <div className="lp-head lp-reveal">
+            <h2 className="lp-display">What we offer</h2>
+            <p>Four service lines, one account and one checkout.</p>
+          </div>
+          <div className="lp-ledger">
+            {OFFER.map(({ name, icon: Icon, chip, to, text }, i) => (
+              <div className="lp-row lp-reveal" style={{ '--i': i }} key={name}>
+                <div className="lp-row-name">
+                  <span className="ico" style={{ '--chip': chip }}><Icon size={26} /></span>
+                  <h3 className="lp-display">{name}</h3>
+                </div>
+                <div className="pg-row-body">
+                  <p>{text}</p>
+                  <Link to={to}>See {name} packages<Arrow size={16} /></Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="lp-section lp-ink">
+        <div className="lp-wrap">
+          <div className="lp-head lp-reveal">
+            <h2 className="lp-display">Why customers choose us</h2>
+            <p>The promises we hold ourselves to on every order.</p>
+          </div>
+          <ul className="pg-why">
+            {WHY.map((w, i) => (
+              <li className="lp-reveal" style={{ '--i': i }} key={w.title}>
+                <Check size={22} />
+                <div><b>{w.title}</b><p>{w.text}</p></div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="lp-section lp-final">
+        <span className="lp-ring-deco" aria-hidden="true" />
+        <div className="lp-wrap">
+          <h2 className="lp-display lp-reveal">Questions before you order?</h2>
+          <p className="lp-reveal" style={{ '--i': 1 }}>Our support team is here to help, and replies within 24 hours.</p>
+          <div className="lp-reveal" style={{ '--i': 2 }}>
+            <Link to="/contact" className="lp-btn lp-btn-white">Contact us<Arrow /></Link>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 }

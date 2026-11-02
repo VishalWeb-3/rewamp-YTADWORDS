@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
+import PageHead from '../components/site/PageHead';
 import SEO from '../components/SEO';
 import { useContactContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
@@ -69,29 +70,26 @@ export default function ContactPage() {
         title="Contact Us | YoutubeADwords"
         description="Get in touch with the YoutubeADwords support team. We're here 24/7 to help with your YouTube, TikTok, and Google Ads service questions."
       />
-      <div className="bg-white min-h-screen py-8 sm:py-12 lg:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          {/* Page Title */}
-          <div className="text-center mb-8 lg:mb-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              {c?.title ?? 'Contact us'}
-            </h1>
-            <div className="space-y-3 text-gray-700 text-base lg:text-lg max-w-3xl mx-auto">
+      <div className="pg-contact pg-wrap">
+        <div className="pg-contact-intro">
+          <PageHead title={c?.title ?? 'Contact us'} size="md">
+            <div className="pg-contact-copy">
               <p>{c?.introParagraph1 ?? 'If you have anything in mind about our social media services, and YoutubeADwords please send us a message. Our support team will get back to you within 24 hours.'}</p>
               <p>
                 {c?.introParagraph2 ?? 'If you have any questions about your order, you can easily track its status '}
-                <a href={c?.trackOrderLinkHref ?? '#'} className="text-brand-red font-semibold hover:underline">{c?.trackOrderLinkText ?? 'here'}</a>.
+                <a href={c?.trackOrderLinkHref ?? '#'}>{c?.trackOrderLinkText ?? 'here'}</a>.
               </p>
             </div>
-          </div>
+          </PageHead>
+          <dl className="pg-facts pg-in" style={{ '--d': '0.8s' }}>
+            <div><dt>Reply time</dt><dd>Within 24 hours</dd></div>
+            <div><dt>Order status</dt><dd><a href="/orders">My Orders</a></dd></div>
+            <div><dt>Refunds</dt><dd><a href="/refund-policy">Refund policy</a></dd></div>
+          </dl>
+        </div>
 
           {/* Contact Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 relative overflow-hidden">
-            {/* Decorative Red Shapes - Top Right */}
-            <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none">
-              <div className="absolute top-4 right-4 w-24 h-1 bg-red-200 transform rotate-45 origin-center"></div>
-              <div className="absolute top-6 right-6 w-20 h-2 bg-brand-red transform rotate-45 origin-center"></div>
-            </div>
+          <div className="pg-contact-card pg-in" style={{ '--d': '0.35s' }}>
 
             {/* Form Heading */}
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6 lg:mb-8 relative z-10">
@@ -221,7 +219,6 @@ export default function ContactPage() {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </Layout>
   );

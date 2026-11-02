@@ -125,13 +125,7 @@ export default function PayLinkPage() {
                 title={link ? `Pay ${link.amount.toFixed(2)} ${link.currency}` : 'Secure Payment Link'}
                 description="Complete your secure payment."
             />
-            <div
-                className="min-h-screen flex items-center justify-center px-4 py-10"
-                style={{
-                    background:
-                        'radial-gradient(circle at top left,#e0f2fe,transparent 55%), radial-gradient(circle at bottom right,#fef3c7,transparent 55%), #f9fafb',
-                }}
-            >
+            <div className="min-h-screen flex items-center justify-center px-4 py-10 pg-flow">
                 <div className="w-full max-w-xl">
                     {/* Security badge */}
                     <div className="flex items-center justify-between mb-4">

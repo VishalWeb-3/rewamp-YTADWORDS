@@ -150,7 +150,7 @@ export default function SharedPaymentPage() {
     return (
         <Layout>
             <SEO title={`Pay for ${title} | YoutubeADwords`} description="Secure payment link to complete your order." />
-            <div className="min-h-screen bg-gray-50 py-6 sm:py-12 px-4">
+            <div className="min-h-screen bg-gray-50 py-6 sm:py-12 px-4 pg-flow">
                 <div className="max-w-4xl mx-auto">
                     {/* Breadcrumb */}
                     <Link to="/" className="inline-flex items-center text-brand-red font-bold mb-4 sm:mb-6 hover:underline text-sm">

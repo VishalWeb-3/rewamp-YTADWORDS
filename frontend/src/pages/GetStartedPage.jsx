@@ -192,7 +192,7 @@ export default function GetStartedPage() {
   if (!allPackages || Object.keys(allPackages).length === 0) {
     return (
       <Layout>
-        <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center pg-flow">
           <div className="text-center max-w-md mx-auto px-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Select a package first</h1>
             <p className="text-gray-600 mb-6">
@@ -212,7 +212,7 @@ export default function GetStartedPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 py-12 pg-flow">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8">

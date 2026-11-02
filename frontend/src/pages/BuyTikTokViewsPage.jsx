@@ -97,7 +97,7 @@ export default function BuyTikTokViewsPage() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="space-y-6">
+          <div className="space-y-6 svc-hero">
             <div className="mb-6 flex justify-center">
               <img
                 src={resolveImageUrl(hero?.image, '/pricepage.png')}
@@ -106,7 +106,7 @@ export default function BuyTikTokViewsPage() {
               />
             </div>
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap svc-h1">
                 {hero?.title ?? 'Buy TikTok Views'}{' '}
                 <span className="bg-blue-600 text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
                   {hero?.badge ?? 'Instantly'}
@@ -119,7 +119,7 @@ export default function BuyTikTokViewsPage() {
             <ServiceAssurance />
           </div>
 
-          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100 svc-pass">
             <div className="flex gap-4 mb-6 border-b border-gray-200">
               {[{ id: 'regular', label: 'Active Views' }].map((tab) => (
                 <button
@@ -216,7 +216,7 @@ export default function BuyTikTokViewsPage() {
           </div>
         </div>
 {/* All In One TikTok Views Campaign Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative blue shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
@@ -281,7 +281,7 @@ export default function BuyTikTokViewsPage() {
           </div>
         </div>
 
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">Frequently Asked <span className="text-blue-600 relative">Questions<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" /></span></h2>
             <div className="space-y-4">
