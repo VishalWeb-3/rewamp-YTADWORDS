@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
 import { isValidEmail } from '../utils/emailValidator';
+import { derivePasswordKey, randomSalt } from '../utils/passwordKey';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -81,6 +82,8 @@ export default function SignupPage() {
     setIsSubmitting(true);
 
     try {
+      const salt = randomSalt();
+      const passwordKey = await derivePasswordKey(formData.password, salt);
       const res = await fetch(`${API_BASE}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,7 +91,8 @@ export default function SignupPage() {
         body: JSON.stringify({
           email: formData.email.trim(),
           username: formData.username.trim(),
-          password: formData.password,
+          salt,
+          passwordKey,
           name: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim() || null,
         }),
       });

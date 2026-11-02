@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
 import { isValidEmail } from '../utils/emailValidator';
+import { derivePasswordKey } from '../utils/passwordKey';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -39,14 +40,20 @@ export default function LoginPage() {
     setError('');
 
     try {
+      const saltRes = await fetch(`${API_BASE}/api/auth/salt`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ loginIdentifier: identifier }),
+      });
+      if (!saltRes.ok) throw new Error(`Login failed (${saltRes.status})`);
+      const { salt } = await saltRes.json();
+      const passwordKey = await derivePasswordKey(formData.password, salt);
+
       const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          loginIdentifier: formData.email.trim(),
-          password: formData.password,
-        }),
+        body: JSON.stringify({ loginIdentifier: identifier, passwordKey }),
       });
       const text = await res.text();
       let data = {};
