@@ -9,6 +9,8 @@ import { useCtaActions } from '../contexts/CtaActionsContext';
 import ServiceAssurance from '../components/ServiceAssurance';
 import { submitReview } from '../utils/reviews';
 
+import SvcGuide, { SvcTopic } from '../components/site/SvcGuide';
+import SvcNav from '../components/site/SvcNav';
 const viewPackagesFallback = {
   regular: [
     { views: '100', price: '1.34', originalPrice: '1.49', discount: '10%' },
@@ -274,6 +276,9 @@ export default function BuyYouTubeViewsPage() {
           </div>
         </div>
 
+        <SvcNav />
+
+
         {/* All In One YouTube Views Campaign Section */}
         <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
@@ -372,81 +377,23 @@ export default function BuyYouTubeViewsPage() {
           </div>
         </div>
 
-        {/* Why Do You Need To Buy YouTube Views Section */}
-        <div className="mt-12 lg:mt-16 svc-prose lp-reveal">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="flex justify-center lg:justify-start">
-              <img
-                src={resolveImageUrl(content?.whySection?.image, '/demo1.jpg')}
-                alt={content?.whySection?.heading ?? 'YouTube Views Growing'}
-                className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-              />
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                {content?.whySection?.heading ?? 'Why Do You Need To Buy YouTube Views?'}
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>{content?.whySection?.paragraph1 ?? "The number of views your YouTube video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of views, they will think that your video is valuable and worth watching."}</p>
-                <p>{content?.whySection?.paragraph2 ?? "This increases the chances that they will click on your video and watch it. In addition, YouTube's algorithm favors videos with more views, which means that videos with more views are more likely to appear in search results and be recommended to other users."}</p>
-                <p>{content?.whySection?.paragraph3 ?? "Therefore, buying YouTube views can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic views and subscribers in the long run."}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Numbers, Engagement, and Reputation Section */}
-        <div className="mt-12 lg:mt-32 svc-prose lp-reveal">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                {content?.numbersSection?.heading ?? 'Numbers, Engagement, and Reputation; YoutubeADwords'}
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>{content?.numbersSection?.paragraph1 ?? "What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?"}</p>
-                <p>{content?.numbersSection?.paragraph2 ?? "Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to."}</p>
-                <p>{content?.numbersSection?.paragraph3 ?? "What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you."}</p>
-              </div>
-            </div>
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                <img
-                  src={resolveImageUrl(content?.numbersSection?.image, '/demo1.jpg')}
-                  alt={content?.numbersSection?.heading ?? 'Content Creation'}
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* An Excellent Strategy Section */}
-        <div className="mt-12 lg:mt-16 svc-prose lp-reveal">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="flex justify-center lg:justify-start order-2 lg:order-1">
-              <div className="relative">
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-                <img
-                  src={resolveImageUrl(content?.strategySection?.image, '/demo2.jpg')}
-                  alt={content?.strategySection?.heading ?? 'YouTube Channel Strategy'}
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-            <div className="space-y-4 order-1 lg:order-2">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                {content?.strategySection?.heading ?? 'An Excellent Strategy To Uplift Your YouTube Channel'}
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>{content?.strategySection?.paragraph1 ?? "Organic views are great, but if you're in need, it is possible to buy YouTube views and buy YouTube watch hours that will provide you with just as much influence in way shorter time."}</p>
-                <p>{content?.strategySection?.paragraph2 ?? "The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying views on YouTube may be an excellent strategy to uplift your YouTube channel. The bought views serve as an effective support base and a credibility for visitors to become subscribers."}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Good-to-know guide: the long-form copy as one tabbed panel */}
+        <SvcGuide>
+          <SvcTopic title={content?.whySection?.heading ?? 'Why Do You Need To Buy YouTube Views?'} image={resolveImageUrl(content?.whySection?.image, '/demo1.jpg')}>
+            <p>{content?.whySection?.paragraph1 ?? "The number of views your YouTube video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of views, they will think that your video is valuable and worth watching."}</p>
+            <p>{content?.whySection?.paragraph2 ?? "This increases the chances that they will click on your video and watch it. In addition, YouTube's algorithm favors videos with more views, which means that videos with more views are more likely to appear in search results and be recommended to other users."}</p>
+            <p>{content?.whySection?.paragraph3 ?? "Therefore, buying YouTube views can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic views and subscribers in the long run."}</p>
+          </SvcTopic>
+          <SvcTopic title={content?.numbersSection?.heading ?? 'Numbers, Engagement, and Reputation; YoutubeADwords'} image={resolveImageUrl(content?.numbersSection?.image, '/demo1.jpg')}>
+            <p>{content?.numbersSection?.paragraph1 ?? "What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?"}</p>
+            <p>{content?.numbersSection?.paragraph2 ?? "Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to."}</p>
+            <p>{content?.numbersSection?.paragraph3 ?? "What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you."}</p>
+          </SvcTopic>
+          <SvcTopic title={content?.strategySection?.heading ?? 'An Excellent Strategy To Uplift Your YouTube Channel'} image={resolveImageUrl(content?.strategySection?.image, '/demo2.jpg')}>
+            <p>{content?.strategySection?.paragraph1 ?? "Organic views are great, but if you're in need, it is possible to buy YouTube views and buy YouTube watch hours that will provide you with just as much influence in way shorter time."}</p>
+            <p>{content?.strategySection?.paragraph2 ?? "The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying views on YouTube may be an excellent strategy to uplift your YouTube channel. The bought views serve as an effective support base and a credibility for visitors to become subscribers."}</p>
+          </SvcTopic>
+        </SvcGuide>
 
         {/* FAQ Section */}
         <div className="mt-12 lg:mt-16 svc-faq lp-reveal">

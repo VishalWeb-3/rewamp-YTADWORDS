@@ -9,6 +9,8 @@ import { resolveImageUrl } from '../utils/image';
 import ServiceAssurance from '../components/ServiceAssurance';
 import { submitReview } from '../utils/reviews';
 
+import SvcGuide, { SvcTopic } from '../components/site/SvcGuide';
+import SvcNav from '../components/site/SvcNav';
 const subscriberPackagesFallback = {
   regular: [
     { subscribers: '100', price: '5.03', originalPrice: '5.59', discount: '10%' },
@@ -288,6 +290,9 @@ export default function BuyYouTubeSubscribersPage() {
           </div>
         </div>
 
+        <SvcNav />
+
+
         {/* All In One YouTube Subscribers Campaign Section */}
         <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
@@ -484,114 +489,23 @@ export default function BuyYouTubeSubscribersPage() {
           </div>
         </div>
 
-        {/* Why Do You Need To Buy YouTube Subscribers Section */}
-        <div className="mt-12 lg:mt-16 svc-prose lp-reveal">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - GIF */}
-            <div className="flex justify-center lg:justify-start">
-              <img
-                src="/demo1.jpg"
-                alt="YouTube Subscribers Growing"
-                className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-              />
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Why Do You Need To Buy YouTube Subscribers?
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  The number of subscribers your YouTube channel has is one of the most important factors that determine the credibility and growth potential of your channel. When visitors see that your channel has a high number of subscribers, they will think that your content is valuable and worth subscribing to.
-                </p>
-                <p>
-                  This increases the chances that they will subscribe to your channel and watch your videos. In addition, YouTube's algorithm favors channels with more subscribers, which means that your videos are more likely to appear in search results and be recommended to other users.
-                </p>
-                <p>
-                  Therefore, buying YouTube subscribers can help you improve your channel's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic subscribers and views in the long run.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Numbers, Engagement, and Reputation Section */}
-        <div className="mt-12 lg:mt-32 svc-prose lp-reveal">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; YoutubeADwords
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?
-                </p>
-                <p>
-                  Numbers are everything in today's digital world. Buying subscribers makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.
-                </p>
-                <p>
-                  What number of subscribers will satisfy you? Would 100,000 subscribers look good on your channel? YoutubeADwords can provide this for you. Thanks to the quality subscribers we send to your channel, we're able to activate the YouTube algorithm and make the system work for you.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Section - Image */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo1.jpg"
-                  alt="Content Creation"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* An Excellent Strategy Section */}
-        <div className="mt-12 lg:mt-16 svc-prose lp-reveal">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Image */}
-            <div className="flex justify-center lg:justify-start order-2 lg:order-1">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo2.jpg"
-                  alt="YouTube Channel Strategy"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4 order-1 lg:order-2">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                An Excellent Strategy To Uplift Your YouTube Channel
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  Organic subscribers are great, but if you're in need, it is possible to{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube subscribers</span> and{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube watch hours</span> that will provide you with just as much influence in way shorter time.
-                </p>
-                <p>
-                  The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying subscribers on YouTube may be an excellent strategy to uplift your YouTube channel. The bought subscribers serve as an effective support base and a credibility for visitors to become subscribers.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Good-to-know guide: the long-form copy as one tabbed panel */}
+        <SvcGuide>
+          <SvcTopic title={"Why Do You Need To Buy YouTube Subscribers?"}>
+            <p>The number of subscribers your YouTube channel has is one of the most important factors that determine the credibility and growth potential of your channel. When visitors see that your channel has a high number of subscribers, they will think that your content is valuable and worth subscribing to.</p>
+            <p>This increases the chances that they will subscribe to your channel and watch your videos. In addition, YouTube's algorithm favors channels with more subscribers, which means that your videos are more likely to appear in search results and be recommended to other users.</p>
+            <p>Therefore, buying YouTube subscribers can help you improve your channel's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic subscribers and views in the long run.</p>
+          </SvcTopic>
+          <SvcTopic title={"Numbers, Engagement, and Reputation; YoutubeADwords"}>
+            <p>What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?</p>
+            <p>Numbers are everything in today's digital world. Buying subscribers makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.</p>
+            <p>What number of subscribers will satisfy you? Would 100,000 subscribers look good on your channel? YoutubeADwords can provide this for you. Thanks to the quality subscribers we send to your channel, we're able to activate the YouTube algorithm and make the system work for you.</p>
+          </SvcTopic>
+          <SvcTopic title={"An Excellent Strategy To Uplift Your YouTube Channel"}>
+            <p>Organic subscribers are great, but if you're in need, it is possible to{' '} <span className="text-brand-red font-semibold">buy YouTube subscribers</span> and{' '} <span className="text-brand-red font-semibold">buy YouTube watch hours</span> that will provide you with just as much influence in way shorter time.</p>
+            <p>The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying subscribers on YouTube may be an excellent strategy to uplift your YouTube channel. The bought subscribers serve as an effective support base and a credibility for visitors to become subscribers.</p>
+          </SvcTopic>
+        </SvcGuide>
 
         {/* FAQ Section */}
         <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
