@@ -64,7 +64,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="lp-section lp-ink">
+      <section className="lp-section pg-why-sec">
         <div className="lp-wrap">
           <div className="lp-head lp-reveal">
             <h2 className="lp-display">Why customers choose us</h2>
