@@ -44,7 +44,6 @@ export default function Header() {
   const navItems = header.navLinks || [
     { label: 'Google Ads Services', link: '/buy-google-skip-ads-views' },
     { label: 'YouTube Services', link: '/buy-youtube-views' },
-    { label: 'TikTok Ads Services', link: '/buy-tiktok-followers' },
     { label: 'Contact', link: '/contact' },
   ];
 

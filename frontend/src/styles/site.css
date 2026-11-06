@@ -48,7 +48,7 @@
 .site > .min-h-screen, .site > div.bg-white:not([role="dialog"]), .site > main.bg-white, .site > .bg-gray-50 { background-color: transparent; }
 .site img[class*="w-[200px]"] { display: none; }
 
-/* one accent: the TikTok pages used blue, unify to the signal red */
+/* one accent: unify any stray blue to the signal red */
 .site .bg-blue-600, .site .bg-blue-500 { background-color: var(--red); }
 .site .text-blue-600, .site .text-blue-500 { color: var(--red-deep); }
 .site .border-blue-600, .site .border-blue-500 { border-color: var(--red); }

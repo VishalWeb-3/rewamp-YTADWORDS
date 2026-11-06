@@ -22,7 +22,7 @@ export default function TermsPage() {
     <Layout>
       <SEO
         title="Terms of Service | YoutubeADwords"
-        description="Read the YoutubeADwords Terms of Service. By using our platform, you agree to our terms for YouTube, TikTok, and Google Ads growth services."
+        description="Read the YoutubeADwords Terms of Service. By using our platform, you agree to our terms for YouTube and Google Ads growth services."
       />
       <LegalShell title={title} lastUpdated={lastUpdated} headings={sections.map((s) => s.heading)}>
             {sections.map((section, i) => (

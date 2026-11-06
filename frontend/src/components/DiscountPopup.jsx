@@ -49,8 +49,6 @@ export default function DiscountPopup() {
         '/pay',
         '/payment/success',
         '/payment/failure',
-        '/google-reviews/get-started',
-        '/google-reviews/upgrade',
         '/get-started'
     ];
 

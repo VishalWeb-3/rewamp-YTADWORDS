@@ -182,21 +182,6 @@ const loginSchema = z.object({
 const saltSchema = z.object({ loginIdentifier: z.string().trim().min(1).max(254) });
 
 // Orders name a package; the server looks up its price (the browser never sends one)
-const reviewItemFields = {
-  kind: z.literal("google-reviews"),
-  slug: z.string().max(100),
-  paymentType: z.string().max(20),
-  reviewType: z.string().max(20),
-  reviews: z.coerce.number().int().positive(),
-  addOns: z
-    .object({
-      verifiedReviewers: z.boolean().optional(),
-      ageGroupTargeting: z.boolean().optional(),
-      genderTargeting: z.boolean().optional(),
-    })
-    .optional(),
-  details: z.record(z.string(), z.unknown()).optional(),
-};
 const packageItemFields = {
   kind: z.literal("package").optional(),
   slug: z.string().max(100),
@@ -204,7 +189,7 @@ const packageItemFields = {
   quantity: z.union([z.string().max(20), z.number()]),
 };
 const itemSchema = (link: z.ZodType<string | undefined>) =>
-  z.union([z.object({ ...reviewItemFields, link }), z.object({ ...packageItemFields, link })]);
+  z.object({ ...packageItemFields, link });
 
 const catalogItemSchema = itemSchema(z.string().trim().min(1, "A link is required for every item").max(500));
 const quoteSchema = z.object({ items: z.array(itemSchema(z.string().max(500).optional())).min(1).max(20) });
@@ -522,8 +507,7 @@ type QuotedItem = PricedItem & { link?: string; details?: Record<string, unknown
 function quoteItems(items: Array<z.infer<typeof catalogItemSchema> | (CatalogItem & { link?: string })>) {
   const priced: QuotedItem[] = items.map((item) => {
     const base = priceItem(item as CatalogItem);
-    const details = item.kind === "google-reviews" ? { ...(item as any).details, addOns: (item as any).addOns } : undefined;
-    return { ...base, link: (item as any).link, details };
+    return { ...base, link: (item as any).link };
   });
   return { priced, total: round2(priced.reduce((sum, item) => sum + item.price, 0)) };
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalContent, useHomeContent } from '../../contexts/ContentContext';
-import { Arrow, Check, Cross, Star, YouTube, TikTok, GoogleG } from './icons';
+import { Arrow, Check, Cross, YouTube, GoogleG } from './icons';
 
 const R = ({ children, i = 0, as: Tag = 'div', className = '', ...rest }) => (
   <Tag className={`lp-reveal ${className}`} style={{ '--i': i }} {...rest}>{children}</Tag>
@@ -10,8 +10,6 @@ const R = ({ children, i = 0, as: Tag = 'div', className = '', ...rest }) => (
 const GROUP_STYLE = [
   { icon: GoogleG, chip: '#4285F4' },
   { icon: YouTube, chip: '#e53935' },
-  { icon: TikTok, chip: '#0b1020' },
-  { icon: Star, chip: '#1f9d57' },
 ];
 
 export function Services() {
@@ -47,7 +45,7 @@ export function Services() {
 }
 
 const STEPS = [
-  { title: 'Choose a service', text: 'Open the YouTube, TikTok, Google Ads or Google Reviews page and pick a package.' },
+  { title: 'Choose a service', text: 'Open the YouTube or Google Ads page and pick a package.' },
   { title: 'Share a link, never a password', text: 'We need your video, profile or business link. Nothing that lets us log in to your account.' },
   { title: 'Follow it in My Orders', text: 'Check delivery from your account. If something looks wrong, support is one message away.' },
 ];
@@ -321,8 +319,6 @@ export function Closer() {
         <R i={2}><a href="#top" className="lp-btn lp-btn-white">Choose your pass<Arrow /></a></R>
         <R i={3} className="lp-final-links">
           <Link to="/buy-youtube-views">Buy YouTube views</Link>
-          <Link to="/buy-tiktok-followers">Buy TikTok followers</Link>
-          <Link to="/buy-male-google-reviews">Buy Google reviews</Link>
           <Link to="/buy-google-skip-ads-views">Google Ads views</Link>
         </R>
       </div>

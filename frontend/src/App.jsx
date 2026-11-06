@@ -8,18 +8,11 @@ const BuyYouTubeViewsPage = lazy(() => import('./pages/BuyYouTubeViewsPage'));
 const BuyYouTubeSubscribersPage = lazy(() => import('./pages/BuyYouTubeSubscribersPage'));
 const BuyYouTubeLikesPage = lazy(() => import('./pages/BuyYouTubeLikesPage'));
 const BuyYouTubeWatchHoursPage = lazy(() => import('./pages/BuyYouTubeWatchHoursPage'));
-const BuyTikTokFollowersPage = lazy(() => import('./pages/BuyTikTokFollowersPage'));
-const BuyTikTokLikesPage = lazy(() => import('./pages/BuyTikTokLikesPage'));
-const BuyTikTokViewsPage = lazy(() => import('./pages/BuyTikTokViewsPage'));
 const BuyGoogleSkipAdsViewsPage = lazy(() => import('./pages/BuyGoogleSkipAdsViewsPage'));
 const BuyGoogleDisplayAdsViewsPage = lazy(() => import('./pages/BuyGoogleDisplayAdsViewsPage'));
 
 const BuyGoogleAppsDownloadPage = lazy(() => import('./pages/BuyGoogleAppsDownloadPage'));
 const BuyGoogleAdsWebsiteTrafficPage = lazy(() => import('./pages/BuyGoogleAdsWebsiteTrafficPage'));
-const BuyFemaleGoogleReviewsPage = lazy(() => import('./pages/BuyFemaleGoogleReviewsPage'));
-const BuyMaleGoogleReviewsPage = lazy(() => import('./pages/BuyMaleGoogleReviewsPage'));
-const BuyGoogleLocalGuideReviewsPage = lazy(() => import('./pages/BuyGoogleLocalGuideReviewsPage'));
-const BuyGoogleReviewsByAgeGroupPage = lazy(() => import('./pages/BuyGoogleReviewsByAgeGroupPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const AboutUsPage = lazy(() => import('./pages/AboutUsPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -30,8 +23,6 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SignupPage = lazy(() => import('./pages/SignupPage'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
 const GetStartedPage = lazy(() => import('./pages/GetStartedPage'));
-const GoogleReviewsGetStartedGeneric = lazy(() => import('./pages/GoogleReviewsGetStartedGeneric'));
-const GoogleReviewsUpgradeGeneric = lazy(() => import('./pages/GoogleReviewsUpgradeGeneric'));
 const MyOrdersPage = lazy(() => import('./pages/MyOrdersPage'));
 const OrderDetailPage = lazy(() => import('./pages/OrderDetailPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
@@ -70,18 +61,11 @@ function AppContent() {
         <Route path="/buy-youtube-subscribers" element={<BuyYouTubeSubscribersPage />} />
         <Route path="/buy-youtube-likes" element={<BuyYouTubeLikesPage />} />
         <Route path="/buy-youtube-watch-hours" element={<BuyYouTubeWatchHoursPage />} />
-        <Route path="/buy-tiktok-followers" element={<BuyTikTokFollowersPage />} />
-        <Route path="/buy-tiktok-likes" element={<BuyTikTokLikesPage />} />
-        <Route path="/buy-tiktok-views" element={<BuyTikTokViewsPage />} />
         <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
         <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
 
         <Route path="/buy-google-apps-download" element={<BuyGoogleAppsDownloadPage />} />
         <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
-        <Route path="/buy-female-google-reviews" element={<BuyFemaleGoogleReviewsPage />} />
-        <Route path="/buy-male-google-reviews" element={<BuyMaleGoogleReviewsPage />} />
-        <Route path="/buy-google-local-guide-reviews" element={<BuyGoogleLocalGuideReviewsPage />} />
-        <Route path="/buy-google-reviews-by-age-group" element={<BuyGoogleReviewsByAgeGroupPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
         <Route path="/tickets" element={<ContactPage />} />
@@ -104,8 +88,6 @@ function AppContent() {
         <Route path="/get-started" element={<GetStartedPage />} />
         <Route path="/blog" element={<BlogListPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
-        <Route path="/google-reviews/get-started" element={<GoogleReviewsGetStartedGeneric />} />
-        <Route path="/google-reviews/upgrade" element={<GoogleReviewsUpgradeGeneric />} />
         <Route path="/orders" element={<MyOrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />

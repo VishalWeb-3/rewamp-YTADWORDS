@@ -64,12 +64,12 @@ export default function BlogListPage() {
     <Layout>
       <SEO
         title="Blog | YoutubeADwords"
-        description="Read the YoutubeADwords blog for tips, guides, and updates on growing your YouTube, TikTok, and Google Ads presence."
+        description="Read the YoutubeADwords blog for tips, guides, and updates on growing your YouTube and Google Ads presence."
       />
       <div className="pg-wrap pg-section">
         <PageHead
           title="Blog"
-          lede="Tips, guides and updates to help you grow on YouTube, Google and TikTok."
+          lede="Tips, guides and updates to help you grow on YouTube and Google."
         />
 
         {loading ? (

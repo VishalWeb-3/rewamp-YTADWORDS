@@ -157,7 +157,6 @@ export default defineConfig({
           {
             type: 'object', name: 'servicesSection', label: 'Services Section', fields: [
               { type: 'string', name: 'googleServices', label: 'Google Services', list: true },
-              { type: 'string', name: 'tiktokServices', label: 'TikTok Services', list: true },
             ]
           },
           {
@@ -628,113 +627,6 @@ export default defineConfig({
               },
               { type: 'string', name: 'saveButtonText', label: 'Save Button Text' },
               { type: 'string', name: 'savedButtonText', label: 'Saved Button Text' },
-            ],
-          },
-        ],
-      },
-      {
-        name: 'googlePricing',
-        label: 'Google Reviews Pricing',
-        path: 'content/google-pricing',
-        format: 'json',
-        ui: {
-          allowedActions: { create: false, delete: false },
-        },
-        fields: [
-          {
-            type: 'object',
-            name: 'pages',
-            label: 'Pricing Pages',
-            list: true,
-            fields: [
-              { type: 'string', name: 'slug', label: 'Page Slug', required: true },
-              {
-                type: 'object',
-                name: 'oneTime',
-                label: 'One Time',
-                fields: [
-                  {
-                    type: 'object',
-                    name: 'basic',
-                    label: 'Basic',
-                    list: true,
-                    fields: [
-                      { type: 'number', name: 'reviews', label: 'Reviews' },
-                      { type: 'number', name: 'currentPrice', label: 'Current Price' },
-                      { type: 'number', name: 'finalPrice', label: 'Final Price' },
-                    ],
-                  },
-                  {
-                    type: 'object',
-                    name: 'custom',
-                    label: 'Custom',
-                    list: true,
-                    fields: [
-                      { type: 'number', name: 'reviews', label: 'Reviews' },
-                      { type: 'number', name: 'currentPrice', label: 'Current Price' },
-                      { type: 'number', name: 'finalPrice', label: 'Final Price' },
-                    ],
-                  },
-                ],
-              },
-              {
-                type: 'object',
-                name: 'monthly',
-                label: 'Monthly Plan',
-                fields: [
-                  {
-                    type: 'object',
-                    name: 'basic',
-                    label: 'Basic',
-                    list: true,
-                    fields: [
-                      { type: 'number', name: 'reviews', label: 'Reviews' },
-                      { type: 'number', name: 'currentPrice', label: 'Current Price' },
-                      { type: 'number', name: 'finalPrice', label: 'Final Price' },
-                    ],
-                  },
-                  {
-                    type: 'object',
-                    name: 'custom',
-                    label: 'Custom',
-                    list: true,
-                    fields: [
-                      { type: 'number', name: 'reviews', label: 'Reviews' },
-                      { type: 'number', name: 'currentPrice', label: 'Current Price' },
-                      { type: 'number', name: 'finalPrice', label: 'Final Price' },
-                    ],
-                  },
-                ],
-              },
-              {
-                type: 'object',
-                name: 'drip90',
-                label: '90 Day Drip Reviews',
-                fields: [
-                  {
-                    type: 'object',
-                    name: 'basic',
-                    label: 'Basic',
-                    list: true,
-                    fields: [
-                      { type: 'number', name: 'reviews', label: 'Reviews' },
-                      { type: 'number', name: 'currentPrice', label: 'Current Price' },
-                      { type: 'number', name: 'finalPrice', label: 'Final Price' },
-                    ],
-                  },
-                  {
-                    type: 'object',
-                    name: 'custom',
-                    label: 'Custom',
-                    list: true,
-                    fields: [
-                      { type: 'number', name: 'reviews', label: 'Reviews' },
-                      { type: 'number', name: 'currentPrice', label: 'Current Price' },
-                      { type: 'number', name: 'finalPrice', label: 'Final Price' },
-                    ],
-                  },
-                ],
-              },
             ],
           },
         ],

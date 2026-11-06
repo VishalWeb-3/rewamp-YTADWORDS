@@ -8,8 +8,6 @@ import { Arrow } from '../components/landing/icons';
 
 const POPULAR = [
   { to: '/buy-youtube-views', label: 'Buy YouTube views' },
-  { to: '/buy-tiktok-followers', label: 'Buy TikTok followers' },
-  { to: '/buy-male-google-reviews', label: 'Buy Google reviews' },
   { to: '/buy-google-skip-ads-views', label: 'Google Ads views' },
 ];
 

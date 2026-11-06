@@ -3,22 +3,14 @@ const normalize = (str) => (str || '').trim().toLowerCase();
 // Accepted hostnames per platform (subdomains such as www., m., vm. are allowed)
 const PLATFORM_HOSTS = {
   youtube: ['youtube.com', 'youtu.be'],
-  tiktok: ['tiktok.com'],
-  instagram: ['instagram.com'],
-  facebook: ['facebook.com', 'fb.watch', 'fb.com'],
-  twitter: ['twitter.com', 'x.com'],
 };
 
-const HANDLE_PLATFORMS = ['youtube', 'tiktok', 'instagram', 'twitter'];
+const HANDLE_PLATFORMS = ['youtube'];
 
 function platformKey(platform) {
   const p = normalize(platform);
   if (p.includes('youtube')) return 'youtube';
-  if (p.includes('tiktok')) return 'tiktok';
   if (p.includes('google')) return 'google';
-  if (p.includes('instagram')) return 'instagram';
-  if (p.includes('facebook') || p.includes('meta')) return 'facebook';
-  if (p.includes('twitter') || p === 'x') return 'twitter';
   return 'other';
 }
 
@@ -50,7 +42,7 @@ function isGoogleBusinessUrl(url) {
 /**
  * Checks that a link or @handle belongs to the given platform.
  * @param {string} link - The link or username to validate
- * @param {string} platform - The platform name (YouTube, TikTok, Google, etc.)
+ * @param {string} platform - The platform name (YouTube or Google)
  * @returns {boolean} - True if the link is valid for the platform
  */
 export const isValidLink = (link, platform) => {
@@ -80,9 +72,6 @@ export const isValidLink = (link, platform) => {
 export const getLinkPlaceholder = (platform) => {
   const key = platformKey(platform);
   if (key === 'youtube') return 'Paste YouTube video link or @channel...';
-  if (key === 'tiktok') return 'Paste TikTok URL or @username...';
   if (key === 'google') return 'Paste Google Maps link or business URL...';
-  if (key === 'instagram') return 'Paste Instagram profile URL or @username...';
-  if (key === 'facebook') return 'Paste Facebook page or video URL...';
   return 'Paste your link here (e.g. https://example.com/...)';
 };

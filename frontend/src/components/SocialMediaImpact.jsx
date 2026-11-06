@@ -17,7 +17,7 @@ export default function SocialMediaImpact() {
                 <span className="text-brand-red">{section.leftTitleHighlight || 'Impact'}</span>
               </h2>
               <p className="text-gray-500 leading-relaxed" style={{ fontSize: "13px" }}>
-                {section.leftParagraph1 || 'YouTube, TikTok, Facebook, X, and Pinterest have all become so popular worldwide that gaining widespread visibility and interaction for user-generated content is increasingly difficult.'}
+                {section.leftParagraph1 || 'YouTube and Google have all become so popular worldwide that gaining widespread visibility and interaction for user-generated content is increasingly difficult.'}
               </p>
               <p className="text-gray-500 leading-relaxed" style={{ fontSize: "13px" }}>
                 {section.leftParagraph2 || "When all these users come across channels and accounts or posts with great numbers of subscribers, followers, likes, views, watch hours, and comments respectively, it will increase the interest in what is all the excitement about."}
@@ -32,10 +32,10 @@ export default function SocialMediaImpact() {
                 <span className="text-brand-red">{section.rightTitleHighlight || 'Growth'}</span>
               </h2>
               <p className="text-gray-500 leading-relaxed" style={{ fontSize: "13px" }}>
-                {section.rightParagraph1 || 'This increases your engagement on YouTube, TikTok, Facebook, X, and Pinterest, boosting your influence, popularity, and presence on these platforms.'}
+                {section.rightParagraph1 || 'This increases your engagement on YouTube and Google, boosting your influence, popularity, and presence on these platforms.'}
               </p>
               <p className="text-gray-500 leading-relaxed" style={{ fontSize: "13px" }}>
-                {section.rightParagraph2 || 'YoutubeADwords can make it a reality! With our YouTube, TikTok, Facebook, X, and Pinterest engagement packages, results arrive instantly, your account remains secure, and you experience rapid organic growth for your profile, pages, and content!'}
+                {section.rightParagraph2 || 'YoutubeADwords can make it a reality! With our YouTube and Google engagement packages, results arrive instantly, your account remains secure, and you experience rapid organic growth for your profile, pages, and content!'}
               </p>
             </div>
           </div>

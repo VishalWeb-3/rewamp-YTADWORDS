@@ -97,7 +97,7 @@ export default function BlogPostPage() {
     <Layout>
       <SEO
         title={post.title ? `${post.title} | YoutubeADwords` : 'Blog | YoutubeADwords'}
-        description={post.excerpt || 'Read the latest tips and guides on YoutubeADwords blog about YouTube, TikTok, and Google Ads growth.'}
+        description={post.excerpt || 'Read the latest tips and guides on YoutubeADwords blog about YouTube and Google Ads growth.'}
       />
       <ReadingBar />
       <div className="pg-article">

@@ -1,16 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useHomeContent } from '../../contexts/ContentContext';
-import { Arrow, Check, Star, YouTube, TikTok, GoogleG, Hand } from './icons';
+import { Arrow, Check, YouTube, GoogleG, Hand } from './icons';
 
 // Each service is a laminate pass; the pass is also the link to that service's page.
 // `flip` mirrors a pass's content to its right edge: those two fan out to the right and the front
 // pass covers their left half, which would hide the name.
 const PASSES = [
-  { id: 'ads', to: '/buy-google-skip-ads-views', name: 'Google Ads', serial: 'GA-0004', icon: GoogleG, chip: '#4285F4', strap: '#4285F4', options: ['Skip ads', 'Display ads', 'App installs', 'Web traffic'], flip: true, r: -21, d: '0.45s' },
-  { id: 'tiktok', to: '/buy-tiktok-followers', name: 'TikTok', serial: 'TT-0003', icon: TikTok, chip: '#0b1020', strap: '#0b1020', dark: true, options: ['Followers', 'Likes', 'Views'], flip: true, r: -8, d: '0.25s' },
-  { id: 'youtube', to: '/buy-youtube-views', name: 'YouTube', serial: 'YT-0002', icon: YouTube, chip: '#e53935', strap: '#e53935', options: ['Views', 'Subscribers', 'Likes', 'Watch hours'], side: true, r: 19, d: '0.1s' },
-  { id: 'reviews', to: '/buy-male-google-reviews', name: 'Google Reviews', serial: 'GR-0001', icon: Star, chip: '#1f9d57', strap: '#1f9d57', options: ['Male', 'Female', 'Local Guide', 'By age group'], r: 5, d: '0s', sample: true },
+  { id: 'ads', to: '/buy-google-skip-ads-views', name: 'Google Ads', serial: 'GA-0004', icon: GoogleG, chip: '#4285F4', strap: '#4285F4', options: ['Skip ads', 'Display ads', 'App installs', 'Web traffic'], flip: true, r: -14, d: '0.45s' },
+  { id: 'youtube', to: '/buy-youtube-views', name: 'YouTube', serial: 'YT-0002', icon: YouTube, chip: '#e53935', strap: '#e53935', options: ['Views', 'Subscribers', 'Likes', 'Watch hours'], r: 9, d: '0.1s', sample: true },
 ];
 
 const SAMPLE_TOTAL = 50;
@@ -430,7 +428,7 @@ function Pass({ pass, delivered, onOpen }) {
           {pass.sample && (
             <div className="lp-order" aria-label="Sample order illustration">
               <span className="tag lp-mono">SAMPLE ORDER</span>
-              <b>50 Google Reviews · USA</b>
+              <b>50 YouTube Views · USA</b>
               <div className="lp-bar"><i style={{ '--p': `${(Math.max(delivered, 0) / SAMPLE_TOTAL) * 100}%` }} /></div>
               <small className="lp-mono">{Math.max(delivered, 0)} / {SAMPLE_TOTAL} delivered</small>
             </div>
@@ -490,8 +488,8 @@ export default function LandingHero() {
     return () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', leave); };
   }, [reduced]);
 
-  const title = hero.title || 'Build Instant Trust with 5-Star Google Reviews & Real Social Growth';
-  const subtitle = hero.subtitle || 'Get verified, organic Google Reviews, YouTube Views, and TikTok Followers.';
+  const title = hero.title || 'Build Instant Trust with Grow Your YouTube Channel & Google Ads with Real Engagement';
+  const subtitle = hero.subtitle || 'Get verified, organic YouTube views, subscribers and Google Ads traffic.';
 
   return (
     <section className="lp-hero" id="top">
@@ -500,7 +498,7 @@ export default function LandingHero() {
           <Headline title={title} />
           <p className="lp-lede">{subtitle}</p>
           <div className="lp-cta-row">
-            <Link to={hero.ctaPrimaryLink || '/buy-male-google-reviews'} className="lp-btn lp-btn-red">{hero.ctaPrimary || 'Get 5-Star Reviews'}<Arrow /></Link>
+            <Link to={hero.ctaPrimaryLink || '/buy-youtube-views'} className="lp-btn lp-btn-red">{hero.ctaPrimary || 'Buy YouTube Views'}<Arrow /></Link>
             <Link to={hero.ctaSecondaryLink || '/contact'} className="lp-btn lp-btn-line">{hero.ctaSecondary || 'Contact Now'}</Link>
           </div>
           <ul className="lp-assure">

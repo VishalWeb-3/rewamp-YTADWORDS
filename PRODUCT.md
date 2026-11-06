@@ -8,7 +8,7 @@ web
 
 ## Users
 
-Primary: creators and small channels on YouTube and TikTok who want to grow reach and credibility, buying views, subscribers, likes and watch hours. They arrive wary of bans and fake engagement, and compare several storefronts before paying.
+Primary: creators and small channels on YouTube who want to grow reach and credibility, buying views, subscribers, likes and watch hours. They arrive wary of bans and fake engagement, and compare several storefronts before paying.
 
 Secondary (present in the catalog, not confirmed as a core audience): local businesses buying Google reviews, local guide reviews, ads traffic and app downloads.
 
@@ -22,7 +22,7 @@ Real-people, safe delivery: engagement that is genuine and policy-safe, so a cre
 
 ## Operating Context
 
-- Service catalog spans YouTube (views, likes, subscribers, watch hours), TikTok (views, likes, followers), Google reviews (male, female, age group, local guide), Google ads views (skip, display), website traffic and app downloads.
+- Service catalog spans YouTube (views, likes, subscribers, watch hours), Google reviews (male, female, age group, local guide), Google ads views (skip, display), website traffic and app downloads.
 - Accounts, cart, orders, order detail, shareable payment links and payment success/failure flows exist.
 - Content is editable through TinaCMS; blog is part of the site.
 

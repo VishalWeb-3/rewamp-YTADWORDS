@@ -41,7 +41,7 @@ export default function Layout({ children, variant, seoTitle, seoDescription, se
   // Metadata edited in Tina (content/pages/<slug>.mdx); pages can still set their own <SEO>
   const finalMetadata = usePageMetadata(slug);
 
-  const title = finalMetadata?.title || seoTitle || 'YoutubeADwords - Boost Your Google Ads & TikTok Campaigns';
+  const title = finalMetadata?.title || seoTitle || 'YoutubeADwords - Boost Your Google Ads & YouTube Campaigns';
   const description = finalMetadata?.description || seoDescription || 'Experience rapid growth with YoutubeADwords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.';
   const keywords = finalMetadata?.keywords || seoKeywords || '';
   const ogImage = finalMetadata?.ogImage || seoOgImage || '/favicon.svg';

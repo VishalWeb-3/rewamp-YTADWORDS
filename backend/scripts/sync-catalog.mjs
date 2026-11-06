@@ -9,7 +9,7 @@ const contentDir = path.resolve(backendRoot, "..", "frontend", "content");
 const dataDir = path.resolve(backendRoot, "data");
 
 mkdirSync(dataDir, { recursive: true });
-for (const name of ["pricing", "google-pricing"]) {
+for (const name of ["pricing"]) {
   const src = path.join(contentDir, name, "index.json");
   if (existsSync(src)) {
     copyFileSync(src, path.join(dataDir, `${name}.json`));

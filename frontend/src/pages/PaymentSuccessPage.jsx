@@ -140,7 +140,7 @@ export default function PaymentSuccessPage() {
               <li>
                 <span className="num lp-mono" aria-hidden="true">02</span>
                 <h3 className="lp-display">Delivery begins</h3>
-                <p>Views, subscribers or reviews start appearing within minutes to hours.</p>
+                <p>Views, subscribers or traffic start appearing within minutes to hours.</p>
               </li>
               <li>
                 <span className="num lp-mono" aria-hidden="true">03</span>

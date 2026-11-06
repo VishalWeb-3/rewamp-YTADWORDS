@@ -55,7 +55,7 @@ npm test           # or set TEST_DATABASE_URL to use another database
 
 ## Pricing
 
-Order prices are always computed on the server from `frontend/content/pricing` and `frontend/content/google-pricing`
+Order prices are always computed on the server from `frontend/content/pricing`
 (the files TinaCMS edits). The browser only sends a package reference (`slug`, `tier`, `quantity`).
 `backend/data/` holds a copy for deployments without the frontend folder; `npm run build` refreshes it.
 

@@ -71,7 +71,7 @@ export default function ContactPage() {
     <Layout>
       <SEO
         title="Contact Us | YoutubeADwords"
-        description="Get in touch with the YoutubeADwords support team. We're here 24/7 to help with your YouTube, TikTok, and Google Ads service questions."
+        description="Get in touch with the YoutubeADwords support team. We're here 24/7 to help with your YouTube and Google Ads service questions."
       />
       <div className="pg-contact pg-wrap">
         <div className="pg-contact-intro">

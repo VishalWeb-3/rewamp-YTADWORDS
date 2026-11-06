@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function SEO({
-  title = 'YoutubeADwords - Boost Your Google Ads & TikTok Campaigns',
+  title = 'YoutubeADwords - Boost Your Google Ads & YouTube Campaigns',
   description = 'Experience rapid growth with YoutubeADwords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide.',
   keywords = '',
   ogImage = '/favicon.svg',

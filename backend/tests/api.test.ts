@@ -69,19 +69,6 @@ describe("catalog", () => {
     expect(priceItem({ slug: "buy-youtube-views", tier: "regular", quantity: "5.0K" })).toMatchObject({ amount: 5000, price: 19.78 });
     expect(() => priceItem({ slug: "buy-youtube-views", tier: "regular", quantity: "123" })).toThrow();
   });
-
-  it("adds Google review add-on surcharges", () => {
-    const base = priceItem({ kind: "google-reviews", slug: "buy-female-google-reviews", paymentType: "one-time", reviewType: "5-star", reviews: 10 });
-    const withAddOn = priceItem({
-      kind: "google-reviews",
-      slug: "buy-female-google-reviews",
-      paymentType: "one-time",
-      reviewType: "5-star",
-      reviews: 10,
-      addOns: { verifiedReviewers: true },
-    });
-    expect(withAddOn.price).toBeCloseTo(base.price * 1.4, 2);
-  });
 });
 
 describe("auth", () => {

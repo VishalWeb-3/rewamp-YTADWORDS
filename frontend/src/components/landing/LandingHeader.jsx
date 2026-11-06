@@ -12,8 +12,6 @@ const FALLBACK_NAV = [
 const FALLBACK_GROUPS = [
   { label: 'Google Ads Services', items: [{ label: 'Google Skip Ads Views', link: '/buy-google-skip-ads-views' }, { label: 'Google Display Ads Views', link: '/buy-google-display-ads-views' }, { label: 'Google Apps Download', link: '/buy-google-apps-download' }, { label: 'Google Ads Website / App Traffic', link: '/buy-google-ads-website-traffic' }] },
   { label: 'YouTube Services', items: [{ label: 'Buy YouTube Views', link: '/buy-youtube-views' }, { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' }, { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' }, { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' }] },
-  { label: 'TikTok Ads Services', items: [{ label: 'TikTok Followers', link: '/buy-tiktok-followers' }, { label: 'TikTok Likes', link: '/buy-tiktok-likes' }, { label: 'TikTok Views', link: '/buy-tiktok-views' }] },
-  { label: 'Buy Google Reviews', items: [{ label: 'Buy Female Google Reviews', link: '/buy-female-google-reviews' }, { label: 'Buy Male Google Reviews', link: '/buy-male-google-reviews' }, { label: 'Buy Google Local Guide Reviews', link: '/buy-google-local-guide-reviews' }, { label: 'Buy Google Reviews by Age Group', link: '/buy-google-reviews-by-age-group' }] },
 ];
 
 export default function LandingHeader() {

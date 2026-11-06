@@ -115,7 +115,7 @@ The mood is friendly, confident, and promotional. Buttons are bold and obvious, 
 A neutral white-and-gray field with one red action color and one blue service color, plus green only for confirmation.
 
 ### Primary
-- **Signal Red** (#E53935): The primary CTA fill, accent words in the hero headline ("Google Ads", "TikTok"), the "Ad" block in the wordmark, and input focus rings.
+- **Signal Red** (#E53935): The primary CTA fill, accent words in the hero headline ("Google Ads", "YouTube"), the "Ad" block in the wordmark, and input focus rings.
 - **Signal Red Deep** (#C62828): Hover state for every red button. Also used directly as a fill on some buy buttons.
 
 ### Secondary
@@ -136,7 +136,7 @@ A neutral white-and-gray field with one red action color and one blue service co
 - **Headline Ink** (#111827): Headlines and primary text.
 - **Slate Ink** (#1E293B): Dark panels on a few sections.
 
-Service-specific brands (YouTube #FF0000, TikTok-style accents, Google green #34A853) appear per page through a `brandColor` prop and are not part of the core palette.
+Service-specific brands (YouTube #FF0000, Google green #34A853) appear per page through a `brandColor` prop and are not part of the core palette.
 
 ### Named Rules
 **The One Buy Signal Rule.** Red marks the action to take and the words to remember. On any screen, a second red fill competing with the primary CTA is a bug.

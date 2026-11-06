@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <Layout variant="landing">
       <SEO
-        title="YoutubeADwords - Buy YouTube Views, Google Ads & TikTok Campaigns"
+        title="YoutubeADwords - Buy YouTube Views & Google Ads Campaigns"
         description="Experience rapid growth with YoutubeADwords premium traffic solutions. Real views, genuine impressions, and authentic engagement from quality sources worldwide."
       />
       <main className="lp">

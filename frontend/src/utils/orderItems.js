@@ -3,18 +3,6 @@
  * the backend looks them up in its own catalog (backend/lib/catalog.ts).
  */
 export function toOrderItem(item, link) {
-  if (item.kind === 'google-reviews') {
-    return {
-      kind: 'google-reviews',
-      slug: item.slug,
-      paymentType: item.paymentType,
-      reviewType: item.reviewType,
-      reviews: Number(item.reviews ?? item.quantity),
-      addOns: item.addOns,
-      details: item.details,
-      link,
-    };
-  }
   return { slug: item.slug, tier: item.tier || 'regular', quantity: String(item.quantity), link };
 }
 

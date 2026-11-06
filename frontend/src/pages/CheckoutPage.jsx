@@ -21,7 +21,6 @@ function getPlatform(serviceType) {
   if (!serviceType) return 'Other';
   const s = String(serviceType).toLowerCase();
   if (s.includes('youtube')) return 'YouTube';
-  if (s.includes('tiktok')) return 'TikTok';
   if (s.includes('google')) return 'Google';
   return 'Other';
 }

@@ -7,7 +7,6 @@ import contactContent from '../../content/contact/contact.json';
 import pricingContent from '../../content/pricing/index.json';
 import pricingPageContent from '../../content/pricing-pages/index.json';
 import legalContent from '../../content/legal/index.json';
-import googlePricingContent from '../../content/google-pricing/index.json';
 
 // Page metadata (title, description, keywords) edited in Tina lives in the front matter of content/pages/*.mdx
 const pageFiles = import.meta.glob('../../content/pages/*.mdx', { query: '?raw', import: 'default', eager: true });
@@ -42,7 +41,6 @@ const staticValue = {
   pricing: pricingContent,
   pricingPageContent,
   legal: legalContent,
-  googlePricing: googlePricingContent,
   pageMetadata,
 };
 
@@ -155,12 +153,3 @@ export function usePageMetadata(slug) {
   return (slug && meta[slug]) || null;
 }
 
-export function useGooglePricing() {
-  const { googlePricing } = useContent();
-  return googlePricing;
-}
-
-export function getGooglePricingBySlug(googlePricing, slug) {
-  if (!googlePricing?.pages || !slug) return null;
-  return googlePricing.pages.find((p) => p && p.slug === slug) ?? null;
-}

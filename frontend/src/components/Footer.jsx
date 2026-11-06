@@ -34,8 +34,7 @@ export default function Footer() {
     { label: 'Buy YouTube Subscribers', link: '/buy-youtube-subscribers' },
     { label: 'Buy YouTube Likes', link: '/buy-youtube-likes' },
     { label: 'Buy YouTube Watch Hours', link: '/buy-youtube-watch-hours' },
-    { label: 'Buy TikTok Followers', link: '/buy-tiktok-followers' },
-    { label: 'Buy Google Reviews', link: '/buy-female-google-reviews' },
+    { label: 'Buy Google Skip Ads Views', link: '/buy-google-skip-ads-views' },
   ];
   const resources = footer.resources || [{ label: 'Blog', link: '/blog' }];
   const company = footer.company || [
@@ -72,7 +71,7 @@ export default function Footer() {
         </div>
 
         <p className="lp-foot-legal">
-          {footer.legalDisclaimer || "All the materials offered by YoutubeADwords are safeguarded by copyright laws. Unlawful reproduction or distribution of our materials is strictly forbidden. It's important to understand that YoutubeADwords operates independently and is not associated with any social media platforms. This website is not affiliated with or endorsed by Instagram LLC, YouTube LLC, TikTok Inc., Facebook, or any other social media platform."}
+          {footer.legalDisclaimer || "All the materials offered by YoutubeADwords are safeguarded by copyright laws. Unlawful reproduction or distribution of our materials is strictly forbidden. It's important to understand that YoutubeADwords operates independently and is not associated with any social media platforms. This website is not affiliated with or endorsed by YouTube LLC, Google LLC, Facebook, or any other social media platform."}
         </p>
 
         <div className="lp-foot-bottom">

@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import PageHead from '../components/site/PageHead';
-import { Arrow, Check, Star, YouTube, TikTok, GoogleG } from '../components/landing/icons';
+import { Arrow, Check, YouTube, GoogleG } from '../components/landing/icons';
 
 const OFFER = [
   { name: 'YouTube', icon: YouTube, chip: '#e53935', to: '/buy-youtube-views', text: 'Views, subscribers, likes and watch hours, delivered at a pace that looks like normal channel growth.' },
-  { name: 'TikTok', icon: TikTok, chip: '#0b1020', to: '/buy-tiktok-followers', text: 'Followers, likes and views that help creators and businesses reach a wider audience.' },
   { name: 'Google Ads', icon: GoogleG, chip: '#4285F4', to: '/buy-google-skip-ads-views', text: 'Skip ads views, display ads views, app downloads and search campaign traffic.' },
-  { name: 'Google Reviews', icon: Star, chip: '#1f9d57', to: '/buy-male-google-reviews', text: 'Reviews from verified reviewers, chosen by demographic to match the customers you serve.' },
 ];
 
 const WHY = [
@@ -25,13 +23,13 @@ export default function AboutUsPage() {
     <Layout>
       <SEO
         title="About Us | YoutubeADwords"
-        description="Learn about YoutubeADwords – a leading provider of YouTube, TikTok, and Google Ads growth services. Authentic engagement, 24/7 support, and best-price guarantee."
+        description="Learn about YoutubeADwords – a leading provider of YouTube and Google Ads growth services. Authentic engagement, 24/7 support, and best-price guarantee."
       />
       <section className="lp-section" style={{ paddingBottom: 0 }}>
         <div className="lp-wrap lp-split">
           <PageHead
             title="Growth services for creators and local businesses."
-            lede="YoutubeADwords helps businesses and content creators grow on YouTube, TikTok and Google with real, high-quality engagement."
+            lede="YoutubeADwords helps businesses and content creators grow on YouTube and Google with real, high-quality engagement."
           />
           <div className="lp-prose pg-in" style={{ '--d': '0.7s', paddingTop: '0.75rem' }}>
             <h2 className="lp-display">Our mission</h2>
