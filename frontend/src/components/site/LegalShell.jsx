@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PageHead from './PageHead';
 
 export const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -7,6 +7,7 @@ export const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/
 export default function LegalShell({ title, lastUpdated, headings = [], children }) {
   const [active, setActive] = useState(slugify(headings[0]));
   const key = headings.join('|');
+  const tocRef = useRef(null);
 
   useEffect(() => {
     const els = key.split('|').map((h) => document.getElementById(slugify(h))).filter(Boolean);
@@ -19,13 +20,20 @@ export default function LegalShell({ title, lastUpdated, headings = [], children
     return () => io.disconnect();
   }, [key]);
 
+  // on phones the rail is a sideways chip bar: keep the current chip in view
+  useEffect(() => {
+    const list = tocRef.current;
+    const chip = list?.querySelector('[aria-current="true"]');
+    if (chip && list.scrollWidth > list.clientWidth) list.scrollTo({ left: chip.offsetLeft - 20, behavior: 'smooth' });
+  }, [active]);
+
   return (
     <div className="pg-wrap pg-legal">
       <PageHead title={title} lede={lastUpdated ? `Last updated ${lastUpdated}` : undefined} size="md" />
       <div className="pg-legal-grid">
         <nav className="pg-toc pg-in" style={{ '--d': '0.55s' }} aria-label="On this page">
           <p>On this page</p>
-          <ol>
+          <ol ref={tocRef}>
             {headings.map((h) => {
               const id = slugify(h);
               return (

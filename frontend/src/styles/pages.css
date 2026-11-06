@@ -442,3 +442,35 @@ html { scroll-behavior: smooth; }
 .site.overflow-x-hidden { overflow-x: clip; }
 .site .svc-pass > .border-b:first-child { overflow-x: auto; scrollbar-width: none; }
 .site .svc-pass > .border-b:first-child::-webkit-scrollbar { display: none; }
+
+/* ---------- Phones: service pass ---------- */
+@media (max-width: 39.99rem) {
+  .site .svc-pass { padding-inline: 1.25rem; }
+  /* every tab stays in view (the last one used to hide past the edge); long labels wrap inside their segment */
+  .site .svc-pass > .border-b:first-child { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); width: 100%; border-radius: 1.1rem; }
+  .site .svc-pass > .border-b:first-child button { min-height: 2.75rem; padding: 0.45rem 0.5rem; border-radius: 0.85rem; font-size: 0.875rem; line-height: 1.2; white-space: normal; text-align: center; }
+  /* the package stubs shipped 8-10px labels and prices; nothing in them goes below 11px */
+  .site .svc-pass :is([role="button"], button) :is([class*="text-[8px]"], [class*="text-[9px]"], [class*="text-[10px]"]) { font-size: 0.6875rem; letter-spacing: 0; }
+  .site .svc-pass [role="button"] .text-xs { font-size: 0.8125rem; }
+}
+/* the Google review badges stay at 10px past sm; same 11px floor */
+@media (min-width: 40rem) {
+  .site .svc-pass :is([class*="sm:text-[9px]"], [class*="sm:text-[10px]"]) { font-size: 0.6875rem; }
+}
+/* below 360px two stubs per row leave no room for a price: one per row */
+@media (max-width: 22.49rem) {
+  .site .svc-pass .grid.grid-cols-2:has(> [role="button"]) { grid-template-columns: minmax(0, 1fr); }
+  .site .svc-pass > .border-b:first-child button { padding-inline: 0.3rem; font-size: 0.8125rem; }
+  /* Google review billing tabs (One-time / Monthly / Drip Feed): fit all three instead of hiding the last */
+  .site .svc-pass .flex.gap-4.overflow-x-auto { gap: 0.5rem; }
+  .site .svc-pass .flex.gap-4.overflow-x-auto > button { padding-inline: 0.25rem; }
+}
+/* touch: inline text links that act as navigation get a full 44px row */
+@media (pointer: coarse) {
+  .pg-row-body a, .site a.inline-flex.text-lg.text-gray-700, .site a.inline-flex.text-brand-red.font-bold { min-height: 2.75rem; }
+}
+/* laptops: the pass column is at its narrowest, so the old and new price stack instead of sitting side by side */
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .site .svc-pass [role="button"] .sm\:flex-row { flex-direction: column; gap: 0; }
+  .site .svc-pass [role="button"] .rounded-full { padding-inline: 0.55rem; white-space: nowrap; }
+}

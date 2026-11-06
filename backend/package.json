@@ -17,6 +17,7 @@
   "scripts": {
     "sync-catalog": "node scripts/sync-catalog.mjs",
     "build": "node scripts/sync-catalog.mjs && prisma generate",
+    "generate": "prisma generate",
     "start": "prisma generate && tsx server.ts",
     "dev": "tsx watch server.ts",
     "test": "vitest run",

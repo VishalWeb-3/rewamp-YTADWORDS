@@ -9,6 +9,7 @@ import { usePageMetadata } from '../contexts/ContentContext';
 import '../styles/landing.css';
 import '../styles/site.css';
 import '../styles/pages.css';
+import '../styles/mobile.css';
 
 export default function Layout({ children, variant, seoTitle, seoDescription, seoKeywords, seoOgImage }) {
   const location = useLocation();

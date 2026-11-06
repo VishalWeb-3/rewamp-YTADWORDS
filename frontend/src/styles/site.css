@@ -22,6 +22,12 @@
 .lp-foot-bottom a:hover { color: #fff; }
 @media (min-width: 48rem) { .lp-foot-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
 .lp-footer :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+/* touch: footer and closing links were ~20px tall; give each a full 44px row */
+@media (pointer: coarse) {
+  .lp-foot-col ul { gap: 0; }
+  .lp-foot-col a, .lp-foot-col button, .lp-foot-bottom nav a, .lp-final-links a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .lp-foot-bottom nav { gap: 0 1.5rem; }
+}
 
 /* ---------- Skin for inner pages (Tailwind-built markup) ---------- */
 .site { background: var(--paper); color: var(--ink); font-family: 'Onest', system-ui, sans-serif; }
@@ -92,7 +98,7 @@
 .svc-assure summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; cursor: pointer; list-style: none; min-height: 2.75rem; }
 .svc-assure summary::-webkit-details-marker { display: none; }
 .svc-assure summary::after { content: '+'; font-size: 1.5rem; line-height: 1; color: var(--ink-2); }
-.svc-assure[open] summary::after { content: '2'; }
+.svc-assure[open] summary::after { content: '\2212'; }
 .svc-assure h2 { margin: 0; font-size: 1.25rem; }
 .svc-assure[open] summary { margin-bottom: 0.75rem; }
 @media (min-width: 64rem) { .svc-assure summary { pointer-events: none; } .svc-assure summary::after { display: none; } }

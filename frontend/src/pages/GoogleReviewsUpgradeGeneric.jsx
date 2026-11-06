@@ -300,7 +300,7 @@ export default function GoogleReviewsUpgradeGeneric() {
                     <div className="flex items-center gap-4 sm:ml-6">
                       <button
                         onClick={() => toggleAddOn('verifiedReviewers')}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.verifiedReviewers ? 'bg-green-600' : 'bg-gray-300'
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.verifiedReviewers ? 'bg-green-600' : 'bg-gray-300'
                           }`}
                       >
                         <span
@@ -346,7 +346,7 @@ export default function GoogleReviewsUpgradeGeneric() {
                     <div className="flex items-center gap-4 sm:ml-6">
                       <button
                         onClick={() => toggleAddOn('ageGroupTargeting')}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.ageGroupTargeting ? 'bg-green-600' : 'bg-gray-300'
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.ageGroupTargeting ? 'bg-green-600' : 'bg-gray-300'
                           }`}
                       >
                         <span
@@ -393,7 +393,7 @@ export default function GoogleReviewsUpgradeGeneric() {
                     <div className="flex items-center gap-4 sm:ml-6">
                       <button
                         onClick={() => toggleAddOn('genderTargeting')}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.genderTargeting ? 'bg-green-600' : 'bg-gray-300'
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full before:absolute before:-inset-y-2.5 before:inset-x-0 before:content-[''] transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${addOns.genderTargeting ? 'bg-green-600' : 'bg-gray-300'
                           }`}
                       >
                         <span

@@ -55,6 +55,8 @@
 .lp-header-in { display: flex; align-items: center; justify-content: space-between; gap: 2rem; height: 4.25rem; }
 .lp-logo { display: inline-flex; align-items: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.35rem; letter-spacing: -0.03em; }
 .lp-logo b { background: var(--red); color: #fff; padding: 0.05em 0.3em; margin-inline: 0.12em; border-radius: 0.2em; font-weight: 800; }
+/* 320px phones: logo + cart + menu overran the row and pushed the menu button off screen */
+@media (max-width: 22.49rem) { .lp-header-in { gap: 0.5rem; } .lp-header .lp-logo { font-size: 1.15rem; } }
 .lp-nav { display: none; align-items: center; gap: 0.25rem; }
 @media (min-width: 75rem) { .lp-nav { display: flex; } .lp-burger { display: none !important; } }
 .lp-nav a, .lp-nav button.lp-link { position: relative; padding: 0.5rem 0.9rem; font-size: 0.95rem; font-weight: 550; color: var(--ink-2); background: none; border: 0; cursor: pointer; font-family: inherit; transition: color 0.2s; }
@@ -85,7 +87,11 @@
 .lp-assure svg { color: var(--green); flex: none; }
 
 /* The pass fan */
-.lp-stage { --s: 1; position: relative; height: calc(700px * var(--s)); perspective: 1400px; margin-inline: auto; width: 100%; max-width: 34rem; }
+/* the fan reaches ~820px below the stage top and spans ~640px at --s: 1; the height leaves room for the hover lift */
+.lp-stage { --s: 1; position: relative; height: calc(800px * var(--s)); perspective: 1400px; margin-inline: auto; width: 100%; max-width: 34rem; }
+/* two-column hero on laptops: the column is narrower than the fan, so shrink it to stay clear of the copy */
+@media (min-width: 64rem) and (max-width: 71.99rem) { .lp-stage { --s: 0.76; } }
+@media (min-width: 72rem) and (max-width: 84.99rem) { .lp-stage { --s: 0.85; } }
 @media (max-width: 40rem) { .lp-stage { --s: 0.78; } }
 @media (max-width: 26rem) { .lp-stage { --s: 0.66; } }
 .lp-rig { position: absolute; left: 50%; top: calc(290px * var(--s)); width: 0; height: 0; transform: scale(var(--s)) translate3d(calc(var(--px, 0) * -14px), 0, 0) rotateY(calc(var(--px, 0) * 5deg)) rotateX(calc(var(--py, 0) * -3deg)); transition: transform 0.6s var(--ease); transform-style: preserve-3d; }
