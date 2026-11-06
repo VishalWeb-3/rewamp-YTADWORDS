@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import PageHead from '../components/site/PageHead';
 import SEO from '../components/SEO';
@@ -13,11 +14,13 @@ export default function ContactPage() {
   const c = useContactContent();
   const { isEnabled } = useCtaActions();
   const canSubmitTicket = isEnabled('submit_ticket');
+  const [params] = useSearchParams();
   const [formData, setFormData] = useState({
     email: '',
-    reason: '',
+    reason: params.get('reason') || '',
     orderNumber: '',
-    message: '',
+    // arriving from "Forgot password?" on the login page
+    message: params.get('topic') === 'password' ? 'I forgot my password and need help resetting it.' : '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -189,7 +192,7 @@ export default function ContactPage() {
                 {/* Right Column - Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    {c?.labelMessage ?? 'Your message'}
+                    {c?.labelMessage ?? 'Your message'} <span className="text-brand-red">*</span>
                   </label>
                   <textarea
                     id="message"

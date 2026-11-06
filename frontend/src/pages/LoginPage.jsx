@@ -168,9 +168,9 @@ export default function LoginPage() {
                   />
                   <span className="ml-2 text-sm text-gray-700">{auth.rememberMe || 'Remember me'}</span>
                 </label>
-                <a href="#" className="text-sm text-brand-red hover:underline">
+                <Link to="/contact?reason=support&topic=password" className="text-sm text-brand-red hover:underline">
                   {auth.forgotPassword || 'Forgot password?'}
-                </a>
+                </Link>
               </div>
 
               {/* Submit Button */}

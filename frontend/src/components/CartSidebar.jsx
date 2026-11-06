@@ -116,7 +116,7 @@ export default function CartSidebar() {
                         )}
                       </div>
                       <p className="text-lg font-bold text-brand-red mt-2">
-                        ${item.price}
+                        ${Number(item.price).toFixed(2)}
                       </p>
                     </div>
                     <button

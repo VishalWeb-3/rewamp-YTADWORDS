@@ -109,15 +109,13 @@
 .lp-pass::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.5) 50%, transparent 62%) no-repeat; background-size: 280% 100%; background-position: calc(60% + var(--a, 0) * -5%) 0; opacity: 0; transition: opacity 0.4s var(--ease); }
 .lp-pass.dark::after { background-image: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.18) 50%, transparent 62%); }
 .lp-live .lp-pass::after { opacity: 1; }
-/* first-use hint and the sound switch */
-.lp-hint, .lp-sound { position: absolute; top: 0.25rem; z-index: 25; display: inline-flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.4rem 0.75rem; border-radius: 99px; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; background: var(--card); color: var(--ink-2); box-shadow: 0 0 0 1px rgba(11,16,32,.08), 0 6px 16px -8px rgba(11,16,32,.3); }
+/* first-use hint */
+.lp-hint { position: absolute; top: 0.25rem; z-index: 25; display: inline-flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.4rem 0.75rem; border-radius: 99px; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; background: var(--card); color: var(--ink-2); box-shadow: 0 0 0 1px rgba(11,16,32,.08), 0 6px 16px -8px rgba(11,16,32,.3); }
 .lp-hint { left: 0; opacity: 0; animation: lp-hint-in 0.8s var(--ease) 2.6s forwards; pointer-events: none; transition: opacity 0.4s; }
 .lp-hint svg { animation: lp-wave 1.6s ease-in-out 3.4s infinite; transform-origin: 70% 90%; }
 @keyframes lp-hint-in { to { opacity: 1; } }
 @keyframes lp-wave { 0%, 60%, 100% { transform: rotate(0); } 20% { transform: rotate(-14deg); } 40% { transform: rotate(10deg); } }
 .lp-touched .lp-hint { animation: none; opacity: 0; visibility: hidden; }
-.lp-sound { right: 0; border: 0; cursor: pointer; font: inherit; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; }
-.lp-sound[aria-pressed="true"] { color: var(--red); }
 @keyframes lp-sway { from { transform: rotate(calc(var(--r) - 0.9deg)); } to { transform: rotate(calc(var(--r) + 0.9deg)); } }
 .lp-strap { position: absolute; left: 50%; top: -260px; width: 30px; height: calc(260px + var(--pull, 0px)); margin-left: -15px; background: var(--strap, var(--ink)); box-shadow: inset 4px 0 0 rgba(255,255,255,.14), inset -4px 0 0 rgba(0,0,0,.14); }
 .lp-pass { position: relative; display: flex; flex-direction: column; width: 230px; min-height: 340px; padding: 2.1rem 1.35rem 1.2rem; border-radius: 1.35rem; background: var(--card); color: var(--ink); box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(11,16,32,.07), 0 38px 60px -24px rgba(11,16,32,.45), 0 8px 18px -8px rgba(11,16,32,.2); transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease); }

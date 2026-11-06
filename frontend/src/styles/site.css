@@ -45,7 +45,7 @@
 .site [class*="bg-red-100/"], .site [class*="bg-red-400/"] { display: none; }
 
 /* page wrappers that paint their own white/grey field let the paper show through */
-.site > .min-h-screen, .site > div.bg-white, .site > main.bg-white, .site > .bg-gray-50 { background-color: transparent; }
+.site > .min-h-screen, .site > div.bg-white:not([role="dialog"]), .site > main.bg-white, .site > .bg-gray-50 { background-color: transparent; }
 .site img[class*="w-[200px]"] { display: none; }
 
 /* one accent: the TikTok pages used blue, unify to the signal red */

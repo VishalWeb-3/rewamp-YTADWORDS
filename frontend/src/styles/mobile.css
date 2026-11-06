@@ -130,3 +130,8 @@
   .pg-toc a[aria-current="true"] { background: var(--card); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 6px 14px -8px rgba(11,16,32,.3); }
   .pg-legal-sec { scroll-margin-top: 8.5rem; }
 }
+
+/* the checkout-style forms don't need to fill the screen on a phone; it just leaves a blank band under the card */
+@media (max-width: 59.99rem) {
+  .site .pg-flow.min-h-screen { min-height: 0; padding-bottom: 2.5rem; }
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useHomeContent } from '../../contexts/ContentContext';
-import { Arrow, Check, Star, YouTube, TikTok, GoogleG, Hand, Volume, Mute } from './icons';
+import { Arrow, Check, Star, YouTube, TikTok, GoogleG, Hand } from './icons';
 
 // Each service is a laminate pass; the pass is also the link to that service's page.
 // `flip` mirrors a pass's content to its right edge: those two fan out to the right and the front
@@ -14,11 +14,6 @@ const PASSES = [
 ];
 
 const SAMPLE_TOTAL = 50;
-const SOUND_KEY = 'lp-pass-sound';
-// card sounds are opt-in: off unless the visitor switched them on before
-const readSound = () => {
-  try { return localStorage.getItem(SOUND_KEY) === '1'; } catch { return false; }
-};
 
 function useDelivery(reduced) {
   const [n, setN] = useState(reduced ? SAMPLE_TOTAL : 0);
@@ -65,37 +60,7 @@ const BRUSH_GAIN = 10;  // deg/s of push per degree the cursor sweeps across a p
 const BRUSH_MAX = 70;
 const BRUSH_CAP = 150;  // brushing never pushes a pass faster than this
 
-// A soft wooden tick, synthesised so there is no asset to load. Only ever started from a drag.
-function makeTicker() {
-  let ctx = null;
-  let lastTick = 0;
-  return {
-    unlock() {
-      try {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (!ctx && AC) ctx = new AC();
-        if (ctx && ctx.state === 'suspended') ctx.resume();
-      } catch { /* audio is optional */ }
-    },
-    tick(strength) {
-      if (!ctx || ctx.state !== 'running' || ctx.currentTime - lastTick < 0.05) return;
-      lastTick = ctx.currentTime;
-      const t = ctx.currentTime;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(520 + strength * 260, t);
-      osc.frequency.exponentialRampToValueAtTime(180, t + 0.07);
-      gain.gain.setValueAtTime(0.025 + strength * 0.06, t);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(t);
-      osc.stop(t + 0.1);
-    },
-  };
-}
-
-function usePassPhysics(stageRef, reduced, soundRef) {
+function usePassPhysics(stageRef, reduced) {
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage || reduced) return undefined;
@@ -108,7 +73,6 @@ function usePassPhysics(stageRef, reduced, soundRef) {
     const v = rest.map(() => 0);
     const d = rest.map(() => 0);   // strap stretch in px
     const vd = rest.map(() => 0);
-    const ticker = makeTicker();
     const lastHit = rest.map(() => 0);
     let live = false;
     let raf = 0;
@@ -144,7 +108,7 @@ function usePassPhysics(stageRef, reduced, soundRef) {
       return Math.hypot(x - px, y - py) / s;
     };
 
-    // a knock: brief flash and bump on the pass, and a tick if sound is on
+    // a knock: brief flash and bump on the pass
     const hit = (i, strength) => {
       const now = performance.now();
       if (now - lastHit[i] < 120) return;
@@ -153,7 +117,6 @@ function usePassPhysics(stageRef, reduced, soundRef) {
         [{ filter: `brightness(${1 + 0.16 * strength})`, scale: 1 + 0.035 * strength }, { filter: 'brightness(1)', scale: 1 }],
         { duration: 260, easing: 'ease-out' },
       );
-      if (soundRef.current) ticker.tick(strength);
     };
 
     const collide = () => {
@@ -259,7 +222,6 @@ function usePassPhysics(stageRef, reduced, soundRef) {
 
     const startDrag = (e) => {
       engage();
-      ticker.unlock();
       grabbed = press.i;
       press.base = a[grabbed];
       dragTo = a[grabbed];
@@ -357,7 +319,7 @@ function usePassPhysics(stageRef, reduced, soundRef) {
       window.removeEventListener('pointercancel', onUp);
       finish();
     };
-  }, [stageRef, reduced, soundRef]);
+  }, [stageRef, reduced]);
 }
 
 // Click-to-blast: the clicked pass flies to the middle of the screen and bursts into sprinkles. The page
@@ -506,20 +468,12 @@ export default function LandingHero() {
   const stage = useRef(null);
   const reduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const delivered = useDelivery(reduced);
-  const [sound, setSound] = useState(readSound);
-  const soundRef = useRef(sound);
-  soundRef.current = sound;
-  usePassPhysics(stage, reduced, soundRef);
+  usePassPhysics(stage, reduced);
   const navigate = useNavigate();
   const openPass = (e, pass) => {
     if (reduced || blasting || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
     e.preventDefault();
     blastPass(e.currentTarget, pass.chip, () => navigate(pass.to));
-  };
-  const toggleSound = () => {
-    const next = !sound;
-    setSound(next);
-    try { localStorage.setItem(SOUND_KEY, next ? '1' : '0'); } catch { /* storage is optional */ }
   };
 
   useEffect(() => {
@@ -558,13 +512,7 @@ export default function LandingHero() {
 
         <div className="lp-stage" ref={stage}>
           {!reduced && (
-            <>
-              <p className="lp-hint lp-mono" aria-hidden="true"><Hand size={16} />Drag the cards</p>
-              <button type="button" className="lp-sound" onClick={toggleSound} aria-pressed={sound} aria-label="Card sounds">
-                {sound ? <Volume size={16} /> : <Mute size={16} />}
-                <span>{sound ? 'Sound on' : 'Sound off'}</span>
-              </button>
-            </>
+            <p className="lp-hint lp-mono" aria-hidden="true"><Hand size={16} />Drag the cards</p>
           )}
           <div className="lp-rig">
             <span className="lp-ring" aria-hidden="true" />
