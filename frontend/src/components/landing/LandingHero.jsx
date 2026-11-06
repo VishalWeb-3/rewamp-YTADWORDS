@@ -7,9 +7,9 @@ import { Arrow, Check, Star, YouTube, TikTok, GoogleG, Hand } from './icons';
 // `flip` mirrors a pass's content to its right edge: those two fan out to the right and the front
 // pass covers their left half, which would hide the name.
 const PASSES = [
-  { id: 'ads', to: '/buy-google-skip-ads-views', name: 'Google Ads', serial: 'GA-0004', icon: GoogleG, chip: '#4285F4', strap: '#4285F4', options: ['Skip ads views', 'Display ads views', 'App downloads', 'Website traffic'], flip: true, r: -21, d: '0.45s' },
+  { id: 'ads', to: '/buy-google-skip-ads-views', name: 'Google Ads', serial: 'GA-0004', icon: GoogleG, chip: '#4285F4', strap: '#4285F4', options: ['Skip ads', 'Display ads', 'App installs', 'Web traffic'], flip: true, r: -21, d: '0.45s' },
   { id: 'tiktok', to: '/buy-tiktok-followers', name: 'TikTok', serial: 'TT-0003', icon: TikTok, chip: '#0b1020', strap: '#0b1020', dark: true, options: ['Followers', 'Likes', 'Views'], flip: true, r: -8, d: '0.25s' },
-  { id: 'youtube', to: '/buy-youtube-views', name: 'YouTube', serial: 'YT-0002', icon: YouTube, chip: '#e53935', strap: '#e53935', options: ['Views', 'Subscribers', 'Likes', 'Watch hours'], r: 19, d: '0.1s' },
+  { id: 'youtube', to: '/buy-youtube-views', name: 'YouTube', serial: 'YT-0002', icon: YouTube, chip: '#e53935', strap: '#e53935', options: ['Views', 'Subscribers', 'Likes', 'Watch hours'], side: true, r: 19, d: '0.1s' },
   { id: 'reviews', to: '/buy-male-google-reviews', name: 'Google Reviews', serial: 'GR-0001', icon: Star, chip: '#1f9d57', strap: '#1f9d57', options: ['Male', 'Female', 'Local Guide', 'By age group'], r: 5, d: '0s', sample: true },
 ];
 
@@ -421,7 +421,7 @@ function Pass({ pass, delivered, onOpen }) {
     <div className="lp-slot" style={{ '--d': pass.d }}>
       <div className="lp-hang" style={{ '--r': `${pass.r}deg`, '--strap': pass.strap }}>
         <span className="lp-strap" aria-hidden="true" />
-        <Link to={pass.to} onClick={(e) => onOpen(e, pass)} className={`lp-pass${pass.dark ? ' dark' : ''}${pass.flip ? ' flip' : ''}`} style={{ '--chip': pass.chip }} aria-label={`${pass.name}: view packages`}>
+        <Link to={pass.to} onClick={(e) => onOpen(e, pass)} className={`lp-pass${pass.dark ? ' dark' : ''}${pass.flip ? ' flip' : ''}${pass.side ? ' side' : ''}`} style={{ '--chip': pass.chip }} aria-label={`${pass.name}: view packages`}>
           <span className="lp-pass-slot" aria-hidden="true" />
           <div className="lp-pass-top lp-mono"><span>SERVICE PASS</span><span>{pass.serial}</span></div>
           <span className="lp-pass-ico"><Icon size={22} /></span>

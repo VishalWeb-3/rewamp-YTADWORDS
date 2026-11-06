@@ -92,8 +92,12 @@
 /* two-column hero on laptops: the column is narrower than the fan, so shrink it to stay clear of the copy */
 @media (min-width: 64rem) and (max-width: 71.99rem) { .lp-stage { --s: 0.76; } }
 @media (min-width: 72rem) and (max-width: 84.99rem) { .lp-stage { --s: 0.85; } }
-@media (max-width: 40rem) { .lp-stage { --s: 0.78; } }
-@media (max-width: 26rem) { .lp-stage { --s: 0.66; } }
+/* the fanned set is ~640px wide before scaling, so each step keeps it inside the screen */
+@media (max-width: 40rem) { .lp-stage { --s: 0.7; } }
+@media (max-width: 30.5rem) { .lp-stage { --s: 0.58; } }
+@media (max-width: 26rem) { .lp-stage { --s: 0.5; } }
+@media (max-width: 22.5rem) { .lp-stage { --s: 0.48; } }
+@media (max-width: 40rem) { .lp-stage { height: calc(700px * var(--s)); } }
 .lp-rig { position: absolute; left: 50%; top: calc(290px * var(--s)); width: 0; height: 0; transform: scale(var(--s)) translate3d(calc(var(--px, 0) * -14px), 0, 0) rotateY(calc(var(--px, 0) * 5deg)) rotateX(calc(var(--py, 0) * -3deg)); transition: transform 0.6s var(--ease); transform-style: preserve-3d; }
 .lp-ring { position: absolute; left: -11px; top: -266px; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #9aa3b5 55%, #4b5366); box-shadow: 0 3px 8px rgba(11,16,32,.35); z-index: 20; }
 .lp-slot { position: absolute; left: -115px; top: 0; width: 230px; animation: lp-drop 1.25s var(--ease) both; animation-delay: var(--d); }
@@ -134,6 +138,9 @@
 @keyframes lp-holo { to { background-position: -220% 0; } }
 .lp-pass-go { display: flex; justify-content: space-between; align-items: center; font-weight: 650; font-size: 0.92rem; }
 .lp-pass.flip { text-align: right; }
+/* the left pass only shows its left strip, so keep its text inside it */
+.lp-pass.side h3 { font-size: 1.2rem; }
+.lp-pass.side ul { font-size: 0.8rem; }
 .lp-pass.flip .lp-pass-top, .lp-pass.flip .lp-pass-go { flex-direction: row-reverse; }
 .lp-pass.flip .lp-pass-ico { margin-left: auto; }
 .lp-pass.flip h3 { font-size: 1.5rem; max-width: 6.2rem; margin-left: auto; }
