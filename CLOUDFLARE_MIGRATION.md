@@ -67,7 +67,7 @@ Still to finish:
 | Setting | Value |
 | --- | --- |
 | Root directory | `/` |
-| Build command | `npm ci && npm --prefix frontend ci && npm --prefix backend ci --omit=dev && npm --prefix backend exec prisma generate && npm run build` |
+| Build command | `npm ci && npm --prefix frontend ci && npm --prefix backend ci --omit=dev && npm --prefix backend run generate && npm run build` |
 | Deploy command | `npx wrangler deploy` |
 
 `--omit=dev` keeps the local-only `better-sqlite3` native module out of the Cloudflare build. The build command hasn't been run in Workers Builds yet. Both lockfiles passed `npm ci --dry-run` locally.
