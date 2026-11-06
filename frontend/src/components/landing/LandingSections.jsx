@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalContent, useHomeContent } from '../../contexts/ContentContext';
 import { Arrow, Check, Cross, Star, YouTube, TikTok, GoogleG } from './icons';
@@ -90,73 +90,170 @@ export function Solutions() {
           </ul>
           <Link to="/buy-google-skip-ads-views" className="lp-btn lp-btn-red">{s.ctaButton || 'Start Google Ads Campaign'}<Arrow /></Link>
         </R>
-        <R i={2} className="lp-prose" style={{ paddingTop: '0.5rem' }}>
-          <h3 className="lp-display">{s.block1Title}</h3>
-          <p>{s.block1Text}</p>
-          <h3 className="lp-display">{s.block2Title}</h3>
-          <p style={{ marginBottom: 0 }}>{s.block2Text}</p>
+        {/* the two explainers fold away; the first starts open so the column isn't empty */}
+        <R i={2} className="lp-folds">
+          {[[s.block1Title, s.block1Text], [s.block2Title, s.block2Text]].filter(([t]) => t).map(([t, body], i) => (
+            <details key={t} open={i === 0}>
+              <summary><span className="lp-display">{t}</span><span className="pm" aria-hidden="true" /></summary>
+              <p>{body}</p>
+            </details>
+          ))}
         </R>
       </div>
     </section>
   );
 }
 
+// Barcode bars for the stub, derived from the feature titles so it stays the same between renders.
+const barsFrom = (text) => {
+  const out = [];
+  let x = 0;
+  for (let i = 0; i < text.length && x < 220; i += 1) {
+    const c = text.charCodeAt(i);
+    const w = 1 + (c % 3);
+    out.push({ x, w });
+    x += w + 1 + ((c >> 2) % 3);
+  }
+  return out;
+};
+
+const MICRO = 'REAL PEOPLE · SAFE DELIVERY · NO PASSWORDS · '.repeat(160);
+
+const Seal = () => (
+  <div className="lp-seal" aria-hidden="true">
+    <svg viewBox="0 0 120 120">
+      <defs><path id="lp-seal-ring" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs>
+      <text><textPath href="#lp-seal-ring" textLength="272" lengthAdjust="spacing">REAL PEOPLE · SAFE DELIVERY · NO PASSWORDS ·</textPath></text>
+      <path className="tick" d="M44 61 l11 11 22 -24" />
+    </svg>
+  </div>
+);
+
+// the loupe follows the mouse over the pass (touch would leave it stuck on screen); the seal's foil turns with it
+const inspect = (e) => {
+  if (e.pointerType !== 'mouse') return;
+  const pass = e.currentTarget;
+  const r = pass.getBoundingClientRect();
+  pass.style.setProperty('--lx', `${e.clientX - r.left}px`);
+  pass.style.setProperty('--ly', `${e.clientY - r.top}px`);
+  pass.classList.add('is-looking');
+  const seal = pass.closest('.lp-check')?.querySelector('.lp-seal');
+  if (seal) {
+    seal.style.setProperty('--sx', ((e.clientX - r.left) / r.width).toFixed(3));
+    seal.style.setProperty('--sy', ((e.clientY - r.top) / r.height).toFixed(3));
+  }
+};
+const stopInspect = (e) => e.currentTarget.classList.remove('is-looking');
+
+// What we ensure, as the door check: the promises are the conditions printed on the back of the pass,
+// and the reasons to choose us are punched into its tear-off stub.
 export function Safety() {
   const home = useHomeContent();
   const ensure = home?.whatWeEnsure || {};
   const why = home?.whyChooseUs || {};
+  const features = why.features || [];
+  const bars = barsFrom(features.map((f) => f.title).join(''));
   return (
-    <section className="lp-section lp-ink" id="why">
-      <div className="lp-wrap">
-        <R className="lp-head">
+    <section className="lp-section lp-check" id="why">
+      <div className="lp-wrap lp-check-grid">
+        <R className="lp-check-intro">
           <h2 className="lp-display">{ensure.title || 'What We'} {ensure.titleHighlight || 'Ensure'}</h2>
           <p>Safe, real-person engagement is the whole point. Here is what we hold ourselves to.</p>
+          <ol className="lp-terms">
+            {(ensure.cards || []).map((c) => (
+              <li key={c.title}>
+                <h3 className="lp-display">{c.title}</h3>
+                <p>{c.description}</p>
+              </li>
+            ))}
+          </ol>
         </R>
-        <div className="lp-pillars">
-          {(ensure.cards || []).map((c, i) => (
-            <R className="lp-pillar" i={i} key={c.title}>
-              <div className="lp-holo" aria-hidden="true" />
-              <h3 className="lp-display">{c.title}</h3>
-              <p>{c.description}</p>
-            </R>
-          ))}
-        </div>
-        <R className="lp-head" style={{ marginBottom: '1.5rem' }}>
-          <h3 className="lp-display" style={{ fontSize: '1.9rem', margin: 0 }}>{why.title || 'Why Choose Us?'}</h3>
+
+        <R className="lp-check-hang" i={1}>
+          <article className="lp-back" onPointerMove={inspect} onPointerLeave={stopInspect}>
+            <span className="lp-back-slot" aria-hidden="true" />
+            <div className="lp-micro" aria-hidden="true">{MICRO}</div>
+            <span className="lp-loupe" aria-hidden="true" />
+
+            <div className="lp-pass-head">
+              <Seal />
+              <div>
+                <h3 className="lp-display">{why.title || 'Why Choose Us?'}</h3>
+                <p className="lp-check-hint" aria-hidden="true">Move over the pass to check its print.</p>
+              </div>
+            </div>
+
+            {features.length > 0 && (
+              <div className="lp-stub">
+                <ul className="lp-punch">
+                  {features.map((f, i) => (
+                    <li key={f.title} style={{ '--i': i }}><span className="hole" aria-hidden="true" />{f.title}</li>
+                  ))}
+                </ul>
+                <svg className="lp-barcode" viewBox="0 0 220 40" preserveAspectRatio="none" aria-hidden="true">
+                  {bars.map((b) => <rect key={b.x} x={b.x} width={b.w} height="40" />)}
+                </svg>
+              </div>
+            )}
+          </article>
         </R>
-        <ul className="lp-feat">
-          {(why.features || []).map((f, i) => (
-            <R as="li" i={i % 4} key={f.title}><Check size={20} />{f.title}</R>
-          ))}
-        </ul>
       </div>
     </section>
   );
 }
 
+// Why we are better, as a split-flap board: each slat shows what other providers do, then flips to
+// what we do instead. It flips by itself the first time it scrolls into view; the switch flips it back.
 export function Compare() {
   const c = useHomeContent()?.comparison || {};
+  const theirs = c.otherPoints || [];
+  const ours = c.ourPoints || [];
+  const rows = Array.from({ length: Math.max(theirs.length, ours.length) }, (_, i) => [theirs[i], ours[i]]);
+  const [side, setSide] = useState('them');
+  const [flipped, setFlipped] = useState(false); // once it has shown ours, flipping back animates too
+  const show = (s) => { setSide(s); if (s === 'us') setFlipped(true); };
+  const board = useRef(null);
+
+  useEffect(() => {
+    const el = board.current;
+    if (!el) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { show('us'); return undefined; }
+    let t;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      t = setTimeout(() => show('us'), 700);
+      io.disconnect();
+    }, { threshold: 0.45 });
+    io.observe(el);
+    return () => { io.disconnect(); clearTimeout(t); };
+  }, []);
+
+  const us = side === 'us';
   return (
     <section className="lp-section" id="compare">
       <div className="lp-wrap">
-        <R className="lp-head">
+        <R className="lp-flip-head">
           <h2 className="lp-display">{c.heading || 'Why We Are'} {c.better || 'Better?'}</h2>
-        </R>
-        <R className="lp-compare">
-          <div className="lp-col other">
-            <h3 className="lp-display">{c.otherTitle || 'Other Providers'}</h3>
-            <ul>
-              {(c.otherPoints || []).map((p, i) => <li key={p} style={{ '--i': i }}><Cross size={18} /><span>{p}</span></li>)}
-            </ul>
-          </div>
-          <div className="lp-col us">
-            <div className="lp-holo" aria-hidden="true" />
-            <h3 className="lp-display">{c.ourTitle || 'YoutubeADwords'}<span className="lp-best">{c.bestChoice || 'BEST CHOICE'}</span></h3>
-            <ul>
-              {(c.ourPoints || []).map((p) => <li key={p}><Check size={20} />{p}</li>)}
-            </ul>
+          <div className="lp-flip-switch" role="group" aria-label="Show the comparison for">
+            <button type="button" aria-pressed={!us} onClick={() => show('them')}>{c.otherTitle || 'Other Providers'}</button>
+            <button type="button" aria-pressed={us} onClick={() => show('us')}>
+              {c.ourTitle || 'YoutubeADwords'}<span className="lp-best">{c.bestChoice || 'BEST CHOICE'}</span>
+            </button>
           </div>
         </R>
+        <ul ref={board} className={`lp-board${us ? ' is-us' : flipped ? ' is-back' : ''}`} aria-live="polite">
+          {rows.map(([them, mine], i) => (
+            <li key={mine || them} className="lp-slat" style={{ '--i': i }}>
+              <div className="lp-flap">
+                <div className="lp-face them" aria-hidden={us}><Cross size={20} /><span>{them}</span></div>
+                <div className="lp-face us" aria-hidden={!us}>
+                  <Check size={20} />
+                  <span>{them && <small><s>{them}</s></small>}{mine}</span>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -220,7 +317,7 @@ export function Closer() {
       <span className="lp-ring-deco" aria-hidden="true" />
       <div className="lp-wrap">
         <R><h2 className="lp-display">{g.title || 'Expanding your reach'} {g.titleHighlight || 'to a Global Audience'}</h2></R>
-        <R i={1}><p>{g.paragraph1}</p><p>{g.paragraph2}</p></R>
+        <R i={1}><p>{g.paragraph2 || g.paragraph1}</p></R>
         <R i={2}><a href="#top" className="lp-btn lp-btn-white">Choose your pass<Arrow /></a></R>
         <R i={3} className="lp-final-links">
           <Link to="/buy-youtube-views">Buy YouTube views</Link>

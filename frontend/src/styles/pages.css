@@ -142,6 +142,24 @@
 .site .svc-guarantee .bg-white.rounded-2xl { height: 100%; }
 .site .svc-guarantee .bg-white.rounded-2xl p { font-size: 0.95rem; }
 
+/* guarantee copy is clipped to three lines; SvcNav arms the clipped cards so a click opens the rest */
+.site .svc-guarantee .bg-white.rounded-2xl:not([data-fold="open"]) p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.site .svc-guarantee [data-fold] { cursor: pointer; }
+.site .svc-guarantee [data-fold]::after { content: 'Read more'; display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.85rem; font-size: 0.85rem; font-weight: 650; color: var(--red-deep); }
+.site .svc-guarantee [data-fold="open"]::after { content: 'Show less'; }
+.site .svc-guarantee [data-fold="open"] p { animation: pg-open 0.4s var(--ease) both; }
+.site .svc-guarantee [data-fold]:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+/* review form: folded to its heading until someone wants to write one */
+.site .svc-review-form[data-fold="closed"] form { display: none; }
+.site .svc-review-form h2[role="button"] { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0; cursor: pointer; }
+.site .svc-review-form[data-fold="open"] h2[role="button"] { margin-bottom: 1.5rem; }
+.site .svc-review-form h2[role="button"]::after { content: '+'; flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--ink) inset; font-size: 1.4rem; font-weight: 500; line-height: 1; transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.5s var(--ease); }
+.site .svc-review-form h2[role="button"]:hover::after { transform: rotate(90deg); }
+.site .svc-review-form[data-fold="open"] h2[role="button"]::after { content: '\2212'; background: var(--red); color: #fff; box-shadow: none; transform: rotate(180deg); }
+.site .svc-review-form h2[role="button"]:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 0.5rem; }
+.site .svc-review-form[data-fold="open"] form { animation: pg-open 0.45s var(--ease) both; }
+
 /* shared section header: small kicker over the h2 */
 .svc-kicker { margin: 0 0 0.6rem; font-size: 0.78rem; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-deep); }
 .svc-sec-head { max-width: 46rem; margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
@@ -204,6 +222,15 @@
 .site .svc-compare .bg-gray-50.rounded-3xl { background: transparent; box-shadow: none; border-color: transparent; }
 .site .svc-compare .bg-gray-50.rounded-3xl .text-gray-600 { text-decoration: line-through; text-decoration-color: var(--ink-3); }
 .site .svc-compare .text-yellow-500 { color: var(--ink-3); }
+/* rows were 70px tall each; nine of them made the table taller than the screen */
+.site .svc-compare [class*="min-h-[70px]"] { min-height: 3.25rem; padding-block: 0.6rem; align-items: center; }
+.site .svc-compare [class*="min-h-[70px]"] .mt-0\.5 { margin-top: 0; }
+/* fixed header heights keep the three columns' rows on the same lines */
+.site .svc-compare .bg-gray-50.rounded-3xl { padding-top: 2.75rem; }
+.site .svc-compare .mb-8.flex { height: 2.75rem; margin-bottom: 1rem; }
+.site .svc-compare .h-20 { height: 5.75rem; }
+/* phones stack the columns, which leaves the criteria list floating on its own: drop it there */
+@media (max-width: 47.99rem) { .site .svc-compare .grid.md\:grid-cols-3 > .space-y-3:first-child { display: none; } }
 
 /* reviews: the landing's voice cards */
 .site .svc-reviews .grid > div { position: relative; padding: 1.75rem; border: 0; border-radius: 1.4rem; background: var(--card); box-shadow: 0 0 0 1px var(--line); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }

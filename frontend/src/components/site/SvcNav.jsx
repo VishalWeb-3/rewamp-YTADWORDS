@@ -10,12 +10,76 @@ const SECTIONS = [
   ['.svc-reviews', 'Reviews'],
 ];
 
+const CARD = '.svc-guarantee .bg-white.rounded-2xl';
+const FORM = '.svc-review-form';
+
+// Long guarantee copy is clipped to a few lines (CSS) and the review form starts folded; both open on click.
+// The page markup differs per service, so this arms whatever is there instead of each page wiring it up.
+function armFolds(root) {
+  root.querySelectorAll(CARD).forEach((card) => {
+    const p = card.querySelector('p');
+    if (!p || card.dataset.fold === 'open') return;
+    const clipped = p.scrollHeight > p.clientHeight + 2;
+    if (clipped) {
+      card.dataset.fold = 'closed';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-expanded', 'false');
+    } else if (card.dataset.fold) {
+      delete card.dataset.fold;
+      card.removeAttribute('tabindex');
+      card.removeAttribute('role');
+      card.removeAttribute('aria-expanded');
+    }
+  });
+  const form = root.querySelector(FORM);
+  const head = form?.querySelector('h2');
+  if (head && !form.dataset.fold) {
+    form.dataset.fold = 'closed';
+    head.tabIndex = 0;
+    head.setAttribute('role', 'button');
+    head.setAttribute('aria-expanded', 'false');
+  }
+}
+
+function toggleFold(e) {
+  if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest(`${CARD}[data-fold]`);
+  const head = !card && e.target.closest(`${FORM} h2[role="button"]`);
+  const box = card || head?.closest(FORM);
+  if (!box) return;
+  e.preventDefault();
+  const open = box.dataset.fold !== 'open';
+  box.dataset.fold = open ? 'open' : 'closed';
+  (card || head).setAttribute('aria-expanded', String(open));
+}
+
 // Sticky "on this page" bar for the service pages. It finds the sections already on the page,
 // so each page only has to drop it in; short pages (under four sections) don't get one.
 export default function SvcNav() {
   const ref = useRef(null);
   const [items, setItems] = useState([]);
   const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const root = ref.current?.closest('.site') || document.body;
+    let t;
+    const arm = () => { clearTimeout(t); t = setTimeout(() => armFolds(root), 60); };
+    arm();
+    // CMS copy arrives after first paint and swaps the card text, so re-measure when it changes
+    const mo = new MutationObserver(arm);
+    root.querySelectorAll('.svc-guarantee').forEach((el) => mo.observe(el, { childList: true, subtree: true, characterData: true }));
+    window.addEventListener('resize', arm);
+    root.addEventListener('click', toggleFold);
+    root.addEventListener('keydown', toggleFold);
+    return () => {
+      clearTimeout(t);
+      mo.disconnect();
+      window.removeEventListener('resize', arm);
+      root.removeEventListener('click', toggleFold);
+      root.removeEventListener('keydown', toggleFold);
+    };
+  }, []);
 
   useEffect(() => {
     const root = ref.current?.closest('.site') || document;
