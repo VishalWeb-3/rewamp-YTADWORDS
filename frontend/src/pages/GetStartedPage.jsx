@@ -35,7 +35,7 @@ function YouTubeLinkSuggest({ value, onChange, placeholder, className, enableSug
       }
     }, 400);
     return () => clearTimeout(timer);
-  }, [value]);
+  }, [value, enableSuggestions]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -88,7 +88,6 @@ function getPlatform(serviceType) {
   if (!serviceType) return 'Other';
   const s = String(serviceType).toLowerCase();
   if (s.includes('youtube')) return 'YouTube';
-  if (s.includes('tiktok')) return 'TikTok';
   if (s.includes('google')) return 'Google';
   return 'Other';
 }
@@ -99,6 +98,7 @@ export default function GetStartedPage() {
 
   const state = location.state || {};
   const {
+    slug = null,
     allPackages = null,
     serviceType = 'YouTube Views',
     typeLabels = { regular: 'Regular', fast: 'Fast', ads: 'Ads' },
@@ -117,6 +117,7 @@ export default function GetStartedPage() {
   const [selectedType, setSelectedType] = useState(initialType);
   const [selectedPackage, setSelectedPackage] = useState(initialPackage);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const packages = allPackages?.[selectedType] || [];
 
@@ -127,39 +128,49 @@ export default function GetStartedPage() {
     } else if (packages.length > 0 && !selectedPackage) {
       setSelectedPackage(packages[0]);
     }
+    // Seed the selection when the incoming route state changes; `packages` is rebuilt every render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allPackages, initialType, initialPackage]);
 
   useEffect(() => {
     if (packages.length > 0 && (!selectedPackage || !packages.some((p) => p.price === selectedPackage.price && p[quantityKey] === selectedPackage[quantityKey]))) {
       setSelectedPackage(packages[0]);
     }
+    // Reset to the first package only when the type or catalog changes, not on every pick
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedType, allPackages]);
 
   const handleContinue = () => {
     const platform = getPlatform(serviceType);
-    if (!formData.link || !isValidLink(formData.link, platform) || !formData.email || !isValidEmail(formData.email) || !selectedPackage) {
-      if (formData.link && !isValidLink(formData.link, platform)) {
-        alert(`Please enter a valid ${platform} link`);
-      }
-      if (formData.email && !isValidEmail(formData.email)) {
-        alert('Please enter a valid popular email (gmail, outlook, etc.)');
-      }
+    if (!formData.link || !isValidLink(formData.link, platform)) {
+      setFormError(`Please enter a valid ${platform} link.`);
       return;
     }
+    if (!isValidEmail(formData.email)) {
+      setFormError('Please enter a valid email address.');
+      return;
+    }
+    if (!selectedPackage || !slug) {
+      setFormError('Please choose a package.');
+      return;
+    }
+    setFormError('');
 
     const quantity = selectedPackage[quantityKey];
     const serviceLabel = `${serviceType} - ${quantity}`;
-    const amount = quantity;
     const price = parseFloat(selectedPackage.price);
 
-    // Direct buy: pass single item to checkout without adding to cart
+    // Direct buy: pass single item to checkout without adding to cart.
+    // The server prices it from slug + tier + quantity.
     navigate('/checkout', {
       state: {
         directItem: {
           id: 'direct',
+          slug,
+          tier: selectedType,
+          quantity: String(quantity),
           platform,
           service: serviceLabel,
-          amount: typeof amount === 'string' ? parseInt(amount, 10) || amount : amount,
           price,
         },
         email: formData.email,
@@ -180,7 +191,7 @@ export default function GetStartedPage() {
   if (!allPackages || Object.keys(allPackages).length === 0) {
     return (
       <Layout>
-        <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center pg-flow">
           <div className="text-center max-w-md mx-auto px-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Select a package first</h1>
             <p className="text-gray-600 mb-6">
@@ -200,7 +211,7 @@ export default function GetStartedPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 py-12 pg-flow">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8">
@@ -212,6 +223,12 @@ export default function GetStartedPage() {
               </div>
 
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">Get started</h2>
+
+              {formError && (
+                <div role="alert" className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  {formError}
+                </div>
+              )}
 
               <form onSubmit={(e) => { e.preventDefault(); handleContinue(); }} className="space-y-6">
                 <div>
@@ -254,7 +271,7 @@ export default function GetStartedPage() {
                     placeholder="your@email.com"
                   />
                   {formData.email && !isValidEmail(formData.email) && (
-                    <p className="text-xs text-red-500 font-medium mt-1">Please enter a valid popular email (gmail, outlook, etc.)</p>
+                    <p className="text-xs text-red-500 font-medium mt-1">Please enter a valid email address.</p>
                   )}
                 </div>
 

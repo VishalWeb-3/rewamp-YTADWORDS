@@ -118,30 +118,6 @@ function ServiceCard({ subtitle, benefits, buttonText, link = '/', theme = 'red'
 }
 
 // Benefits data
-const tiktokViewsBenefits = [
-  'Genuine views delivered via TikTok discovery networks',
-  'Target Worldwide, USA, India, or Tier-1 Countries',
-  'Authentic views that help activate TikTok\'s algorithm',
-  'Scalable packages (Minimum 100 up to 1M+)',
-  '100% Manual verification & WhatsApp support',
-];
-
-const tiktokFollowersBenefits = [
-  'Real followers from active TikTok users',
-  'Target Worldwide, USA, India, or Tier-1 Countries',
-  'Organic growth with authentic engagement',
-  'Scalable packages (Minimum 100 up to 100k+)',
-  '100% Manual verification & WhatsApp support',
-];
-
-const tiktokLikesBenefits = [
-  'Genuine likes from real TikTok users',
-  'Target Worldwide, USA, India, or Tier-1 Countries',
-  'Boosts video visibility and engagement',
-  'Scalable packages (Minimum 500 up to 500k+)',
-  '100% Manual verification & WhatsApp support',
-];
-
 const youtubeViewsBenefits = [
   'Genuine views delivered via YouTube networks',
   'Target Worldwide, USA, India, or Tier-1 Countries',
@@ -174,41 +150,9 @@ const youtubeWatchHoursBenefits = [
   '100% Manual verification & WhatsApp support',
 ];
 
-const googleReviewsBenefits = [
-  'Authentic reviews from verified Google users',
-  'Target Worldwide, USA, India, or Tier-1 Countries',
-  'Improves local SEO and business credibility',
-  'Scalable packages (Minimum 5 up to 1k+)',
-  '100% Manual verification & WhatsApp support',
-];
-
 export default function ServiceSections() {
   return (
     <>
-      <ServiceCard
-        subtitle="Buy TikTok Followers"
-        benefits={tiktokFollowersBenefits}
-        buttonText="Start TikTok Followers Campaign"
-        link="/buy-tiktok-followers"
-        theme="blue"
-        cardPosition="left"
-      />
-      <ServiceCard
-        subtitle="Buy TikTok Likes"
-        benefits={tiktokLikesBenefits}
-        buttonText="Start TikTok Likes Campaign"
-        link="/buy-tiktok-likes"
-        theme="blue"
-        cardPosition="right"
-      />
-      <ServiceCard
-        subtitle="Buy TikTok Views"
-        benefits={tiktokViewsBenefits}
-        buttonText="Start TikTok Views Campaign"
-        link="/buy-tiktok-views"
-        theme="blue"
-        cardPosition="left"
-      />
       <ServiceCard
         subtitle="Buy YouTube Views"
         benefits={youtubeViewsBenefits}
@@ -242,14 +186,6 @@ export default function ServiceSections() {
         link="/buy-youtube-watch-hours"
         theme="red"
         cardPosition="left"
-      />
-      <ServiceCard
-        subtitle="Buy Google Reviews"
-        benefits={googleReviewsBenefits}
-        buttonText="Start Google Reviews Campaign"
-        link="/buy-female-google-reviews"
-        theme="green"
-        cardPosition="right"
       />
     </>
   );

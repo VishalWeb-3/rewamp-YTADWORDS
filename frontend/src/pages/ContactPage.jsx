@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
+import PageHead from '../components/site/PageHead';
 import SEO from '../components/SEO';
 import { useContactContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
 import { isValidEmail } from '../utils/emailValidator';
+import { readJson } from '../utils/orderItems';
+
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 export default function ContactPage() {
   const c = useContactContent();
   const { isEnabled } = useCtaActions();
   const canSubmitTicket = isEnabled('submit_ticket');
+  const [params] = useSearchParams();
   const [formData, setFormData] = useState({
     email: '',
-    reason: '',
+    reason: params.get('reason') || '',
     orderNumber: '',
-    message: '',
+    // arriving from "Forgot password?" on the login page
+    message: params.get('topic') === 'password' ? 'I forgot my password and need help resetting it.' : '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [submitError, setSubmitError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,64 +35,64 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setEmailError('');
+    setSubmitError('');
 
     if (!isValidEmail(formData.email)) {
-      setEmailError('Please enter a valid popular email (gmail, outlook, etc.)');
+      setEmailError('Please enter a valid email address.');
       return;
     }
 
     setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      setShowSuccess(true);
-      setIsSubmitting(false);
-      setFormData({
-        email: '',
-        reason: '',
-        orderNumber: '',
-        message: '',
+    try {
+      const res = await fetch(`${API_BASE}/api/tickets`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(formData),
       });
+      const data = await readJson(res);
+      if (!res.ok) throw new Error(data.error || 'Could not send your message. Please try again.');
 
+      setShowSuccess(true);
+      setFormData({ email: '', reason: '', orderNumber: '', message: '' });
       // Hide success message after 5 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-    }, 1000);
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (err) {
+      setSubmitError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <Layout>
       <SEO
         title="Contact Us | YoutubeADwords"
-        description="Get in touch with the YoutubeADwords support team. We're here 24/7 to help with your YouTube, TikTok, and Google Ads service questions."
+        description="Get in touch with the YoutubeADwords support team. We're here 24/7 to help with your YouTube and Google Ads service questions."
       />
-      <div className="bg-white min-h-screen py-8 sm:py-12 lg:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          {/* Page Title */}
-          <div className="text-center mb-8 lg:mb-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              {c?.title ?? 'Contact us'}
-            </h1>
-            <div className="space-y-3 text-gray-700 text-base lg:text-lg max-w-3xl mx-auto">
+      <div className="pg-contact pg-wrap">
+        <div className="pg-contact-intro">
+          <PageHead title={c?.title ?? 'Contact us'} size="md">
+            <div className="pg-contact-copy">
               <p>{c?.introParagraph1 ?? 'If you have anything in mind about our social media services, and YoutubeADwords please send us a message. Our support team will get back to you within 24 hours.'}</p>
               <p>
                 {c?.introParagraph2 ?? 'If you have any questions about your order, you can easily track its status '}
-                <a href={c?.trackOrderLinkHref ?? '#'} className="text-brand-red font-semibold hover:underline">{c?.trackOrderLinkText ?? 'here'}</a>.
+                <a href={c?.trackOrderLinkHref ?? '#'}>{c?.trackOrderLinkText ?? 'here'}</a>.
               </p>
             </div>
-          </div>
+          </PageHead>
+          <dl className="pg-facts pg-in" style={{ '--d': '0.8s' }}>
+            <div><dt>Reply time</dt><dd>Within 24 hours</dd></div>
+            <div><dt>Order status</dt><dd><a href="/orders">My Orders</a></dd></div>
+            <div><dt>Refunds</dt><dd><a href="/refund-policy">Refund policy</a></dd></div>
+          </dl>
+        </div>
 
           {/* Contact Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 relative overflow-hidden">
-            {/* Decorative Red Shapes - Top Right */}
-            <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none">
-              <div className="absolute top-4 right-4 w-24 h-1 bg-red-200 transform rotate-45 origin-center"></div>
-              <div className="absolute top-6 right-6 w-20 h-2 bg-brand-red transform rotate-45 origin-center"></div>
-            </div>
+          <div className="pg-contact-card pg-in" style={{ '--d': '0.35s' }}>
 
             {/* Form Heading */}
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6 lg:mb-8 relative z-10">
@@ -97,7 +105,12 @@ export default function ContactPage() {
                 <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="font-medium">{c?.successMessage ?? 'Success!'}</span>
+                <span className="font-medium" role="status">{c?.successMessage ?? 'Success!'}</span>
+              </div>
+            )}
+            {submitError && (
+              <div role="alert" className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm relative z-10">
+                {submitError}
               </div>
             )}
 
@@ -179,7 +192,7 @@ export default function ContactPage() {
                 {/* Right Column - Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    {c?.labelMessage ?? 'Your message'}
+                    {c?.labelMessage ?? 'Your message'} <span className="text-brand-red">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -209,7 +222,6 @@ export default function ContactPage() {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </Layout>
   );

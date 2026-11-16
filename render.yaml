@@ -17,8 +17,6 @@ services:
         sync: false
       - key: FRONTEND_URL
         sync: false
-      - key: SESSION_SECRET
-        generateValue: true
       - key: UPLEF_API_KEY
         sync: false
       - key: UPLEF_API_SECRET

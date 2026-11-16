@@ -7,27 +7,22 @@ export default function ServicesSection() {
   const home = useHomeContent();
   const section = home?.servicesSection || {};
   const googleServices = section.googleServices || [];
-  const tiktokServices = section.tiktokServices || [];
 
   const getServiceLink = (label) => {
     const l = label.toLowerCase();
     if (l.includes('youtube')) return '/buy-youtube-views';
-    if (l.includes('tiktok')) return '/buy-tiktok-followers';
     if (l.includes('google ads')) return '/buy-google-skip-ads-views';
-    if (l.includes('google reviews')) return '/buy-male-google-reviews';
     return '#';
   };
 
   const getServiceColor = (label) => {
     const l = label.toLowerCase();
     if (l.includes('youtube')) return 'bg-[#FF0000] hover:bg-[#CC0000]';
-    if (l.includes('tiktok')) return 'bg-black hover:bg-gray-800';
     if (l.includes('google ads')) return 'bg-[#4285F4] hover:bg-[#3367D6]';
-    if (l.includes('google reviews')) return 'bg-[#34A853] hover:bg-[#2E8B44]';
     return 'bg-blue-600 hover:bg-blue-700';
   };
 
-  const allServices = [...googleServices, ...tiktokServices];
+  const allServices = googleServices;
 
   return (
     <section className="bg-white py-8 sm:py-10 lg:py-14">

@@ -1,213 +1,136 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { useCart } from '../contexts/CartContext';
+import SEO from '../components/SEO';
+import Pass from '../components/site/Pass';
+import { Arrow } from '../components/landing/icons';
+import { useAuth } from '../contexts/AuthContext';
+import { fetchMyOrders, formatDate, paymentMethodLabel, statusInfo } from '../utils/orders';
 
 export default function OrderDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { orders } = useCart();
+  const { isLoggedIn, isLoading: authLoading } = useAuth();
+  const [order, setOrder] = useState(null);
+  const [state, setState] = useState('loading'); // loading | ready | missing | error
 
-  const order = orders.find((o) => o.id === id);
+  useEffect(() => {
+    if (authLoading) return;
+    if (!isLoggedIn) {
+      setState('missing');
+      return;
+    }
+    let cancelled = false;
+    fetchMyOrders()
+      .then((orders) => {
+        if (cancelled) return;
+        const match = orders.find((o) => o.items.some((item) => String(item.id) === String(id)));
+        setOrder(match || null);
+        setState(match ? 'ready' : 'missing');
+      })
+      .catch(() => !cancelled && setState('error'));
+    return () => {
+      cancelled = true;
+    };
+  }, [id, isLoggedIn, authLoading]);
 
-  if (!order) {
+  if (state === 'loading') {
     return (
       <Layout>
+        <SEO title="Order Details | YoutubeADwords" description="Order details" />
+        <p className="max-w-4xl mx-auto px-4 sm:px-6 py-12 text-gray-600" role="status">
+          Loading order…
+        </p>
+      </Layout>
+    );
+  }
+
+  if (state !== 'ready') {
+    return (
+      <Layout>
+        <SEO title="Order Not Found | YoutubeADwords" description="Order details" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Not Found</h1>
-          <p className="text-gray-600 mb-8">The order you're looking for doesn't exist.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            {state === 'error' ? 'Could not load this order' : 'Order Not Found'}
+          </h1>
+          <p className="text-gray-600 mb-8">
+            {!isLoggedIn
+              ? 'Log in to see your orders.'
+              : state === 'error'
+                ? 'Please try again in a moment.'
+                : "The order you're looking for doesn't exist."}
+          </p>
           <Link
-            to="/orders"
+            to={isLoggedIn ? '/orders' : '/login'}
             className="px-6 py-3 bg-brand-red text-white font-semibold rounded-lg hover:bg-[#C62828] transition-colors"
           >
-            View All Orders
+            {isLoggedIn ? 'View All Orders' : 'Log in'}
           </Link>
         </div>
       </Layout>
     );
   }
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'completed':
-        return 'bg-green-100 text-green-800';
-      case 'processing':
-        return 'bg-blue-100 text-blue-800';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'cancelled':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  const status = statusInfo(order.status);
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <button
-          onClick={() => navigate('/orders')}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Back to Orders
+      <SEO title={`Order #${order.id} | YoutubeADwords`} description="Order details" />
+      <div className="pg-wrap pg-section">
+        <button type="button" onClick={() => navigate('/orders')} className="pg-back pg-in" style={{ '--d': '0s' }}>
+          <span aria-hidden="true">&larr;</span> Back to orders
         </button>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-8 pb-6 border-b border-gray-200">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Order #{order.id}
-              </h1>
-              <p className="text-gray-600">Placed on {formatDate(order.createdAt)}</p>
-            </div>
-            <span
-              className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(
-                order.status
-              )}`}
-            >
-              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-            </span>
-          </div>
+        <div className="pg-receipt">
+          <div>
+            <header className="pg-head pg-head-md">
+              <h1 className="lp-display pg-in" style={{ '--d': '0.05s' }}>Order #{order.id}</h1>
+              <p className="pg-lede">Placed on {formatDate(order.createdAt)}</p>
+            </header>
 
-          {/* Order Items */}
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Order Items</h2>
-            <div className="space-y-4">
-              {order.items.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">
-                      {item.serviceName || item.serviceType}
-                    </h3>
-                    <div className="text-sm text-gray-600 mt-1 space-y-1">
-                      {item.type && (
-                        <p>
-                          <span className="font-medium">Type:</span> {item.type}
-                        </p>
-                      )}
-                      {item.quantity && (
-                        <p>
-                          <span className="font-medium">Quantity:</span> {item.quantity}
-                        </p>
-                      )}
-                      {item.url && (
-                        <p className="truncate">
-                          <span className="font-medium">URL:</span> {item.url}
-                        </p>
-                      )}
-                    </div>
+            <div className={`pg-track is-${status.key} pg-in`} style={{ '--d': '0.3s' }}>
+              <span className="pg-chip">{status.label}</span>
+            </div>
+
+            <h2 className="pg-sub lp-display pg-in" style={{ '--d': '0.35s' }}>Items</h2>
+            <ul className="pg-order-items pg-receipt-items pg-in" style={{ '--d': '0.4s' }}>
+              {order.items.map((item) => (
+                <li key={item.id}>
+                  <div style={{ minWidth: 0 }}>
+                    <b>{item.service}</b>
+                    <span>Quantity {item.quantity}</span>
+                    {item.link && <span className="pg-link-line">{item.link}</span>}
                   </div>
-                  <span className="text-xl font-bold text-brand-red ml-4">
-                    ${item.price}
-                  </span>
-                </div>
+                  <span className="lp-mono">${item.price.toFixed(2)}</span>
+                </li>
               ))}
+            </ul>
+
+            <dl className="pg-facts pg-in" style={{ '--d': '0.5s', maxWidth: 'none' }}>
+              <div><dt>Payment method</dt><dd>{paymentMethodLabel(order.paymentMethod)}</dd></div>
+              <div className="pg-total"><dt>Total</dt><dd>${order.total.toFixed(2)}</dd></div>
+            </dl>
+
+            <div className="pg-actions pg-in" style={{ '--d': '0.6s', marginTop: '2rem' }}>
+              <Link to="/" className="lp-btn lp-btn-red">Continue shopping<Arrow /></Link>
+              <Link to="/contact" className="lp-btn lp-btn-line">Ask about this order</Link>
             </div>
           </div>
 
-          {/* Order Summary */}
-          <div className="mb-8 p-6 bg-gray-50 rounded-lg">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-600">Subtotal</span>
-                <span className="font-semibold">${order.total.toFixed(2)}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-gray-600">Tax</span>
-                <span className="font-semibold">$0.00</span>
-              </div>
-              <div className="flex items-center justify-between pt-4 border-t border-gray-300">
-                <span className="text-xl font-bold text-gray-900">Total</span>
-                <span className="text-2xl font-bold text-brand-red">
-                  ${order.total.toFixed(2)}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Customer Information */}
-          {order.customer && (
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Customer Information</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-600">Name</p>
-                  <p className="font-semibold text-gray-900">{order.customer.name}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Email</p>
-                  <p className="font-semibold text-gray-900">{order.customer.email}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Phone</p>
-                  <p className="font-semibold text-gray-900">{order.customer.phone}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Payment Method</p>
-                  <p className="font-semibold text-gray-900">
-                    {order.paymentMethod === 'card'
-                      ? 'Credit/Debit Card'
-                      : order.paymentMethod === 'paypal'
-                      ? 'PayPal'
-                      : 'Cryptocurrency'}
-                  </p>
-                </div>
-                {order.customer.address && (
-                  <div className="md:col-span-2">
-                    <p className="text-sm text-gray-600">Address</p>
-                    <p className="font-semibold text-gray-900">
-                      {order.customer.address}, {order.customer.city}, {order.customer.country}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Actions */}
-          <div className="flex gap-4 pt-6 border-t border-gray-200">
-            <Link
-              to="/orders"
-              className="px-6 py-3 bg-gray-100 text-gray-900 font-semibold rounded-lg hover:bg-gray-200 transition-colors"
-            >
-              View All Orders
-            </Link>
-            <Link
-              to="/"
-              className="px-6 py-3 bg-brand-red text-white font-semibold rounded-lg hover:bg-[#C62828] transition-colors"
-            >
-              Continue Shopping
-            </Link>
-          </div>
+          <aside className="pg-receipt-pass" aria-hidden="true">
+            <Pass
+              kind="Order pass"
+              serial={`#${order.id}`}
+              tone="dark"
+              strap="var(--red)"
+              title={`$${order.total.toFixed(2)}`}
+              rows={[
+                { label: 'Status', value: status.label },
+                { label: 'Items', value: String(order.items.length) },
+                { label: 'Placed', value: formatDate(order.createdAt) },
+              ]}
+            />
+          </aside>
         </div>
       </div>
     </Layout>

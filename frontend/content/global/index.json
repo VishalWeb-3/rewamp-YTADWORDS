@@ -11,10 +11,6 @@
         "link": "/buy-youtube-views"
       },
       {
-        "label": "TikTok Ads Services",
-        "link": "/buy-tiktok-followers"
-      },
-      {
         "label": "Contact",
         "link": "/tickets"
       }
@@ -32,9 +28,6 @@
       { "label": "Buy YouTube Subscribers", "link": "/buy-youtube-subscribers" },
       { "label": "Buy YouTube Likes", "link": "/buy-youtube-likes" },
       { "label": "Buy YouTube Watch Hours", "link": "/buy-youtube-watch-hours" },
-      { "label": "Buy TikTok Followers", "link": "/buy-tiktok-followers" },
-      { "label": "Buy TikTok Likes", "link": "/buy-tiktok-likes" },
-      { "label": "Buy TikTok Views", "link": "/buy-tiktok-views" },
       { "label": "Buy Google Skip Ads Views", "link": "/buy-google-skip-ads-views" }
     ],
     "resourcesTitle": "Resources",
@@ -106,44 +99,6 @@
           {
             "label": "Buy YouTube Watch Hours",
             "link": "/buy-youtube-watch-hours"
-          }
-        ]
-      },
-      {
-        "label": "TikTok Ads Services",
-        "items": [
-          {
-            "label": "TikTok Followers",
-            "link": "/buy-tiktok-followers"
-          },
-          {
-            "label": "TikTok Likes",
-            "link": "/buy-tiktok-likes"
-          },
-          {
-            "label": "TikTok Views",
-            "link": "/buy-tiktok-views"
-          }
-        ]
-      },
-      {
-        "label": "Buy Google Reviews",
-        "items": [
-          {
-            "label": "Buy Female Google Reviews",
-            "link": "/buy-female-google-reviews"
-          },
-          {
-            "label": "Buy Male Google Reviews",
-            "link": "/buy-male-google-reviews"
-          },
-          {
-            "label": "Buy Google Local Guide Reviews",
-            "link": "/buy-google-local-guide-reviews"
-          },
-          {
-            "label": "Buy Google Reviews by Age Group",
-            "link": "/buy-google-reviews-by-age-group"
           }
         ]
       }

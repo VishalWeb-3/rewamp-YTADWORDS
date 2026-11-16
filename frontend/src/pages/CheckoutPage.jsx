@@ -1,119 +1,117 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import PaymentLoadingOverlay from '../components/PaymentLoadingOverlay';
 import { isValidLink, getLinkPlaceholder } from '../utils/linkValidator';
 import { isValidEmail } from '../utils/emailValidator';
 import { triggerPaymentRelay } from '../utils/paymentRelay';
+import { toOrderItem, readJson, encodeShareItems } from '../utils/orderItems';
+import { formatQuantity } from '../utils/quantity';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
-const CARD_MINIMUM = 35; 
+const CARD_MINIMUM = 35;
 const CARD_MAXIMUM = 999;
-
 
 // Derive platform from serviceType
 function getPlatform(serviceType) {
   if (!serviceType) return 'Other';
   const s = String(serviceType).toLowerCase();
   if (s.includes('youtube')) return 'YouTube';
-  if (s.includes('tiktok')) return 'TikTok';
   if (s.includes('google')) return 'Google';
   return 'Other';
 }
 
 export default function CheckoutPage() {
   const { user } = useAuth();
-  const { cartItems, removeFromCart, clearCart } = useCart();
+  const { cartItems, removeFromCart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
-  const query = new URLSearchParams(location.search);
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const [usernames, setUsernames] = useState({});
+  const [links, setLinks] = useState({});
   const [email, setEmail] = useState(user?.email || '');
+  const [error, setError] = useState(null);
+  const [notice, setNotice] = useState('');
+  const [quote, setQuote] = useState(null);
 
-  const urlPlatform = query.get('platform');
-  const urlService = query.get('service');
-  const urlAmount = query.get('amount');
-  const urlPrice = query.get('price');
   const directItem = location.state?.directItem;
   const stateEmail = location.state?.email;
 
   useEffect(() => {
-    if (user?.email && !directItem) setEmail(user.email);
-    if (directItem && stateEmail) setEmail(stateEmail);
-  }, [user?.email, directItem, stateEmail]);
-
-  useEffect(() => {
-    if (directItem && location.state?.usernames && Object.keys(location.state.usernames).length > 0) {
-      setUsernames(location.state.usernames);
-    }
-  }, [directItem]);
+    if (user?.email && !stateEmail) setEmail(user.email);
+    if (stateEmail) setEmail(stateEmail);
+  }, [user?.email, stateEmail]);
 
   const displayItems = useMemo(() => {
-    if (directItem) {
-      return [{
-        id: directItem.id || 'direct',
-        platform: directItem.platform,
-        service: directItem.service,
-        amount: typeof directItem.amount === 'number'
-          ? directItem.amount
-          : parseInt(String(directItem.amount), 10) || directItem.amount,
-        price: parseFloat(directItem.price || 0),
-      }];
-    }
-    if (urlPlatform && urlService) {
-      return [{
-        id: 'temp',
-        platform: urlPlatform,
-        service: urlService,
-        amount: parseInt(urlAmount || '0'),
-        price: parseFloat(urlPrice || '0'),
-      }];
-    }
-    return cartItems.map((item) => ({
-      id: item.id,
+    const source = directItem ? [directItem] : cartItems;
+    return source.map((item) => ({
+      ...item,
+      id: item.id || 'direct',
       platform: item.platform || getPlatform(item.serviceType),
-      service: item.serviceName || item.serviceType,
-      amount: parseInt(item.quantity || item.views || '0'),
+      service: item.service || item.serviceName || item.serviceType,
       price: parseFloat(item.price || 0),
     }));
-  }, [cartItems, urlPlatform, urlService, urlAmount, urlPrice, directItem]);
+  }, [cartItems, directItem]);
 
-  const platforms = useMemo(() => {
-    return [...new Set(displayItems.map((item) => item.platform))];
+  // Pre-fill links passed from the Get Started page (keyed by platform there)
+  useEffect(() => {
+    const passed = location.state?.usernames;
+    if (!passed) return;
+    setLinks((prev) => {
+      const next = { ...prev };
+      displayItems.forEach((item) => {
+        if (!next[item.id] && passed[item.platform]) next[item.id] = passed[item.platform];
+      });
+      return next;
+    });
+  }, [location.state, displayItems]);
+
+  // Ask the server for the real prices so the total shown is the total charged
+  useEffect(() => {
+    if (displayItems.length === 0) return;
+    let cancelled = false;
+    fetch(`${API_BASE}/api/orders/quote`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: displayItems.map((item) => toOrderItem(item)) }),
+    })
+      .then(async (res) => ({ ok: res.ok, data: await readJson(res) }))
+      .then(({ ok, data }) => {
+        if (cancelled) return;
+        if (ok) {
+          setQuote(data);
+        } else {
+          setQuote(null);
+          setError({ message: `${data.error || 'Some items could not be priced'}. Please remove them and add them again.` });
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setQuote(null);
+        setError({ message: 'Could not load prices. Check your connection and refresh the page.' });
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [displayItems]);
 
-  const total = useMemo(() => {
-    if (urlPlatform && urlService && urlPrice) return parseFloat(urlPrice);
-    return displayItems.reduce((sum, item) => sum + item.price, 0);
-  }, [displayItems, urlPlatform, urlService, urlPrice]);
+  const itemPrice = (item, index) => quote?.items?.[index]?.price ?? item.price;
+  const total = quote?.totalAmount ?? displayItems.reduce((sum, item) => sum + item.price, 0);
 
-  // --------------------------------------------------
-  // Payment method logic (mirrors famoid.com exactly)
-  //   total < $35   → crypto only (card hidden)
-  //   total >= $35  → card + crypto (card pre-selected)
-  // --------------------------------------------------
+  // total < $35 or > $999 → crypto only; otherwise card + crypto (card pre-selected)
   const showCardOption = total >= CARD_MINIMUM && total <= CARD_MAXIMUM;
+  const [paymentMethod, setPaymentMethod] = useState('card');
 
-  const [paymentMethod, setPaymentMethod] = useState(
-    showCardOption ? 'card' : 'crypto'
-  );
-
-  // Keep payment method in sync when total crosses the $35 threshold
   useEffect(() => {
-    if (!showCardOption) {
-      setPaymentMethod('crypto');
-    } else if (paymentMethod !== 'card' && paymentMethod !== 'crypto') {
-      setPaymentMethod('card');
-    }
+    if (!showCardOption) setPaymentMethod('crypto');
   }, [showCardOption]);
 
   const handleRemove = (id) => {
-    if (id === 'temp' || id === 'direct') {
+    if (id === 'direct') {
       navigate('/');
     } else {
       removeFromCart(id);
@@ -122,62 +120,41 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
 
     if (!isValidEmail(email)) {
-      alert('Please enter a valid popular email (gmail, outlook, etc.)');
+      setError({ message: 'Please enter a valid email address.' });
       return;
     }
-
-    // Validate all platform links
-    for (const platform of platforms) {
-      const link = usernames[platform];
-      if (!link || !isValidLink(link, platform)) {
-        alert(`Please enter a valid ${platform} link`);
-        return;
-      }
+    const missing = displayItems.find((item) => !isValidLink(links[item.id], item.platform));
+    if (missing) {
+      setError({ message: `Please enter a valid ${missing.platform} link for "${missing.service}".` });
+      return;
     }
 
     setIsProcessing(true);
     let isRedirecting = false;
-
-    // Always use crypto when card option is not available
     const method = showCardOption ? paymentMethod : 'crypto';
 
     try {
-      const items = displayItems.map((item) => ({
-        platform: item.platform,
-        service: item.service,
-        amount: item.amount,
-        price: item.price,
-        username: usernames[item.platform],
-      }));
-
       const res = await fetch(`${API_BASE}/api/orders/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          userId: user?.id ?? null,
           email,
-          usernames,
-          items,
+          items: displayItems.map((item) => toOrderItem(item, links[item.id])),
           paymentMethod: method,
         }),
       });
-
-      const text = await res.text();
-      let data = {};
-      try {
-        data = JSON.parse(text);
-      } catch (err) {
-        // Not JSON - might be HTML from 404 or Render error
-        console.error('Non-JSON response:', text);
-        const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
-        throw new Error(`Server returned invalid response. ${snippet.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snippet}`);
-      }
+      const data = await readJson(res);
 
       if (res.ok && data.paymentUrl) {
-        if (!location.state?.directItem && !urlPlatform) clearCart();
+        // The cart is cleared on the success page once the payment is confirmed
+        sessionStorage.setItem(
+          'pendingCheckout',
+          JSON.stringify({ externalOrderId: data.externalOrderId, fromCart: !directItem })
+        );
         isRedirecting = true;
         if (method === 'card') {
           triggerPaymentRelay(data.paymentUrl);
@@ -187,20 +164,13 @@ export default function CheckoutPage() {
         return;
       }
 
-      if (res.ok && !data.paymentUrl) {
-        if (!location.state?.directItem && !urlPlatform) clearCart();
-        alert('Order created successfully');
-        navigate('/orders');
-        return;
-      }
-
-      const errorMsg = data.details || data.error || `Failed to create order (${res.status})`;
-      alert(errorMsg);
+      setError({
+        message: data.details || data.error || `Failed to create order (${res.status})`,
+        needsLogin: res.status === 409,
+      });
     } catch (err) {
       console.error('Checkout error:', err);
-      // Better error message for the user
-      const msg = err.message || 'Something went wrong. Please try again.';
-      alert(msg);
+      setError({ message: err.message || 'Something went wrong. Please try again.' });
     } finally {
       if (!isRedirecting) {
         setIsProcessing(false);
@@ -209,42 +179,29 @@ export default function CheckoutPage() {
   };
 
   const handleShareLink = async () => {
-    const firstItem = displayItems[0];
     const url = new URL('/pay', window.location.origin);
-    url.searchParams.set('amount', String(firstItem.amount));
-    url.searchParams.set('price', String(total.toFixed(2)));
-    url.searchParams.set('original', String((total * 1.5).toFixed(2)));
-    url.searchParams.set('platform', firstItem.platform);
-    url.searchParams.set('service', firstItem.service);
-    url.searchParams.set('ts', String(Date.now()));
-    url.searchParams.set('label', 'Shared Order');
-    // Pass the username/link so it's pre-filled on the shared page
-    const usernameVal = usernames[firstItem.platform] || firstItem.username || '';
-    if (usernameVal) url.searchParams.set('username', usernameVal);
+    url.searchParams.set('items', encodeShareItems(displayItems.map((item) => toOrderItem(item))));
+    const firstLink = links[displayItems[0]?.id];
+    if (displayItems.length === 1 && firstLink) url.searchParams.set('username', firstLink);
     if (email) url.searchParams.set('email', email);
-
     const shareUrl = url.toString();
 
     try {
       if (navigator.share) {
-        await navigator.share({
-          title: 'Secure Payment Link',
-          url: shareUrl,
-        });
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(shareUrl);
-        alert('Payment link copied to clipboard.');
+        await navigator.share({ title: 'Secure Payment Link', url: shareUrl });
       } else {
-        alert(`Share this link: ${shareUrl}`);
+        await navigator.clipboard.writeText(shareUrl);
+        setNotice('Payment link copied to clipboard.');
       }
     } catch {
-      alert(`Share this link: ${shareUrl}`);
+      setNotice(`Share this link: ${shareUrl}`);
     }
   };
 
   if (displayItems.length === 0) {
     return (
       <Layout>
+        <SEO title="Checkout | YoutubeADwords" description="Review your order and pay securely." />
         <div className="min-h-screen bg-gray-50 py-12 flex flex-col items-center justify-center text-center px-4">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
           <p className="text-gray-600 mb-6">
@@ -264,22 +221,37 @@ export default function CheckoutPage() {
   return (
     <>
       <Layout>
-        <div className="min-h-screen bg-gray-50 py-12">
+        <SEO title="Checkout | YoutubeADwords" description="Review your order and pay securely." />
+        <div className="min-h-screen bg-gray-50 py-12 pg-flow">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
             <div className="grid lg:grid-cols-3 gap-8">
               {/* ── Left: Form ── */}
               <div className="lg:col-span-2">
-                <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8">
+                <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8" noValidate>
                   <div className="space-y-6">
+                    {error && (
+                      <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                        {error.message}
+                        {error.needsLogin && (
+                          <>
+                            {' '}
+                            <Link to="/login" className="font-bold underline">
+                              Log in
+                            </Link>
+                          </>
+                        )}
+                      </div>
+                    )}
 
                     {/* Email */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="checkout-email" className="block text-sm font-medium text-gray-700 mb-2">
                         Email *
                       </label>
                       <input
+                        id="checkout-email"
                         type="email"
                         required
                         value={email}
@@ -289,32 +261,33 @@ export default function CheckoutPage() {
                       />
                     </div>
 
-                    {/* Platform usernames */}
+                    {/* One link per item, so two YouTube items can target different videos */}
                     <div>
-                      <h3 className="text-sm font-medium text-gray-700 mb-3">Platform usernames</h3>
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">Where should we deliver?</h3>
                       <div className="space-y-4">
-                        {platforms.map((platform) => (
-                          <div key={platform}>
-                            <label className="block text-xs text-gray-500 mb-1">
-                              {platform} username or link
-                            </label>
-                            <input
-                              type="text"
-                              value={usernames[platform] || ''}
-                              onChange={(e) =>
-                                setUsernames({ ...usernames, [platform]: e.target.value })
-                              }
-                              className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-brand-red focus:border-transparent transition-colors ${usernames[platform] && !isValidLink(usernames[platform], platform)
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                                }`}
-                              placeholder={getLinkPlaceholder(platform)}
-                            />
-                            {usernames[platform] && !isValidLink(usernames[platform], platform) && (
-                              <p className="text-[10px] text-red-500 font-bold mt-1">Please enter a valid {platform} link</p>
-                            )}
-                          </div>
-                        ))}
+                        {displayItems.map((item) => {
+                          const value = links[item.id] || '';
+                          const invalid = value && !isValidLink(value, item.platform);
+                          return (
+                            <div key={item.id}>
+                              <label htmlFor={`link-${item.id}`} className="block text-xs text-gray-500 mb-1">
+                                {item.service}: {item.platform} username or link
+                              </label>
+                              <input
+                                id={`link-${item.id}`}
+                                type="text"
+                                value={value}
+                                onChange={(e) => setLinks({ ...links, [item.id]: e.target.value })}
+                                aria-invalid={invalid ? 'true' : 'false'}
+                                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-brand-red focus:border-transparent transition-colors ${invalid ? 'border-red-500' : 'border-gray-300'}`}
+                                placeholder={getLinkPlaceholder(item.platform)}
+                              />
+                              {invalid && (
+                                <p className="text-[10px] text-red-500 font-bold mt-1">Please enter a valid {item.platform} link</p>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
@@ -324,12 +297,13 @@ export default function CheckoutPage() {
                         Payment method
                       </label>
 
-                      {/* Button row: card shown only when total >= $35 */}
+                      {/* Button row: card shown only for $35–$999 */}
                       <div className={`flex gap-3 ${showCardOption ? '' : 'justify-center'}`}>
                         {showCardOption && (
                           <button
                             type="button"
                             id="payment-method-card"
+                            aria-pressed={paymentMethod === 'card'}
                             onClick={() => setPaymentMethod('card')}
                             className={`flex-1 min-h-[48px] rounded-xl border-2 text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${paymentMethod === 'card'
                               ? 'border-brand-red bg-red-50 text-brand-red'
@@ -344,6 +318,7 @@ export default function CheckoutPage() {
                               viewBox="0 0 24 24"
                               stroke="currentColor"
                               strokeWidth={2}
+                              aria-hidden="true"
                             >
                               <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
                               <line x1="1" y1="10" x2="23" y2="10" />
@@ -355,6 +330,7 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           id="payment-method-crypto"
+                          aria-pressed={paymentMethod === 'crypto'}
                           onClick={() => setPaymentMethod('crypto')}
                           className={`${showCardOption ? 'flex-1' : 'w-full'} min-h-[48px] rounded-xl border-2 text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${paymentMethod === 'crypto'
                             ? 'border-amber-500 bg-amber-50 text-amber-700'
@@ -369,6 +345,7 @@ export default function CheckoutPage() {
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                             strokeWidth={2}
+                            aria-hidden="true"
                           >
                             <circle cx="12" cy="12" r="10" />
                             <path d="M8 14s1.5 2 4 2 4-2 4-2" />
@@ -382,8 +359,8 @@ export default function CheckoutPage() {
                       {/* Note shown only when crypto is mandatory */}
                       {!showCardOption && total > 0 && (
                         <p className="mt-2 text-[10px] text-gray-400 text-center">
-                          {total < CARD_MINIMUM 
-                            ? `Card payment available for orders $${CARD_MINIMUM}+` 
+                          {total < CARD_MINIMUM
+                            ? `Card payment available for orders $${CARD_MINIMUM}+`
                             : `Card payment available for orders up to $${CARD_MAXIMUM}`}
                         </p>
                       )}
@@ -399,7 +376,7 @@ export default function CheckoutPage() {
                     {/* ── Submit ── */}
                     <button
                       type="submit"
-                      disabled={isProcessing}
+                      disabled={isProcessing || !quote}
                       className={`w-full text-white font-bold py-4 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg ${paymentMethod === 'crypto' || !showCardOption
                         ? 'bg-amber-500 hover:bg-amber-600'
                         : 'bg-brand-red hover:bg-[#C62828]'
@@ -417,10 +394,10 @@ export default function CheckoutPage() {
 
               {/* ── Right: Order Summary ── */}
               <div>
-                <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
+                <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-4 pg-flow-pass">
                   <h2 className="text-xl font-bold text-gray-900 mb-6">Order summary</h2>
                   <div className="space-y-4 mb-6">
-                    {displayItems.map((item) => (
+                    {displayItems.map((item, index) => (
                       <div
                         key={item.id}
                         className="flex justify-between items-center pb-4 border-b border-gray-100"
@@ -428,12 +405,12 @@ export default function CheckoutPage() {
                         <div>
                           <p className="font-medium text-gray-900">{item.service}</p>
                           <p className="text-sm text-gray-500">
-                            {item.platform} • {item.amount}
+                            {item.platform} • {formatQuantity(quote?.items?.[index]?.amount ?? item.quantity)}
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-brand-red">
-                            ${item.price.toFixed(2)}
+                            ${itemPrice(item, index).toFixed(2)}
                           </span>
                           <button
                             type="button"
@@ -485,11 +462,16 @@ export default function CheckoutPage() {
                       onClick={handleShareLink}
                       className="w-full h-11 rounded-xl border-2 border-gray-200 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:border-brand-red hover:text-brand-red transition-all flex items-center justify-center gap-2"
                     >
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                       </svg>
                       Share Payment Link
                     </button>
+                    {notice && (
+                      <p role="status" className="text-xs text-gray-500 text-center break-all">
+                        {notice}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

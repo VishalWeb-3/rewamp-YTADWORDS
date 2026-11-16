@@ -10,32 +10,24 @@ export const useCart = () => {
   return context;
 };
 
+function loadSavedCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    // Items saved before package references were added can't be priced by the server
+    return Array.isArray(saved) ? saved.filter((item) => item && item.slug) : [];
+  } catch {
+    return [];
+  }
+}
+
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  // Read the saved cart during the first render so the save effect never overwrites it with []
+  const [cartItems, setCartItems] = useState(loadSavedCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [orders, setOrders] = useState([]);
 
-  // Load cart and orders from localStorage on mount
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cartItems');
-    const savedOrders = localStorage.getItem('orders');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
-    if (savedOrders) {
-      setOrders(JSON.parse(savedOrders));
-    }
-  }, []);
-
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
-
-  // Save orders to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('orders', JSON.stringify(orders));
-  }, [orders]);
 
   const addToCart = (item) => {
     const newItem = {
@@ -69,20 +61,6 @@ export const CartProvider = ({ children }) => {
     return cartItems.length;
   };
 
-  const createOrder = (orderData) => {
-    const newOrder = {
-      id: `ORDER-${Date.now()}`,
-      ...orderData,
-      items: [...cartItems],
-      total: getCartTotal(),
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-    };
-    setOrders((prev) => [newOrder, ...prev]);
-    clearCart();
-    return newOrder;
-  };
-
   const value = {
     cartItems,
     addToCart,
@@ -93,8 +71,6 @@ export const CartProvider = ({ children }) => {
     getCartCount,
     isCartOpen,
     setIsCartOpen,
-    orders,
-    createOrder,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

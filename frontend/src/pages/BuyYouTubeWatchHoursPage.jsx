@@ -4,10 +4,12 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
-import { useCtaActions } from '../contexts/CtaActionsContext';
-import { useCheckout } from '../hooks/useCheckout';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
+import { submitReview } from '../utils/reviews';
 
+import SvcGuide, { SvcTopic } from '../components/site/SvcGuide';
+import SvcNav from '../components/site/SvcNav';
 const watchHoursPackagesFallback = {
   regular: [
     { hours: '1.0K', price: '80.55', originalPrice: '89.50', discount: '10%' },
@@ -32,10 +34,6 @@ const featuresFallback = [
 export default function BuyYouTubeWatchHoursPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const { isEnabled } = useCtaActions();
-  const canBuy = isEnabled('buy');
-  const canAddToCart = isEnabled('add_to_cart');
-  const { goToCheckout } = useCheckout();
   const watchHoursPackages = usePricingPackages('buy-youtube-watch-hours', watchHoursPackagesFallback);
   const content = usePricingPageContent('buy-youtube-watch-hours', null);
   const [activeTab, setActiveTab] = useState('regular');
@@ -47,6 +45,7 @@ export default function BuyYouTubeWatchHoursPage() {
     review: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [reviewError, setReviewError] = useState('');
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = watchHoursPackages ? watchHoursPackages[activeTab] : [];
 
@@ -79,6 +78,8 @@ export default function BuyYouTubeWatchHoursPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-youtube-watch-hours',
+      tier: activeTab,
       platform: 'YouTube',
       serviceType: 'YouTube Watch Hours',
       serviceName: `YouTube Watch Hours - ${pkg.hours}`,
@@ -112,7 +113,7 @@ export default function BuyYouTubeWatchHoursPage() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
-          <div className="space-y-6">
+          <div className="space-y-6 svc-hero">
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
@@ -122,7 +123,7 @@ export default function BuyYouTubeWatchHoursPage() {
               />
             </div>
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap svc-h1">
                 {hero?.title ?? 'Buy YouTube Watch Hours'}{' '}
                 <span className="bg-brand-red text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
                   {hero?.badge ?? 'Instantly'}
@@ -132,10 +133,11 @@ export default function BuyYouTubeWatchHoursPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Watch Hours with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100 svc-pass">
             {/* Tabs */}
             <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
               {tabList.map((tab) => (
@@ -160,7 +162,7 @@ export default function BuyYouTubeWatchHoursPage() {
               <div className="bg-gray-100 rounded-lg p-4 mb-6">
                 <p className="text-gray-700 text-sm">
                   {infoBanner ? (
-                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                    <><span className="font-medium">Information:</span> {String(infoBanner).replace(/^\s*Information:\s*/i, '')}</>
                   ) : (
                     <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Verified YouTube Watch Hours</span> packages to boost your monetization.</>
                   )}
@@ -175,6 +177,15 @@ export default function BuyYouTubeWatchHoursPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-brand-red p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'}`}
                   >
@@ -223,6 +234,7 @@ export default function BuyYouTubeWatchHoursPage() {
                     const selectedPkg = packages[selectedPackageIndex];
                     navigate('/get-started', {
                       state: {
+                        slug: 'buy-youtube-watch-hours',
                         allPackages: watchHoursPackages,
                         serviceType: 'YouTube Watch Hours',
                         typeLabels: { regular: 'Watch Time' },
@@ -270,8 +282,11 @@ export default function BuyYouTubeWatchHoursPage() {
           </div>
         </div>
 
+        <SvcNav />
+
+
         {/* All In One YouTube Watch Hours Campaign Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
@@ -338,7 +353,7 @@ export default function BuyYouTubeWatchHoursPage() {
         </div>
 
         {/* YoutubeADwords's Guarantee Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-guarantee">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
@@ -466,117 +481,26 @@ export default function BuyYouTubeWatchHoursPage() {
           </div>
         </div>
 
-        {/* Why Do You Need To Buy YouTube Watch Hours Section */}
-        <div className="mt-12 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - GIF */}
-            <div className="flex justify-center lg:justify-start">
-              <img
-                src="/demo1.jpg"
-                alt="YouTube Watch Hours Growing"
-                className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-              />
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Why Do You Need To Buy YouTube Watch Hours?
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  The number of watch hours your YouTube channel has is one of the most important factors that determine your eligibility for monetization. When you reach 4,000 watch hours, you become eligible for the YouTube Partner Program, allowing you to earn money from your content.
-                </p>
-                <p>
-                  This increases your channel's credibility and helps you meet YouTube's monetization requirements. In addition, YouTube's algorithm favors channels with more watch hours, which means that your videos are more likely to appear in search results and be recommended to other users.
-                </p>
-                <p>
-                  Therefore, buying YouTube watch hours can help you improve your channel's performance and reach monetization faster. It can also help you build social proof and credibility, which can lead to more organic watch hours and subscribers in the long run.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Numbers, Engagement, and Reputation Section */}
-        <div className="mt-12 lg:mt-32">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; YoutubeADwords
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?
-                </p>
-                <p>
-                  Numbers are everything in today's digital world. Buying watch hours makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.
-                </p>
-                <p>
-                  What number of watch hours will satisfy you? Would 4,000 watch hours help you get monetized? YoutubeADwords can provide this for you. Thanks to the quality watch hours we send to your videos, we're able to activate the YouTube algorithm and make the system work for you.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Section - Image */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo1.jpg"
-                  alt="Content Creation"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* An Excellent Strategy Section */}
-        <div className="mt-12 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Image */}
-            <div className="flex justify-center lg:justify-start order-2 lg:order-1">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo2.jpg"
-                  alt="YouTube Channel Strategy"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4 order-1 lg:order-2">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                An Excellent Strategy To Uplift Your YouTube Channel
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  Organic watch hours are great, but if you're in need, it is possible to{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube watch hours</span> and{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube subscribers</span> that will provide you with just as much influence in way shorter time.
-                </p>
-                <p>
-                  The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying watch hours on YouTube may be an excellent strategy to uplift your YouTube channel. The bought watch hours serve as an effective support base and a credibility for visitors to become subscribers.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Good-to-know guide: the long-form copy as one tabbed panel */}
+        <SvcGuide>
+          <SvcTopic title={"Why Do You Need To Buy YouTube Watch Hours?"}>
+            <p>The number of watch hours your YouTube channel has is one of the most important factors that determine your eligibility for monetization. When you reach 4,000 watch hours, you become eligible for the YouTube Partner Program, allowing you to earn money from your content.</p>
+            <p>This increases your channel's credibility and helps you meet YouTube's monetization requirements. In addition, YouTube's algorithm favors channels with more watch hours, which means that your videos are more likely to appear in search results and be recommended to other users.</p>
+            <p>Therefore, buying YouTube watch hours can help you improve your channel's performance and reach monetization faster. It can also help you build social proof and credibility, which can lead to more organic watch hours and subscribers in the long run.</p>
+          </SvcTopic>
+          <SvcTopic title={"Numbers, Engagement, and Reputation; YoutubeADwords"}>
+            <p>What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?</p>
+            <p>Numbers are everything in today's digital world. Buying watch hours makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.</p>
+            <p>What number of watch hours will satisfy you? Would 4,000 watch hours help you get monetized? YoutubeADwords can provide this for you. Thanks to the quality watch hours we send to your videos, we're able to activate the YouTube algorithm and make the system work for you.</p>
+          </SvcTopic>
+          <SvcTopic title={"An Excellent Strategy To Uplift Your YouTube Channel"}>
+            <p>Organic watch hours are great, but if you're in need, it is possible to{' '} <span className="text-brand-red font-semibold">buy YouTube watch hours</span> and{' '} <span className="text-brand-red font-semibold">buy YouTube subscribers</span> that will provide you with just as much influence in way shorter time.</p>
+            <p>The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying watch hours on YouTube may be an excellent strategy to uplift your YouTube channel. The bought watch hours serve as an effective support base and a credibility for visitors to become subscribers.</p>
+          </SvcTopic>
+        </SvcGuide>
 
         {/* FAQ Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
           <div className="max-w-4xl mx-auto">
             {/* Heading */}
             <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
@@ -625,7 +549,7 @@ export default function BuyYouTubeWatchHoursPage() {
         </div>
 
         {/* Comparison Chart Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-compare lp-reveal">
           <div className="max-w-7xl mx-auto">
             {/* Section Title */}
             <div className="text-center mb-12">
@@ -742,7 +666,7 @@ export default function BuyYouTubeWatchHoursPage() {
         </div>
 
         {/* Reviews Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-reviews lp-reveal">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
@@ -836,7 +760,7 @@ export default function BuyYouTubeWatchHoursPage() {
         </div>
 
         {/* Leave a Review Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-review-form lp-reveal">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100 relative overflow-hidden">
               {/* Decorative elements */}
@@ -849,12 +773,18 @@ export default function BuyYouTubeWatchHoursPage() {
                 </h2>
 
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 5000);
-                    setFormData({ name: '', email: '', review: '' });
-                    setRating(0);
+                    setReviewError('');
+                    try {
+                      await submitReview({ page: 'buy-youtube-watch-hours', name: formData.name, email: formData.email, rating, text: formData.review });
+                      setShowSuccess(true);
+                      setTimeout(() => setShowSuccess(false), 5000);
+                      setFormData({ name: '', email: '', review: '' });
+                      setRating(0);
+                    } catch (err) {
+                      setReviewError(err.message);
+                    }
                   }}
                   className="space-y-6"
                 >
@@ -943,8 +873,11 @@ export default function BuyYouTubeWatchHoursPage() {
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">Success!</span>
+                      <span className="font-medium" role="status">Thanks! Your review will appear after moderation.</span>
                     </div>
+                  )}
+                  {reviewError && (
+                    <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">{reviewError}</div>
                   )}
 
 

@@ -75,3 +75,23 @@ node_modules/
 # Build artifacts
 frontend/dist/
 dist/
+
+# Local tooling, never published
+.claude/
+.impeccable/
+.playwright-mcp/
+
+# macOS metadata
+.DS_Store
+
+# Generated Prisma client
+backend/generated/
+
+# Cloudflare
+.wrangler/
+.dev.vars
+
+# Local SQLite databases (dev and tests)
+backend/*.db
+backend/*.db-journal
+backend/tests/.test.db*

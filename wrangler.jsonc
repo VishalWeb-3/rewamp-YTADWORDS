@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "youtubeadwords",
+  "main": "backend/worker.ts",
+  "compatibility_date": "2026-10-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./frontend/dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "youtubeadwords-db",
+      "database_id": "adf5fd15-f4bf-4d26-a652-da68176c56b0",
+      "migrations_dir": "backend/migrations"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "RATE_LIMITS", "class_name": "RateLimitCounter" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RateLimitCounter"] }],
+  "observability": { "enabled": true },
+  "vars": {
+    "NODE_ENV": "production",
+    "FRONTEND_URL": "https://youtubeadwords.long-bar-2706.workers.dev",
+    "API_URL": "https://youtubeadwords.long-bar-2706.workers.dev"
+  }
+}

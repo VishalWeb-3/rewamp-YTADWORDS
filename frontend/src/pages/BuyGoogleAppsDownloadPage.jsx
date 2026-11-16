@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
 
 const appsDownloadPackagesFallback = {
     regular: [
@@ -39,22 +40,16 @@ export default function BuyGoogleAppsDownloadPage() {
     const content = usePricingPageContent('buy-google-apps-download', null);
     const [activeTab, setActiveTab] = useState('regular');
     const [openFAQIndex, setOpenFAQIndex] = useState(null);
-    const [rating, setRating] = useState(0);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        review: '',
-    });
-    const [showSuccess, setShowSuccess] = useState(false);
     const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
     const packages = appsDownloadPackages ? appsDownloadPackages[activeTab] : [];
 
-    const hero = content?.hero;
-    const tabs = content?.tabs;
+    const hero = content?.hero;
     const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
     const handleAddToCart = (pkg) => {
         addToCart({
+            slug: 'buy-google-apps-download',
+            tier: activeTab,
             serviceType: 'Google Apps Download',
             serviceName: `Google Apps Download - ${pkg.installs}`,
             type: activeTab === 'regular' ? 'Worldwide (WW) Installs' : 'Tier-1 Country Installs (USA, UK, Canada, etc.)',
@@ -110,7 +105,7 @@ export default function BuyGoogleAppsDownloadPage() {
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
                 <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                     {/* Left Section - Information */}
-                    <div className="space-y-6">
+                    <div className="space-y-6 svc-hero">
                         {/* Image */}
                         <div className="mb-6 flex justify-center">
                             <img
@@ -120,7 +115,7 @@ export default function BuyGoogleAppsDownloadPage() {
                             />
                         </div>
                         <div>
-                            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+                            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap svc-h1">
                                 {hero?.title ?? 'Buy Google Apps Download'}{' '}
                                 <span className="bg-[#4285F4] text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
                                     {hero?.badge ?? 'Instantly'}
@@ -130,10 +125,11 @@ export default function BuyGoogleAppsDownloadPage() {
                                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy Google Apps Download with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
                             </p>
                         </div>
+            <ServiceAssurance />
                     </div>
 
                     {/* Right Section - Pricing Card */}
-                    <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+                    <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100 svc-pass">
                         {/* Tabs */}
                         <div className="flex gap-4 mb-6 border-b border-gray-200">
                             {[
@@ -172,6 +168,15 @@ export default function BuyGoogleAppsDownloadPage() {
                                 return (
                                     <div
                                         key={index}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-pressed={selectedPackageIndex === index}
+                                        onKeyDown={(e) => {
+                                          if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            setSelectedPackageIndex(index);
+                                          }
+                                        }}
                                         onClick={() => setSelectedPackageIndex(index)}
                                         className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'}`}
                                     >
@@ -200,6 +205,7 @@ export default function BuyGoogleAppsDownloadPage() {
                                         } else {
                                             navigate('/get-started', {
                                                 state: {
+                                                    slug: 'buy-google-apps-download',
                                                     allPackages: appsDownloadPackages,
                                                     serviceType: 'Google Apps Download',
                                                     typeLabels: { regular: 'Worldwide (WW) Installs', fast: 'Tier-1 Country Installs (USA, UK, Canada, etc.)' },
@@ -249,7 +255,7 @@ export default function BuyGoogleAppsDownloadPage() {
                 </div>
 
                 {/* All In One Google Apps Download Campaign Section */}
-                <div className="mt-12 lg:mt-16">
+                <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
                     <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
                         {/* Decorative blue shape */}
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
@@ -315,7 +321,7 @@ export default function BuyGoogleAppsDownloadPage() {
                 </div>
 
                 {/* FAQ Section */}
-                <div className="mt-12 lg:mt-16">
+                <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
                     <div className="max-w-4xl mx-auto">
                         {/* Heading */}
                         <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">

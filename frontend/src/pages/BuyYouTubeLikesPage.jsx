@@ -5,9 +5,12 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { useCtaActions } from '../contexts/CtaActionsContext';
-import { useCheckout } from '../hooks/useCheckout';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
+import { submitReview } from '../utils/reviews';
 
+import SvcGuide, { SvcTopic } from '../components/site/SvcGuide';
+import SvcNav from '../components/site/SvcNav';
 const likePackagesFallback = {
   regular: [
     { likes: '20', price: '0.53', originalPrice: '0.59', discount: '10%' },
@@ -44,7 +47,6 @@ export default function BuyYouTubeLikesPage() {
   const { isEnabled } = useCtaActions();
   const canBuy = isEnabled('buy');
   const canAddToCart = isEnabled('add_to_cart');
-  const { goToCheckout } = useCheckout();
   const likePackages = usePricingPackages('buy-youtube-likes', likePackagesFallback);
   const content = usePricingPageContent('buy-youtube-likes', null);
   const [activeTab, setActiveTab] = useState('regular');
@@ -56,6 +58,7 @@ export default function BuyYouTubeLikesPage() {
     review: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [reviewError, setReviewError] = useState('');
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = likePackages ? likePackages[activeTab] : [];
 
@@ -92,6 +95,8 @@ export default function BuyYouTubeLikesPage() {
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-youtube-likes',
+      tier: activeTab,
       platform: 'YouTube',
       serviceType: 'YouTube Likes',
       serviceName: `YouTube Likes - ${pkg.likes}`,
@@ -126,7 +131,7 @@ export default function BuyYouTubeLikesPage() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
-          <div className="space-y-6">
+          <div className="space-y-6 svc-hero">
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
@@ -136,7 +141,7 @@ export default function BuyYouTubeLikesPage() {
               />
             </div>
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap svc-h1">
                 {hero?.title ?? 'Buy YouTube Likes'}{' '}
                 <span className="bg-brand-red text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
                   {hero?.badge ?? 'Instantly'}
@@ -146,10 +151,11 @@ export default function BuyYouTubeLikesPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy YouTube Likes with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100 svc-pass">
             {/* Tabs */}
             <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-200 overflow-x-auto -mx-1 px-1">
               {tabList.map((tab) => (
@@ -174,7 +180,7 @@ export default function BuyYouTubeLikesPage() {
               <div className="bg-gray-100 rounded-lg p-4 mb-6">
                 <p className="text-gray-700 text-sm">
                   {infoBanner ? (
-                    <><span className="font-medium">Information:</span> {infoBanner}</>
+                    <><span className="font-medium">Information:</span> {String(infoBanner).replace(/^\s*Information:\s*/i, '')}</>
                   ) : (
                     <><span className="font-medium">Information:</span> We recommend our <span className="text-brand-red font-semibold">Turbo YouTube Likes</span> packages for orders with a high number of likes.</>
                   )}
@@ -189,6 +195,15 @@ export default function BuyYouTubeLikesPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-brand-red p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-brand-red/50 p-0'}`}
                   >
@@ -237,6 +252,7 @@ export default function BuyYouTubeLikesPage() {
                     const selectedPkg = packages[selectedPackageIndex];
                     navigate('/get-started', {
                       state: {
+                        slug: 'buy-youtube-likes',
                         allPackages: likePackages,
                         serviceType: 'YouTube Likes',
                         typeLabels: { regular: 'Slow Likes', fast: 'Turbo Likes' },
@@ -284,8 +300,11 @@ export default function BuyYouTubeLikesPage() {
           </div>
         </div>
 
+        <SvcNav />
+
+
         {/* All In One YouTube Likes Campaign Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
@@ -352,7 +371,7 @@ export default function BuyYouTubeLikesPage() {
         </div>
 
         {/* YoutubeADwords's Guarantee Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-guarantee">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
@@ -480,117 +499,26 @@ export default function BuyYouTubeLikesPage() {
           </div>
         </div>
 
-        {/* Why Do You Need To Buy YouTube Views Section */}
-        <div className="mt-12 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - GIF */}
-            <div className="flex justify-center lg:justify-start">
-              <img
-                src="/demo1.jpg"
-                alt="YouTube Views Growing"
-                className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-              />
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Why Do You Need To Buy YouTube Views?
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  The number of views your YouTube video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of views, they will think that your video is valuable and worth watching.
-                </p>
-                <p>
-                  This increases the chances that they will click on your video and watch it. In addition, YouTube's algorithm favors videos with more views, which means that videos with more views are more likely to appear in search results and be recommended to other users.
-                </p>
-                <p>
-                  Therefore, buying YouTube views can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic views and likes in the long run.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Numbers, Engagement, and Reputation Section */}
-        <div className="mt-12 lg:mt-32">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; YoutubeADwords
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?
-                </p>
-                <p>
-                  Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.
-                </p>
-                <p>
-                  What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Section - Image */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo1.jpg"
-                  alt="Content Creation"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* An Excellent Strategy Section */}
-        <div className="mt-12 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Image */}
-            <div className="flex justify-center lg:justify-start order-2 lg:order-1">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo2.jpg"
-                  alt="YouTube Channel Strategy"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4 order-1 lg:order-2">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                An Excellent Strategy To Uplift Your YouTube Channel
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  Organic views are great, but if you're in need, it is possible to{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube views</span> and{' '}
-                  <span className="text-brand-red font-semibold">buy YouTube watch hours</span> that will provide you with just as much influence in way shorter time.
-                </p>
-                <p>
-                  The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying views on YouTube may be an excellent strategy to uplift your YouTube channel. The bought views serve as an effective support base and a credibility for visitors to become likes.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Good-to-know guide: the long-form copy as one tabbed panel */}
+        <SvcGuide>
+          <SvcTopic title={"Why Do You Need To Buy YouTube Likes?"}>
+            <p>The number of views your YouTube video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of views, they will think that your video is valuable and worth watching.</p>
+            <p>This increases the chances that they will click on your video and watch it. In addition, YouTube's algorithm favors videos with more views, which means that videos with more views are more likely to appear in search results and be recommended to other users.</p>
+            <p>Therefore, buying YouTube views can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic views and likes in the long run.</p>
+          </SvcTopic>
+          <SvcTopic title={"Numbers, Engagement, and Reputation; YoutubeADwords"}>
+            <p>What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from YouTube?</p>
+            <p>Numbers are everything in today's digital world. Buying views makes a quick and immediate contribution to your numerical superiority, making you seem like a legit channel for viewers to flock to.</p>
+            <p>What number of views will satisfy you? Would 100,000 views look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality views we send to your videos, we're able to activate the YouTube algorithm and make the system work for you.</p>
+          </SvcTopic>
+          <SvcTopic title={"An Excellent Strategy To Uplift Your YouTube Channel"}>
+            <p>Organic views are great, but if you're in need, it is possible to{' '} <span className="text-brand-red font-semibold">buy YouTube views</span> and{' '} <span className="text-brand-red font-semibold">buy YouTube watch hours</span> that will provide you with just as much influence in way shorter time.</p>
+            <p>The majority of YouTube visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying views on YouTube may be an excellent strategy to uplift your YouTube channel. The bought views serve as an effective support base and a credibility for visitors to become likes.</p>
+          </SvcTopic>
+        </SvcGuide>
 
         {/* FAQ Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
           <div className="max-w-4xl mx-auto">
             {/* Heading */}
             <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
@@ -639,7 +567,7 @@ export default function BuyYouTubeLikesPage() {
         </div>
 
         {/* Comparison Chart Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-compare lp-reveal">
           <div className="max-w-7xl mx-auto">
             {/* Section Title */}
             <div className="text-center mb-12">
@@ -756,7 +684,7 @@ export default function BuyYouTubeLikesPage() {
         </div>
 
         {/* Reviews Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-reviews lp-reveal">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
@@ -850,7 +778,7 @@ export default function BuyYouTubeLikesPage() {
         </div>
 
         {/* Leave a Review Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-review-form lp-reveal">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100 relative overflow-hidden">
               {/* Decorative elements */}
@@ -863,12 +791,18 @@ export default function BuyYouTubeLikesPage() {
                 </h2>
 
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 5000);
-                    setFormData({ name: '', email: '', review: '' });
-                    setRating(0);
+                    setReviewError('');
+                    try {
+                      await submitReview({ page: 'buy-youtube-likes', name: formData.name, email: formData.email, rating, text: formData.review });
+                      setShowSuccess(true);
+                      setTimeout(() => setShowSuccess(false), 5000);
+                      setFormData({ name: '', email: '', review: '' });
+                      setRating(0);
+                    } catch (err) {
+                      setReviewError(err.message);
+                    }
                   }}
                   className="space-y-6"
                 >
@@ -957,8 +891,11 @@ export default function BuyYouTubeLikesPage() {
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">Success!</span>
+                      <span className="font-medium" role="status">Thanks! Your review will appear after moderation.</span>
                     </div>
+                  )}
+                  {reviewError && (
+                    <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">{reviewError}</div>
                   )}
 
 

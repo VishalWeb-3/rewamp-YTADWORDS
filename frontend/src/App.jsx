@@ -1,45 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CtaActionsProvider } from './contexts/CtaActionsContext';
 import HomePage from './pages/HomePage';
-import BuyYouTubeViewsPage from './pages/BuyYouTubeViewsPage';
-import BuyYouTubeSubscribersPage from './pages/BuyYouTubeSubscribersPage';
-import BuyYouTubeLikesPage from './pages/BuyYouTubeLikesPage';
-import BuyYouTubeWatchHoursPage from './pages/BuyYouTubeWatchHoursPage';
-import BuyTikTokFollowersPage from './pages/BuyTikTokFollowersPage';
-import BuyTikTokLikesPage from './pages/BuyTikTokLikesPage';
-import BuyTikTokViewsPage from './pages/BuyTikTokViewsPage';
-import BuyGoogleSkipAdsViewsPage from './pages/BuyGoogleSkipAdsViewsPage';
-import BuyGoogleDisplayAdsViewsPage from './pages/BuyGoogleDisplayAdsViewsPage';
+const BuyYouTubeViewsPage = lazy(() => import('./pages/BuyYouTubeViewsPage'));
+const BuyYouTubeSubscribersPage = lazy(() => import('./pages/BuyYouTubeSubscribersPage'));
+const BuyYouTubeLikesPage = lazy(() => import('./pages/BuyYouTubeLikesPage'));
+const BuyYouTubeWatchHoursPage = lazy(() => import('./pages/BuyYouTubeWatchHoursPage'));
+const BuyGoogleSkipAdsViewsPage = lazy(() => import('./pages/BuyGoogleSkipAdsViewsPage'));
+const BuyGoogleDisplayAdsViewsPage = lazy(() => import('./pages/BuyGoogleDisplayAdsViewsPage'));
 
-import BuyGoogleAppsDownloadPage from './pages/BuyGoogleAppsDownloadPage';
-import BuyGoogleAdsWebsiteTrafficPage from './pages/BuyGoogleAdsWebsiteTrafficPage';
-import BuyFemaleGoogleReviewsPage from './pages/BuyFemaleGoogleReviewsPage';
-import BuyMaleGoogleReviewsPage from './pages/BuyMaleGoogleReviewsPage';
-import BuyGoogleLocalGuideReviewsPage from './pages/BuyGoogleLocalGuideReviewsPage';
-import BuyGoogleReviewsByAgeGroupPage from './pages/BuyGoogleReviewsByAgeGroupPage';
-import ContactPage from './pages/ContactPage';
-import AboutUsPage from './pages/AboutUsPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsPage from './pages/TermsPage';
-import RefundPolicyPage from './pages/RefundPolicyPage';
-import CookiesSettingsPage from './pages/CookiesSettingsPage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import CheckoutPage from './pages/CheckoutPage';
-import GetStartedPage from './pages/GetStartedPage';
-import GoogleReviewsGetStartedGeneric from './pages/GoogleReviewsGetStartedGeneric';
-import GoogleReviewsUpgradeGeneric from './pages/GoogleReviewsUpgradeGeneric';
-import MyOrdersPage from './pages/MyOrdersPage';
-import OrderDetailPage from './pages/OrderDetailPage';
-import PaymentSuccessPage from './pages/PaymentSuccessPage';
-import PaymentFailurePage from './pages/PaymentFailurePage';
-import BlogListPage from './pages/BlogListPage';
-import BlogPostPage from './pages/BlogPostPage';
-import SharedPaymentPage from './pages/SharedPaymentPage';
-import PayLinkPage from './pages/PayLinkPage';
+const BuyGoogleAppsDownloadPage = lazy(() => import('./pages/BuyGoogleAppsDownloadPage'));
+const BuyGoogleAdsWebsiteTrafficPage = lazy(() => import('./pages/BuyGoogleAdsWebsiteTrafficPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const AboutUsPage = lazy(() => import('./pages/AboutUsPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
+const CookiesSettingsPage = lazy(() => import('./pages/CookiesSettingsPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const SignupPage = lazy(() => import('./pages/SignupPage'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const GetStartedPage = lazy(() => import('./pages/GetStartedPage'));
+const MyOrdersPage = lazy(() => import('./pages/MyOrdersPage'));
+const OrderDetailPage = lazy(() => import('./pages/OrderDetailPage'));
+const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
+const PaymentFailurePage = lazy(() => import('./pages/PaymentFailurePage'));
+const BlogListPage = lazy(() => import('./pages/BlogListPage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const SharedPaymentPage = lazy(() => import('./pages/SharedPaymentPage'));
+const PayLinkPage = lazy(() => import('./pages/PayLinkPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -62,24 +54,18 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
+      <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/buy-youtube-views" element={<BuyYouTubeViewsPage />} />
         <Route path="/buy-youtube-subscribers" element={<BuyYouTubeSubscribersPage />} />
         <Route path="/buy-youtube-likes" element={<BuyYouTubeLikesPage />} />
         <Route path="/buy-youtube-watch-hours" element={<BuyYouTubeWatchHoursPage />} />
-        <Route path="/buy-tiktok-followers" element={<BuyTikTokFollowersPage />} />
-        <Route path="/buy-tiktok-likes" element={<BuyTikTokLikesPage />} />
-        <Route path="/buy-tiktok-views" element={<BuyTikTokViewsPage />} />
         <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
         <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
 
         <Route path="/buy-google-apps-download" element={<BuyGoogleAppsDownloadPage />} />
         <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
-        <Route path="/buy-female-google-reviews" element={<BuyFemaleGoogleReviewsPage />} />
-        <Route path="/buy-male-google-reviews" element={<BuyMaleGoogleReviewsPage />} />
-        <Route path="/buy-google-local-guide-reviews" element={<BuyGoogleLocalGuideReviewsPage />} />
-        <Route path="/buy-google-reviews-by-age-group" element={<BuyGoogleReviewsByAgeGroupPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
         <Route path="/tickets" element={<ContactPage />} />
@@ -102,15 +88,15 @@ function AppContent() {
         <Route path="/get-started" element={<GetStartedPage />} />
         <Route path="/blog" element={<BlogListPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
-        <Route path="/google-reviews/get-started" element={<GoogleReviewsGetStartedGeneric />} />
-        <Route path="/google-reviews/upgrade" element={<GoogleReviewsUpgradeGeneric />} />
         <Route path="/orders" element={<MyOrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
         <Route path="/payment/failure" element={<PaymentFailurePage />} />
         <Route path="/pay" element={<SharedPaymentPage />} />
         <Route path="/pay/:token" element={<PayLinkPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </Suspense>
     </>
   );
 }

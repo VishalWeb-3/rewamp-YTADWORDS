@@ -23,7 +23,7 @@ export default function Hero() {
             {hero.title ? (
               (() => {
                 const t = hero.title;
-                const a = 'Google Ads', b = 'TikTok';
+                const a = 'Google Ads', b = 'YouTube';
                 const i1 = t.indexOf(a), i2 = t.indexOf(b);
                 if (i1 === -1 || i2 === -1) return t;
                 return (
@@ -39,7 +39,7 @@ export default function Hero() {
             ) : (
               <>
                 Boost Your <span className="text-brand-red">Google Ads</span>
-                {' '}& <span className="text-brand-red">TikTok</span>
+                {' '}& <span className="text-brand-red">YouTube</span>
                 {' '}Campaigns with Authentic, High-Quality Traffic
               </>
             )}
@@ -88,7 +88,7 @@ export default function Hero() {
         <div className="flex-1 relative w-full max-w-2xl min-h-[240px] sm:min-h-[360px] lg:min-h-[480px] flex items-center justify-center">
           <img
             src={hero.heroImage || '/youtubeadwords_1.webp'}
-            alt={hero.heroImageAlt || 'YoutubeADwords - Boost your Google Ads & TikTok campaigns'}
+            alt={hero.heroImageAlt || 'YoutubeADwords - Boost your Google Ads & YouTube campaigns'}
             className="w-full h-auto max-h-[280px] sm:max-h-[400px] lg:max-h-[520px] object-contain object-center rounded-lg"
           />
         </div>

@@ -3,16 +3,26 @@ generator client {
   output   = "../generated/prisma"
 }
 
+// Same client for Cloudflare Workers, which can't load the Node build above
+generator workerClient {
+  provider = "prisma-client"
+  output   = "../generated/prisma-worker"
+  runtime  = "cloudflare"
+}
+
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   username  String     @unique
-  password  String
+  usernameLower String @unique // lowercased copy: SQLite can't compare case-insensitively through Prisma
+  password  String // HMAC of the browser-derived key, never the password itself
+  passwordSalt String @default("") // random per-user salt the browser stretches the password with
   name      String?
+  isGuest   Boolean    @default(false) // created by guest checkout; can be claimed at signup
   isBanned  Boolean    @default(false)
   bannedAt  DateTime?
   banReason String?
@@ -23,6 +33,7 @@ model User {
   sessions  Session[]
   ctaActions UserCtaAction[]
   paymentLinks PaymentLink[] @relation("MerchantLinks")
+  tickets   Ticket[]
 }
 
 model Session {
@@ -31,6 +42,9 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 model CartItem {
@@ -44,6 +58,8 @@ model CartItem {
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model Order {
@@ -58,6 +74,8 @@ model Order {
   externalOrderId    String?  // ORDER_xxx for payment webhooks
   uplefOrderId       String?  // Uplef order ID for webhook
   cryptomusPaymentId String?  // Cryptomus payment UUID for webhook
+  email              String?  // checkout email the order was placed with
+  details            Json?    // extra options, e.g. Google review add-ons and custom review texts
   user               User     @relation(fields: [userId], references: [id])
   userId             Int
   ipAddress          String?
@@ -67,6 +85,11 @@ model Order {
   ipLatitude         Float?
   ipLongitude        Float?
   createdAt          DateTime @default(now())
+
+  @@index([userId])
+  @@index([externalOrderId])
+  @@index([uplefOrderId])
+  @@index([status])
 }
 
 model CtaAction {
@@ -105,10 +128,12 @@ model PaymentLink {
   maxPayments   Int?
   redirectUrl   String?
   notes         String?
-  status        String            @default("ACTIVE") // ACTIVE, EXPIRED, CANCELLED
+  status        String            @default("ACTIVE") // ACTIVE, EXPIRED, CANCELLED, COMPLETED
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
   transactions  LinkTransaction[]
+
+  @@index([merchantId])
 }
 
 model LinkTransaction {
@@ -122,4 +147,34 @@ model LinkTransaction {
   metadata       Json?
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+
+  @@index([paymentLinkId])
+}
+
+model Ticket {
+  id          Int      @id @default(autoincrement())
+  email       String
+  reason      String
+  orderNumber String?
+  message     String
+  status      String   @default("OPEN") // OPEN, CLOSED
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([status])
+  @@index([userId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  page      String   // service page slug the review was left on
+  name      String
+  email     String
+  rating    Int
+  text      String
+  approved  Boolean  @default(false) // reviews stay hidden until moderated
+  createdAt DateTime @default(now())
+
+  @@index([page, approved])
 }

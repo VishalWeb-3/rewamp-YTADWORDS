@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       let data = {};
       try {
         data = JSON.parse(text);
-      } catch (err) {
+      } catch {
         // Skip console error for regular session checks to avoid noise
         if (!res.ok) console.error('Auth check non-JSON:', text);
         setIsLoading(false);
@@ -60,22 +60,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
-
-  useEffect(() => {
-    if (!user?.id) {
-      return;
-    }
-    fetch(`${API_BASE}/api/auth/check/${user.id}`, { credentials: 'include' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.isBanned) {
-          setBanned({ isBanned: true, banReason: data.banReason || 'Your account has been suspended.' });
-        } else {
-          setBanned({ isBanned: false });
-        }
-      })
-      .catch(() => setBanned(null));
-  }, [user?.id]);
 
   useEffect(() => {
     const onFocus = () => fetchUser();

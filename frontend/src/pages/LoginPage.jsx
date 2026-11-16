@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import PageHead from '../components/site/PageHead';
+import Pass from '../components/site/Pass';
 import { useAuth } from '../contexts/AuthContext';
 import { useGlobalContent } from '../contexts/ContentContext';
 import { isValidEmail } from '../utils/emailValidator';
+import { derivePasswordKey } from '../utils/passwordKey';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -30,7 +33,7 @@ export default function LoginPage() {
     e.preventDefault();
     const identifier = formData.email.trim();
     if (identifier.includes('@') && !isValidEmail(identifier)) {
-      setError('Please enter a valid popular email (gmail, outlook, etc.)');
+      setError('Please enter a valid email address.');
       setIsSubmitting(false);
       return;
     }
@@ -39,20 +42,26 @@ export default function LoginPage() {
     setError('');
 
     try {
+      const saltRes = await fetch(`${API_BASE}/api/auth/salt`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ loginIdentifier: identifier }),
+      });
+      if (!saltRes.ok) throw new Error(`Login failed (${saltRes.status})`);
+      const { salt } = await saltRes.json();
+      const passwordKey = await derivePasswordKey(formData.password, salt);
+
       const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          loginIdentifier: formData.email.trim(),
-          password: formData.password,
-        }),
+        body: JSON.stringify({ loginIdentifier: identifier, passwordKey }),
       });
       const text = await res.text();
       let data = {};
       try {
         data = JSON.parse(text);
-      } catch (err) {
+      } catch {
         console.error('Non-JSON response:', text);
         const snippet = text.length > 100 ? text.slice(0, 100) + '...' : text;
         throw new Error(`Server returned invalid response. ${snippet.includes('<!DOCTYPE') ? 'Check VITE_API_URL or backend logs.' : 'Details: ' + snippet}`);
@@ -80,20 +89,16 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <div className="bg-white min-h-screen py-12 lg:py-16">
-        <div className="max-w-md mx-auto px-4 sm:px-6">
-          {/* Page Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
-              {auth.loginTitle || 'Login'}
-            </h1>
-            <p className="text-gray-600">
-              {auth.loginSubtitle || 'Sign in to your YoutubeADwords account'}
-            </p>
-          </div>
+      <div className="pg-auth pg-wrap">
+        <div className="pg-auth-main">
+          <PageHead
+            size="md"
+            title={auth.loginTitle || 'Login'}
+            lede={auth.loginSubtitle || 'Sign in to your YoutubeADwords account'}
+          />
 
           {/* Login Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+          <div className="pg-auth-card pg-in">
             {error && (
               <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
@@ -137,7 +142,8 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 grid place-items-center w-11 h-11 rounded-full text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,9 +168,9 @@ export default function LoginPage() {
                   />
                   <span className="ml-2 text-sm text-gray-700">{auth.rememberMe || 'Remember me'}</span>
                 </label>
-                <a href="#" className="text-sm text-brand-red hover:underline">
+                <Link to="/contact?reason=support&topic=password" className="text-sm text-brand-red hover:underline">
                   {auth.forgotPassword || 'Forgot password?'}
-                </a>
+                </Link>
               </div>
 
               {/* Submit Button */}
@@ -188,6 +194,24 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
+
+        {/* A returning member's pass, already issued */}
+        <aside className="pg-auth-side">
+          <div aria-hidden="true">
+            <Pass
+              kind="Member pass"
+              serial="YAW-0001"
+              tone="dark"
+              strap="var(--red)"
+              title="Welcome back"
+              rows={[
+                { label: 'Signing in as', value: formData.email, mono: true },
+                { label: 'Inside', value: 'Your orders, receipts and support tickets' },
+              ]}
+            />
+          </div>
+          <p className="pg-auth-note pg-in" style={{ '--d': '1.1s' }}>Track every order from My Orders once you are signed in.</p>
+        </aside>
       </div>
     </Layout>
   );

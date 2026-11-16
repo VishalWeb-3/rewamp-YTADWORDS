@@ -5,7 +5,11 @@ import SEO from '../components/SEO';
 import { useCart } from '../contexts/CartContext';
 import { usePricingPackages, usePricingPageContent } from '../contexts/ContentContext';
 import { resolveImageUrl } from '../utils/image';
+import ServiceAssurance from '../components/ServiceAssurance';
+import { submitReview } from '../utils/reviews';
 
+import SvcGuide, { SvcTopic } from '../components/site/SvcGuide';
+import SvcNav from '../components/site/SvcNav';
 const websiteTrafficPackagesFallback = {
   regular: [
     { traffic: '50k', price: '100', originalPrice: null, discount: null },
@@ -30,7 +34,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
   const { addToCart } = useCart();
   const websiteTrafficPackages = usePricingPackages('buy-google-ads-website-traffic', websiteTrafficPackagesFallback);
   const content = usePricingPageContent('buy-google-ads-website-traffic', null);
-  const [activeTab, setActiveTab] = useState('regular');
+  const [activeTab] = useState('regular');
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
   const [rating, setRating] = useState(0);
   const [formData, setFormData] = useState({
@@ -39,15 +43,18 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
     review: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [reviewError, setReviewError] = useState('');
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(null);
   const packages = websiteTrafficPackages ? websiteTrafficPackages[activeTab] : [];
 
   const hero = content?.hero;
-  const tabs = content?.tabs;
+
   const featuresList = (content?.features?.length ? content.features : features).map((f) => ({ ...f, icon: f.icon || 'check' }));
 
   const handleAddToCart = (pkg) => {
     addToCart({
+      slug: 'buy-google-ads-website-traffic',
+      tier: activeTab,
       serviceType: 'Google Ads Website Traffic',
       serviceName: `Google Ads Website Traffic - ${pkg.traffic}`,
       type: activeTab === 'regular' ? 'Regular' : activeTab === 'fast' ? 'Fast' : 'Ads',
@@ -103,7 +110,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Section - Information */}
-          <div className="space-y-6">
+          <div className="space-y-6 svc-hero">
             {/* Image */}
             <div className="mb-6 flex justify-center">
               <img
@@ -113,7 +120,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
               />
             </div>
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap">
+              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-3 flex-wrap svc-h1">
                 {hero?.title ?? 'Buy Google Ads Website / App Traffic'}{' '}
                 <span className="bg-[#4285F4] text-white px-4 py-2 rounded-lg text-2xl lg:text-3xl font-bold">
                   {hero?.badge ?? 'Instantly'}
@@ -123,10 +130,11 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                 {hero?.intro ?? 'YoutubeADwords is the safest way to buy Google Ads Website / App Traffic with delivery in just a few minutes. We offer multiple packages with real users for all different needs - choose wisely!'}
               </p>
             </div>
+            <ServiceAssurance />
           </div>
 
           {/* Right Section - Pricing Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 border border-gray-100 svc-pass">
             {/* View Packages Grid */}
             <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-6">
               {packages.map((pkg, index) => {
@@ -135,6 +143,15 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedPackageIndex === index}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedPackageIndex(index);
+                      }
+                    }}
                     onClick={() => setSelectedPackageIndex(index)}
                     className={`rounded-full transition-colors cursor-pointer flex items-center ${isSelected ? 'bg-[#4285F4] p-[1px] md:p-[2px]' : 'bg-gray-50 hover:border-blue-500/50 p-0'}`}
                   >
@@ -163,6 +180,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                     } else {
                       navigate('/get-started', {
                         state: {
+                          slug: 'buy-google-ads-website-traffic',
                           allPackages: websiteTrafficPackages,
                           serviceType: 'Google Ads Website Traffic',
                           typeLabels: { regular: 'Regular' },
@@ -211,8 +229,11 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
           </div>
         </div>
 
+        <SvcNav />
+
+
         {/* All In One Google Ads Website / App Traffic Campaign Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-offer lp-reveal">
           <div className="bg-gray-50 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
             {/* Decorative red shape */}
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-red-100/40 transform rotate-12 -translate-x-8 translate-y-8"></div>
@@ -278,7 +299,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
         </div>
 
         {/* YoutubeADwords's Guarantee Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-guarantee">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left Section - Heading and Intro */}
             <div className="space-y-4">
@@ -406,117 +427,26 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
           </div>
         </div>
 
-        {/* Why Do You Need To Buy Google Ads Website / App Traffic Section */}
-        <div className="mt-12 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - GIF */}
-            <div className="flex justify-center lg:justify-start">
-              <img
-                src="/demo1.jpg"
-                alt="Google Ads Website / App Traffic Growing"
-                className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-              />
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Why Do You Need To Buy Google Ads Website / App Traffic?
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  The number of traffic your Google video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of traffic, they will think that your video is valuable and worth watching.
-                </p>
-                <p>
-                  This increases the chances that they will click on your video and watch it. In addition, Google's algorithm favors videos with more traffic, which means that videos with more traffic are more likely to appear in search results and be recommended to other users.
-                </p>
-                <p>
-                  Therefore, buying Google traffic can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic traffic and subscribers in the long run.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Numbers, Engagement, and Reputation Section */}
-        <div className="mt-12 lg:mt-32">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Text Content */}
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Numbers, Engagement, and Reputation; YoutubeADwords
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from Google?
-                </p>
-                <p>
-                  Numbers are everything in today's digital world. Buying traffic makes a quick and immediate contribution to your numerical superiority, making you seem like a legit campaign for viewers to flock to.
-                </p>
-                <p>
-                  What number of traffic will satisfy you? Would 100,000 traffic look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality traffic we send to your videos, we're able to activate the Google algorithm and make the system work for you.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Section - Image */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -right-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo1.jpg"
-                  alt="Content Creation"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* An Excellent Strategy Section */}
-        <div className="mt-12 lg:mt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Section - Image */}
-            <div className="flex justify-center lg:justify-start order-2 lg:order-1">
-              <div className="relative">
-                {/* Decorative shapes */}
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-red-100/40 rounded-lg transform rotate-12 -z-10"></div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-pink-100/40 rounded-lg transform -rotate-12 -z-10"></div>
-
-                {/* Main image */}
-                <img
-                  src="/demo2.jpg"
-                  alt="Google Channel Strategy"
-                  className="w-full max-w-md h-auto rounded-2xl shadow-xl object-cover relative z-10"
-                />
-              </div>
-            </div>
-
-            {/* Right Section - Text Content */}
-            <div className="space-y-4 order-1 lg:order-2">
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                An Excellent Strategy To Uplift Your Google Channel
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base lg:text-lg leading-relaxed">
-                <p>
-                  Organic traffic are great, but if you're in need, it is possible to{' '}
-                  <span className="text-#4285F4 font-semibold">buy Google traffic</span> and{' '}
-                  <span className="text-#4285F4 font-semibold">buy Google watch hours</span> that will provide you with just as much influence in way shorter time.
-                </p>
-                <p>
-                  The majority of Google visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying traffic on Google may be an excellent strategy to uplift your Google campaign. The bought traffic serve as an effective support base and a credibility for visitors to become subscribers.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Good-to-know guide: the long-form copy as one tabbed panel */}
+        <SvcGuide>
+          <SvcTopic title={"Why Do You Need To Buy Google Ads Website / App Traffic?"}>
+            <p>The number of traffic your Google video has is one of the most important factors that determine the quality and performance of your video. When visitors see that your video has a high number of traffic, they will think that your video is valuable and worth watching.</p>
+            <p>This increases the chances that they will click on your video and watch it. In addition, Google's algorithm favors videos with more traffic, which means that videos with more traffic are more likely to appear in search results and be recommended to other users.</p>
+            <p>Therefore, buying Google traffic can help you improve your video's visibility and reach a wider audience. It can also help you build social proof and credibility, which can lead to more organic traffic and subscribers in the long run.</p>
+          </SvcTopic>
+          <SvcTopic title={"Numbers, Engagement, and Reputation; YoutubeADwords"}>
+            <p>What is your expectation? Do you just want numerical superiority? Do you want your videos reach more viewers? Or do you want your company's ad to look good online? What about making money from Google?</p>
+            <p>Numbers are everything in today's digital world. Buying traffic makes a quick and immediate contribution to your numerical superiority, making you seem like a legit campaign for viewers to flock to.</p>
+            <p>What number of traffic will satisfy you? Would 100,000 traffic look good on a video promoting your company? YoutubeADwords can provide this for you. Thanks to the quality traffic we send to your videos, we're able to activate the Google algorithm and make the system work for you.</p>
+          </SvcTopic>
+          <SvcTopic title={"An Excellent Strategy To Uplift Your Google Channel"}>
+            <p>Organic traffic are great, but if you're in need, it is possible to{' '} <span className="text-#4285F4 font-semibold">buy Google traffic</span> and{' '} <span className="text-#4285F4 font-semibold">buy Google watch hours</span> that will provide you with just as much influence in way shorter time.</p>
+            <p>The majority of Google visitors never question where these numbers come from. They accept them as quality engagement without thinking too deeply about their origin or authenticity. This means that buying traffic on Google may be an excellent strategy to uplift your Google campaign. The bought traffic serve as an effective support base and a credibility for visitors to become subscribers.</p>
+          </SvcTopic>
+        </SvcGuide>
 
         {/* FAQ Section */}
-        <div className="mt-12 lg:mt-16">
+        <div className="mt-12 lg:mt-16 svc-faq lp-reveal">
           <div className="max-w-4xl mx-auto">
             {/* Heading */}
             <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16">
@@ -565,7 +495,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
         </div>
 
         {/* Comparison Chart Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-compare lp-reveal">
           <div className="max-w-7xl mx-auto">
             {/* Section Title */}
             <div className="text-center mb-12">
@@ -681,13 +611,13 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
           </div>
         </div>
 
-        {/* Retraffic Section */}
-        <div className="mt-16 lg:mt-20">
+        {/* Reviews Section */}
+        <div className="mt-16 lg:mt-20 svc-reviews lp-reveal">
           <div className="max-w-6xl mx-auto">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-0">
-                Retraffic
+                Reviews
               </h2>
               <div className="flex items-center gap-3">
                 <span className="text-gray-700 font-medium">Average: 4.9 / 5</span>
@@ -776,7 +706,7 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
         </div>
 
         {/* Leave a Review Section */}
-        <div className="mt-16 lg:mt-20">
+        <div className="mt-16 lg:mt-20 svc-review-form lp-reveal">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100 relative overflow-hidden">
               {/* Decorative elements */}
@@ -789,12 +719,18 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                 </h2>
 
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 5000);
-                    setFormData({ name: '', email: '', review: '' });
-                    setRating(0);
+                    setReviewError('');
+                    try {
+                      await submitReview({ page: 'buy-google-ads-website-traffic', name: formData.name, email: formData.email, rating, text: formData.review });
+                      setShowSuccess(true);
+                      setTimeout(() => setShowSuccess(false), 5000);
+                      setFormData({ name: '', email: '', review: '' });
+                      setRating(0);
+                    } catch (err) {
+                      setReviewError(err.message);
+                    }
                   }}
                   className="space-y-6"
                 >
@@ -883,8 +819,11 @@ export default function BuyGoogleAdsWebsiteTrafficPage() {
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">Success!</span>
+                      <span className="font-medium" role="status">Thanks! Your review will appear after moderation.</span>
                     </div>
+                  )}
+                  {reviewError && (
+                    <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">{reviewError}</div>
                   )}
 
 

@@ -1,77 +1,77 @@
 const normalize = (str) => (str || '').trim().toLowerCase();
 
+// Accepted hostnames per platform (subdomains such as www., m., vm. are allowed)
+const PLATFORM_HOSTS = {
+  youtube: ['youtube.com', 'youtu.be'],
+};
+
+const HANDLE_PLATFORMS = ['youtube'];
+
+function platformKey(platform) {
+  const p = normalize(platform);
+  if (p.includes('youtube')) return 'youtube';
+  if (p.includes('google')) return 'google';
+  return 'other';
+}
+
+function parseUrl(value) {
+  try {
+    const url = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`);
+    return url.hostname.includes('.') ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+const hostMatches = (hostname, allowed) =>
+  allowed.some((h) => hostname === h || hostname.endsWith(`.${h}`));
+
+// Google Maps / Business links: google.<any TLD>/maps, maps.google.*, goo.gl/maps,
+// maps.app.goo.gl, g.page, g.co/kgs and Google search results for a business
+function isGoogleBusinessUrl(url) {
+  const host = url.hostname.replace(/^www\./, '');
+  const path = url.pathname;
+  if (host === 'maps.app.goo.gl' || host === 'g.page' || host === 'g.co') return path.length > 1;
+  if (host === 'goo.gl') return path.startsWith('/maps');
+  if (/^(maps\.)?google\.[a-z.]{2,6}$/.test(host)) {
+    return host.startsWith('maps.') || path.startsWith('/maps') || (path.startsWith('/search') && url.searchParams.has('q'));
+  }
+  return false;
+}
+
 /**
- * Validates links based on the platform to ensure they are "authentic"
+ * Checks that a link or @handle belongs to the given platform.
  * @param {string} link - The link or username to validate
- * @param {string} platform - The platform name (YouTube, TikTok, Google, etc.)
+ * @param {string} platform - The platform name (YouTube or Google)
  * @returns {boolean} - True if the link is valid for the platform
  */
 export const isValidLink = (link, platform) => {
-    if (!link) return false;
-    const v = link.trim();
-    const p = normalize(platform);
+  if (!link) return false;
+  const v = link.trim();
+  if (!v || /\s/.test(v)) return false;
+  const key = platformKey(platform);
 
-    // YouTube validations
-    if (p.includes('youtube')) {
-        // Stricter YouTube regex: match specific paths (watch, channel, @, c, user, shorts) or youtu.be
-        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|channel\/|@|c\/|user\/|shorts\/)|youtu\.be\/)[\w\-\._\?\&\%#\=\+]+$/i;
-        // Also allow just the channel handle
-        const isHandle = /^@[\w.-]+$/.test(v);
-        return youtubeRegex.test(v) || isHandle;
-    }
+  if (HANDLE_PLATFORMS.includes(key) && /^@[\w.-]+$/.test(v)) return true;
 
-    // TikTok validations
-    if (p.includes('tiktok')) {
-        // Anchored to end, allows profile or specific video
-        const tiktokUrlRegex = /^(https?:\/\/)?(www\.)?tiktok\.com\/@[\w.-]+(\/video\/\d+)?\/?$/i;
-        // Matches @username
-        const tiktokHandleRegex = /^@[\w.-]+$/;
-        return tiktokUrlRegex.test(v) || tiktokHandleRegex.test(v);
-    }
+  const url = parseUrl(v);
+  if (!url) return false;
 
-    // Google validations (Maps/Business)
-    if (p.includes('google')) {
-        // Matches google.com/maps, goo.gl/maps, maps.app.goo.gl, plus g.page and business search links
-        const googleRegex = /^(https?:\/\/)?(www\.|maps\.)?(google\.com\/(maps|search\?q=)|goo\.gl\/maps|maps\.app\.goo\.gl|g\.page)\/.+$/i;
-        return googleRegex.test(v);
-    }
-
-    // Instagram validations
-    if (p.includes('instagram')) {
-        const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[\w._-]+\/?$/i;
-        const instagramHandleRegex = /^@[\w._-]+$/;
-        return instagramRegex.test(v) || instagramHandleRegex.test(v);
-    }
-
-    // Facebook / Meta validations
-    if (p.includes('facebook') || p.includes('meta')) {
-        const fbRegex = /^(https?:\/\/)?(www\.|m\.|web\.)?(facebook\.com|fb\.watch)\/.+$/i;
-        return fbRegex.test(v);
-    }
-
-    // Twitter / X validations
-    if (p.includes('twitter') || p.includes(' x ') || p === 'x') {
-        const xRegex = /^(https?:\/\/)?(www\.)?(twitter\.com|x\.com)\/[\w.-]+\/?$/i;
-        const xHandleRegex = /^@[\w.-]+$/;
-        return xRegex.test(v) || xHandleRegex.test(v);
-    }
-
-    // Generic URL validation - require protocol for generic domains
-    const genericUrlRegex = /^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w\- .\/?%&=]*)?$/i;
-    return genericUrlRegex.test(v);
+  if (key === 'google') return isGoogleBusinessUrl(url);
+  if (PLATFORM_HOSTS[key]) {
+    return hostMatches(url.hostname.toLowerCase(), PLATFORM_HOSTS[key]) && (url.pathname.length > 1 || url.search.length > 1);
+  }
+  // Generic links must spell out the protocol
+  return /^https?:\/\//i.test(v);
 };
 
 /**
  * Gets a helpful placeholder for a platform's link field
- * @param {string} platform 
+ * @param {string} platform
  * @returns {string}
  */
 export const getLinkPlaceholder = (platform) => {
-    const p = normalize(platform);
-    if (p.includes('youtube')) return 'Paste YouTube video link or @channel...';
-    if (p.includes('tiktok')) return 'Paste TikTok URL or @username...';
-    if (p.includes('google')) return 'Paste Google Maps link or business URL...';
-    if (p.includes('instagram')) return 'Paste Instagram profile URL or @username...';
-    if (p.includes('facebook') || p.includes('meta')) return 'Paste Facebook page or video URL...';
-    return 'Paste your link here (e.g. https://example.com/...)';
+  const key = platformKey(platform);
+  if (key === 'youtube') return 'Paste YouTube video link or @channel...';
+  if (key === 'google') return 'Paste Google Maps link or business URL...';
+  return 'Paste your link here (e.g. https://example.com/...)';
 };

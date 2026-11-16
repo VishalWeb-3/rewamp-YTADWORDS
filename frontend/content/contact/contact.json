@@ -1,9 +1,9 @@
 {
   "title": "Contact us",
   "introParagraph1": "If you have anything in mind about our social media services, and YoutubeADwords please send us a message. Our support team will get back to you within 24 hours.",
-  "introParagraph2": "If you have any questions about your order, you can easily track its status here.",
+  "introParagraph2": "If you have any questions about your order, you can easily track its status ",
   "trackOrderLinkText": "here",
-  "trackOrderLinkHref": "#",
+  "trackOrderLinkHref": "/orders",
   "formHeading": "Send us a message",
   "successMessage": "Success!",
   "labelEmail": "Your Email",
