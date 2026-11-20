@@ -1,0 +1,170 @@
+[
+  {
+    "route": "/about",
+    "key": "about",
+    "title": "YoutubeADwords — YouTube & Google Ads Services",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/blog",
+    "key": "blog",
+    "title": "Blog | YoutubeADwords",
+    "description": "Practical guides to YouTube services, Google Ads packages, placing orders and getting support."
+  },
+  {
+    "route": "/contact",
+    "key": "contact",
+    "title": "YoutubeADwords — YouTube & Google Ads Services",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/",
+    "key": "home",
+    "title": "YoutubeADwords — YouTube & Google Ads Services",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/service",
+    "key": "service",
+    "title": "YoutubeADwords — YouTube & Google Ads Services",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/about-us",
+    "key": "about-us",
+    "title": "YoutubeADwords — YouTube & Google Ads Services",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/youtube-services",
+    "key": "youtube-services",
+    "title": "YoutubeADwords — YouTube & Google Ads Services",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/google-ads",
+    "key": "google-ads",
+    "title": "Google Ads Services | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/privacy-policy",
+    "key": "privacy-policy",
+    "title": "Privacy Policy | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/terms",
+    "key": "terms",
+    "title": "Terms of Service | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/refund-policy",
+    "key": "refund-policy",
+    "title": "Refund Policy | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/cookies",
+    "key": "cookies",
+    "title": "Cookies Settings | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-youtube-views",
+    "key": "buy-youtube-views",
+    "title": "Buy YouTube Views | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-youtube-subscribers",
+    "key": "buy-youtube-subscribers",
+    "title": "Buy YouTube Subscribers | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-youtube-likes",
+    "key": "buy-youtube-likes",
+    "title": "Buy YouTube Likes | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-youtube-watch-hours",
+    "key": "buy-youtube-watch-hours",
+    "title": "Buy YouTube Watch Hours | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-google-skip-ads-views",
+    "key": "buy-google-skip-ads-views",
+    "title": "Buy Google Skip Ads Views | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-google-display-ads-views",
+    "key": "buy-google-display-ads-views",
+    "title": "Buy Google Display Ads Views | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-google-apps-download",
+    "key": "buy-google-apps-download",
+    "title": "Buy Google Apps Download | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/buy-google-ads-website-traffic",
+    "key": "buy-google-ads-website-traffic",
+    "title": "Buy Google Ads Website / App Traffic | YoutubeADwords",
+    "description": "Grow your YouTube channel and Google Ads with real engagement. Explore views, subscribers, likes, watch hours, app installs and website traffic."
+  },
+  {
+    "route": "/blog/choosing-youtube-views",
+    "key": "blog__choosing-youtube-views",
+    "title": "Buy YouTube Views: packages for your next video | YoutubeADwords",
+    "description": "A guide to Regular, Fast and Ads Views, package sizes, and what to check before placing an order."
+  },
+  {
+    "route": "/blog/google-ads-services-explained",
+    "key": "blog__google-ads-services-explained",
+    "title": "Grow your reach with Google Ads campaigns | YoutubeADwords",
+    "description": "Understand Skip Ads, Display Ads, app installs and website traffic before choosing your campaign."
+  },
+  {
+    "route": "/blog/how-to-place-and-track-an-order",
+    "key": "blog__how-to-place-and-track-an-order",
+    "title": "Choose a service, share a link, track your order | YoutubeADwords",
+    "description": "A practical walkthrough of package selection, public links, order tracking and support."
+  },
+  {
+    "route": "/blog/youtube-subscriber-packages",
+    "key": "blog__youtube-subscriber-packages",
+    "title": "Grow your audience with YouTube subscribers | YoutubeADwords",
+    "description": "Compare the subscriber tiers and prepare your channel link before choosing a package."
+  },
+  {
+    "route": "/blog/youtube-likes-packages",
+    "key": "blog__youtube-likes-packages",
+    "title": "Explore YouTube likes packages | YoutubeADwords",
+    "description": "What to review when choosing a likes package and how to follow your order after purchase."
+  },
+  {
+    "route": "/blog/youtube-watch-hours-packages",
+    "key": "blog__youtube-watch-hours-packages",
+    "title": "Build your viewing time with YouTube Watch Hours | YoutubeADwords",
+    "description": "Review watch-hour quantities, pricing and delivery questions before choosing a package."
+  },
+  {
+    "route": "/blog/google-app-install-packages",
+    "key": "blog__google-app-install-packages",
+    "title": "Get app installs with Google Ads | YoutubeADwords",
+    "description": "Compare worldwide and Tier-1 install options and prepare your app campaign details."
+  },
+  {
+    "route": "/orders",
+    "key": "orders",
+    "title": "My Orders | YoutubeADwords",
+    "description": "Every order you place with YoutubeADwords, and how far its delivery has got."
+  }
+]

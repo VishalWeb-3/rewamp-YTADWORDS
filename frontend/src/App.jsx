@@ -1,37 +1,79 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CtaActionsProvider } from './contexts/CtaActionsContext';
-import HomePage from './pages/HomePage';
+import LinkRouter from './revamp/LinkRouter';
+
+// The site's pages are the imported Growth Haus revamp (src/revamp, see scripts/import-revamp.mjs).
+// Pages the revamp doesn't have keep their existing components below.
+const RevampPage = lazy(() => import('./revamp/RevampPage'));
+const RevampBlogList = lazy(() => import('./revamp/RevampBlog').then((m) => ({ default: m.RevampBlogList })));
+const RevampBlogPost = lazy(() => import('./revamp/RevampBlog').then((m) => ({ default: m.RevampBlogPost })));
+// Login, signup, Get started and Checkout keep the original pages (same flow), shown in the revamp's nav and footer
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const SignupPage = lazy(() => import('./pages/SignupPage'));
+const GetStartedPage = lazy(() => import('./pages/GetStartedPage'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const OrderDetailPage = lazy(() => import('./pages/OrderDetailPage'));
+const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
+const PaymentFailurePage = lazy(() => import('./pages/PaymentFailurePage'));
+const SharedPaymentPage = lazy(() => import('./pages/SharedPaymentPage'));
+const PayLinkPage = lazy(() => import('./pages/PayLinkPage'));
 const BuyYouTubeViewsPage = lazy(() => import('./pages/BuyYouTubeViewsPage'));
 const BuyYouTubeSubscribersPage = lazy(() => import('./pages/BuyYouTubeSubscribersPage'));
 const BuyYouTubeLikesPage = lazy(() => import('./pages/BuyYouTubeLikesPage'));
 const BuyYouTubeWatchHoursPage = lazy(() => import('./pages/BuyYouTubeWatchHoursPage'));
 const BuyGoogleSkipAdsViewsPage = lazy(() => import('./pages/BuyGoogleSkipAdsViewsPage'));
 const BuyGoogleDisplayAdsViewsPage = lazy(() => import('./pages/BuyGoogleDisplayAdsViewsPage'));
-
 const BuyGoogleAppsDownloadPage = lazy(() => import('./pages/BuyGoogleAppsDownloadPage'));
 const BuyGoogleAdsWebsiteTrafficPage = lazy(() => import('./pages/BuyGoogleAdsWebsiteTrafficPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-const AboutUsPage = lazy(() => import('./pages/AboutUsPage'));
+const CookiesSettingsPage = lazy(() => import('./pages/CookiesSettingsPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
-const CookiesSettingsPage = lazy(() => import('./pages/CookiesSettingsPage'));
-const LoginPage = lazy(() => import('./pages/LoginPage'));
-const SignupPage = lazy(() => import('./pages/SignupPage'));
-const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
-const GetStartedPage = lazy(() => import('./pages/GetStartedPage'));
-const MyOrdersPage = lazy(() => import('./pages/MyOrdersPage'));
-const OrderDetailPage = lazy(() => import('./pages/OrderDetailPage'));
-const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage'));
-const PaymentFailurePage = lazy(() => import('./pages/PaymentFailurePage'));
-const BlogListPage = lazy(() => import('./pages/BlogListPage'));
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
-const SharedPaymentPage = lazy(() => import('./pages/SharedPaymentPage'));
-const PayLinkPage = lazy(() => import('./pages/PayLinkPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+
+// The service pages in the navbar menus, Cookies Settings and the legal pages keep the original pages (content, section order and purchase flow),
+// shown inside the revamp shell and theme.
+const SERVICE_ROUTES = [
+  ['/buy-youtube-views', BuyYouTubeViewsPage],
+  ['/buy-youtube-subscribers', BuyYouTubeSubscribersPage],
+  ['/buy-youtube-likes', BuyYouTubeLikesPage],
+  ['/buy-youtube-watch-hours', BuyYouTubeWatchHoursPage],
+  ['/buy-google-skip-ads-views', BuyGoogleSkipAdsViewsPage],
+  ['/buy-google-display-ads-views', BuyGoogleDisplayAdsViewsPage],
+  ['/buy-google-apps-download', BuyGoogleAppsDownloadPage],
+  ['/buy-google-ads-website-traffic', BuyGoogleAdsWebsiteTrafficPage],
+  // the original cookie preferences (switches and Save Preferences), which the revamp's page doesn't have
+  ['/cookies', CookiesSettingsPage],
+  ['/cookies-settings', CookiesSettingsPage],
+  // the legal pages read their text from Tina (content/legal), so they keep the original pages too
+  ['/privacy-policy', PrivacyPolicyPage],
+  ['/privacy', PrivacyPolicyPage],
+  ['/terms', TermsPage],
+  ['/terms-of-service', TermsPage],
+  ['/refund-policy', RefundPolicyPage],
+  ['/refunds', RefundPolicyPage],
+];
+
+// path -> revamp page; metaSlug is the Tina page-metadata entry (content/pages) that still sets title and description
+const REVAMP_ROUTES = [
+  ['/', 'home', 'home'],
+  ['/about', 'about', 'about'],
+  ['/about-us', 'about-us', 'about-us'],
+  ['/service', 'service', 'service'],
+  ['/youtube-services', 'youtube-services', 'youtube-services'],
+  ['/google-ads', 'google-ads', 'google-ads'],
+  ['/contact', 'contact', 'contact'],
+  ['/contact-us', 'contact', 'contact-us'],
+  ['/tickets', 'contact', 'contact'],
+  ['/support', 'contact', 'contact'],
+  ['/orders', 'orders', 'orders'],
+  // The revamp's own guides (linked from its home page); every other /blog/:slug is a Tina post
+  ...['choosing-youtube-views', 'google-ads-services-explained', 'how-to-place-and-track-an-order', 'youtube-subscriber-packages',
+    'youtube-likes-packages', 'youtube-watch-hours-packages', 'google-app-install-packages'].map((slug) => [`/blog/${slug}`, `blog__${slug}`, `blog/${slug}`]),
+];
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -54,41 +96,23 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
+      <LinkRouter />
       <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/buy-youtube-views" element={<BuyYouTubeViewsPage />} />
-        <Route path="/buy-youtube-subscribers" element={<BuyYouTubeSubscribersPage />} />
-        <Route path="/buy-youtube-likes" element={<BuyYouTubeLikesPage />} />
-        <Route path="/buy-youtube-watch-hours" element={<BuyYouTubeWatchHoursPage />} />
-        <Route path="/buy-google-skip-ads-views" element={<BuyGoogleSkipAdsViewsPage />} />
-        <Route path="/buy-google-display-ads-views" element={<BuyGoogleDisplayAdsViewsPage />} />
-
-        <Route path="/buy-google-apps-download" element={<BuyGoogleAppsDownloadPage />} />
-        <Route path="/buy-google-ads-website-traffic" element={<BuyGoogleAdsWebsiteTrafficPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/contact-us" element={<ContactPage />} />
-        <Route path="/tickets" element={<ContactPage />} />
-        <Route path="/support" element={<ContactPage />} />
-        <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/about" element={<AboutUsPage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-        <Route path="/privacy" element={<PrivacyPolicyPage />} />
-        <Route path="/terms" element={<TermsPage />} />
-        <Route path="/terms-of-service" element={<TermsPage />} />
-        <Route path="/refund-policy" element={<RefundPolicyPage />} />
-        <Route path="/refunds" element={<RefundPolicyPage />} />
-        <Route path="/cookies" element={<CookiesSettingsPage />} />
-        <Route path="/cookies-settings" element={<CookiesSettingsPage />} />
+        {REVAMP_ROUTES.map(([path, pageKey, metaSlug]) => (
+          <Route key={path} path={path} element={<RevampPage key={pageKey} pageKey={pageKey} metaSlug={metaSlug} />} />
+        ))}
+        {SERVICE_ROUTES.map(([path, Page]) => <Route key={path} path={path} element={<Page />} />)}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signin" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/register" element={<SignupPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
+        {/* No reset endpoint: same destination as the login page's "Forgot password?" link */}
+        <Route path="/forgot-password" element={<Navigate to="/contact?reason=support&topic=password" replace />} />
         <Route path="/get-started" element={<GetStartedPage />} />
-        <Route path="/blog" element={<BlogListPage />} />
-        <Route path="/blog/:slug" element={<BlogPostPage />} />
-        <Route path="/orders" element={<MyOrdersPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/blog" element={<RevampBlogList />} />
+        <Route path="/blog/:slug" element={<RevampBlogPost />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />
         <Route path="/payment/failure" element={<PaymentFailurePage />} />

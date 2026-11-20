@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import LandingHeader from './landing/LandingHeader';
-import Footer from './Footer';
-import CartSidebar from './CartSidebar';
 import SEO from './SEO';
-import DiscountPopup from './DiscountPopup';
+import RevampShell from '../revamp/RevampShell';
 import { usePageMetadata } from '../contexts/ContentContext';
 import '../styles/landing.css';
 import '../styles/site.css';
@@ -47,18 +44,17 @@ export default function Layout({ children, variant, seoTitle, seoDescription, se
   const ogImage = finalMetadata?.ogImage || seoOgImage || '/favicon.svg';
 
   return (
-    <div ref={rootRef} className={`min-h-screen overflow-x-hidden w-full ${variant === 'landing' ? '' : 'site'}`}>
-      <SEO
-        title={title}
-        description={description}
-        keywords={keywords}
-        ogImage={ogImage}
-      />
-      <LandingHeader />
-      {children}
-      <Footer />
-      <CartSidebar />
-      <DiscountPopup />
-    </div>
+    // Pages the revamp doesn't have sit inside the revamp's nav and footer (which also bring the cart drawer)
+    <RevampShell title={title} description={description}>
+      <div ref={rootRef} className={`w-full ${variant === 'landing' ? '' : 'site'}`}>
+        <SEO
+          title={title}
+          description={description}
+          keywords={keywords}
+          ogImage={ogImage}
+        />
+        {children}
+      </div>
+    </RevampShell>
   );
 }
