@@ -1,0 +1,46 @@
+# Quality gate shared by the PR preview and the production deploy.
+# Nothing is deployed here: it only proves the code is safe to deploy.
+name: Checks
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Public Firebase web config (GitHub > Settings > Secrets and variables > Actions > Variables)
+      VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+      VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/setup
+
+      - name: Lint frontend
+        run: npm --prefix frontend run lint -- --max-warnings=0
+
+      - name: Typecheck backend
+        working-directory: backend
+        run: npx tsc --noEmit -p .
+
+      - name: Test backend
+        run: npm --prefix backend test
+
+      # Only Vite here: the Tina step talks to Tina Cloud and is covered at deploy time
+      - name: Build frontend
+        uses: ./.github/actions/build
+
+      # Bundles the Worker exactly as a deploy would, without uploading anything
+      - name: Bundle Worker (dry run)
+        run: npx wrangler deploy --dry-run --outdir .wrangler/dry-run

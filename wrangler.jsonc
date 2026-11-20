@@ -26,5 +26,26 @@
     "NODE_ENV": "production",
     "FRONTEND_URL": "https://youtubeadwords.long-bar-2706.workers.dev",
     "API_URL": "https://youtubeadwords.long-bar-2706.workers.dev"
+  },
+  // Settings for PR previews (`wrangler preview`). Previews inherit nothing from above.
+  // Each preview gets its own Durable Object storage automatically.
+  // D1 points at a separate preview database so PRs never touch production data.
+  // FRONTEND_URL and API_URL are passed per PR by .github/workflows/pr-preview.yml.
+  "previews": {
+    "d1_databases": [
+      {
+        "binding": "DB",
+        "database_name": "youtubeadwords-preview-db",
+        "database_id": "REPLACE_WITH_PREVIEW_DB_ID",
+        "migrations_dir": "backend/migrations"
+      }
+    ],
+    "durable_objects": {
+      "bindings": [{ "name": "RATE_LIMITS", "class_name": "RateLimitCounter" }]
+    },
+    "observability": { "enabled": true },
+    "vars": {
+      "NODE_ENV": "production"
+    }
   }
 }

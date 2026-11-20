@@ -1,0 +1,32 @@
+name: Setup project
+description: Install Node, all three npm projects (root, frontend, backend) and generate the Prisma client.
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+        cache-dependency-path: |
+          package-lock.json
+          frontend/package-lock.json
+          backend/package-lock.json
+
+    - name: Install root dependencies (wrangler)
+      shell: bash
+      run: npm ci --no-audit --no-fund
+
+    - name: Install frontend dependencies
+      shell: bash
+      run: npm --prefix frontend ci --no-audit --no-fund
+
+    - name: Install backend dependencies
+      shell: bash
+      run: npm --prefix backend ci --no-audit --no-fund
+
+    # backend/generated/ is git-ignored, so the Prisma client is created on every run
+    - name: Generate Prisma client
+      shell: bash
+      run: npm --prefix backend run generate

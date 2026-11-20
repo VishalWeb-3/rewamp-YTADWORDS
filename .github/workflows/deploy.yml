@@ -1,0 +1,66 @@
+# Every push to main (normally a merged PR):
+#   1. runs the same checks as PRs
+#   2. if they pass, applies new D1 migrations to the production database
+#   3. deploys the youtubeadwords Worker (site + /api) to production
+name: Deploy production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # "Run workflow" button in the Actions tab, for a manual redeploy
+
+# Never run two production deploys at once; a queued one waits instead of cancelling
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    uses: ./.github/workflows/checks.yml
+
+  deploy:
+    name: Deploy to Cloudflare
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Add required reviewers to this environment in GitHub to make deploys wait for approval
+    environment:
+      name: production
+      url: https://youtubeadwords.long-bar-2706.workers.dev
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+      VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check Cloudflare secrets
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error title=Cloudflare secrets missing::Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID under GitHub > Settings > Secrets and variables > Actions. See CI_CD.md."
+            exit 1
+          fi
+
+      - uses: ./.github/actions/setup
+
+      - uses: ./.github/actions/build
+        with:
+          tina-client-id: ${{ secrets.TINA_CLIENT_ID }}
+          tina-token: ${{ secrets.TINA_TOKEN }}
+
+      # Only applies migrations that are not applied yet; a no-op on most deploys.
+      # Runs before the deploy so new code never meets an old schema.
+      - name: Apply database migrations (production)
+        run: npx wrangler d1 migrations apply youtubeadwords-db --remote
+
+      - name: Deploy Worker
+        run: npx wrangler deploy --message "GitHub Actions ${GITHUB_SHA::7}"

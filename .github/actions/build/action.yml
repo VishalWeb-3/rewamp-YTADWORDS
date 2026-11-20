@@ -1,0 +1,30 @@
+name: Build frontend
+description: Build the React app into frontend/dist, which the Worker serves as static assets.
+
+inputs:
+  tina-client-id:
+    description: Tina Cloud client id. When it and tina-token are set, the full Tina build runs so /admin works.
+    required: false
+    default: ""
+  tina-token:
+    description: Tina Cloud read-only token.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Build frontend
+      shell: bash
+      working-directory: frontend
+      env:
+        TINA_CLIENT_ID: ${{ inputs.tina-client-id }}
+        TINA_TOKEN: ${{ inputs.tina-token }}
+      run: |
+        if [ -n "$TINA_CLIENT_ID" ] && [ -n "$TINA_TOKEN" ]; then
+          echo "Tina credentials found: running the full build (Tina admin + Vite)."
+          npm run build
+        else
+          echo "::warning title=Tina build skipped::TINA_CLIENT_ID / TINA_TOKEN secrets are not set, so only 'vite build' ran. The site works, but /admin will not."
+          npx vite build
+        fi

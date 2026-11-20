@@ -1,0 +1,137 @@
+# Every pull request into main:
+#   1. runs the checks (lint, typecheck, tests, build)
+#   2. if they pass, deploys a Cloudflare Preview of the whole Worker (site + /api)
+#      at https://pr-<number>-youtubeadwords.<subdomain>.workers.dev
+#   3. posts that link as a comment on the PR (updated on every new push)
+# When the PR is closed or merged, the preview is deleted.
+name: PR preview
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, closed]
+
+# A new push to the same PR cancels the run that is still going
+concurrency:
+  group: pr-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  WORKER_NAME: youtubeadwords
+  WORKERS_SUBDOMAIN: long-bar-2706
+  PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+
+jobs:
+  checks:
+    if: github.event.action != 'closed'
+    uses: ./.github/workflows/checks.yml
+
+  preview:
+    name: Deploy preview
+    needs: checks
+    # Forked PRs get no repository secrets, so they only run the checks
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+    environment:
+      name: preview
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+      VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check one-time setup
+        run: |
+          if grep -q REPLACE_WITH_PREVIEW_DB_ID wrangler.jsonc wrangler.preview-migrations.jsonc; then
+            echo "::error title=Preview database not set up::Create it with 'npx wrangler d1 create youtubeadwords-preview-db' and put its id in wrangler.jsonc (previews block) and wrangler.preview-migrations.jsonc. See CI_CD.md."
+            exit 1
+          fi
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error title=Cloudflare secrets missing::Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID under GitHub > Settings > Secrets and variables > Actions. See CI_CD.md."
+            exit 1
+          fi
+
+      - uses: ./.github/actions/setup
+
+      - uses: ./.github/actions/build
+        with:
+          tina-client-id: ${{ secrets.TINA_CLIENT_ID }}
+          tina-token: ${{ secrets.TINA_TOKEN }}
+
+      - name: Apply database migrations to the preview database
+        run: npx wrangler d1 migrations apply youtubeadwords-preview-db --remote --config wrangler.preview-migrations.jsonc
+
+      - name: Deploy Cloudflare Preview
+        id: deploy
+        run: |
+          host="https://${PREVIEW_NAME}-${WORKER_NAME}.${WORKERS_SUBDOMAIN}.workers.dev"
+          npx wrangler preview \
+            --name "$PREVIEW_NAME" \
+            --message "PR #${{ github.event.pull_request.number }} @ ${GITHUB_SHA::7}" \
+            --var "FRONTEND_URL:$host" \
+            --var "API_URL:$host" \
+            --json > preview.json
+          cat preview.json
+          url="$(jq -er '.preview.urls[0]' preview.json)"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Comment preview link on the PR
+        uses: actions/github-script@v8
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
+        with:
+          script: |
+            const marker = '<!-- cloudflare-preview -->';
+            const sha = context.payload.pull_request.head.sha.slice(0, 7);
+            const body = [
+              marker,
+              '### Cloudflare preview is ready',
+              '',
+              `**Site + API:** ${process.env.PREVIEW_URL}`,
+              '',
+              `Built from commit \`${sha}\`. This link updates on every push and is deleted when the PR closes.`,
+              'It uses the preview database, not production data.',
+            ].join('\n');
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+  cleanup:
+    name: Delete preview
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      # "|| true": a PR whose preview never deployed has nothing to delete
+      - name: Delete Cloudflare Preview
+        run: npx wrangler preview delete --name "$PREVIEW_NAME" --skip-confirmation || true

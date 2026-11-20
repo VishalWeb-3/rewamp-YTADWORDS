@@ -1,0 +1,16 @@
+// Used only to apply backend/migrations to the PR preview database:
+//   npx wrangler d1 migrations apply youtubeadwords-preview-db --remote --config wrangler.preview-migrations.jsonc
+// Keep database_id in sync with "previews.d1_databases" in wrangler.jsonc.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "youtubeadwords",
+  "compatibility_date": "2026-10-30",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "youtubeadwords-preview-db",
+      "database_id": "REPLACE_WITH_PREVIEW_DB_ID",
+      "migrations_dir": "backend/migrations"
+    }
+  ]
+}
