@@ -8,6 +8,7 @@ import LinkRouter from './revamp/LinkRouter';
 // The site's pages are the imported Growth Haus revamp (src/revamp, see scripts/import-revamp.mjs).
 // Pages the revamp doesn't have keep their existing components below.
 const RevampPage = lazy(() => import('./revamp/RevampPage'));
+const RevampHome = lazy(() => import('./revamp/HomeHero'));
 const RevampBlogList = lazy(() => import('./revamp/RevampBlog').then((m) => ({ default: m.RevampBlogList })));
 const RevampBlogPost = lazy(() => import('./revamp/RevampBlog').then((m) => ({ default: m.RevampBlogPost })));
 // Login, signup, Get started and Checkout keep the original pages (same flow), shown in the revamp's nav and footer
@@ -59,7 +60,6 @@ const SERVICE_ROUTES = [
 
 // path -> revamp page; metaSlug is the Tina page-metadata entry (content/pages) that still sets title and description
 const REVAMP_ROUTES = [
-  ['/', 'home', 'home'],
   ['/about', 'about', 'about'],
   ['/about-us', 'about-us', 'about-us'],
   ['/service', 'service', 'service'],
@@ -99,6 +99,7 @@ function AppContent() {
       <LinkRouter />
       <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
       <Routes>
+        <Route path="/" element={<RevampHome key="home" pageKey="home" metaSlug="home" />} />
         {REVAMP_ROUTES.map(([path, pageKey, metaSlug]) => (
           <Route key={path} path={path} element={<RevampPage key={pageKey} pageKey={pageKey} metaSlug={metaSlug} />} />
         ))}
