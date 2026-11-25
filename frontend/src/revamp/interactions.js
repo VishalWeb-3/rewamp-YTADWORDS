@@ -321,5 +321,36 @@ export function runInteractions(root, { account } = {}) {
     cleanups.push(close);
   });
 
+  // Phone card rows (the steps and the packages) are wider than the screen. They slide sideways as the
+  // page scrolls, carousel-style, so every card passes through view; reduced motion gets a swipeable row.
+  let rows = [];
+  let rowFrame = 0;
+  const slideRows = () => {
+    rowFrame = 0;
+    if (reduced) return;
+    const vh = window.innerHeight;
+    rows.forEach((row) => {
+      const distance = row.scrollWidth - row.clientWidth;
+      const progress = Math.min(1, Math.max(0, (vh * 0.85 - row.getBoundingClientRect().top) / (vh * 0.6)));
+      row.style.transform = `translate3d(${-progress * distance}px,0,0)`;
+    });
+  };
+  const onScroll = () => { if (!rowFrame) rowFrame = requestAnimationFrame(slideRows); };
+  const resetRows = () => rows.forEach((row) => { row.style.transform = ''; row.style.overflowX = ''; });
+  const armRows = () => {
+    resetRows();
+    rows = phone.matches
+      ? all(root, 'section[data-framer-name="Solution"] [data-framer-name="Bottom"], section[data-framer-name="Work with me"] [data-framer-name="Bottom"]')
+        .filter((row) => getComputedStyle(row).flexDirection === 'row' && row.scrollWidth > row.clientWidth * 1.3)
+      : [];
+    if (reduced) rows.forEach((row) => { row.style.overflowX = 'auto'; });
+    slideRows();
+  };
+  armRows();
+  listen(phone, 'change', armRows);
+  listen(window, 'resize', onScroll);
+  listen(window, 'scroll', onScroll, { passive: true });
+  cleanups.push(() => { cancelAnimationFrame(rowFrame); resetRows(); });
+
   return () => cleanups.forEach((cleanup) => cleanup());
 }
