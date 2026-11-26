@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigationType } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CtaActionsProvider } from './contexts/CtaActionsContext';
@@ -75,10 +75,32 @@ const REVAMP_ROUTES = [
     'youtube-likes-packages', 'youtube-watch-hours-packages', 'google-app-install-packages'].map((slug) => [`/blog/${slug}`, `blog__${slug}`, `blog/${slug}`]),
 ];
 
+// New pages open at the top; Back/Forward returns to where the reader was on that page.
+const scrollPositions = new Map(); // history entry key -> scrollY
+
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, key } = useLocation();
+  const navType = useNavigationType();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const save = () => scrollPositions.set(key, window.scrollY);
+    window.addEventListener('scroll', save, { passive: true });
+    return () => window.removeEventListener('scroll', save);
+  }, [key]);
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+    const target = navType === 'POP' ? scrollPositions.get(key) ?? 0 : 0;
+    // Pages load after the route changes, so wait until the page is tall enough to reach the saved spot
+    const start = performance.now();
+    let frame = 0;
+    const restore = () => {
+      const reachable = document.documentElement.scrollHeight - window.innerHeight >= target;
+      if (reachable || performance.now() - start > 3000) window.scrollTo(0, target);
+      else frame = requestAnimationFrame(restore);
+    };
+    restore();
+    return () => cancelAnimationFrame(frame);
+    // Only a page change moves the scroll; key and navType are read for that change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   return null;
 }

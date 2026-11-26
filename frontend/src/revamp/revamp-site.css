@@ -104,7 +104,8 @@
 /* Service-page hero: fits the first screen under the nav, copy and package card centred against each other */
 .revamp-shell-slot:has(.svc-hero) { padding-top: 96px; }
 .revamp-shell-slot div:has(> .grid > .svc-hero) { padding-top: 1rem; padding-bottom: clamp(2.5rem, 5vw, 4rem); }
-.revamp-shell-slot .grid:has(> .svc-hero) { align-items: center; row-gap: 2rem; }
+/* start, not center: the package card changes height per tab and centring made both columns jump */
+.revamp-shell-slot .grid:has(> .svc-hero) { align-items: start; row-gap: 2rem; }
 @media (min-width: 64rem) {
   .revamp-shell-slot .grid:has(> .svc-hero) { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); column-gap: clamp(2.5rem, 4.5vw, 4.5rem); min-height: calc(100svh - 96px - 2rem); }
 }
@@ -324,3 +325,18 @@
   .yaw-hero__sticker, .yaw-hero__bubble, .yaw-hero__frame, .yaw-hero__dot { animation: none; }
   .yaw-hero__sticker, .yaw-hero__bubble { transform: rotate(var(--r, 0deg)); }
 }
+
+/* Phone compare table: the two column headers looked like a toggle (one filled pill, one faded pill), so testers
+   tapped them expecting a switch. Both columns are always shown; style the headers as plain underlined labels. */
+@media (max-width: 47.99rem) {
+  .revamp-shell-slot .site .svc-compare .grid.md\:grid-cols-3 > .border-4 > .mb-8,
+  .revamp-shell-slot .site .svc-compare .grid.md\:grid-cols-3 > div:last-child > .mb-8 { background: none; box-shadow: none; border-radius: 0; padding: 0.5rem 0.25rem 0.6rem; border-bottom: 2px solid var(--ink); }
+  .revamp-shell-slot .site .svc-compare .grid.md\:grid-cols-3 > div:last-child > .mb-8 { border-bottom-color: var(--ink-3); }
+  .revamp-shell-slot .site .svc-compare .grid.md\:grid-cols-3 > div:last-child > .mb-8 > .bg-gray-200 { background: none; border: 0; padding: 0; }
+}
+
+/* Client reviews strip: cards sized to their own text came out 389-432px tall; stretch them to one height */
+section[data-framer-name="Testimonial"] ul:has(> li.ticker-item) { align-items: stretch !important; }
+section[data-framer-name="Testimonial"] li.ticker-item { height: auto !important; }
+section[data-framer-name="Testimonial"] li.ticker-item > div,
+section[data-framer-name="Testimonial"] li.ticker-item > div > div { height: 100% !important; }

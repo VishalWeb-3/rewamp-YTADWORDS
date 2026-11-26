@@ -186,7 +186,7 @@ export function runInteractions(root, { account } = {}) {
     cleanups.push(() => control.stop());
   });
 
-  // Continuous tracks: the title ticker drifts left-to-right; the client cards drift right-to-left,
+  // Continuous tracks drift right-to-left (title ticker faster); the client cards
   // pause on hover and can be dragged with momentum.
   if (!reduced) all(root, marqueeTrackSelector).forEach((track) => {
     const items = Array.from(track.children);
@@ -197,10 +197,10 @@ export function runInteractions(root, { account } = {}) {
     const copies = items.map((el) => el.cloneNode(true));
     copies.forEach((el) => { el.setAttribute('aria-hidden', 'true'); track.appendChild(el); });
     const isTitle = !!track.closest('[data-framer-name="Title Ticker"]');
-    const direction = isTitle ? 1 : -1;
+    const direction = -1;
     const speed = isTitle ? 60 : 30;
     const surface = track.parentElement || track;
-    let x = isTitle ? -distance : 0;
+    let x = 0;
     let hovering = false;
     let dragging = false;
     let moved = false;

@@ -19,7 +19,7 @@ export function matchFlows(root, ctx) {
   const setAttr = (el, name, value) => {
     const old = el.getAttribute(name);
     el.setAttribute(name, value);
-    undo.push(() => el.setAttribute(name, old));
+    undo.push(() => (old === null ? el.removeAttribute(name) : el.setAttribute(name, old)));
   };
   const setText = (el, value) => {
     const old = el.textContent;
@@ -42,6 +42,13 @@ export function matchFlows(root, ctx) {
     const labels = LABELS[href];
     if (labels) a.querySelectorAll('p').forEach((p) => { if (labels[text(p)]) setText(p, labels[text(p)]); });
   });
+
+  // On the Contact page, "Contact support" (Useful links) pointed at the page itself and did nothing: send it to the form
+  const contactForm = root.dataset.route === '/contact' && root.querySelector('form');
+  if (contactForm) {
+    if (!contactForm.id) setAttr(contactForm, 'id', 'contact-form');
+    root.querySelectorAll('a[href="/contact"]').forEach((a) => setAttr(a, 'href', `#${contactForm.id}`));
+  }
 
   root.querySelectorAll('footer').forEach((foot) => {
     const links = Array.from(foot.querySelectorAll('a[href]'));

@@ -90,6 +90,14 @@ export function wireForms(root, ctx) {
       const texts = ctx.contact || {};
       // Name is the revamp's extra field; the original form only required the email and message
       field(form, 'Name')?.removeAttribute('required');
+      // Asterisks follow what is actually required (email and message), not the revamp's own labels
+      form.querySelectorAll('input:not([type="radio"]), textarea').forEach((input) => {
+        const label = input.closest('label')?.querySelector('p');
+        if (!label) return;
+        const old = label.textContent;
+        label.textContent = old.replace(/\s*\*\s*$/, '') + (input.required ? '*' : '');
+        cleanups.push(() => { label.textContent = old; });
+      });
       const email = field(form, 'Email');
       if (email && ctx.state?.email && !email.value) email.value = ctx.state.email;
       // Ticket switch off: the original shows a disabled "Submit disabled" button
